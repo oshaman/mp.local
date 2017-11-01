@@ -15,6 +15,12 @@ Route::get('/', 'MainController@main');
 
 Route::match(['get', 'post'], 'main', 'MainController@index');
 
+Route::get('preparat/{loc}/{medicine}', 'MainController@medicine')->name('medicine')->where(['medicine' => '[\w-]+', 'loc' => 'ru|ua']);
+Route::get('preparat/{loc}/{medicine}/analog', 'MainController@analog')->name('medicine_analog')->where(['medicine' => '[\w-]+', 'loc' => 'ru|ua']);
+Route::get('preparat/{loc}/{medicine}/adaptive', 'MainController@adaptive')->name('medicine_adaptive')->where(['medicine' => '[\w-]+', 'loc' => 'ru|ua']);
+
+
+
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::get('/', 'Admin\IndexController@show')->name('admin');

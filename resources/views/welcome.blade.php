@@ -77,6 +77,10 @@
                 {!! Form::close() !!}
             </div>
 
+            <a href="{{ route('medicine', ['loc'=>'ru', 'medicine'=>'test']) }}">Medicine</a>
+            <a href="{{ route('medicine_analog', ['loc'=>'ru', 'medicine'=>'test']) }}">Analog</a>
+            <a href="{{ route('medicine_adaptive', ['loc'=>'ru', 'medicine'=>'test']) }}">Adaptive</a>
+
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
 
@@ -85,7 +89,6 @@
                     <!-- Authentication Links -->
                     @if (Auth::guest())
                         <li><a href="{{ route('login') }}">Login</a></li>
-                        {{--<li><a href="{{ route('register') }}">Register</a></li>--}}
                     @else
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -133,7 +136,6 @@
         @endif
         @yield('content')
     </div>
-
 </div>
 
 <!-- Scripts -->

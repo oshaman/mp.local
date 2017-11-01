@@ -7,13 +7,13 @@
             <li>
                 <h4>{!! Form::label('email', 'Электронная почта') !!}</h4>
 
-                {!! Form::text('email', old('email') ? : $user->email) !!}
+                {!! Form::email('email', old('email') ? : $user->email, ['class'=>'form-control', 'required'=>'required']) !!}
 
             </li>
             <li>
                 <h4>{!! Form::label('name', 'Имя') !!}</h4>
 
-                {!! Form::text('name', old('name') ? : $user->name) !!}
+                {!! Form::text('name', old('name') ? : $user->name, ['class'=>'form-control', 'required'=>'required']) !!}
 
             </li>
             <li>
@@ -26,7 +26,7 @@
             </li>
 
             <li>
-                <h4>{!! Form::label('roles', 'Роль') !!}</h4>
+                <h4>{!! Form::label('role', 'Роль') !!}</h4>
                 <table class="table">
                     @foreach($roles as $id=>$role)
                         @if($user->role_id == $id)

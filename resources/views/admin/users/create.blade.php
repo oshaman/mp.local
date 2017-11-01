@@ -4,11 +4,11 @@
     <ul list-group>
         <li>
             <h4>{!! Form::label('name', 'Имя') !!}</h4>
-            {!! Form::text('name', old('name') ? : '') !!}
+            {!! Form::text('name', old('name') ? : '', ['class'=>'form-control', 'required'=>'required']) !!}
         </li>
         <li>
             <h4>{!! Form::label('email', 'Электронная почта') !!}</h4>
-            {!! Form::email('email', old('email') ? : '') !!}
+            {!! Form::email('email', old('email') ? : '', ['class'=>'form-control', 'required'=>'required']) !!}
         </li>
         <li>
             <h4>{!! Form::label('pass', 'Пароль') !!}</h4>
@@ -19,7 +19,7 @@
             {!! Form::password('password_confirmation') !!}
         </li>
         <li>
-            <h4>{!! Form::label('roles', 'Роль') !!}</h4>
+            <h4>{!! Form::label('role', 'Роль') !!}</h4>
             <table class="table">
                 @foreach($roles as $id=>$role)
                     <td>
