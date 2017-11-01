@@ -2,6 +2,7 @@
 
 namespace Fresh\Medpravda\Http\Controllers\Auth;
 
+
 use Fresh\Medpravda\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
