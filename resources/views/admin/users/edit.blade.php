@@ -11,6 +11,12 @@
 
             </li>
             <li>
+                <h4>{!! Form::label('name', 'Имя') !!}</h4>
+
+                {!! Form::text('name', old('name') ? : $user->name) !!}
+
+            </li>
+            <li>
                 <h4>{!! Form::label('pass', 'Пароль') !!}</h4>
                 {!! Form::password('password') !!}
             </li>

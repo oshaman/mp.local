@@ -10,6 +10,7 @@
 <table class="table">
     <thead>
     <th>ID</th>
+    <th>Имя</th>
     <th>Почта</th>
     <th>Роль</th>
     <th>Редактировать</th>
@@ -20,6 +21,7 @@
         @foreach($users as $user)
             <tr>
                 <td>{{ $user->id }}</td>
+                <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
                 <td>{{ $user->role->name }}</td>
                 <td>

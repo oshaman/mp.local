@@ -72,6 +72,9 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
+                {!! Form::open(['url' => route('admin'),'class'=>'form-horizontal','method'=>'GET']) !!}
+                {!! Form::button('Admin', ['class' => 'btn btn-success','type'=>'submit']) !!}
+                {!! Form::close() !!}
             </div>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
