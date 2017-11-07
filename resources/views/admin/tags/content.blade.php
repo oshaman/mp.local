@@ -4,10 +4,10 @@
 <div class="">
     {{ Form::label('tag', 'Название тега') }}
     <div class="">
-        {!! Form::text('tag', old('tag') ? : '' , ['placeholder'=>'Психиатрия...', 'id'=>'tag', 'class'=>'form-control']) !!}
+        {!! Form::text('tag', old('tag') ? : '' , ['placeholder'=>'Валидол...', 'id'=>'tag', 'class'=>'form-control ru-title', 'required'=>'required']) !!}
     </div>
     <div class="">
-        {!! Form::text('alias', old('alias') ? : '' , ['placeholder'=>'Здоровье...', 'id'=>'alias', 'class'=>'form-control']) !!}
+        {!! Form::text('alias', old('alias') ? : '' , ['placeholder'=>'validol...', 'id'=>'alias', 'class'=>'form-control eng-alias', 'required'=>'required']) !!}
     </div>
     <div class="">
         {!! Form::button('Добавить', ['class' => 'btn btn-primary','type'=>'submit']) !!}

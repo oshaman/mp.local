@@ -7,5 +7,11 @@
     @endisset
 @endsection
 @section('content')
-    <h2>{!! $content !!}</h2>
+    {!! $content !!}
+@endsection
+
+@section('jss')
+    @isset($jss)
+        {!! $jss !!}
+    @endisset
 @endsection

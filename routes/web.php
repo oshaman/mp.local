@@ -36,7 +36,16 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::match(['get', 'post'], 'edit/{tag}', ['uses' => 'Admin\TagsController@edit', 'as' => 'edit_tags'])->where('tag', '[0-9]+');
         Route::get('delete/{tag}', ['uses' => 'Admin\TagsController@destroy', 'as' => 'delete_tag'])->where('tag', '[0-9]+');
     });
+    /**
+     * Medicine
+     */
+    Route::group(['prefix' => 'medicine'], function () {
+        Route::get('/', ['uses' => 'Admin\MedicineController@index', 'as' => 'medicine_admin']);
+        Route::match(['get', 'post'], 'create', ['uses' => 'Admin\MedicineController@create', 'as' => 'medicine_create']);
+        Route::match(['get', 'post'], 'edit/{medicine}', ['uses' => 'Admin\MedicineController@edit', 'as' => 'medicine_edit'])->where('medicine', '[0-9]+');
+        Route::get('del/{medicine}', ['uses' => 'Admin\MedicineController@del', 'as' => 'medicine_delete'])->where('medicine', '[0-9]+');
 
+    });
 
     /**
      *   Admin USERS

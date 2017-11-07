@@ -23,9 +23,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
         parent::boot();
+        Route::model('tag', \Fresh\Medpravda\Tag::class);
+        Route::model('medicine', \Fresh\Medpravda\Medicine::class);
     }
 
     /**

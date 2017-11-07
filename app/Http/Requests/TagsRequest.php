@@ -56,7 +56,7 @@ class TagsRequest extends FormRequest
     {
         if ($this->isMethod('post')) {
             $rules = [
-                'tag' => ['required', 'between:3, 64', 'regex:#^[а-яА-ЯёЁ\s-]+$#u'],
+                'tag' => ['required', 'between:3, 64', 'regex:#^[а-яА-ЯёЁ0-9\s-]+$#u'],
             ];
             return $rules;
         }

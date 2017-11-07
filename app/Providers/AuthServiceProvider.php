@@ -36,5 +36,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('TAGS_ADMIN', function ($user) {
             return (('admin' === $user->role->name) || ('editor' === $user->role->name));
         });
+
+        Gate::define('UPDATE_MEDICINE', function ($user) {
+            return (('admin' === $user->role->name) || ('editor' === $user->role->name));
+        });
     }
 }
