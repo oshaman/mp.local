@@ -15,7 +15,8 @@
     "laravel/tinker": "~1.0",
     "laravelcollective/html": "^5.4.0",
     "lavary/laravel-menu": "^1.7",
-    "roumen/sitemap": "^2.7"
+    "roumen/sitemap": "^2.7",
+    "unisharp/laravel-filemanager": "~1.8"
   },
   "require-dev": {
     "filp/whoops": "~2.0",

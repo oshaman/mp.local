@@ -40,5 +40,13 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('UPDATE_MEDICINE', function ($user) {
             return (('admin' === $user->role->name) || ('editor' === $user->role->name));
         });
+
+        Gate::define('UPDATE_ARTICLES', function ($user) {
+            return (('admin' === $user->role->name) || ('editor' === $user->role->name));
+        });
+
+        Gate::define('UPDATE_MEDICINES_CATS', function ($user) {
+            return (('admin' === $user->role->name) || ('editor' === $user->role->name));
+        });
     }
 }

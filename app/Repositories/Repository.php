@@ -60,9 +60,9 @@ abstract class Repository
                 }
             }*/
 
-            /*if (is_string($item->seo) && is_object(json_decode($item->seo)) && (json_last_error() == JSON_ERROR_NONE)) {
+            if (is_string($item->seo) && is_object(json_decode($item->seo)) && (json_last_error() == JSON_ERROR_NONE)) {
                 $item->seo = json_decode($item->seo);
-            }*/
+            }
 
             return $item;
 

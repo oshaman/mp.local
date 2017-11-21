@@ -15,6 +15,7 @@ class AdminController extends Controller
     protected $title;
     protected $vars;
     protected $jss = null;
+    protected $tiny = false;
 
     /**
      * @return mixed
@@ -23,6 +24,7 @@ class AdminController extends Controller
     {
         $this->vars = array_add($this->vars, 'title', $this->title);
         $this->vars = array_add($this->vars, 'jss', $this->jss);
+        $this->vars = array_add($this->vars, 'tiny', $this->tiny);
 
         $menu = $this->getMenu();
         $navigation = view('admin.navigation')->with('menu', $menu)->render();
@@ -49,12 +51,17 @@ class AdminController extends Controller
             if (Gate::allows('UPDATE_MEDICINE')) {
                 $menu->add('Редактирование препаратов', array('route' => 'medicine_admin'));
             }
-            /*if(Gate::allows('UPDATE_ARTICLES')) {
+
+            if (Gate::allows('UPDATE_ARTICLES')) {
                 $menu->add('Редактирование статей',array('route' => 'articles_admin'));
-            }*/
+            }
 
             if (Gate::allows('TAGS_ADMIN')) {
                 $menu->add('Редактирование тэгов', array('route' => 'tags_admin'));
+            }
+
+            if (Gate::allows('UPDATE_MEDICINES_CATS')) {
+                $menu->add('Редактирование категорий препаратов', array('route' => 'medicine_cats'));
             }
 
         });

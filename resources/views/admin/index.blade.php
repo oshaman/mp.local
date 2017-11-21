@@ -75,7 +75,7 @@
             <div class="alert alert-danger">
                 <p class="error">
                     @foreach ($errors->toArray() as $key=>$error)
-                    {!! str_replace($key, '<strong>' . trans('admin.' . $key) . '</strong>', $error[0]) !!}</br>
+                    {!! str_replace(str_replace('_', ' ', $key), '<strong>' . trans('admin.' . $key) . '</strong>', $error[0]) !!}</br>
                     @endforeach
                 </p>
             </div>
@@ -92,7 +92,7 @@
 
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
-{{--<script src="{{ asset('js/admin.js') }}"></script>--}}
+<script src="{{ asset('js/admin.js') }}"></script>
 @yield('jss')
 </body>
 </html>
