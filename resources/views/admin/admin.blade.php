@@ -84,3 +84,8 @@
         {!! $jss !!}
     @endisset
 @endsection
+@section('css')
+    @isset($css)
+        {!! $css !!}
+    @endisset
+@endsection

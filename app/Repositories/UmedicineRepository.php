@@ -35,11 +35,6 @@ class UmedicineRepository extends Repository
         }
 
         $input = $request->except('_token', 'slider');
-        if (!empty($input['approved'])) {
-            $input['approved'] = 1;
-        } else {
-            $input['approved'] = 0;
-        }
         // SEO handle
         if (!empty($input['seo_title'] || !empty($input['seo_keywords']) || !empty($input['seo_description']) || !empty($input['seo_text'])
             || !empty($input['og_image']) || !empty($input['og_title']) || !empty($input['og_description']))) {
@@ -55,8 +50,8 @@ class UmedicineRepository extends Repository
         }
         // SEO handle
 
+        dd($input);
         $updated = $model->fill($input)->save();
-//        dd($input);
 
         if (!empty($updated)) {
             //Slider

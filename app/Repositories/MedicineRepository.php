@@ -2,8 +2,14 @@
 
 namespace Fresh\Medpravda\Repositories;
 
+use Fresh\Medpravda\Classification;
+use Fresh\Medpravda\Fabricator;
+use Fresh\Medpravda\Form;
 use Fresh\Medpravda\Image as Slider;
+use Fresh\Medpravda\Innname;
 use Fresh\Medpravda\Medicine;
+use Fresh\Medpravda\Pharmagroup;
+use Fresh\Medpravda\Substance;
 use Fresh\Medpravda\Umedicine;
 use Image;
 use Config;
@@ -13,9 +19,30 @@ use DB;
 
 class MedicineRepository extends Repository
 {
-    public function __construct(Medicine $medicine)
+    protected $inname;
+    protected $form;
+    protected $classification;
+    protected $pharmagroup;
+    protected $fabricator;
+    protected $substance;
+
+    public function __construct(
+        Medicine $medicine,
+        Innname $innname,
+        Form $form,
+        Classification $classification,
+        Pharmagroup $pharmagroup,
+        Fabricator $fabricator,
+        Substance $substance
+    )
     {
         $this->model = $medicine;
+        $this->inname = $innname;
+        $this->form = $form;
+        $this->classification = $classification;
+        $this->pharmagroup = $pharmagroup;
+        $this->fabricator = $fabricator;
+        $this->substance = $substance;
     }
 
     /**
@@ -33,7 +60,6 @@ class MedicineRepository extends Repository
      */
     public function updateMedicine($request, $medicine)
     {
-
         $model = $this->one($medicine);
 
         if (empty($model)) {
@@ -42,7 +68,7 @@ class MedicineRepository extends Repository
 
         $input = $request->except('_token', 'slider');
 
-//        dd($input);
+        dd($input);
         // SEO handle
         if (!empty($input['seo_title'] || !empty($input['seo_keywords']) || !empty($input['seo_description']) || !empty($input['seo_text'])
             || !empty($input['og_image']) || !empty($input['og_title']) || !empty($input['og_description']))) {
@@ -58,6 +84,54 @@ class MedicineRepository extends Repository
         }
         // SEO handle
 
+        //General=====================================>
+        if ($model->classification_id != $input['classification_id']) {
+            DB::transaction(function () use ($input, $model) {
+                DB::table('umedicines')->where('alias', $model->alias)->update(['classification_id' => $input['classification_id']]);
+                DB::table('medicines')->where('alias', $model->alias)->update(['classification_id' => $input['classification_id']]);
+            });
+        }
+        array_forget($input, 'classification_id');
+
+        if ($model->pharmagroup_name_id != $input['pharmagroup_name_id']) {
+            DB::transaction(function () use ($input, $model) {
+                DB::table('umedicines')->where('alias', $model->alias)->update(['pharmagroup_id' => $input['pharmagroup_name_id']]);
+                DB::table('medicines')->where('alias', $model->alias)->update(['pharmagroup_id' => $input['pharmagroup_name_id']]);
+            });
+        }
+        array_forget($input, 'pharmagroup_name_id');
+
+        if ($model->fabricator_name_id != $input['fabricator_name_id']) {
+            DB::transaction(function () use ($input, $model) {
+                DB::table('umedicines')->where('alias', $model->alias)->update(['fabricator_id' => $input['fabricator_name_id']]);
+                DB::table('medicines')->where('alias', $model->alias)->update(['fabricator_id' => $input['fabricator_name_id']]);
+            });
+        }
+        array_forget($input, 'fabricator_name_id');
+
+        if ($model->innname_id != $input['innname_id']) {
+            DB::transaction(function () use ($input, $model) {
+                DB::table('umedicines')->where('alias', $model->alias)->update(['innname_id' => $input['innname_id']]);
+                DB::table('medicines')->where('alias', $model->alias)->update(['innname_id' => $input['innname_id']]);
+            });
+        }
+        array_forget($input, 'innname_id');
+
+        if ($model->form_id != $input['form_id']) {
+            DB::transaction(function () use ($input, $model) {
+                DB::table('umedicines')->where('alias', $model->alias)->update(['form_id' => $input['form_id']]);
+                DB::table('medicines')->where('alias', $model->alias)->update(['form_id' => $input['form_id']]);
+            });
+        }
+        array_forget($input, 'form_id');
+
+        if ($model->backcolor != $input['backcolor']) {
+            DB::transaction(function () use ($input, $model) {
+                DB::table('umedicines')->where('alias', $model->alias)->update(['backcolor' => $input['backcolor']]);
+                DB::table('medicines')->where('alias', $model->alias)->update(['backcolor' => $input['backcolor']]);
+            });
+        }
+        array_forget($input, 'backcolor');
 
         if ($model->alias != $input['alias']) {
             $newalias = $input['alias'];
@@ -68,7 +142,7 @@ class MedicineRepository extends Repository
             });
             $model = $this->one($newalias);
         }
-
+        array_forget($input, 'alias');
 
         $approved = !empty($input['approved']) ? 1 : 0;
 
@@ -77,10 +151,9 @@ class MedicineRepository extends Repository
                 DB::table('umedicines')->where('alias', $model->alias)->update(['approved' => $approved]);
                 DB::table('medicines')->where('alias', $model->alias)->update(['approved' => $approved]);
             });
-            array_forget($input, 'approved');
         }
-
-//        dd($model);
+        array_forget($input, 'approved');
+        //General=====================================>
 
         $updated = $model->fill($input)->save();
 //        dd($input);
@@ -202,6 +275,82 @@ class MedicineRepository extends Repository
         }
         $result['medicines'] = $medicines;
         $result['forms'] = $forms;
+        return $result;
+    }
+
+    public function getCustom($request)
+    {
+        $result = null;
+        switch ($request->source) {
+            case 'innname':
+                $result = $this->inname->select(['id', 'title', 'name'])
+                    ->where('title', 'like', $request->value . '%')
+                    ->orWhere('name', 'like', $request->value . '%')->get();
+                if (null != $result && $result->isNotEmpty()) {
+                    foreach ($result as $item) {
+                        $res[$item->id] = $item->title . '(' . $item->name . ')';
+                    }
+                    $result = $res;
+                }
+                break;
+            case 'form':
+                $result = $this->form->select(['id', 'name'])
+                    ->where('name', 'like', $request->value . '%')->orderBy('name')->get();
+                if (null != $result && $result->isNotEmpty()) {
+                    foreach ($result as $item) {
+                        $res[$item->id] = $item->name;
+                    }
+                    $result = $res;
+                }
+                break;
+            case 'classification':
+                $result = $this->classification->select(['id', 'class'])
+                    ->where('class', $request->value)->first();
+
+                if (null != $result) {
+
+                    $result->load('getChildren');
+                    if ($result->getChildren->isNotEmpty()) {
+                        foreach ($result->getChildren as $item) {
+                            $res[$item->id] = $item->class;
+                        }
+                    }
+                    $res[$result->id] = $result->class;
+                    $result = $res;
+                }
+                break;
+            case 'pharmagroup_name':
+                $result = $this->pharmagroup->select(['id', 'title'])
+                    ->where('title', 'like', $request->value . '%')->orderBy('title')->get();
+                if (null != $result && $result->isNotEmpty()) {
+                    foreach ($result as $item) {
+                        $res[$item->id] = $item->title;
+                    }
+                    $result = $res;
+                }
+                break;
+            case 'fabricator_name':
+                $result = $this->fabricator->select(['id', 'title'])
+                    ->where('title', 'like', '%' . $request->value . '%')->orderBy('title')->get();
+                if (null != $result && $result->isNotEmpty()) {
+                    foreach ($result as $item) {
+                        $res[$item->id] = $item->title;
+                    }
+                    $result = $res;
+                }
+                break;
+            default:
+                $result = $this->substance->select(['id', 'title'])
+                    ->where('title', 'like', '%' . $request->value . '%')->orderBy('title')->get();
+                if (null != $result && $result->isNotEmpty()) {
+                    foreach ($result as $item) {
+                        $res[$item->id] = $item->title;
+                    }
+                    $result = $res;
+                }
+                break;
+        }
+
         return $result;
     }
 }

@@ -128,6 +128,9 @@ class MedicineController extends AdminController
         $this->template = 'admin.admin';
         $this->tiny = true;
 
+        $this->jss .= '<script src="' . asset('/js/auto-complete.min.js') . '"></script>';
+        $this->css = '<link href="' . asset('css/auto-complete.css') . '" rel="stylesheet">';
+
         $drug = $this->{$spec . '_rep'}->one($medicine);
         if (empty($drug)) {
             abort(404);
@@ -140,6 +143,7 @@ class MedicineController extends AdminController
         $drug->load('form');
         $drug->load('innname');
         $drug->load('pharmagroup');
+        $drug->load('substance');
 //dd($drug);
 
         $this->content = view('admin.medicine.edit')->with(['drug' => $drug, 'spec' => $spec])->render();
@@ -182,6 +186,7 @@ class MedicineController extends AdminController
         if (Gate::denies('UPDATE_MEDICINE')) {
             abort(404);
         }
+
         $validator = Validator::make($request->all(), [
             'slider_id' => 'integer|required',
         ]);
@@ -209,20 +214,20 @@ class MedicineController extends AdminController
         return \Response::json($result);
     }
 
-    public function getCustom(Request $request)
+    public function customs(Request $request)
     {
         if (Gate::denies('UPDATE_MEDICINE')) {
             abort(404);
         }
 
         $request->validate([
-            'value' => ['string', 'between:1,255', 'regex:#^[a-zA-zа-яА-ЯёЁїі0-9\-\s\,\.]+$#u'],
+            'value' => ['string', 'between:1,255', 'regex:#^[a-zA-zа-яА-ЯёЁїіІЇ0-9\-\s\,\.]+$#u'],
             'source' => 'required',
         ]);
 
-        $result = 'success';
+        $result = $this->ru_rep->getCustom($request);
 
-        return \Response::json(['success' => $result]);
+        return $result;
 
     }
 }

@@ -41,7 +41,8 @@ class Umedicine extends Model
         'dose',
         'additionally',
         'reg',
-        'form_id'
+        'form_id',
+        'backcolor',
     ];
 
     /**

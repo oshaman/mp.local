@@ -16,7 +16,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <!-- TinyMCE -->
+@yield('css')
+<!-- TinyMCE -->
 @yield('tiny')
 <!-- TinyMCE -->
 </head>
@@ -92,7 +93,7 @@
 
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
-<script src="{{ asset('js/admin.js') }}"></script>
 @yield('jss')
+<script src="{{ asset('js/admin.js') }}"></script>
 </body>
 </html>

@@ -15,6 +15,7 @@ class AdminController extends Controller
     protected $title;
     protected $vars;
     protected $jss = null;
+    protected $css = null;
     protected $tiny = false;
 
     /**
@@ -25,6 +26,7 @@ class AdminController extends Controller
         $this->vars = array_add($this->vars, 'title', $this->title);
         $this->vars = array_add($this->vars, 'jss', $this->jss);
         $this->vars = array_add($this->vars, 'tiny', $this->tiny);
+        $this->vars = array_add($this->vars, 'css', $this->css);
 
         $menu = $this->getMenu();
         $navigation = view('admin.navigation')->with('menu', $menu)->render();

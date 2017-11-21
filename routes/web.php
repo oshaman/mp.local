@@ -64,7 +64,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         //  show articles list
         Route::get('/', ['uses' => 'Admin\ArticlesController@index', 'as' => 'articles_admin']);
         Route::match(['get', 'post'], 'create', ['uses' => 'Admin\ArticlesController@create', 'as' => 'create_article']);
-        Route::match(['get', 'post'], 'edit/{article}', ['uses' => 'Admin\ArticlesController@edit', 'as' => 'edit_article'])->where('article', '[0-9]+');
+        Route::match(['get', 'post'], 'edit/{spec}/{article}', ['uses' => 'Admin\ArticlesController@edit', 'as' => 'edit_article'])
+            ->where(['article' => '[0-9]+', 'spec' => 'ru|ua']);
         Route::get('del/{article}', ['uses' => 'Admin\ArticlesController@del', 'as' => 'delete_article'])->where('article', '[0-9]+');
 
     });
@@ -89,6 +90,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::post('slider', 'Admin\MedicineController@slider')->name('delete_slider');
         Route::match(['get', 'post'], 'faq/{spec}/{medicine}', 'Admin\MedicineController@faq')
             ->name('faq')->where(['medicine' => '[\w-]+', 'spec' => 'ru|ua']);
+
+        Route::post('customs', 'Admin\MedicineController@customs');
+        Route::post('save-custom', 'Admin\MedicineController@saveCustom')->name('get_custom');
 
     });
     /**

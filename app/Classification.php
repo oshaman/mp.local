@@ -31,4 +31,9 @@ class Classification extends Model
     {
         return $this->belongsTo('Fresh\Medpravda\Classification', 'parent');
     }
+
+    public function getChildren()
+    {
+        return $this->hasMany('Fresh\Medpravda\Classification', 'parent', 'id');
+    }
 }

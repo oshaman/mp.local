@@ -13,10 +13,10 @@
     </div>
 </div>
 <div class="">
-    {{ Form::label('cats', 'Категория') }}
+    {{ Form::label('category_id', 'Категория') }}
     <div>
-        {!! Form::select('cats', $cats ?? [],
-            old('cats') ? : '' , [ 'class'=>'form-control', 'placeholder'=>'Категория'])
+        {!! Form::select('category_id', $cats ?? [],
+            old('category_id') ? : '' , [ 'class'=>'form-control', 'placeholder'=>'Категория'])
         !!}
     </div>
 </div>

@@ -51,7 +51,7 @@
     </div>
     <div id="general" class="panel-collapse collapse ">
         <hr>
-        <div class="panel panel-info">
+        <div class="panel panel-info alert alert-info">
             <div class="panel-heading">Общее</div>
             <div class="panel-body">
                 {{ Form::label('alias', 'Псевдоним страницы') }}
@@ -62,22 +62,35 @@
             </div>
             <hr>
             <div class="panel-body">
-                <label>
-                    <input type="checkbox" {{ (old('approved') || !empty($drug->approved)) ? 'checked' : '' }} value="1"
-                           name="approved"> Опубликовать</label>
+                <div class="col-lg-6">
+                    {{ Form::label('backcolor', 'Фон страницы') }}
+                    <div>
+                        #{!! Form::text('backcolor', old('backcolor') ? : ($drug->backcolor ?? '') ,
+                         ['placeholder'=>'FFF000', 'id'=>'backcolor', 'class'=>'form-control']) !!}
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <label>
+                        <input type="checkbox"
+                               {{ (old('approved') || !empty($drug->approved)) ? 'checked' : '' }} value="1"
+                               name="approved"> Опубликовать</label>
+                </div>
             </div>
+            <hr>
             <div class="panel-body">
                 <div class="col-lg-6">
                     {{ Form::label('form', 'Форма выпуска   ') }}
                     {!! Form::text('form', old('form') ? : ($drug->form->name ?? '') ,
-                     ['placeholder'=>'ATX', 'id'=>'form', 'class'=>'form-control', 'data-id'=>$drug->form->id]) !!}
-                    {!! Form::hidden('form_id', old('form_id') ? : $drug->form->id) !!}
+                     ['placeholder'=>'ATX', 'id'=>'form', 'class'=>'form-control autocomplete',
+                       'autocomplete'=>'off', 'data-id'=>$drug->form->id]) !!}
+                    {!! Form::hidden('form_id', old('form_id') ? : $drug->form->id, ['id'=>'form_id']) !!}
                 </div>
                 <div class="col-lg-6">
                     {{ Form::label('innname', 'Международное название') }}
                     {!! Form::text('innname', old('innname') ? : ($drug->innname->title ?? '') ,
-                     ['placeholder'=>'...', 'id'=>'innname', 'class'=>'form-control', 'data-id'=>$drug->innname->id]) !!}
-                    {!! Form::hidden('innname_id', old('innname_id') ? : $drug->innname->id) !!}
+                     ['placeholder'=>'...', 'id'=>'innname', 'autocomplete'=>'off',
+                        'class'=>'form-control autocomplete', 'data-id'=>$drug->innname->id]) !!}
+                    {!! Form::hidden('innname_id', old('innname_id') ? : $drug->innname->id, ['id'=>'innname_id']) !!}
                 </div>
             </div>
             <hr>
@@ -85,14 +98,16 @@
                 <div class="col-lg-6">
                     {{ Form::label('classification', 'Классификация') }}
                     {!! Form::text('classification', old('classification') ? : ($drug->classification->class ?? '') ,
-                     ['placeholder'=>'ATX', 'id'=>'classification', 'class'=>'form-control', 'data-id'=>$drug->classification->class]) !!}
-                    {!! Form::hidden('classification_id', old('classification_id') ? : $drug->classification->id) !!}
+                     ['placeholder'=>'ATX', 'id'=>'classification', 'class'=>'form-control autocomplete',
+                       'autocomplete'=>'off', 'data-id'=>$drug->classification->class]) !!}
+                    {!! Form::hidden('classification_id', old('classification_id') ? : $drug->classification->id, ['id'=>'classification_id']) !!}
                 </div>
                 <div class="col-lg-6">
                     {{ Form::label('pharmagroup_name', 'Фарм. группа') }}
                     {!! Form::text('pharmagroup_name', old('pharmagroup_name') ? : ($drug->pharmagroup->title ?? '') ,
-                     ['placeholder'=>'Фарм. группа', 'id'=>'pharmagroup_name', 'class'=>'form-control', 'data-id'=>$drug->pharmagroup->title]) !!}
-                    {!! Form::hidden('pharmagroup_id', old('pharmagroup_id') ? : $drug->pharmagroup->id) !!}
+                     ['placeholder'=>'Фарм. группа', 'id'=>'pharmagroup_name', 'class'=>'form-control autocomplete',
+                       'autocomplete'=>'off','data-id'=>$drug->pharmagroup->title]) !!}
+                    {!! Form::hidden('pharmagroup_name_id', old('pharmagroup_name_id') ? : $drug->pharmagroup->id, ['id'=>'pharmagroup_name_id']) !!}
                 </div>
             </div>
             <hr>
@@ -100,8 +115,29 @@
                 <div>
                     {{ Form::label('fabricator_name', 'Производитель') }}
                     {!! Form::text('fabricator_name', old('fabricator_name') ? : ($drug->fabricator_name->title ?? '') ,
-                     ['placeholder'=>'...', 'id'=>'fabricator_name', 'class'=>'form-control', 'data-id'=>$drug->fabricator_name->id]) !!}
-                    {!! Form::hidden('fabricator_id', old('fabricator_id') ? : $drug->fabricator_name->id) !!}
+                     ['placeholder'=>'...', 'id'=>'fabricator_name', 'class'=>'form-control autocomplete',
+                       'autocomplete'=>'off', 'data-id'=>$drug->fabricator_name->id]) !!}
+                    {!! Form::hidden('fabricator_name_id', old('fabricator_name_id') ? : $drug->fabricator_name->id, ['id'=>'fabricator_name_id']) !!}
+                </div>
+            </div>
+            <hr>
+            <div class="panel-body">
+                <div class="block-to-add-substance">
+                    {{ Form::label('substance', 'Действующее вещество') }}
+                    @if(is_object($drug->substance) && $drug->substance->isNotEmpty())
+                        @foreach($drug->substance as $substance)
+                            <div>
+                                {!! Form::text('substance[]', old('substance') ? : ($substance->title ?? '') ,
+                             ['placeholder'=>'...', 'id'=>'substance', 'class'=>'form-control autocomplete',
+                               'autocomplete'=>'off', 'data-id'=>$substance->id]) !!}
+                                {!! Form::hidden('substance_id[]', old('substance_id') ? : $substance->id, ['id'=>'substance_id']) !!}
+                                <span class="remove-this"><button type="button" class="btn btn-danger">-</button></span>
+                            </div>
+                        @endforeach
+                    @endif
+                </div>
+                <div class="add-new-substance">
+                    <button type="button" class="btn btn-primary">+</button>
                 </div>
             </div>
         </div>
@@ -211,4 +247,12 @@
         </div>
     </div>
     <hr>
+</div>
+<div class="shablon-substance" style="display:none">
+    <div>
+        {!! Form::text('substance[]', null, ['placeholder'=>'...', 'class'=>'form-control autocomplete',
+              'autocomplete'=>'off']) !!}
+        {!! Form::hidden('substance_id[]') !!}
+        <span class="remove-this"><button type="button" class="btn btn-danger">-</button></span>
+    </div>
 </div>

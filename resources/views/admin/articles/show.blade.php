@@ -55,13 +55,18 @@
                     <td>{{ $article->title }}</td>
                     <td>{{ $article->created_at }}</td>
                     <td>
-                        {!! Form::open(['url' => route('edit_article',['article'=> $article->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
-                        {!! Form::button(trans('admin.edit_btn'), ['class' => 'btn btn-warning','type'=>'submit']) !!}
+                        {!! Form::open(['url' => route('edit_article',['spec' => 'ru','article'=> $article->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
+                        {!! Form::button('Редактировать', ['class' => 'btn btn-warning','type'=>'submit']) !!}
+                        {!! Form::close() !!}
+                    </td>
+                    <td>
+                        {!! Form::open(['url' => route('edit_article',['spec' => 'ua','article'=> $article->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
+                        {!! Form::button('Редактировать UA', ['class' => 'btn btn-warning','type'=>'submit']) !!}
                         {!! Form::close() !!}
                     </td>
                     <td>
                         {!! Form::open(['url' => route('delete_article',['article'=> $article->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
-                        {!! Form::button(trans('admin.delete'), ['class' => 'btn btn-danger','type'=>'submit']) !!}
+                        {!! Form::button('Удалить', ['class' => 'btn btn-danger','type'=>'submit']) !!}
                         {!! Form::close() !!}
                     </td>
                 </tr>

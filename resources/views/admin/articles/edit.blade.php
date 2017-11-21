@@ -1,5 +1,6 @@
 <h2>Редактирование статьи</h2>
-{!! Form::open(['url'=>route('edit_article', $article->id), 'method'=>'POST', 'class'=>'form-horizontal', 'files'=>true]) !!}
+{!! Form::open(['url'=>route('edit_article', ['spec' => $spec , 'article' => $article->id]),
+    'method'=>'POST', 'class'=>'form-horizontal', 'files'=>true]) !!}
 {{ csrf_field() }}
 <div class="">
     {{ Form::label('title', 'Заголовок страницы') }}
@@ -14,35 +15,29 @@
     </div>
 </div>
 <div class="">
-    {{ Form::label('own', 'Принадлежность') }}
-    <div>
-        {!! Form::select('own', [0=>'Раздел пациентов', 1=>'Раздел докторов'],
-            old('own') ? : (($article->own !== 'docs') ? 0 : 1) , [ 'class'=>'form-control', 'placeholder'=>'Доктор\Пациент'])
-        !!}
-    </div>
-</div>
-<div class="">
     {{ Form::label('cats', 'Категория') }}
     <div>
         {!! Form::select('cats', $cats ?? [],
-            old('cats') ? : ($tmp->category ?? ($article->category_id ?? '')) , [ 'class'=>'form-control', 'placeholder'=>'Категория'])
+            old('cats') ? : ($article->category_id ?? '') , [ 'class'=>'form-control', 'placeholder'=>'Категория'])
         !!}
     </div>
 </div>
 <div class="">
     {{ Form::label('img', 'Основное изображение') }}
-    @if(!empty($img))
+    @if(!empty($article->image))
         <div>
-            {{ Html::image(asset('/images/article/main').'/'.$img->path, 'a picture', array('class' => 'thumb')) }}
+            {{ Html::image(asset('/asset/images/articles/'.$spec.'/main').'/'.$article->image->path, 'a picture', array('class' => 'thumb')) }}
         </div>
     @endif
     {{ Form::label('img', 'Параметры картинки') }}
     <div class="">
         <div class="col-lg-6">
-            {!! Form::text('imgalt', old('imgalt') ? : ($img->alt ?? '') , ['placeholder'=>'Alt', 'id'=>'imgalt', 'class'=>'form-control']) !!}
+            {!! Form::text('imgalt', old('imgalt') ? : ($article->image->alt ?? ''),
+                ['placeholder'=>'Alt', 'id'=>'imgalt', 'class'=>'form-control']) !!}
         </div>
         <div class="col-lg-6">
-            {!! Form::text('imgtitle', old('imgtitle') ? : ($img->title ?? '') , ['placeholder'=>'Title', 'id'=>'imgtitle', 'class'=>'form-control']) !!}
+            {!! Form::text('imgtitle', old('imgtitle') ? : ($article->image->title ?? ''),
+                ['placeholder'=>'Title', 'id'=>'imgtitle', 'class'=>'form-control']) !!}
         </div>
     </div>
     <div>
@@ -132,60 +127,28 @@
 </div>
 <!-- SEO -->
 
-<div class="">
+<div class="row">
     <div class="input-prepend col-lg-6"><span class="add-on"><i class="icon-time"></i></span>
-        <h4>{!! Form::label('outputtime', trans('admin.add_outputtime')) !!}</h4>
+        <h4>{!! Form::label('outputtime', 'Дата публикации') !!}</h4>
         <input type="text" name="outputtime" id="outputtime"
                value="{{ old('outputtime') ? : (date('Y-m-d H:i', strtotime($article->created_at)) ?? date('Y-m-d H:i')) }}">
     </div>
-    <div class="col-lg-6">
+    {{--<div class="col-lg-6">
         <h4>{!! Form::label('view', 'Кол-во просмотров') !!}</h4>
         <div class="input-prepend col-lg-6">
             <input type="text" name="view" id="view"
                    value="{{ old('view') ? : $article->view }}">
         </div>
-    </div>
+    </div>--}}
 </div>
 <div class="">
-    <div class="col-lg-6">
-        <label>
-            <input type="checkbox" {{ (old('confirmed') || !empty($article->approved)) ? 'checked' : '' }} value="1"
-                   name="confirmed"> В тираж</label>
-    </div>
-    <div class="col-lg-6">
-        <label>
-            <input type="checkbox" {{ (old('addnews') || !empty($article->news)) ? 'checked' : '' }} value="1"
-                   name="addnews"> В новости</label>
-    </div>
+    <label>
+        <input type="checkbox" {{ (old('confirmed') || !empty($article->approved)) ? 'checked' : '' }} value="1"
+               name="confirmed"> В тираж</label>
 </div>
-<div class="">
+<hr>
+<div class="row">
     <textarea name="content" class="form-control editor">{!! old('content') ? : ($article->content ?? '') !!}</textarea>
-    <hr>
-    @if(!empty($establishments))
-        <div class="panel-heading">
-            <h4>
-                <a data-toggle="collapse" href="#mentions" class="btn btn-info btn-block">Прикрепить
-                    рекламодателей: </a>
-            </h4>
-        </div>
-        <div id="mentions" class="panel-collapse collapse">
-            @foreach($establishments as $id=>$establishment)
-                <p>
-                    <input name="mentions[]" type="checkbox"
-                           @if(!empty(old('mentions')))
-                           @foreach(old('mentions') as $val)
-                           @if($val == $id)
-                           checked
-                           @endif
-                           @endforeach
-                           @elseif($article->hasEstablishment($establishment->id))
-                           checked
-                           @endif
-                           value="{{ $establishment->id }}"> {{ $establishment->title }}
-                </p>
-            @endforeach
-        </div>
-    @endif
     <hr>
     {!! Form::button('Сохранить', ['class' => 'btn btn-large btn-primary','type'=>'submit']) !!}
 </div>
