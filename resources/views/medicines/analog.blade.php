@@ -33,9 +33,10 @@
         <div class="product-nav">
             <a href="{{ route('medicine', ['medicine'=>$medicine->alias, 'loc'=>'ru']) }}" class="nav-button-grey">Официальная
                 инструкция</a>
-            <a href="product-adaptive-instruction.html!" class="nav-button-grey">Адаптированная инструкция</a>
+            <a href="{{ route('medicine_adaptive', ['medicine'=>$medicine->alias, 'loc'=>'ru']) }}"
+               class="nav-button-grey">Адаптированная инструкция</a>
             <a class="nav-button-grey active">Аналоги</a>
-            <a href="product-question.html!" class="nav-button-grey">Вопросы</a>
+            <a href="{{ route('medicine_faq', ['medicine'=>$medicine->alias, 'loc'=>'ru']) }}" class="nav-button-grey">Вопросы</a>
         </div>
         <div class="minzdrav">
             Перед применением проконсультируйтесь со своим лечащим врачом!

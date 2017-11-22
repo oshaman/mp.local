@@ -11,11 +11,11 @@
                 @break
 
                 @case('aua')
-                {{ Html::image(asset('/asset/images/medicine/main_ukr').'/'.$pic->path, 'a picture', array('class' => 'img-thumbnail')) }}
+                {{ Html::image(asset('/asset/images/medicine/main_aukr').'/'.$pic->path, 'a picture', array('class' => 'img-thumbnail')) }}
                 @break
 
                 @case('aru')
-                {{ Html::image(asset('/asset/images/medicine/main_ukr').'/'.$pic->path, 'a picture', array('class' => 'img-thumbnail')) }}
+                {{ Html::image(asset('/asset/images/medicine/main_a').'/'.$pic->path, 'a picture', array('class' => 'img-thumbnail')) }}
                 @break
 
                 @default

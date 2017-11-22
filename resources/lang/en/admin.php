@@ -9,6 +9,10 @@ return [
     'title' => 'Название',
     'imgalt' => 'Alt картинки',
     'imgtitle' => 'Title картинки',
+//    Препарат faq
+    'question' => 'Вопрос',
+    'answer' => 'Ответ',
+//    Препарат контент
     'consist' => 'Состав',
     'docs_form' => 'Лекарственная форма',
     'physicochemical_char' => 'Физико-химические характеристики',

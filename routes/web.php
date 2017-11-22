@@ -21,8 +21,8 @@ Route::get('preparat/{loc}/{medicine}/{act?}', 'MedicineController@medicine')
     ->name('medicine')
     ->where(['medicine' => '[\w-]+', 'loc' => 'ru|ua', 'act' => 'analogi|adaptinaya-instrukcija|chastye-voprosy']);
 Route::get('preparat/{loc}/{medicine}/analog', 'MedicineController@analog')->name('medicine_analog')->where(['medicine' => '[\w-]+', 'loc' => 'ru|ua']);
-//Route::get('preparat/{loc}/{medicine}/adaptive', 'MainController@adaptive')->name('medicine_adaptive')->where(['medicine' => '[\w-]+', 'loc' => 'ru|ua']);
-//Route::get('preparat/{loc}/{medicine}/faq', 'MainController@faqMed')->name('medicine_faq')->where(['medicine' => '[\w-]+', 'loc' => 'ru|ua']);
+Route::get('preparat/{loc}/{medicine}/adaptive', 'MedicineController@adaptive')->name('medicine_adaptive')->where(['medicine' => '[\w-]+', 'loc' => 'ru|ua']);
+Route::get('preparat/{loc}/{medicine}/faq', 'MedicineController@faq')->name('medicine_faq')->where(['medicine' => '[\w-]+', 'loc' => 'ru|ua']);
 
 /**
  * SEARCH
@@ -95,6 +95,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::post('save-custom', 'Admin\MedicineController@saveCustom')->name('get_custom');
 
     });
+    Route::match(['post', 'get'], 'blocks', 'Admin\BlocksController@updateBlocks')->name('blocks');
     /**
      * MedicinesCats
      */

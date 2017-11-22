@@ -68,7 +68,7 @@ class MedicineRepository extends Repository
 
         $input = $request->except('_token', 'slider');
 
-        dd($input);
+//        dd($input);
         // SEO handle
         if (!empty($input['seo_title'] || !empty($input['seo_keywords']) || !empty($input['seo_description']) || !empty($input['seo_text'])
             || !empty($input['og_image']) || !empty($input['og_title']) || !empty($input['og_description']))) {
@@ -89,6 +89,8 @@ class MedicineRepository extends Repository
             DB::transaction(function () use ($input, $model) {
                 DB::table('umedicines')->where('alias', $model->alias)->update(['classification_id' => $input['classification_id']]);
                 DB::table('medicines')->where('alias', $model->alias)->update(['classification_id' => $input['classification_id']]);
+                DB::table('amedicines')->where('alias', $model->alias)->update(['classification_id' => $input['classification_id']]);
+                DB::table('uamedicines')->where('alias', $model->alias)->update(['classification_id' => $input['classification_id']]);
             });
         }
         array_forget($input, 'classification_id');
@@ -97,6 +99,8 @@ class MedicineRepository extends Repository
             DB::transaction(function () use ($input, $model) {
                 DB::table('umedicines')->where('alias', $model->alias)->update(['pharmagroup_id' => $input['pharmagroup_name_id']]);
                 DB::table('medicines')->where('alias', $model->alias)->update(['pharmagroup_id' => $input['pharmagroup_name_id']]);
+                DB::table('amedicines')->where('alias', $model->alias)->update(['pharmagroup_id' => $input['pharmagroup_name_id']]);
+                DB::table('uamedicines')->where('alias', $model->alias)->update(['pharmagroup_id' => $input['pharmagroup_name_id']]);
             });
         }
         array_forget($input, 'pharmagroup_name_id');
@@ -105,6 +109,8 @@ class MedicineRepository extends Repository
             DB::transaction(function () use ($input, $model) {
                 DB::table('umedicines')->where('alias', $model->alias)->update(['fabricator_id' => $input['fabricator_name_id']]);
                 DB::table('medicines')->where('alias', $model->alias)->update(['fabricator_id' => $input['fabricator_name_id']]);
+                DB::table('amedicines')->where('alias', $model->alias)->update(['fabricator_id' => $input['fabricator_name_id']]);
+                DB::table('uamedicines')->where('alias', $model->alias)->update(['fabricator_id' => $input['fabricator_name_id']]);
             });
         }
         array_forget($input, 'fabricator_name_id');
@@ -113,6 +119,8 @@ class MedicineRepository extends Repository
             DB::transaction(function () use ($input, $model) {
                 DB::table('umedicines')->where('alias', $model->alias)->update(['innname_id' => $input['innname_id']]);
                 DB::table('medicines')->where('alias', $model->alias)->update(['innname_id' => $input['innname_id']]);
+                DB::table('amedicines')->where('alias', $model->alias)->update(['innname_id' => $input['innname_id']]);
+                DB::table('uamedicines')->where('alias', $model->alias)->update(['innname_id' => $input['innname_id']]);
             });
         }
         array_forget($input, 'innname_id');
@@ -121,6 +129,8 @@ class MedicineRepository extends Repository
             DB::transaction(function () use ($input, $model) {
                 DB::table('umedicines')->where('alias', $model->alias)->update(['form_id' => $input['form_id']]);
                 DB::table('medicines')->where('alias', $model->alias)->update(['form_id' => $input['form_id']]);
+                DB::table('amedicines')->where('alias', $model->alias)->update(['form_id' => $input['form_id']]);
+                DB::table('uamedicines')->where('alias', $model->alias)->update(['form_id' => $input['form_id']]);
             });
         }
         array_forget($input, 'form_id');
@@ -129,6 +139,8 @@ class MedicineRepository extends Repository
             DB::transaction(function () use ($input, $model) {
                 DB::table('umedicines')->where('alias', $model->alias)->update(['backcolor' => $input['backcolor']]);
                 DB::table('medicines')->where('alias', $model->alias)->update(['backcolor' => $input['backcolor']]);
+                DB::table('amedicines')->where('alias', $model->alias)->update(['backcolor' => $input['backcolor']]);
+                DB::table('uamedicines')->where('alias', $model->alias)->update(['backcolor' => $input['backcolor']]);
             });
         }
         array_forget($input, 'backcolor');
@@ -150,6 +162,17 @@ class MedicineRepository extends Repository
             DB::transaction(function () use ($approved, $model) {
                 DB::table('umedicines')->where('alias', $model->alias)->update(['approved' => $approved]);
                 DB::table('medicines')->where('alias', $model->alias)->update(['approved' => $approved]);
+                DB::table('amedicines')->where('alias', $model->alias)->update(['approved' => $approved]);
+                DB::table('uamedicines')->where('alias', $model->alias)->update(['approved' => $approved]);
+            });
+        }
+        array_forget($input, 'approved');
+
+        if (count($input['substance_id']) > 0) {
+            DB::transaction(function () use ($input, $model) {
+                $model->substance()->sync($input['substance_id']);
+                $umodel = Umedicine::firstOrCreate(['alias' => $model->alias]);
+                $umodel->substance()->sync($input['substance_id']);
             });
         }
         array_forget($input, 'approved');

@@ -3,7 +3,10 @@
 namespace Fresh\Medpravda\Http\Controllers\Admin;
 
 use Fresh\Medpravda\Http\Requests\MedicineRequest;
+use Fresh\Medpravda\Repositories\AmedicineRepository;
 use Fresh\Medpravda\Repositories\MedicineRepository;
+use Fresh\Medpravda\Repositories\QuestionsRepository;
+use Fresh\Medpravda\Repositories\UamedicineRepository;
 use Fresh\Medpravda\Repositories\UmedicineRepository;
 use Gate;
 use Illuminate\Http\Request;
@@ -13,11 +16,23 @@ class MedicineController extends AdminController
 {
     protected $ru_rep;
     protected $ua_rep;
+    protected $aru_rep;
+    protected $aua_rep;
+    protected $faq_rep;
 
-    public function __construct(MedicineRepository $medicineRepository, UmedicineRepository $ua_rep)
+    public function __construct(
+        MedicineRepository $medicineRepository,
+        AmedicineRepository $amedicineRepository,
+        UmedicineRepository $ua_rep,
+        UamedicineRepository $aua_rep,
+        QuestionsRepository $questionsRepository
+    )
     {
         $this->ru_rep = $medicineRepository;
+        $this->aru_rep = $amedicineRepository;
         $this->ua_rep = $ua_rep;
+        $this->aua_rep = $aua_rep;
+        $this->faq_rep = $questionsRepository;
         $this->jss = '
                 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
                 <script src="' . asset('js/translate.js') . '"></script>
@@ -143,7 +158,10 @@ class MedicineController extends AdminController
         $drug->load('form');
         $drug->load('innname');
         $drug->load('pharmagroup');
-        $drug->load('substance');
+
+        if ('ru' == $spec) {
+            $drug->load('substance');
+        }
 //dd($drug);
 
         $this->content = view('admin.medicine.edit')->with(['drug' => $drug, 'spec' => $spec])->render();
@@ -157,11 +175,30 @@ class MedicineController extends AdminController
      * @param $medicine
      * @return mixed
      */
-    public function faq($spec, $medicine)
+    public function faq(Request $request, $spec, $medicine)
     {
         if (Gate::denies('UPDATE_MEDICINE')) {
             abort(404);
         }
+
+
+        if ($request->isMethod('post')) {
+            $request->validate([
+                'question' => 'required|array',
+                'answer' => 'required|array',
+                "question.*" => ['required', 'string', 'between:1,255', 'regex:#^[a-zA-zа-яА-ЯёЁїіІЇ0-9\-\s\,\.\?]+$#u'],
+                'answer.*' => 'required|string',
+            ], ['question.*' => 'Ошибка заполнения поля "Вопрос"', 'answer.*' => 'Ошибка заполнения поля "Ответ"']);
+
+            $result = $this->faq_rep->createQuestion($request, $spec, $medicine);
+
+            if (is_array($result) && !empty($result['error'])) {
+                return back()->withErrors($result);
+            }
+            return redirect()->back()->with($result);
+
+        }
+
         $this->title = 'Редактирование частых вопросов';
         $this->template = 'admin.admin';
         $this->tiny = true;
@@ -170,8 +207,8 @@ class MedicineController extends AdminController
         if (empty($drug)) {
             abort(404);
         }
-
-//        dd($drug);
+        $drug->load('questions');
+//        dd($drug->questions->isEmpty());
         $this->content = view('admin.medicine.faq')->with(['drug' => $drug, 'spec' => $spec])->render();
 
         return $this->renderOutput();

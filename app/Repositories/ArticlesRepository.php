@@ -15,7 +15,6 @@ use DB;
 class ArticlesRepository extends Repository
 {
     protected $uarticle;
-
     /**
      * ArticlesRepository constructor.
      * @param Article $rep

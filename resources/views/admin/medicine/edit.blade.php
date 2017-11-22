@@ -33,7 +33,9 @@
     </nav>
 @endif
 <h2>{{ $drug->title }}</h2>
-<a href="{{ route('faq', ['spec'=>$spec, 'medicine'=>$drug->alias]) }}" class="btn btn-success">FAQ</a>
+@if('ru' === $spec || 'ua' === $spec )
+    <a href="{{ route('faq', ['spec'=>$spec, 'medicine'=>$drug->alias]) }}" class="btn btn-success">FAQ</a>
+@endif
 <hr>
 {!! Form::open(['url'=>route('medicine_edit',['spec'=>$spec, 'medicine'=> $drug->alias]),
                     'method' => 'post', 'class' => 'form-horizontal', 'files'=>true]) !!}

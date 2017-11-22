@@ -113,4 +113,12 @@ class Umedicine extends Model
     {
         return $this->belongsTo('Fresh\Medpravda\Form');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function questions()
+    {
+        return $this->hasMany('Fresh\Medpravda\Uquestion', 'alias', 'alias');
+    }
 }

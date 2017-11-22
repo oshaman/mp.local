@@ -2,20 +2,20 @@
 
 namespace Fresh\Medpravda\Repositories;
 
-use Fresh\Medpravda\Umedicine;
-use Fresh\Medpravda\Uimage as Slider;
+use Fresh\Medpravda\Uamedicine;
+use Fresh\Medpravda\Uaimage as Slider;
 use Image;
 use Config;
 use Validator;
 use File;
 
-class UmedicineRepository extends Repository
+class UamedicineRepository extends Repository
 {
     /**
-     * UmedicineRepository constructor.
-     * @param Umedicine $medicine
+     * UamedicineRepository constructor.
+     * @param Uamedicine $medicine
      */
-    public function __construct(Umedicine $medicine)
+    public function __construct(Uamedicine $medicine)
     {
         $this->model = $medicine;
     }
@@ -111,7 +111,7 @@ class UmedicineRepository extends Repository
             $img->resize($width, $height, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
-            })->save(public_path() . '/asset/images/medicine/main_ukr/' . $path, 100);
+            })->save(public_path() . '/asset/images/medicine/main_aukr/' . $path, 100);
             return $path;
         } else {
             return false;
@@ -147,8 +147,8 @@ class UmedicineRepository extends Repository
      */
     public function deleteOldImages($name, $path = false)
     {
-        if (File::exists(public_path('/asset/images/medicine/main_ukr/') . $name)) {
-            File::delete(public_path('/asset/images/medicine/main_ukr/') . $name);
+        if (File::exists(public_path('/asset/images/medicine/main_aukr/') . $name)) {
+            File::delete(public_path('/asset/images/medicine/main_aukr/') . $name);
         }
         return true;
     }

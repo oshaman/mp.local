@@ -17,17 +17,24 @@
                     </a>
                 </div>
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <span itemprop="name" class="label1">{{ $medicine->title }}</span>
-                    <meta itemprop="position" content="3"/>
+                    <a href="{{ route('medicine', ['loc'=>'ru', 'medicine'=>$medicine->alias]) }}" itemprop="item">
+                        <span itemprop="name" class="label1">{{ $medicine->title }}</span>
+                        <meta itemprop="position" content="3"/>
+                    </a>
+                </div>
+                <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
+                    <span itemprop="name" class="label1">Адаптированная инструкция</span>
+                    <meta itemprop="position" content="4"/>
                 </div>
             </div>
             {{--BreadCrumbs--}}
             <h1 class="head-title">{{ $medicine->title }} инструкция и цена в аптеках</h1>
             <div class="clone-to" data-number="3"></div>
             <div class="product-nav">
-                <a class="nav-button-grey active">Официальная инструкция</a>
-                <a href="{{ route('medicine_adaptive', ['medicine'=>$medicine->alias, 'loc'=>'ru']) }}"
-                   class="nav-button-grey">Адаптированная инструкция</a>
+                <a href="{{ route('medicine', ['loc'=>'ru', 'medicine'=>$medicine->alias]) }}" class="nav-button-grey">
+                    Официальная инструкция
+                </a>
+                <a class="nav-button-grey active">Адаптированная инструкция</a>
                 <a href="{{ route('medicine_analog', ['medicine'=>$medicine->alias, 'loc'=>'ru']) }}"
                    class="nav-button-grey">Аналоги</a>
                 <a href="{{ route('medicine_faq', ['medicine'=>$medicine->alias, 'loc'=>'ru']) }}"
@@ -206,7 +213,7 @@
                         <div class="product-slider-go">
                             @foreach($medicine->image as $image)
                                 <div>
-                                    <img src="{{ asset('asset/images/medicine/main/').'/'.$image->path }}"
+                                    <img src="{{ asset('asset/images/medicine/main_a/').'/'.$image->path }}"
                                          alt="{{ $image->alt ?? '' }}" title="{{ $image->title ?? '' }}">
                                 </div>
                             @endforeach
