@@ -96,6 +96,8 @@ class MedicineController extends AdminController
         }
 
         $this->title = 'Создание препарата';
+        $this->jss .= '<script src="' . asset('/js/auto-complete.min.js') . '"></script>';
+        $this->css = '<link href="' . asset('css/auto-complete.css') . '" rel="stylesheet">';
 
         $this->template = 'admin.admin';
         $this->tiny = true;

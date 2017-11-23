@@ -44,6 +44,16 @@ class TagsRequest extends FormRequest
             return !empty($input->tag);
         });
 
+        $validator->sometimes('utag', 'unique:tags,uname', function ($input) {
+            if ($this->route()->hasParameter('tag') && $this->isMethod('post')) {
+                $model = $this->route()->parameter('tag');
+                if (null === $model) return true;
+                return (($model->uname !== $input->utag) && !empty($input->utag));
+            }
+
+            return !empty($input->utag);
+        });
+
         return $validator;
     }
 
@@ -57,6 +67,7 @@ class TagsRequest extends FormRequest
         if ($this->isMethod('post')) {
             $rules = [
                 'tag' => ['required', 'between:3, 64', 'regex:#^[а-яА-ЯёЁ0-9\s-]+$#u'],
+                'utag' => ['required', 'between:3, 64', 'regex:#^[а-яА-ЯёЁіІїЇiI0-9\s-\']+$#u'],
             ];
             return $rules;
         }

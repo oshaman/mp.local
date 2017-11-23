@@ -24,6 +24,7 @@ class TagsRepository extends Repository
         $data = $request->except('_token');
 
         $tag['name'] = $data['tag'];
+        $tag['uname'] = $data['utag'];
 
         if (empty($data['alias'])) {
             $tag['alias'] = $this->transliterate($data['tag']);
@@ -51,6 +52,10 @@ class TagsRepository extends Repository
     {
         if ($tag->name != $request->tag) {
             $tag->name = $request->tag;
+        }
+
+        if ($tag->uname != $request->utag) {
+            $tag->uname = $request->utag;
         }
 
         if (empty($request->alias)) {

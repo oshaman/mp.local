@@ -136,10 +136,26 @@
 <!-- Поиск препаратов -->
 <section class="section-product-search">
     <div class="section-title-meta-icon">
-        <h3>Поиск препаратов</h3>
+        <h3>{{ $blocks[1]->title ?? '' }}</h3>
         <div class="section-meta-icon">
-            <a href="#!">Болеутоляющие</a>
-            <a href="#!">Популярные</a>
+            @if(!empty($blocks[1]->first))
+                {{ link_to_route('search', $blocks[1]->first, ['search' =>$blocks[1]->first], ['class'=>'btn-meta']) }}
+            @endif
+            @if(!empty($blocks[1]->second))
+                {{ link_to_route('search', $blocks[1]->second, ['search' =>$blocks[1]->second], ['class'=>'btn-meta']) }}
+            @endif
+            @if(!empty($blocks[1]->third))
+                {{ link_to_route('search', $blocks[1]->third, ['search' =>$blocks[1]->third], ['class'=>'btn-meta']) }}
+            @endif
+            @if(!empty($blocks[1]->fourth))
+                {{ link_to_route('search', $blocks[1]->fourth, ['search' =>$blocks[1]->fourth], ['class'=>'btn-meta']) }}
+            @endif
+            @if(!empty($blocks[1]->fifth))
+                {{ link_to_route('search', $blocks[1]->fifth, ['search' =>$blocks[1]->fifth], ['class'=>'btn-meta']) }}
+            @endif
+            @if(!empty($blocks[1]->sixth))
+                {{ link_to_route('search', $blocks[1]->sixth, ['search' =>$blocks[1]->sixth], ['class'=>'btn-meta']) }}
+            @endif
             <div class="section-icon">
                 <img src="{{ asset('assets') }}/images/title-icons/found.png" alt="иконка Также ищут">
             </div>
@@ -157,11 +173,26 @@
 <!-- ТОП СТАТЬИ -->
 <section>
     <div class="section-title-meta-icon">
-        <h3>Топ статьи</h3>
+        <h3>{{ $blocks[2]->title ?? '' }}</h3>
         <div class="section-meta-icon">
-            <a href="#!">Аллергия</a>
-            <a href="#!">Болеутоляющие</a>
-            <a href="#!">Простата</a>
+            @if(!empty($blocks[2]->first))
+                {{ link_to_route('search', $blocks[2]->first, ['search' =>$blocks[2]->first], ['class'=>'btn-meta']) }}
+            @endif
+            @if(!empty($blocks[2]->second))
+                {{ link_to_route('search', $blocks[2]->second, ['search' =>$blocks[2]->second], ['class'=>'btn-meta']) }}
+            @endif
+            @if(!empty($blocks[2]->third))
+                {{ link_to_route('search', $blocks[2]->third, ['search' =>$blocks[2]->third], ['class'=>'btn-meta']) }}
+            @endif
+            @if(!empty($blocks[2]->fourth))
+                {{ link_to_route('search', $blocks[2]->fourth, ['search' =>$blocks[2]->fourth], ['class'=>'btn-meta']) }}
+            @endif
+            @if(!empty($blocks[2]->fifth))
+                {{ link_to_route('search', $blocks[2]->fifth, ['search' =>$blocks[2]->fifth], ['class'=>'btn-meta']) }}
+            @endif
+            @if(!empty($blocks[2]->sixth))
+                {{ link_to_route('search', $blocks[2]->sixth, ['search' =>$blocks[2]->sixth], ['class'=>'btn-meta']) }}
+            @endif
             <div class="section-icon">
                 <img src="{{ asset('assets') }}/images/title-icons/main-icon-2.png" alt="иконка Топ статьи">
             </div>
@@ -373,11 +404,26 @@
     <div class="content last-commercial">
         <section class="section-last-arts">
             <div class="section-title-meta-icon">
-                <h3>Последние статьи</h3>
+                <h3>{{ $blocks[3]->title ?? '' }}</h3>
                 <div class="section-meta-icon">
-                    <a href="#!">Новости</a>
-                    <a href="#!">Препараты</a>
-                    <a href="#!">Минздрав</a>
+                    @if(!empty($blocks[3]->first))
+                        {{ link_to_route('search', $blocks[3]->first, ['search' =>$blocks[3]->first], ['class'=>'btn-meta']) }}
+                    @endif
+                    @if(!empty($blocks[3]->second))
+                        {{ link_to_route('search', $blocks[3]->second, ['search' =>$blocks[3]->second], ['class'=>'btn-meta']) }}
+                    @endif
+                    @if(!empty($blocks[3]->third))
+                        {{ link_to_route('search', $blocks[3]->third, ['search' =>$blocks[3]->third], ['class'=>'btn-meta']) }}
+                    @endif
+                    @if(!empty($blocks[3]->fourth))
+                        {{ link_to_route('search', $blocks[3]->fourth, ['search' =>$blocks[3]->fourth], ['class'=>'btn-meta']) }}
+                    @endif
+                    @if(!empty($blocks[3]->fifth))
+                        {{ link_to_route('search', $blocks[3]->fifth, ['search' =>$blocks[3]->fifth], ['class'=>'btn-meta']) }}
+                    @endif
+                    @if(!empty($blocks[3]->sixth))
+                        {{ link_to_route('search', $blocks[3]->sixth, ['search' =>$blocks[3]->sixth], ['class'=>'btn-meta']) }}
+                    @endif
                     <div class="section-icon">
                         <img src="{{ asset('assets') }}/images/title-icons/main-icon-3.png"
                              alt="иконка Последние статьи">
@@ -533,11 +579,26 @@
         </section>
         <section class="section-commercial-arts">
             <div class="section-title-meta-icon">
-                <h3>Коммерчиские статьи</h3>
+                <h3>{{ $blocks[4]->title ?? '' }}</h3>
                 <div class="section-meta-icon">
-                    <a href="#!">Новости</a>
-                    <a href="#!">Препараты</a>
-                    <a href="#!">Минздрав</a>
+                    @if(!empty($blocks[4]->first))
+                        {{ link_to_route('search', $blocks[4]->first, ['search' =>$blocks[4]->first], ['class'=>'btn-meta']) }}
+                    @endif
+                    @if(!empty($blocks[4]->second))
+                        {{ link_to_route('search', $blocks[4]->second, ['search' =>$blocks[4]->second], ['class'=>'btn-meta']) }}
+                    @endif
+                    @if(!empty($blocks[4]->third))
+                        {{ link_to_route('search', $blocks[4]->third, ['search' =>$blocks[4]->third], ['class'=>'btn-meta']) }}
+                    @endif
+                    @if(!empty($blocks[4]->fourth))
+                        {{ link_to_route('search', $blocks[4]->fourth, ['search' =>$blocks[4]->fourth], ['class'=>'btn-meta']) }}
+                    @endif
+                    @if(!empty($blocks[4]->fifth))
+                        {{ link_to_route('search', $blocks[4]->fifth, ['search' =>$blocks[4]->fifth], ['class'=>'btn-meta']) }}
+                    @endif
+                    @if(!empty($blocks[4]->sixth))
+                        {{ link_to_route('search', $blocks[4]->sixth, ['search' =>$blocks[4]->sixth], ['class'=>'btn-meta']) }}
+                    @endif
                     <div class="section-icon">
                         <img src="{{ asset('assets') }}/images/title-icons/main-icon-5.png"
                              alt="иконка Коммерчиские статьи">
@@ -981,11 +1042,26 @@
 <!-- Интересные СТАТЬИ -->
 <section>
     <div class="section-title-meta-icon">
-        <h3>Интересные статьи</h3>
+        <h3>{{ $blocks[5]->title ?? '' }}</h3>
         <div class="section-meta-icon">
-            <a href="#!">Аллергия</a>
-            <a href="#!">Беременность</a>
-            <a href="#!">Простата</a>
+            @if(!empty($blocks[5]->first))
+                {{ link_to_route('search', $blocks[5]->first, ['search' =>$blocks[5]->first], ['class'=>'btn-meta']) }}
+            @endif
+            @if(!empty($blocks[5]->second))
+                {{ link_to_route('search', $blocks[5]->second, ['search' =>$blocks[5]->second], ['class'=>'btn-meta']) }}
+            @endif
+            @if(!empty($blocks[5]->third))
+                {{ link_to_route('search', $blocks[5]->third, ['search' =>$blocks[5]->third], ['class'=>'btn-meta']) }}
+            @endif
+            @if(!empty($blocks[5]->fourth))
+                {{ link_to_route('search', $blocks[5]->fourth, ['search' =>$blocks[5]->fourth], ['class'=>'btn-meta']) }}
+            @endif
+            @if(!empty($blocks[5]->fifth))
+                {{ link_to_route('search', $blocks[5]->fifth, ['search' =>$blocks[5]->fifth], ['class'=>'btn-meta']) }}
+            @endif
+            @if(!empty($blocks[5]->sixth))
+                {{ link_to_route('search', $blocks[5]->sixth, ['search' =>$blocks[5]->sixth], ['class'=>'btn-meta']) }}
+            @endif
             <div class="section-icon">
                 <img src="{{ asset('assets') }}/images/title-icons/main-icon-2.png" alt="иконка Топ статьи">
             </div>

@@ -139,7 +139,7 @@ class SearchRepository
      */
     public function findAtxChildren($val)
     {
-        $atx = $this->atx->select('id', 'class', 'name')->where('class', $val)->first();
+        $atx = $this->atx->select('id', 'class', 'name', 'parent')->where('class', $val)->first();
 
         $result = null;
 
@@ -147,6 +147,7 @@ class SearchRepository
 
             $atx->load('children');
             $atx->load('medicines');
+            $atx->load('parents');
 
             if (!empty($atx->medicines)) {
                 foreach ($atx->medicines as $medicine) {

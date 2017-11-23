@@ -59,6 +59,7 @@
                             {{ link_to_route('search_substance', 'L', ['ru', null, 'substance' =>'L'], ['class'=>'nav-button-grey']) }}
                             {{ link_to_route('search_substance', 'P', ['ru', null, 'substance' =>'P'], ['class'=>'nav-button-grey']) }}
                             {{ link_to_route('search_substance', 'T', ['ru', null, 'substance' =>'T'], ['class'=>'nav-button-grey']) }}
+                            <hr>
                             {{ link_to_route('search_substance', 'А', ['ru', null, 'substance' =>'А'], ['class'=>'nav-button-grey']) }}
                             {{ link_to_route('search_substance', 'Б', ['ru', null, 'substance' =>'Б'], ['class'=>'nav-button-grey']) }}
                             {{ link_to_route('search_substance', 'В', ['ru', null, 'substance' =>'В'], ['class'=>'nav-button-grey']) }}

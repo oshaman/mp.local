@@ -26,13 +26,32 @@ class Article extends FormRequest
         $validator->sometimes('alias', ['required', 'max:255', 'regex:#^[\w-]#', 'unique:articles,alias'], function ($input) {
 //  bind article in RouteServiceProvider
 
-            if ($this->route()->hasParameter('article') && $this->isMethod('post')) {
-                $model = $this->route()->parameter('article');
-                if (null === $model) return true;
-                return ($model->alias !== $input->alias) && !empty($input->alias);
+            if (!$this->isMethod('post')) {
+                return false;
             }
 
-            return !empty($input->alias);
+            if ($this->route()->hasParameter('spec') && ('ru' !== $this->route()->parameter('spec'))) {
+                return false;
+            }
+
+            if ($this->route()->hasParameter('article')) {
+                $model = \Fresh\Medpravda\Article::where('id', $this->route()->parameter('article'))->first();
+                if (null === $model) return true;
+                return ($model->alias !== $input->alias);
+            }
+
+            return true;
+        });
+
+        $validator->sometimes('category_id', ['digits_between:1,4', 'nullable', 'required'], function ($input) {
+            if (!$this->isMethod('post')) {
+                return false;
+            }
+            if ($this->route()->hasParameter('spec') && ('ru' !== $this->route()->parameter('spec'))) {
+                return false;
+            }
+            return true;
+
         });
 
         $validator->sometimes('img', 'mimes:jpg,bmp,png,jpeg|max:5120', function ($input) {
@@ -55,9 +74,7 @@ class Article extends FormRequest
     {
         if ($this->isMethod('post')) {
             $rules = [
-                'alias' => 'required',
                 'title' => ['required', 'string', 'between:4,255'],
-                'category_id' => ['digits_between:1,4', 'nullable', 'required'],
 
                 'tags' => 'array',
                 'img' => 'mimes:jpg,bmp,png,jpeg|max:5120',
@@ -80,7 +97,7 @@ class Article extends FormRequest
 
             if ($this->request->has('tags')) {
                 foreach ($this->request->get('tags') as $key => $val) {
-                    $rules['tags.' . $key] = ['digits_between:1,10', 'nullable'];
+                    $rules['tags.' . $key] = ['digits_between:1,10', 'nullable', 'exists:tags,id'];
                 }
             }
             return $rules;

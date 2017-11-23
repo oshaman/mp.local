@@ -77,11 +77,13 @@ class ArticlesRepository extends Repository
         //        Content
         $article['content'] = $data['content'];
 
-//        dd($article);
         $new = $this->model->firstOrCreate($article);
         $uarticle['id'] = $new->id;
+        $uarticle['category_id'] = $new->category_id;
         $uarticle['alias'] = $new->alias;
-        $this->uarticle->firstOrCreate($uarticle);
+        $ua = $this->uarticle->updateOrCreate($uarticle);
+        $ua->save();
+        $ua->image()->create(['path' => str_random(10) . 'mp.jpg', 'alt' => 'Med Pravda', 'title' => 'Med Pravda']);
 
         $error = [];
         if (!empty($new)) {
@@ -98,10 +100,16 @@ class ArticlesRepository extends Repository
                 if (null == $img) {
                     $error[] = ['img' => 'Ошибка записи картинки'];
                 }
+            } else {
+                try {
+                    $new->image()->create(['path' => str_random(10) . 'mp.jpg', 'alt' => 'Med Pravda', 'title' => 'Med Pravda']);
+                } catch (Exception $e) {
+                    \Log::info('Ошибка обновления главного изображения статьи: ', $e->getMessage());
+                    $error[] = ['img' => 'Ошибка обновления главного изображения статьи'];
+                }
             }
             // Tags
             if (!empty($data['tags'])) {
-
                 try {
                     $new->tags()->attach($data['tags']);
                 } catch (Exception $e) {
@@ -124,23 +132,17 @@ class ArticlesRepository extends Repository
      */
     public function updateArticle($request, $article)
     {
-        dd($request->all());
+//        dd($request->all());
         $data = $request->except('_token', 'img');
+        $article = $this->model->where('id', $article)->first();
+        if (null == $article) return $error[] = ['error' => 'Ошибка получения данных'];
         $article->load('image');
 
         if ($data['title'] !== $article->title) {
             $new['title'] = $data['title'];
         }
         if ($data['alias'] !== $article->alias) {
-            $new['alias'] = $this->transliterate($data['alias']);
-            if ($this->one($new['alias'], FALSE)) {
-                $request->merge(array('alias' => $new['alias']));
-                $request->flash();
-
-                return ['error' => trans('admin.alias_in_use')];
-            }
-        } else {
-            $new['alias'] = $article->alias;
+            $new['alias'] = $data['alias'];
         }
 
         if ($data['category_id'] !== $article->category_id) {
@@ -197,6 +199,12 @@ class ArticlesRepository extends Repository
 //        END Content
 
         $updated = $article->fill($new)->save();
+        if ($updated) {
+            $uarticle['id'] = $article->id;
+            $uarticle['alias'] = $article->alias;
+            $cat['category_id'] = $article->category_id;
+            $this->uarticle->updateOrCreate($uarticle, $cat);
+        }
 
         $error = '';
         if (!empty($updated)) {
@@ -204,7 +212,7 @@ class ArticlesRepository extends Repository
             $old_img = $article->image->path;
             // Main Image handle
             if ($request->hasFile('img')) {
-                $path = $this->mainImg($request->file('img'), $new['alias']);
+                $path = $this->mainImg($request->file('img'), $article->alias);
 
                 if (false === $path) {
                     $error[] = ['img' => 'Ошибка загрузки картинки'];
@@ -226,12 +234,12 @@ class ArticlesRepository extends Repository
                 }
             }
 
-            /*try {
+            try {
                 $article->tags()->sync($data['tags']);
             } catch (Exception $e) {
                 \Log::info('Ошибка записи тегов: ', $e->getMessage());
                 $error[] = ['tag' => 'Ошибка записи тегов'];
-            }*/
+            }
 
 
 //            $this->clearArticlesCache($article->id);

@@ -61,6 +61,7 @@
                                class="nav-button-grey">S</a>
                             <a href="{{ route('search_fabricator', ['loc'=>'ru', 'val'=>'Y']) }}"
                                class="nav-button-grey">Y</a>
+                            <hr>
                             <a href="{{ route('search_fabricator', ['loc'=>'ru', 'val'=>'А']) }}"
                                class="nav-button-grey">А</a>
                             <a href="{{ route('search_fabricator', ['loc'=>'ru', 'val'=>'Б']) }}"

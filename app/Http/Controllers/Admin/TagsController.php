@@ -45,7 +45,7 @@ class TagsController extends AdminController
 
         }
 
-        $tags = $this->tag_rep->get(['name', 'id', 'alias'], false, 25);
+        $tags = $this->tag_rep->get(['name', 'uname', 'id', 'alias'], false, 25);
 
         $this->content = view('admin.tags.content')->with('tags', $tags)->render();
         $this->title = 'TAGS';

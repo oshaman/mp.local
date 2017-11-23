@@ -7,14 +7,18 @@
                 <a href="{{ route('main') }}" itemprop="item">Главная</a>
                 <meta itemprop="position" content="1"/>
             </div>
-            @if(!empty($atx->name))
+            @if(!empty($atx->parents))
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <a href="{{ route('search_atx', ['loc'=>'ru', 'val'=>$atx->class ]) }}">{{ $atx->name}}</a>
+                    <a href="{{ route('search_atx', ['loc'=>'ru', 'val'=>$atx->parents->class ]) }}">{{ $atx->parents->class}}</a>
+                    <meta itemprop="position" content="2"/>
+                </div>
+                <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
+                    <span itemprop="name" class="label1">{{ $atx->class ?? '' }}</span>
                     <meta itemprop="position" content="2"/>
                 </div>
             @else
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <span itemprop="name" class="label1">Поиск по ATX-классификации</span>
+                    <span itemprop="name" class="label1">{{ $atx->class ?? '' }}</span>
                     <meta itemprop="position" content="2"/>
                 </div>
             @endif

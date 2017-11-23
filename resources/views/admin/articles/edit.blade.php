@@ -1,13 +1,13 @@
 <h2>Редактирование статьи</h2>
 {!! Form::open(['url'=>route('edit_article', ['spec' => $spec , 'article' => $article->id]),
     'method'=>'POST', 'class'=>'form-horizontal', 'files'=>true]) !!}
-{{ csrf_field() }}
 <div class="">
     {{ Form::label('title', 'Заголовок страницы') }}
     <div>
         {!! Form::text('title', old('title') ? : ($article->title ?? '') , ['placeholder'=>'Title', 'id'=>'title', 'class'=>'form-control ru-title']) !!}
     </div>
 </div>
+@if('ru' == $spec)
 <div class="">
     {{ Form::label('alias', 'Псевдоним страницы') }}
     <div>
@@ -15,13 +15,14 @@
     </div>
 </div>
 <div class="">
-    {{ Form::label('cats', 'Категория') }}
+    {{ Form::label('category_id', 'Категория') }}
     <div>
-        {!! Form::select('cats', $cats ?? [],
-            old('cats') ? : ($article->category_id ?? '') , [ 'class'=>'form-control', 'placeholder'=>'Категория'])
+        {!! Form::select('category_id', $cats ?? [],
+            old('category_id') ? : ($article->category_id ?? '') , [ 'class'=>'form-control', 'placeholder'=>'Категория'])
         !!}
     </div>
 </div>
+@endif
 <div class="">
     {{ Form::label('img', 'Основное изображение') }}
     @if(!empty($article->image))
@@ -44,6 +45,7 @@
         {!! Form::file('img', ['accept'=>'image/*', 'id'=>'img', 'class'=>'form-control']) !!}
     </div>
 </div>
+@if('ru' == $spec)
 <div class="">
     {{ Form::label('tags', 'Тэги') }}
     @if(!empty($tags))
@@ -68,6 +70,7 @@
         </div>
     @endif
 </div>
+@endif
 <!-- SEO -->
 <div class="panel-heading">
     <h2>

@@ -27,11 +27,14 @@ class Classification extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function parent()
+    public function parents()
     {
-        return $this->belongsTo('Fresh\Medpravda\Classification', 'parent');
+        return $this->belongsTo('Fresh\Medpravda\Classification', 'parent', 'id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function getChildren()
     {
         return $this->hasMany('Fresh\Medpravda\Classification', 'parent', 'id');

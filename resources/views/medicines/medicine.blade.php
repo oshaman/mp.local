@@ -212,6 +212,15 @@
                             @endforeach
                         </div>
                     </div>
+                @else
+                    <div class="product-slider clone-from" data-number="3">
+                        <div class="product-slider-go">
+                            <div>
+                                <img src="{{ asset('asset/images/mp.png') }}"
+                                     alt="Med Pravda" title="Med Pravda">
+                            </div>
+                        </div>
+                    </div>
                 @endif
             </div>
 

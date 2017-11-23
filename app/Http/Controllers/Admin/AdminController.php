@@ -62,10 +62,6 @@ class AdminController extends Controller
                 $menu->add('Редактирование статей',array('route' => 'articles_admin'));
             }
 
-            if (Gate::allows('TAGS_ADMIN')) {
-                $menu->add('Редактирование тэгов', array('route' => 'tags_admin'));
-            }
-
             if (Gate::allows('UPDATE_MEDICINES_CATS')) {
                 $menu->add('Редактирование категорий препаратов', array('route' => 'medicine_cats'));
             }

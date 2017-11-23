@@ -2,6 +2,7 @@
 
 namespace Fresh\Medpravda\Http\Controllers;
 
+use Fresh\Medpravda\Block;
 use Fresh\Medpravda\User;
 use Illuminate\Http\Request;
 
@@ -14,12 +15,8 @@ class MainController extends Controller
     protected $css = null;
     protected $jss = null;
     protected $aside = null;
-
-    /*public function index()
-    {
-        $user = User::where('id', 2)->with('role')->first();
-        dd($user);
-    }*/
+    protected $block = null;
+    protected $spec = 'ru';
 
     public function medicine($loc, $medicine, $act = null)
     {
@@ -48,6 +45,7 @@ class MainController extends Controller
 
         return $this->renderOutput();
     }
+
     /*public function analog($loc, $medicine=null)
     {
         if ('ru' == $loc) {
@@ -83,7 +81,8 @@ class MainController extends Controller
         $this->vars = array_add($this->vars, 'jss', $this->jss);
         $this->vars = array_add($this->vars, 'css', $this->jss);
 
-        $header = view('layouts.header')->render();
+        $this->block = Block::where('id', 1)->first();
+        $header = view('layouts.header.' . $this->spec)->with(['block' => $this->block])->render();
         $this->vars = array_add($this->vars, 'header', $header);
 
         $footer = view('layouts.footer')->render();

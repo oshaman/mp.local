@@ -87,6 +87,7 @@
                                class="nav-button-grey">V</a>
                             <a href="{{ route('search_alpha', ['loc'=>'ru', 'val'=>'W']) }}"
                                class="nav-button-grey">W</a>
+                            <hr>
                             <a href="{{ route('search_alpha', ['loc'=>'ru', 'val'=>'А']) }}"
                                class="nav-button-grey">А</a>
                             <a href="{{ route('search_alpha', ['loc'=>'ru', 'val'=>'Б']) }}"

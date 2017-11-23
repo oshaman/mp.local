@@ -33,12 +33,12 @@
             <div class="col-lg-6">
                 {{ Form::label('form', 'Форма выпуска   ') }}
                 {!! Form::text('form', old('form') ? : '',
-                 ['placeholder'=>'ATX', 'id'=>'form', 'class'=>'form-control', 'data-id'=>'']) !!}
+                 ['placeholder'=>'Таблетки', 'id'=>'form', 'class'=>'form-control autocomplete', 'data-id'=>'']) !!}
             </div>
             <div class="col-lg-6">
                 {{ Form::label('innname', 'Международное название') }}
                 {!! Form::text('innname', old('innname') ? : '',
-                 ['placeholder'=>'...', 'id'=>'innname', 'class'=>'form-control', 'data-id'=>'']) !!}
+                 ['placeholder'=>'...', 'id'=>'innname', 'class'=>'form-control autocomplete', 'data-id'=>'']) !!}
             </div>
         </div>
         <hr>
@@ -46,12 +46,12 @@
             <div class="col-lg-6">
                 {{ Form::label('classification', 'Классификация') }}
                 {!! Form::text('classification', old('classification') ? : '',
-                 ['placeholder'=>'ATX', 'id'=>'classification', 'class'=>'form-control', 'data-id'=>'']) !!}
+                 ['placeholder'=>'ATX', 'id'=>'classification', 'class'=>'form-control autocomplete', 'data-id'=>'']) !!}
             </div>
             <div class="col-lg-6">
                 {{ Form::label('pharmagroup_id', 'Фарм. группа') }}
                 {!! Form::text('pharmagroup_id', old('pharmagroup_id') ? : '',
-                 ['placeholder'=>'Фарм. группа', 'id'=>'pharmagroup_id', 'class'=>'form-control', 'data-id'=>'']) !!}
+                 ['placeholder'=>'Фарм. группа', 'id'=>'pharmagroup_id', 'class'=>'form-control autocomplete', 'data-id'=>'']) !!}
             </div>
         </div>
         <hr>
@@ -59,7 +59,7 @@
             <div>
                 {{ Form::label('fabricator_name', 'Производитель') }}
                 {!! Form::text('fabricator_name', old('fabricator_name') ? : '',
-                 ['placeholder'=>'...', 'id'=>'fabricator_name', 'class'=>'form-control', 'data-id'=>'']) !!}
+                 ['placeholder'=>'...', 'id'=>'fabricator_name', 'class'=>'form-control autocomplete', 'data-id'=>'']) !!}
             </div>
         </div>
     </div>

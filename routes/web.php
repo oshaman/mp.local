@@ -95,7 +95,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::post('save-custom', 'Admin\MedicineController@saveCustom')->name('get_custom');
 
     });
-    Route::match(['post', 'get'], 'blocks', 'Admin\BlocksController@updateBlocks')->name('blocks');
+    Route::match(['post', 'get'], 'blocks/{block?}', 'Admin\BlocksController@updateBlocks')
+        ->name('blocks')->where('block', '[0-9]+');
     /**
      * MedicinesCats
      */
