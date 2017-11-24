@@ -1,13 +1,13 @@
 <h2>Частые вопросы</h2>
 {!! Form::open(['url' => route('faq', ['medicine'=>$drug->alias, 'spec'=>$spec]), 'method' => 'post', 'class' => 'form-horizontal']) !!}
 @if($drug->questions->isNotEmpty())
-    @foreach($drug->questions as $faq)
-        <div class="panel-group" id="accordion">
+    <div class="panel-group" id="accordion">
+        @foreach($drug->questions as $faq)
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-question">
                         <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $loop->index }}">
-                            #{{ $loop->index }}:</a>
+                            # {{ $faq->question }}</a>
                     </h4>
                 </div>
                 <div id="collapse{{ $loop->index }}" class="panel-collapse collapse">
@@ -19,16 +19,26 @@
                         </div>
                         {{ Form::label('answer', 'Ответ') }}
                         <textarea name="answer[]" class="form-control editor">
-                            {{ $faq->answer ?? '' }}
-                        </textarea>
+                        {{ $faq->answer ?? '' }}
+                    </textarea>
                     </div>
                 </div>
+                <span class="remove-this"><button type="button" class="btn btn-danger">-</button></span>
             </div>
-            <span class="remove-this"><button type="button" class="btn btn-danger">-</button></span>
-        </div>
-    @endforeach
+        @endforeach
+        <div id="add"></div>
+    </div>
 @endif
-<div class="panel-group" id="accordion">
+{!! Form::button('Редактировать', ['class' => 'btn btn-primary','type'=>'submit']) !!}
+{!! Form::close() !!}
+<hr>
+<div id="add-new">
+    <button type="button" class="btn btn-primary">+</button>
+</div>
+<div id="123" style="display:none">
+    <div>
+        <div>
+            <hr>
     <div class="panel panel-default">
         <div class="panel-heading">
             <h4 class="panel-question">
@@ -44,14 +54,13 @@
                      ['placeholder'=>'aspirin', 'class'=>'form-control']) !!}
                 </div>
                 {{ Form::label('answer', 'Ответ') }}
-                <textarea name="answer[]" class="form-control editor">
-                        {{--{!! old('faq') ? : ($drug->packaging ?? '') !!}--}}
-                    </textarea>
+                <textarea name="answer[]" class="form-control editor" id="added">
+                            {{--{!! old('faq') ? : ($drug->packaging ?? '') !!}--}}
+                        </textarea>
             </div>
         </div>
     </div>
-    <span class="remove-this"><button type="button" class="btn btn-danger">-</button></span>
+            <span class="remove-this"><button type="button" class="btn btn-danger">-</button></span>
 </div>
-<hr>
-{!! Form::button('Редактировать', ['class' => 'btn btn-primary','type'=>'submit']) !!}
-{!! Form::close() !!}
+    </div>
+</div>

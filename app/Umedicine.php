@@ -113,7 +113,6 @@ class Umedicine extends Model
     {
         return $this->belongsTo('Fresh\Medpravda\Form');
     }
-
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

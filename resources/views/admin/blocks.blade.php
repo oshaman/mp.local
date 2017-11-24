@@ -4,7 +4,7 @@
             <div class="panel-heading">
                 <h4 class="panel-question">
                     <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{ $loop->iteration }}">
-                        #{{ $loop->iteration }}:</a>
+                        # {{ $block->title }}:</a>
                 </h4>
             </div>
             <div id="collapse{{ $loop->iteration }}" class="panel-collapse collapse">

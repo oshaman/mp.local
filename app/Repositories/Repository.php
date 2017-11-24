@@ -146,6 +146,19 @@ abstract class Repository
         }
         return $seo;
     }
+
+    public function convertDate($date)
+    {
+        $midnight = strtotime('today midnight');
+        $created = strtotime($date);
+
+        if ($created > $midnight) {
+            $date = date('H:i', $created);
+        } else {
+            $date = date('d-m-Y H:i', $created);
+        }
+        return $date;
+    }
 }
 
 ?>

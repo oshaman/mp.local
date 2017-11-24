@@ -14,7 +14,7 @@
                         задумываясь,
                         что подобная реакция организма сама по себе показатель проблем.</p>
                 </div>
-                <a href="search.html" class="button-blue">Подробнее</a>
+                <a href="{{ route('search') }}" class="button-blue">Подробнее</a>
             </div>
 
         </div>
@@ -31,7 +31,7 @@
                         задумываясь,
                         что подобная реакция организма сама по себе показатель проблем.</p>
                 </div>
-                <a href="search.html" class="button-blue">Подробнее</a>
+                <a href="{{ route('search') }}" class="button-blue">Подробнее</a>
             </div>
         </div>
         <div class="slide white-text">
@@ -47,7 +47,7 @@
                         задумываясь,
                         что подобная реакция организма сама по себе показатель проблем.</p>
                 </div>
-                <a href="search.html" class="button-blue">Подробнее</a>
+                <a href="{{ route('search') }}" class="button-blue">Подробнее</a>
             </div>
         </div>
     </div>
@@ -126,7 +126,7 @@
                 <div class="box-number-info-text">
                     партнеров
                 </div>
-                <a href="search.html" class="button-blue">Все партнеры</a>
+                <a href="{{ route('search') }}" class="button-blue">Все партнеры</a>
             </div>
         </div>
     </div>
@@ -139,22 +139,22 @@
         <h3>{{ $blocks[1]->title ?? '' }}</h3>
         <div class="section-meta-icon">
             @if(!empty($blocks[1]->first))
-                {{ link_to_route('search', $blocks[1]->first, ['search' =>$blocks[1]->first], ['class'=>'btn-meta']) }}
+                {{ link_to_route('search', $blocks[1]->first, ['search' =>$blocks[1]->first]) }}
             @endif
             @if(!empty($blocks[1]->second))
-                {{ link_to_route('search', $blocks[1]->second, ['search' =>$blocks[1]->second], ['class'=>'btn-meta']) }}
+                {{ link_to_route('search', $blocks[1]->second, ['search' =>$blocks[1]->second]) }}
             @endif
             @if(!empty($blocks[1]->third))
-                {{ link_to_route('search', $blocks[1]->third, ['search' =>$blocks[1]->third], ['class'=>'btn-meta']) }}
+                {{ link_to_route('search', $blocks[1]->third, ['search' =>$blocks[1]->third]) }}
             @endif
             @if(!empty($blocks[1]->fourth))
-                {{ link_to_route('search', $blocks[1]->fourth, ['search' =>$blocks[1]->fourth], ['class'=>'btn-meta']) }}
+                {{ link_to_route('search', $blocks[1]->fourth, ['search' =>$blocks[1]->fourth]) }}
             @endif
             @if(!empty($blocks[1]->fifth))
-                {{ link_to_route('search', $blocks[1]->fifth, ['search' =>$blocks[1]->fifth], ['class'=>'btn-meta']) }}
+                {{ link_to_route('search', $blocks[1]->fifth, ['search' =>$blocks[1]->fifth]) }}
             @endif
             @if(!empty($blocks[1]->sixth))
-                {{ link_to_route('search', $blocks[1]->sixth, ['search' =>$blocks[1]->sixth], ['class'=>'btn-meta']) }}
+                {{ link_to_route('search', $blocks[1]->sixth, ['search' =>$blocks[1]->sixth]) }}
             @endif
             <div class="section-icon">
                 <img src="{{ asset('assets') }}/images/title-icons/found.png" alt="иконка Также ищут">
@@ -176,22 +176,22 @@
         <h3>{{ $blocks[2]->title ?? '' }}</h3>
         <div class="section-meta-icon">
             @if(!empty($blocks[2]->first))
-                {{ link_to_route('search', $blocks[2]->first, ['search' =>$blocks[2]->first], ['class'=>'btn-meta']) }}
+                {{ link_to_route('search', $blocks[2]->first, ['search' =>$blocks[2]->first]) }}
             @endif
             @if(!empty($blocks[2]->second))
-                {{ link_to_route('search', $blocks[2]->second, ['search' =>$blocks[2]->second], ['class'=>'btn-meta']) }}
+                {{ link_to_route('search', $blocks[2]->second, ['search' =>$blocks[2]->second]) }}
             @endif
             @if(!empty($blocks[2]->third))
-                {{ link_to_route('search', $blocks[2]->third, ['search' =>$blocks[2]->third], ['class'=>'btn-meta']) }}
+                {{ link_to_route('search', $blocks[2]->third, ['search' =>$blocks[2]->third]) }}
             @endif
             @if(!empty($blocks[2]->fourth))
-                {{ link_to_route('search', $blocks[2]->fourth, ['search' =>$blocks[2]->fourth], ['class'=>'btn-meta']) }}
+                {{ link_to_route('search', $blocks[2]->fourth, ['search' =>$blocks[2]->fourth]) }}
             @endif
             @if(!empty($blocks[2]->fifth))
-                {{ link_to_route('search', $blocks[2]->fifth, ['search' =>$blocks[2]->fifth], ['class'=>'btn-meta']) }}
+                {{ link_to_route('search', $blocks[2]->fifth, ['search' =>$blocks[2]->fifth]) }}
             @endif
             @if(!empty($blocks[2]->sixth))
-                {{ link_to_route('search', $blocks[2]->sixth, ['search' =>$blocks[2]->sixth], ['class'=>'btn-meta']) }}
+                {{ link_to_route('search', $blocks[2]->sixth, ['search' =>$blocks[2]->sixth]) }}
             @endif
             <div class="section-icon">
                 <img src="{{ asset('assets') }}/images/title-icons/main-icon-2.png" alt="иконка Топ статьи">
@@ -394,7 +394,7 @@
     </div>
 
     <div>
-        <a href="articles.html" class="button-white">Больше статей</a>
+        <a href="{{ route('articles', ['loc'=>'ru']) }}" class="button-white">Больше статей</a>
     </div>
 </section>
 <!-- end ТОП СТАТЬИ -->
@@ -407,22 +407,22 @@
                 <h3>{{ $blocks[3]->title ?? '' }}</h3>
                 <div class="section-meta-icon">
                     @if(!empty($blocks[3]->first))
-                        {{ link_to_route('search', $blocks[3]->first, ['search' =>$blocks[3]->first], ['class'=>'btn-meta']) }}
+                        {{ link_to_route('search', $blocks[3]->first, ['search' =>$blocks[3]->first]) }}
                     @endif
                     @if(!empty($blocks[3]->second))
-                        {{ link_to_route('search', $blocks[3]->second, ['search' =>$blocks[3]->second], ['class'=>'btn-meta']) }}
+                        {{ link_to_route('search', $blocks[3]->second, ['search' =>$blocks[3]->second]) }}
                     @endif
                     @if(!empty($blocks[3]->third))
-                        {{ link_to_route('search', $blocks[3]->third, ['search' =>$blocks[3]->third], ['class'=>'btn-meta']) }}
+                        {{ link_to_route('search', $blocks[3]->third, ['search' =>$blocks[3]->third]) }}
                     @endif
                     @if(!empty($blocks[3]->fourth))
-                        {{ link_to_route('search', $blocks[3]->fourth, ['search' =>$blocks[3]->fourth], ['class'=>'btn-meta']) }}
+                        {{ link_to_route('search', $blocks[3]->fourth, ['search' =>$blocks[3]->fourth]) }}
                     @endif
                     @if(!empty($blocks[3]->fifth))
-                        {{ link_to_route('search', $blocks[3]->fifth, ['search' =>$blocks[3]->fifth], ['class'=>'btn-meta']) }}
+                        {{ link_to_route('search', $blocks[3]->fifth, ['search' =>$blocks[3]->fifth]) }}
                     @endif
                     @if(!empty($blocks[3]->sixth))
-                        {{ link_to_route('search', $blocks[3]->sixth, ['search' =>$blocks[3]->sixth], ['class'=>'btn-meta']) }}
+                        {{ link_to_route('search', $blocks[3]->sixth, ['search' =>$blocks[3]->sixth]) }}
                     @endif
                     <div class="section-icon">
                         <img src="{{ asset('assets') }}/images/title-icons/main-icon-3.png"
@@ -574,7 +574,7 @@
                 </div>
             </div>
             <div>
-                <a href="articles.html" class="button-white">Больше статей</a>
+                <a href="{{ route('articles', ['loc'=>'ru']) }}" class="button-white">Больше статей</a>
             </div>
         </section>
         <section class="section-commercial-arts">
@@ -582,22 +582,22 @@
                 <h3>{{ $blocks[4]->title ?? '' }}</h3>
                 <div class="section-meta-icon">
                     @if(!empty($blocks[4]->first))
-                        {{ link_to_route('search', $blocks[4]->first, ['search' =>$blocks[4]->first], ['class'=>'btn-meta']) }}
+                        {{ link_to_route('search', $blocks[4]->first, ['search' =>$blocks[4]->first]) }}
                     @endif
                     @if(!empty($blocks[4]->second))
-                        {{ link_to_route('search', $blocks[4]->second, ['search' =>$blocks[4]->second], ['class'=>'btn-meta']) }}
+                        {{ link_to_route('search', $blocks[4]->second, ['search' =>$blocks[4]->second]) }}
                     @endif
                     @if(!empty($blocks[4]->third))
-                        {{ link_to_route('search', $blocks[4]->third, ['search' =>$blocks[4]->third], ['class'=>'btn-meta']) }}
+                        {{ link_to_route('search', $blocks[4]->third, ['search' =>$blocks[4]->third]) }}
                     @endif
                     @if(!empty($blocks[4]->fourth))
-                        {{ link_to_route('search', $blocks[4]->fourth, ['search' =>$blocks[4]->fourth], ['class'=>'btn-meta']) }}
+                        {{ link_to_route('search', $blocks[4]->fourth, ['search' =>$blocks[4]->fourth]) }}
                     @endif
                     @if(!empty($blocks[4]->fifth))
-                        {{ link_to_route('search', $blocks[4]->fifth, ['search' =>$blocks[4]->fifth], ['class'=>'btn-meta']) }}
+                        {{ link_to_route('search', $blocks[4]->fifth, ['search' =>$blocks[4]->fifth]) }}
                     @endif
                     @if(!empty($blocks[4]->sixth))
-                        {{ link_to_route('search', $blocks[4]->sixth, ['search' =>$blocks[4]->sixth], ['class'=>'btn-meta']) }}
+                        {{ link_to_route('search', $blocks[4]->sixth, ['search' =>$blocks[4]->sixth]) }}
                     @endif
                     <div class="section-icon">
                         <img src="{{ asset('assets') }}/images/title-icons/main-icon-5.png"
@@ -829,7 +829,7 @@
                 </div>
             </div>
             <div>
-                <a href="articles.html" class="button-white">Больше статей</a>
+                <a href="{{ route('articles', ['loc'=>'ru']) }}" class="button-white">Больше статей</a>
             </div>
         </section>
     </div>
@@ -1015,7 +1015,7 @@
             <a href="#!" class="btn-meta active">Беременность</a>
         </div>
         <div class="index-aside-promo">
-            <a href="promotion.html">
+            <a href="{{ route('adv') }}">
                 <img src="{{ asset('assets') }}/images/promotion/main-reclama.jpg">
             </a>
         </div>
@@ -1045,22 +1045,22 @@
         <h3>{{ $blocks[5]->title ?? '' }}</h3>
         <div class="section-meta-icon">
             @if(!empty($blocks[5]->first))
-                {{ link_to_route('search', $blocks[5]->first, ['search' =>$blocks[5]->first], ['class'=>'btn-meta']) }}
+                {{ link_to_route('search', $blocks[5]->first, ['search' =>$blocks[5]->first]) }}
             @endif
             @if(!empty($blocks[5]->second))
-                {{ link_to_route('search', $blocks[5]->second, ['search' =>$blocks[5]->second], ['class'=>'btn-meta']) }}
+                {{ link_to_route('search', $blocks[5]->second, ['search' =>$blocks[5]->second]) }}
             @endif
             @if(!empty($blocks[5]->third))
-                {{ link_to_route('search', $blocks[5]->third, ['search' =>$blocks[5]->third], ['class'=>'btn-meta']) }}
+                {{ link_to_route('search', $blocks[5]->third, ['search' =>$blocks[5]->third]) }}
             @endif
             @if(!empty($blocks[5]->fourth))
-                {{ link_to_route('search', $blocks[5]->fourth, ['search' =>$blocks[5]->fourth], ['class'=>'btn-meta']) }}
+                {{ link_to_route('search', $blocks[5]->fourth, ['search' =>$blocks[5]->fourth]) }}
             @endif
             @if(!empty($blocks[5]->fifth))
-                {{ link_to_route('search', $blocks[5]->fifth, ['search' =>$blocks[5]->fifth], ['class'=>'btn-meta']) }}
+                {{ link_to_route('search', $blocks[5]->fifth, ['search' =>$blocks[5]->fifth]) }}
             @endif
             @if(!empty($blocks[5]->sixth))
-                {{ link_to_route('search', $blocks[5]->sixth, ['search' =>$blocks[5]->sixth], ['class'=>'btn-meta']) }}
+                {{ link_to_route('search', $blocks[5]->sixth, ['search' =>$blocks[5]->sixth]) }}
             @endif
             <div class="section-icon">
                 <img src="{{ asset('assets') }}/images/title-icons/main-icon-2.png" alt="иконка Топ статьи">
@@ -1166,7 +1166,7 @@
         </article>
     </div>
     <div>
-        <a href="articles.html" class="button-white">Больше статей</a>
+        <a href="{{ route('articles', ['loc'=>'ru']) }}" class="button-white">Больше статей</a>
     </div>
 </section>
 <!-- end Интересные СТАТЬИ -->

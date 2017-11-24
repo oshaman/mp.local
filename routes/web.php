@@ -42,7 +42,8 @@ Route::group(['prefix' => 'poisk'], function () {
  * Articles
  */
 Route::group(['prefix' => 'statjі'], function () {
-    Route::get('/', 'ArticlesController@show')->name('articles');
+    Route::get('/{loc}/{article_alias?}', 'ArticlesController@show')->name('articles')->where(['loc' => 'ru|ua', 'article_alias' => '[\w-]+']);
+//    Route::get();
 });
 /**
  * Category
@@ -64,8 +65,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         //  show articles list
         Route::get('/', ['uses' => 'Admin\ArticlesController@index', 'as' => 'articles_admin']);
         Route::match(['get', 'post'], 'create', ['uses' => 'Admin\ArticlesController@create', 'as' => 'create_article']);
-        Route::match(['get', 'post'], 'edit/{spec}/{article}', ['uses' => 'Admin\ArticlesController@edit', 'as' => 'edit_article'])
-            ->where(['article' => '[0-9]+', 'spec' => 'ru|ua']);
+        Route::match(['get', 'post'], 'edit/{spec}/{article_id}', ['uses' => 'Admin\ArticlesController@edit', 'as' => 'edit_article'])
+            ->where(['article_id' => '[0-9]+', 'spec' => 'ru|ua']);
         Route::get('del/{article}', ['uses' => 'Admin\ArticlesController@del', 'as' => 'delete_article'])->where('article', '[0-9]+');
 
     });
@@ -112,6 +113,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::match(['get', 'post'], 'create', 'Admin\UsersController@store')->name('users_create');
         Route::get('del/{user}', ['uses' => 'Admin\UsersController@destroy', 'as' => 'delete_user'])->where('user', '[0-9]+');
     });
+
+    /**
+     * Static
+     */
+    Route::group(['prefix' => 'static', function () {
+        Route::get('/');
+    }]);
 });
 //Auth
 Route::get('login', 'Auth\AuthController@showLoginForm')->name('login');

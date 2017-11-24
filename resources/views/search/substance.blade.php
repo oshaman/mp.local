@@ -9,8 +9,12 @@
             </div>
             @if(!empty($substance))
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <span>Поиск по действующему веществу</span>
+                    <a href="{{ route('search_substance', 'ru') }}" itemprop="item">Поиск по действующему веществу</a>
                     <meta itemprop="position" content="2"/>
+                </div>
+                <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
+                    <span>{{ $substance->title }}</span>
+                    <meta itemprop="position" content="3"/>
                 </div>
             @else
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
@@ -21,17 +25,17 @@
         </div>
         {{--BreadCrumbs--}}
         <h1 class="head-title">
-            Результаты поиска по действующему веществу @if(!empty($substance)): <a>{{ $substance->title }}</a>@endif
+            Результаты поиска: @if(!empty($substance)): <a>{{ $substance->title }}</a>@endif
         </h1>
     </div>
 
     <div class="section-title-meta-icon">
-        @if(!empty($substance->title))
-            <h3>
+        <h3>
+            @if(!empty($substance->title))
                 ПОИСК ПРЕПАРАТОВ :
                 <a>{{ $substance->title }}</a>
-            </h3>
-        @endif
+            @endif
+        </h3>
         <div class="section-meta-icon">
             <div class="section-icon">
                 <img src="{{ asset('assets') }}/images/title-icons/found.png" alt="иконка Также ищут">

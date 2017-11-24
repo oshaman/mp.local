@@ -28,7 +28,17 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('med_cat', \Fresh\Medpravda\MedicinesCat::class);
         Route::model('cat', \Fresh\Medpravda\Category::class);
         Route::model('block', \Fresh\Medpravda\Block::class);
+        Route::model('article', \Fresh\Medpravda\Article::class);
 //        Route::model('medicine', \Fresh\Medpravda\Medicine::class);
+
+
+        Route::bind('article_alias', function ($value, \Illuminate\Routing\Route $route) {
+            if ('ru' == $route->parameter('loc')) {
+                return \Fresh\Medpravda\Article::where('alias', $value)->first();
+            } else {
+                return \Fresh\Medpravda\UArticle::where('alias', $value)->first();
+            }
+        });
     }
 
     /**

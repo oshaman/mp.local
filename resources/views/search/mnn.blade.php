@@ -7,10 +7,14 @@
                 <a href="{{ route('main') }}" itemprop="item">Главная</a>
                 <meta itemprop="position" content="1"/>
             </div>
-            @if(!empty($search))
+            @if(!empty($mnn))
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <span>Поиск по международному названию</span>
+                    <a href="{{ route('search_mnn', 'ru') }}" itemprop="item">Поиск по международному названию</a>
                     <meta itemprop="position" content="2"/>
+                </div>
+                <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
+                    <span>{{ str_limit($mnn->title, 48) }}</span>
+                    <meta itemprop="position" content="3"/>
                 </div>
             @else
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
@@ -21,21 +25,20 @@
         </div>
         {{--BreadCrumbs--}}
         <h1 class="head-title">
-            Результаты поиска по международному названию&nbsp;@if(!empty($mnn)) :
+            Результаты поиска:&nbsp;@if(!empty($mnn)) :
             <a>{{ str_limit($mnn->title, 48) }}</a>@endif
         </h1>
     </div>
 
     <div class="section-title-meta-icon">
-        @if(!empty($mnn->title))
             <h3>
-                ПОИСК ПРЕПАРАТОВ :
-                <a>{{ $mnn->title }}</a>
+                @if(!empty($mnn->title))
+                    ПОИСК ПРЕПАРАТОВ :<a>{{ $mnn->title }}</a>
+                @endif
             </h3>
-        @endif
         <div class="section-meta-icon">
             <div class="section-icon">
-                <img src="{{ asset('assets') }}/images/title-icons/found.png" alt="иконка Также ищут">
+                <img src="{{ asset('assets') }}/images/title-icons/found.png" alt="Препарат">
             </div>
         </div>
     </div>

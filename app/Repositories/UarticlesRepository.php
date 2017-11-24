@@ -215,7 +215,6 @@ class UarticlesRepository extends Repository
         !empty($id) ? Cache::store('file')->forget('patients_article-' . $id) : null;
         !empty($cat) ? Cache::forget('docs_cats' . $cat) : null;
         !empty($cat) ? Cache::forget('articles_cats' . $cat) : null;
-
     }
 
 }

@@ -7,35 +7,49 @@
                 <a href="{{ route('main') }}" itemprop="item">Главная</a>
                 <meta itemprop="position" content="1"/>
             </div>
+            @empty($atx)
+                <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
+                    <span itemprop="name" class="label1">Поиск по ATX-классификации</span>
+                    <meta itemprop="position" content="2"/>
+                </div>
+            @endempty
             @if(!empty($atx->parents))
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
+                    <a href="{{ route('search_atx', ['loc'=>'ru']) }}">Поиск по ATX-классификации</a>
+                    <meta itemprop="position" content="2"/>
+                </div>
+                <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
                     <a href="{{ route('search_atx', ['loc'=>'ru', 'val'=>$atx->parents->class ]) }}">{{ $atx->parents->class}}</a>
+                    <meta itemprop="position" content="3"/>
+                </div>
+                <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
+                    <span itemprop="name" class="label1">{{ $atx->class ?? '' }}</span>
+                    <meta itemprop="position" content="4"/>
+                </div>
+            @elseif(!empty($atx))
+                <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
+                    <a href="{{ route('search_atx', ['loc'=>'ru']) }}">Поиск по ATX-классификации</a>
                     <meta itemprop="position" content="2"/>
                 </div>
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
                     <span itemprop="name" class="label1">{{ $atx->class ?? '' }}</span>
-                    <meta itemprop="position" content="2"/>
-                </div>
-            @else
-                <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <span itemprop="name" class="label1">{{ $atx->class ?? '' }}</span>
-                    <meta itemprop="position" content="2"/>
+                    <meta itemprop="position" content="3"/>
                 </div>
             @endif
         </div>
         {{--BreadCrumbs--}}
-        <h1 class="head-title">Результаты поиска по ATX-классификации:&nbsp;
+        <h1 class="head-title">Результаты поиска:&nbsp;
             @if(!empty($atx)) : <a>{{ str_limit($atx->class, 48) }}</a>@endif
         </h1>
     </div>
 
     <div class="section-title-meta-icon">
-        @if(!empty($atx->name))
-            <h3>
+        <h3>
+            @if(!empty($atx->name))
                 ПОИСК ПРЕПАРАТОВ :
                 <a>{{ $atx->name }}</a>
-            </h3>
-        @endif
+            @endif
+        </h3>
         <div class="section-meta-icon">
             <div class="section-icon">
                 <img src="{{ asset('assets') }}/images/title-icons/found.png" alt="иконка Также ищут">

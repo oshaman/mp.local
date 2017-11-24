@@ -17,6 +17,7 @@ class MainController extends Controller
     protected $aside = null;
     protected $block = null;
     protected $spec = 'ru';
+    protected $seo = null;
 
     public function medicine($loc, $medicine, $act = null)
     {
@@ -45,7 +46,6 @@ class MainController extends Controller
 
         return $this->renderOutput();
     }
-
     /*public function analog($loc, $medicine=null)
     {
         if ('ru' == $loc) {
@@ -91,6 +91,16 @@ class MainController extends Controller
         if ($this->content) {
             $this->vars = array_add($this->vars, 'content', $this->content);
         }
+
+        if (empty($this->seo)) {
+            $this->seo = new \stdClass();
+            $this->seo->seo_keywords = 'Медправда';
+            $this->seo->seo_description = 'Медправда';
+            $this->seo->og_title = 'Медправда';
+            $this->seo->og_description = 'Медправда';
+            $this->seo->seo_title = 'Медправда';
+        }
+        $this->vars = array_add($this->vars, 'seo', $this->seo);
 
         if ($this->aside) {
             $this->vars = array_add($this->vars, 'aside', $this->aside);

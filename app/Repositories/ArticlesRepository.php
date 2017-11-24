@@ -31,8 +31,6 @@ class ArticlesRepository extends Repository
      */
     public function addArticle($request)
     {
-//        dd($request->all());
-
         $data = $request->except('_token');
 
         $article['title'] = $data['title'];
@@ -254,20 +252,19 @@ class ArticlesRepository extends Repository
      * @param $article
      * @return Result array
      */
-    /*public function deleteArticle($article)
+    public function deleteArticle($article)
     {
-        $pics = $article->photo()->get();
-
-        if ($pics->isNotEmpty()) {
-            $old_pic = [];
-            foreach ($pics as $pic) {
-                $old_pic[] = $pic->path;
-            }
-        }
         // $article->comments()->delete();
         if (!empty($article->image->path)) {
             $old_img = $article->image->path;
         }
+
+        $uarticle = UArticle::where('id', $article->id)->first();
+        if (!empty($uarticle->image->path)) {
+            $uold_img = $uarticle->image->path;
+        }
+
+//        dd($article);
 
         if ($article->delete()) {
 
@@ -275,29 +272,22 @@ class ArticlesRepository extends Repository
                 $this->deleteOldImage($old_img);
             }
 
-            if (!empty($old_pic)) {
-                foreach ($old_pic as $pic) {
-
-                    if (File::exists(public_path('/images/article/photos/main/') . $pic)) {
-                        File::delete(public_path('/images/article/photos/main/') . $pic);
-                    }
-
-                    if (File::exists(public_path('/images/article/photos/middle/') . $pic)) {
-                        File::delete(public_path('/images/article/photos/middle/') . $pic);
-                    }
-
-                    if (File::exists(public_path('/images/article/photos/small/') . $pic)) {
-                        File::delete(public_path('/images/article/photos/small/') . $pic);
-                    }
-                }
+            if (File::exists(public_path('/asset/images/articles/ua/main/') . $uold_img)) {
+                File::delete(public_path('/asset/images/articles/ua/main/') . $uold_img);
+            }
+            if (File::exists(public_path('/asset/images/articles/ua/middle/') . $uold_img)) {
+                File::delete(public_path('/asset/images/articles/ua/middle/') . $uold_img);
+            }
+            if (File::exists(public_path('/asset/images/articles/ua/small/') . $uold_img)) {
+                File::delete(public_path('/asset/images/articles/ua/small/') . $uold_img);
             }
 
-            $this->clearArticlesCache();
+//            $this->clearArticlesCache();
 
-            return ['status' => trans('admin.deleted')];
+            return ['status' => 'Статья удалена'];
         }
 
-    }*/
+    }
 
     /**
      * delete old main image
@@ -382,7 +372,7 @@ class ArticlesRepository extends Repository
         !empty($id) ? Cache::store('file')->forget('patients_article-' . $id) : null;
         !empty($cat) ? Cache::forget('docs_cats' . $cat) : null;
         !empty($cat) ? Cache::forget('articles_cats' . $cat) : null;
-
     }
+
 
 }

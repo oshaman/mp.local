@@ -9,10 +9,14 @@
             </div>
             @if(!empty($farm))
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <span>
-                        Поиск по фармакологической группе @if(!empty($farm)) : {{ str_limit($farm->title, 24) }}@endif
-                    </span>
-                    <meta itemprop="position" content="2"/>
+                    <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
+                        <a href="{{ route('search_farm', 'ru') }}" itemprop="item">Поиск по фармакологической группе</a>
+                        <meta itemprop="position" content="2"/>
+                    </div>
+                </div>
+                <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
+                    <span>{{ str_limit($farm->title, 24) }}</span>
+                    <meta itemprop="position" content="3"/>
                 </div>
             @else
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
@@ -24,17 +28,17 @@
             @endif
         </div>
         {{--BreadCrumbs--}}
-        <h1 class="head-title">Результаты поиска по фармакологической группе:&nbsp;@if(!empty($farm)) :
+        <h1 class="head-title">Результаты поиска:&nbsp;@if(!empty($farm)) :
             <a>{{ str_limit($farm->title, 48) }}</a>@endif</h1>
     </div>
 
     <div class="section-title-meta-icon">
-        @if(!empty($farm->title))
-            <h3>
+        <h3>
+            @if(!empty($farm->title))
                 ПОИСК ПРЕПАРАТОВ :
                 <a>{{ str_limit($farm->title, 40) }}</a>
-            </h3>
-        @endif
+            @endif
+        </h3>
         <div class="section-meta-icon">
             <div class="section-icon">
                 <img src="{{ asset('assets') }}/images/title-icons/found.png" alt="иконка Также ищут">

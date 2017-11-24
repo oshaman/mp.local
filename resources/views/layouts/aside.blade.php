@@ -86,7 +86,7 @@
             </article>
         </div>
         <div>
-            <a href="#!" class="button-white">Все новости</a>
+            <a href="{{ route('articles', ['loc'=>'ru']) }}" class="button-white">Все новости</a>
         </div>
     </div>
     <div class="banner-reklama" id="banner-reklama-1">
@@ -171,7 +171,7 @@
             </article>
         </div>
         <div>
-            <a href="#!" class="button-white">Все новости</a>
+            <a href="{{ route('articles', ['loc'=>'ru']) }}" class="button-white">Все новости</a>
         </div>
     </div>
     <div class="banner-reklama" id="banner-reklama-2">

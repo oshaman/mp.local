@@ -12,10 +12,10 @@
         <div class="main-menu">
             <nav class="mobile-display-none">
                 <a href="{{ route('search') }}">Препараты</a>
-                <a href="{{ route('articles') }}">Интересно</a>
-                <a href="{{ route('articles') }}">Последние статьи</a>
-                <a href="{{ route('articles') }}">Новости медицины</a>
-                <a href="{{ route('articles') }}">Лечение</a>
+                <a href="{{ route('articles', ['loc'=>'ru']) }}">Интересно</a>
+                <a href="{{ route('articles', ['loc'=>'ru']) }}">Последние статьи</a>
+                <a href="{{ route('articles', ['loc'=>'ru']) }}">Новости медицины</a>
+                <a href="{{ route('articles', ['loc'=>'ru']) }}">Лечение</a>
             </nav>
             <a class="burgerBtn">
                 <span></span>

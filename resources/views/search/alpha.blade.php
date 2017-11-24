@@ -7,10 +7,14 @@
                 <a href="{{ route('main') }}" itemprop="item">Главная</a>
                 <meta itemprop="position" content="1"/>
             </div>
-            @if(!empty($search))
+            @if(!empty($letter))
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <span>Поиск по алфавиту</span>
+                    <a href="{{ route('search_alpha', 'ru') }}" itemprop="item">Поиск по алфавиту</a>
                     <meta itemprop="position" content="2"/>
+                </div>
+                <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
+                    <span>{{ $letter }}</span>
+                    <meta itemprop="position" content="3"/>
                 </div>
             @else
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
@@ -20,10 +24,15 @@
             @endif
         </div>
         {{--BreadCrumbs--}}
-        <h1 class="head-title">Результаты поиска по алфавиту:&nbsp;</h1>
+        <h1 class="head-title">Результаты поиска:&nbsp;{{ $letter ?? '' }}</h1>
     </div>
 
     <div class="section-title-meta-icon">
+        <h3>
+            @if(!empty($letter))
+                ПОИСК ПРЕПАРАТОВ :<a>{{ $letter }}</a>
+            @endif
+        </h3>
         <div class="section-meta-icon">
             <div class="section-icon">
                 <img src="{{ asset('assets') }}/images/title-icons/found.png" alt="иконка Также ищут">
