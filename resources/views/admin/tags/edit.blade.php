@@ -14,7 +14,7 @@
         {!! Form::text('alias', old('alias') ? : ($tag->alias ?? '') , ['placeholder'=>'psihiatr...', 'id'=>'cat', 'class'=>'form-control eng-alias']) !!}
     </div>
     <div class="">
-        {!! Form::button('Редактировать', ['class' => 'btn btn-primary','type'=>'submit']) !!}
+        {!! Form::button('Сохранить', ['class' => 'btn btn-primary','type'=>'submit']) !!}
     </div>
     {!! Form::close() !!}
 </div>

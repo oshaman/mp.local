@@ -17,6 +17,8 @@ class AdminController extends Controller
     protected $jss = null;
     protected $css = null;
     protected $tiny = false;
+    protected $areaH = false;
+    protected $areaW = false;
 
     /**
      * @return mixed
@@ -27,6 +29,8 @@ class AdminController extends Controller
         $this->vars = array_add($this->vars, 'jss', $this->jss);
         $this->vars = array_add($this->vars, 'tiny', $this->tiny);
         $this->vars = array_add($this->vars, 'css', $this->css);
+        if (!empty($this->areaH)) $this->vars = array_add($this->vars, 'areaH', $this->areaH);
+        if (!empty($this->areaW)) $this->vars = array_add($this->vars, 'areaW', $this->areaW);
 
         $menu = $this->getMenu();
         $navigation = view('admin.navigation')->with('menu', $menu)->render();
@@ -54,16 +58,16 @@ class AdminController extends Controller
                 $menu->add('Редактирование препаратов', array('route' => 'medicine_admin'));
             }
 
-            if (Gate::allows('UPDATE_MEDICINE')) {
-                $menu->add('Блоки заголовков', array('route' => 'blocks'));
-            }
-
             if (Gate::allows('UPDATE_ARTICLES')) {
                 $menu->add('Редактирование статей',array('route' => 'articles_admin'));
             }
 
-            if (Gate::allows('UPDATE_MEDICINES_CATS')) {
-                $menu->add('Редактирование категорий препаратов', array('route' => 'medicine_cats'));
+            if (Gate::allows('MAIN_ADMIN')) {
+                $menu->add('Главная страница', array('route' => 'main_admin'));
+            }
+
+            if (Gate::allows('STATIC_ADMIN')) {
+                $menu->add('Статичные страницы', 'admin/static');
             }
 
         });

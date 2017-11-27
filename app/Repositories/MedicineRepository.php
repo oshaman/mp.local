@@ -2,6 +2,7 @@
 
 namespace Fresh\Medpravda\Repositories;
 
+use function foo\func;
 use Fresh\Medpravda\Classification;
 use Fresh\Medpravda\Fabricator;
 use Fresh\Medpravda\Form;
@@ -177,6 +178,12 @@ class MedicineRepository extends Repository
         }
         array_forget($input, 'approved');
         //General=====================================>
+
+        $input = array_map(function ($n) {
+            $re = '/&nbsp;/';
+            $n = preg_replace($re, ' ', $n);
+            return $n;
+        }, $input);
 
         $updated = $model->fill($input)->save();
 //        dd($input);

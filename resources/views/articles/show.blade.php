@@ -6,7 +6,7 @@
         </div>
         <h1 class="head-title blue-circle">Последние статьи</h1>
     </div>
-    <div class="big-news margin-minus">
+    <div class="big-news margin-minus all-big-news">
         <article class="news">
             <a href="single-article.html">
                 <div class="article-img">

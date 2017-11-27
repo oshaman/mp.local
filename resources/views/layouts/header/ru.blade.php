@@ -42,7 +42,7 @@
             @if(!empty($block->third))
                 {{ link_to_route('search', $block->third, ['search' =>$block->third], ['class'=>'btn-meta']) }}
             @endif
-            @if(!empty($block->fourth))
+            {{--@if(!empty($block->fourth))
                 {{ link_to_route('search', $block->fourth, ['search' =>$block->fourth], ['class'=>'btn-meta']) }}
             @endif
             @if(!empty($block->fifth))
@@ -50,7 +50,7 @@
             @endif
             @if(!empty($block->sixth))
                 {{ link_to_route('search', $block->sixth, ['search' =>$block->sixth], ['class'=>'btn-meta']) }}
-            @endif
+            @endif--}}
         </div>
         <div class="search">
             <form method="GET" action="{{ route('search') }}" accept-charset="UTF-8">

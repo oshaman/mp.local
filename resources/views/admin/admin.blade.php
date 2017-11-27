@@ -10,8 +10,8 @@
             themes: "modern",
             language: 'ru',
             branding: false,
-            height: 250,
-            width: 712,
+            height: "{{ $areaH ?? 250 }}",
+            width: "{{ $areaW ?? 712 }}",
             images_upload_base_path: "{{asset('/photos')}}",
             automatic_uploads: true,
             {{--content_css: "{{asset('css')}}/tinimce.css,",--}}

@@ -9,7 +9,7 @@
             </div>
             @if(!empty($mnn))
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <a href="{{ route('search_mnn', 'ru') }}" itemprop="item">Поиск по международному названию</a>
+                    <a href="{{ route('search_mnn', 'ru') }}" itemprop="item">Сортировка по международному названию</a>
                     <meta itemprop="position" content="2"/>
                 </div>
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
@@ -18,7 +18,7 @@
                 </div>
             @else
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <span itemprop="name" class="label1">Поиск по международному названию</span>
+                    <span itemprop="name" class="label1">Сортировка по международному названию</span>
                     <meta itemprop="position" content="2"/>
                 </div>
             @endif
@@ -32,8 +32,9 @@
 
     <div class="section-title-meta-icon">
             <h3>
+                ПОИСК ПРЕПАРАТОВ:&nbsp;
                 @if(!empty($mnn->title))
-                    ПОИСК ПРЕПАРАТОВ :<a>{{ $mnn->title }}</a>
+                    <a>{{ $mnn->title }}</a>
                 @endif
             </h3>
         <div class="section-meta-icon">
@@ -44,12 +45,12 @@
     </div>
     <div class="wrap">
         <div class="product-analog">
-            <h2 class="product-title">Поиск препаратов по международному названию</h2>
+            <h2 class="product-title">Сортировка препаратов по международному названию</h2>
 
             @include('search.nav')
 
             <div class="search-alfavit">
-                <h2 class="product-title">Поиск препаратов по международному названию
+                <h2 class="product-title">Сортировка препаратов по международному названию
                     @if(!empty($mnn->title))
                         {{ $mnn->title }}
                     @endif

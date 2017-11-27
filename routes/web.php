@@ -45,13 +45,6 @@ Route::group(['prefix' => 'statjі'], function () {
     Route::get('/{loc}/{article_alias?}', 'ArticlesController@show')->name('articles')->where(['loc' => 'ru|ua', 'article_alias' => '[\w-]+']);
 //    Route::get();
 });
-/**
- * Category
- */
-Route::group(['prefix' => 'cats'], function () {
-    Route::match(['get', 'post'], '/', ['uses' => 'Admin\CategoryController@show', 'as' => 'cats']);
-    Route::match(['get', 'post'], 'edit/{cat}', ['uses' => 'Admin\CategoryController@edit', 'as' => 'edit_cats'])->where('cat', '[0-9]+');
-});
 
 
 Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
@@ -69,6 +62,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
             ->where(['article_id' => '[0-9]+', 'spec' => 'ru|ua']);
         Route::get('del/{article}', ['uses' => 'Admin\ArticlesController@del', 'as' => 'delete_article'])->where('article', '[0-9]+');
 
+    });
+
+    /**
+     * Category
+     */
+    Route::group(['prefix' => 'cats'], function () {
+        Route::match(['get', 'post'], '/', ['uses' => 'Admin\CategoryController@show', 'as' => 'cats']);
+        Route::match(['get', 'post'], 'edit/{cat}', ['uses' => 'Admin\CategoryController@edit', 'as' => 'edit_cats'])->where('cat', '[0-9]+');
     });
     /**
      *   Admin TAGS
@@ -117,9 +118,14 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     /**
      * Static
      */
-    Route::group(['prefix' => 'static', function () {
-        Route::get('/');
-    }]);
+    Route::group(['prefix' => 'static'], function () {
+        Route::get('/', 'Admin\StaticsController@show');
+        Route::match(['get', 'post'], 'adv/{adv?}', 'Admin\StaticsController@updateAdv')->name('adv_admin')->where('adv', '[0-9]+');
+    });
+    /**
+     * Main
+     */
+    Route::get('main-admin', 'Admin\MainController@show')->name('main_admin');
 });
 //Auth
 Route::get('login', 'Auth\AuthController@showLoginForm')->name('login');

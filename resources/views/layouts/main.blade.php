@@ -25,8 +25,8 @@
         @endif
     </title>
     <meta charset="UTF-8">
-    <title>Мед правда | Вся правда о препаратах</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+        <link href="{{ asset('/') }}favicon.png" rel="shortcut icon">
     <link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond:700" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets') }}/css/font-awesome.min.css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
@@ -49,7 +49,10 @@
 </div>
 <!-- end REKLAMA BODY -->
 <!-- WRAP -->
-<div id="product-official-instruction" class="main-wrapper main-page">
+<div class="main-wrapper
+        @if('main' == Route::currentRouteName()) main-page @endif
+@if('articles' == Route::currentRouteName()) articles @endif
+        ">
     @yield('header')
 
     @yield('content')
@@ -63,7 +66,7 @@
 <script type="text/javascript" src="{{ asset('assets') }}/js/slider.js"></script>
 <script type="text/javascript" src="{{ asset('assets') }}/js/accordion.js"></script>
 <script type="text/javascript" src="{{ asset('assets') }}/js/menu.js"></script>
-<script type="text/javascript" src="{{ asset('assets') }}/js/clone.js"></script>
+<script type="text/javascript" src="{{ asset('assets') }}/js/totop.js"></script>
 @yield('jss')
 </body>
 </html>

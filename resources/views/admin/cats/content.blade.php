@@ -31,7 +31,7 @@
     <div class="">
         {!! Form::text('utitle', old('utitle') ? : '' , ['placeholder'=>'Психиатрия...', 'id'=>'utitle', 'class'=>'form-control']) !!}
     </div>
-    {{ Form::label('alias', 'Псевдоним категории') }}
+    {{ Form::label('alias', 'ЧПУ') }}
     <div class="">
         {!! Form::text('alias', old('alias') ? : '' , ['placeholder'=>'psihiatriya...', 'id'=>'alias', 'class'=>'form-control eng-alias']) !!}
     </div>
@@ -46,7 +46,7 @@
         <tr>
             <th>Имя</th>
             <th>UA-Имя</th>
-            <th>Псевдоним</th>
+            <th>ЧПУ</th>
             <th>Редактировать</th>
         </tr>
         </thead>

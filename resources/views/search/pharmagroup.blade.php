@@ -10,7 +10,8 @@
             @if(!empty($farm))
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
                     <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                        <a href="{{ route('search_farm', 'ru') }}" itemprop="item">Поиск по фармакологической группе</a>
+                        <a href="{{ route('search_farm', 'ru') }}" itemprop="item">Сортировка по фармакологической
+                            группе</a>
                         <meta itemprop="position" content="2"/>
                     </div>
                 </div>
@@ -21,21 +22,21 @@
             @else
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
                     <span itemprop="name" class="label1">
-                        Поиск по фармакологической группе @if(!empty($farm)) : <a>{{ $farm->title }}</a>@endif
+                        Сортировка по фармакологической группе @if(!empty($farm)) : <a>{{ $farm->title }}</a>@endif
                     </span>
                     <meta itemprop="position" content="2"/>
                 </div>
             @endif
         </div>
         {{--BreadCrumbs--}}
-        <h1 class="head-title">Результаты поиска:&nbsp;@if(!empty($farm)) :
+        <h1 class="head-title">Результаты поиска:@if(!empty($farm))
             <a>{{ str_limit($farm->title, 48) }}</a>@endif</h1>
     </div>
 
     <div class="section-title-meta-icon">
         <h3>
+            ПОИСК ПРЕПАРАТОВ:&nbsp;
             @if(!empty($farm->title))
-                ПОИСК ПРЕПАРАТОВ :
                 <a>{{ str_limit($farm->title, 40) }}</a>
             @endif
         </h3>
@@ -47,12 +48,12 @@
     </div>
     <div class="wrap">
         <div class="product-analog">
-            <h2 class="product-title">Поиск препаратов по фармакологической группе</h2>
+            <h2 class="product-title">Сортировка препаратов по фармакологической группе</h2>
 
             @include('search.nav')
 
             <div class="search-alfavit">
-                <h2 class="product-title">Поиск препаратов по фармакологической группе
+                <h2 class="product-title">Сортировка препаратов по фармакологической группе
                     @if(!empty($farm->title))
                         {{ $farm->title }}
                     @endif

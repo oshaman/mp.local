@@ -28,7 +28,7 @@
     </div>
 </div>
 <div class="">
-    {{ Form::label('alias', 'Псевдоним страницы') }}
+    {{ Form::label('alias', 'ЧПУ страницы') }}
     <div>
         {!! Form::text('alias', old('alias') ? : '' , ['placeholder'=>'psevdonim-stranici', 'id'=>'alias', 'class'=>'form-control eng-alias']) !!}
     </div>
@@ -141,7 +141,7 @@
     <div class="col-lg-6">
         <label>
             <input type="checkbox" {{ old('confirmed') ? 'checked' : ''}} value="1" name="confirmed">
-            В тираж
+            Опубликовать
         </label>
     </div>
     <div class="col-lg-6">

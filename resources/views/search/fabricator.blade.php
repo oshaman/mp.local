@@ -9,7 +9,7 @@
             </div>
             @if(!empty($fabricator))
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <a href="{{ route('search_fabricator', 'ru') }}" itemprop="item">Поиск по производителю</a>
+                    <a href="{{ route('search_fabricator', 'ru') }}" itemprop="item">Сортировка по производителю</a>
                     <meta itemprop="position" content="2"/>
                 </div>
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
@@ -18,21 +18,21 @@
                 </div>
             @else
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <span itemprop="name" class="label1">Поиск по производителю</span>
+                    <span itemprop="name" class="label1">Сортировка по производителю</span>
                     <meta itemprop="position" content="2"/>
                 </div>
             @endif
         </div>
         {{--BreadCrumbs--}}
         <h1 class="head-title">Результаты поиска:
-            &nbsp;@if(!empty($fabricator)) : <a>{{ str_limit($fabricator->title, 48) }}</a>@endif
+            &nbsp;@if(!empty($fabricator))<a>{{ str_limit($fabricator->title, 48) }}</a>@endif
         </h1>
     </div>
 
     <div class="section-title-meta-icon">
         <h3>
+            ПОИСК ПРЕПАРАТОВ:&nbsp;
             @if(!empty($fabricator->title))
-                ПОИСК ПРЕПАРАТОВ :
                 <a>{{ $fabricator->title }}</a>
             @endif
         </h3>
@@ -44,12 +44,12 @@
     </div>
     <div class="wrap">
         <div class="product-analog">
-            <h2 class="product-title">Поиск препаратов по производителю</h2>
+            <h2 class="product-title">Сортировка препаратов по производителю</h2>
 
             @include('search.nav')
 
             <div class="search-alfavit">
-                <h2 class="product-title">Поиск препаратов по производителю
+                <h2 class="product-title">Сортировка препаратов по производителю
                     @if(!empty($fabricator->title))
                         {{ $fabricator->title }}
                     @endif

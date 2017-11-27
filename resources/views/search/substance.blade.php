@@ -9,7 +9,8 @@
             </div>
             @if(!empty($substance))
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <a href="{{ route('search_substance', 'ru') }}" itemprop="item">Поиск по действующему веществу</a>
+                    <a href="{{ route('search_substance', 'ru') }}" itemprop="item">Сортировка по действующему
+                        веществу</a>
                     <meta itemprop="position" content="2"/>
                 </div>
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
@@ -18,21 +19,21 @@
                 </div>
             @else
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <span itemprop="name" class="label1">Поиск по действующему веществу</span>
+                    <span itemprop="name" class="label1">Сортировка по действующему веществу</span>
                     <meta itemprop="position" content="2"/>
                 </div>
             @endif
         </div>
         {{--BreadCrumbs--}}
         <h1 class="head-title">
-            Результаты поиска: @if(!empty($substance)): <a>{{ $substance->title }}</a>@endif
+            Результаты поиска: @if(!empty($substance))<a>{{ $substance->title }}</a>@endif
         </h1>
     </div>
 
     <div class="section-title-meta-icon">
         <h3>
+            ПОИСК ПРЕПАРАТОВ:&nbsp;
             @if(!empty($substance->title))
-                ПОИСК ПРЕПАРАТОВ :
                 <a>{{ $substance->title }}</a>
             @endif
         </h3>
@@ -44,12 +45,12 @@
     </div>
     <div class="wrap">
         <div class="product-analog">
-            <h2 class="product-title">Поиск препаратов по действующему веществу</h2>
+            <h2 class="product-title">Сортировка препаратов по действующему веществу</h2>
 
             @include('search.nav')
 
             <div class="search-alfavit">
-                <h2 class="product-title">Поиск препаратов по действующему веществу
+                <h2 class="product-title">Сортировка препаратов по действующему веществу
                     @if(!empty($substance->title))
                         {{ $substance->title }}
                     @endif

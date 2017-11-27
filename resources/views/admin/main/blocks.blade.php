@@ -1,3 +1,4 @@
+@include('admin.main.nav')
 <div class="panel-group" id="accordion">
     @foreach($blocks as $block)
         <div class="panel panel-default">

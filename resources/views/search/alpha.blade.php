@@ -9,7 +9,7 @@
             </div>
             @if(!empty($letter))
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <a href="{{ route('search_alpha', 'ru') }}" itemprop="item">Поиск по алфавиту</a>
+                    <a href="{{ route('search_alpha', 'ru') }}" itemprop="item">Сортировка по алфавиту</a>
                     <meta itemprop="position" content="2"/>
                 </div>
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
@@ -18,7 +18,7 @@
                 </div>
             @else
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <span itemprop="name" class="label1">Поиск по алфавиту</span>
+                    <span itemprop="name" class="label1">Сортировка по алфавиту</span>
                     <meta itemprop="position" content="2"/>
                 </div>
             @endif
@@ -29,8 +29,9 @@
 
     <div class="section-title-meta-icon">
         <h3>
+            ПОИСК ПРЕПАРАТОВ:&nbsp;
             @if(!empty($letter))
-                ПОИСК ПРЕПАРАТОВ :<a>{{ $letter }}</a>
+                <a>{{ $letter }}</a>
             @endif
         </h3>
         <div class="section-meta-icon">
@@ -41,12 +42,12 @@
     </div>
     <div class="wrap">
         <div class="product-analog">
-            <h2 class="product-title">Поиск препаратов по алфавиту</h2>
+            <h2 class="product-title">Сортировка препаратов по алфавиту</h2>
 
             @include('search.nav')
 
             <div class="search-alfavit">
-                <h2 class="product-title">Поиск препаратов по алфавиту</h2>
+                <h2 class="product-title">Сортировка препаратов по алфавиту</h2>
                 <div class="search-alfavit-column">
                     <div class="search-left-content">
                         <div class="first-alfavit">
@@ -96,7 +97,8 @@
                                class="nav-button-grey">V</a>
                             <a href="{{ route('search_alpha', ['loc'=>'ru', 'val'=>'W']) }}"
                                class="nav-button-grey">W</a>
-                            <hr>
+                        </div>
+                        <div class="second-alfavit">
                             <a href="{{ route('search_alpha', ['loc'=>'ru', 'val'=>'А']) }}"
                                class="nav-button-grey">А</a>
                             <a href="{{ route('search_alpha', ['loc'=>'ru', 'val'=>'Б']) }}"
@@ -173,7 +175,6 @@
             @endif
         </div>
         <div class="SEO-text">
-
         </div>
     </div>
 </section>

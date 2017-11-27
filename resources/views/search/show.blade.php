@@ -35,7 +35,7 @@
     </div>
     <div class="wrap">
         <div class="product-analog">
-            <h2 class="product-title">Поиск препаратов по алфавиту</h2>
+            <h2 class="product-title">Сортировка препаратов по алфавиту</h2>
             <div class="product-nav product-nav-analog">
                 <a href="{{ route('search_alpha', 'ru') }}" class="nav-button-grey">По алфавиту</a>
                 <a href="{{ route('search_fabricator', 'ru') }}" class="nav-button-grey">По производителю</a>

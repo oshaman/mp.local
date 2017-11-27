@@ -9,13 +9,13 @@
             </div>
             @empty($atx)
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <span itemprop="name" class="label1">Поиск по ATX-классификации</span>
+                    <span itemprop="name" class="label1">Сортировка по ATX-классификации</span>
                     <meta itemprop="position" content="2"/>
                 </div>
             @endempty
             @if(!empty($atx->parents))
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <a href="{{ route('search_atx', ['loc'=>'ru']) }}">Поиск по ATX-классификации</a>
+                    <a href="{{ route('search_atx', ['loc'=>'ru']) }}">Сортировка по ATX-классификации</a>
                     <meta itemprop="position" content="2"/>
                 </div>
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
@@ -28,7 +28,7 @@
                 </div>
             @elseif(!empty($atx))
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <a href="{{ route('search_atx', ['loc'=>'ru']) }}">Поиск по ATX-классификации</a>
+                    <a href="{{ route('search_atx', ['loc'=>'ru']) }}">Сортировка по ATX-классификации</a>
                     <meta itemprop="position" content="2"/>
                 </div>
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
@@ -38,16 +38,16 @@
             @endif
         </div>
         {{--BreadCrumbs--}}
-        <h1 class="head-title">Результаты поиска:&nbsp;
-            @if(!empty($atx)) : <a>{{ str_limit($atx->class, 48) }}</a>@endif
+        <h1 class="head-title">Результаты поиска:
+            @if(!empty($atx))<a>{{ str_limit($atx->class, 48) }}</a>@endif
         </h1>
     </div>
 
     <div class="section-title-meta-icon">
         <h3>
+            ПОИСК ПРЕПАРАТОВ:&nbsp;
             @if(!empty($atx->name))
-                ПОИСК ПРЕПАРАТОВ :
-                <a>{{ $atx->name }}</a>
+                <a>{{ str_limit($atx->name, 40) }}</a>
             @endif
         </h3>
         <div class="section-meta-icon">
@@ -58,12 +58,12 @@
     </div>
     <div class="wrap">
         <div class="product-analog">
-            <h2 class="product-title">Поиск препаратов по ATX-классификации</h2>
+            <h2 class="product-title">Сортировка препаратов по ATX-классификации</h2>
 
             @include('search.nav')
 
             <div class="search-alfavit">
-                <h2 class="product-title">Поиск препаратов по ATX-классификации
+                <h2 class="product-title">Сортировка препаратов по ATX-классификации
                     @if(!empty($atx->name))
                         - {{ $atx->name }}
                     @endif

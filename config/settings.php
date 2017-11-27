@@ -1,7 +1,10 @@
 <?php
 return [
     'medicine_img' => [
-        'main' => ['width' => 200, 'height' => 200],
+        'main' => ['width' => 270, 'height' => 270],
+    ],
+    'adv_img' => [
+        'main' => ['width' => 110, 'height' => 270],
     ],
     'articles_img' => [
         'main' => ['width' => 712, 'height' => 361],

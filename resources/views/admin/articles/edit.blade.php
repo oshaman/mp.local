@@ -1,3 +1,24 @@
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <ul class="nav navbar-nav">
+            @if('cats' == Route::currentRouteName())
+                <li><a class="btn btn-default">Категории</a></li>
+            @else
+                <li><a href="{{ route('cats') }}">Категории</a></li>
+            @endif
+            @if('create_article' == Route::currentRouteName())
+                <li><a class="btn btn-default">Создать статью</a></li>
+            @else
+                <li><a href="{{ route('create_article') }}">Создать статью</a></li>
+            @endif
+            @if('tags_admin' == Route::currentRouteName())
+                <li><a class="btn btn-default">Тэги</a></li>
+            @else
+                <li><a href="{{ route('tags_admin') }}">Тэги</a></li>
+            @endif
+        </ul>
+    </div>
+</nav>
 <h2>Редактирование статьи</h2>
 {!! Form::open(['url'=>route('edit_article', ['spec' => $spec , 'article' => $article->id]),
     'method'=>'POST', 'class'=>'form-horizontal', 'files'=>true]) !!}
@@ -9,7 +30,7 @@
 </div>
 @if('ru' == $spec)
 <div class="">
-    {{ Form::label('alias', 'Псевдоним страницы') }}
+    {{ Form::label('alias', 'ЧПУ страницы') }}
     <div>
         {!! Form::text('alias', old('alias') ? : ($article->alias ?? '') , ['placeholder'=>'psevdonim-stranici', 'id'=>'alias', 'class'=>'form-control eng-alias']) !!}
     </div>
@@ -147,7 +168,7 @@
 <div class="">
     <label>
         <input type="checkbox" {{ (old('confirmed') || !empty($article->approved)) ? 'checked' : '' }} value="1"
-               name="confirmed"> В тираж</label>
+               name="confirmed"> Опубликовать</label>
 </div>
 <hr>
 <div class="row">

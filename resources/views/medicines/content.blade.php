@@ -82,6 +82,10 @@
         {!! $medicine->contraindications !!}
     </div>
 @endif
+
+<div class="clone-to" data-number="1"></div>
+
+
 @if(!empty($medicine->security))
     <div id="bezopastnost" class="top-product-nav-info admin-content">
         <div class="title-product-info">
@@ -212,3 +216,4 @@
         {!! $medicine->additionally !!}
     </div>
 @endif
+<div class="clone-to" data-number="1"></div>
