@@ -32,9 +32,21 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 {{ Html::image(asset('/asset/images/rk/ru').'/'.$adv->path, 'ru picture', array('class' => 'img-thumbnail')) }}
+                                @if(!empty($adv->path))
+                                    <span class="pull-right">
+                                        <button type="button" class="btn btn-danger remove-image"
+                                                data-img="{{ $adv->id }}" data-src="ru">-</button>
+                                    </span>
+                                @endif
                             </div>
                             <div class="col-lg-6">
                                 {{ Html::image(asset('/asset/images/rk/ua').'/'.$adv->upath, 'ua picture', array('class' => 'img-thumbnail')) }}
+                                @if(!empty($adv->upath))
+                                    <span class="pull-right">
+                                        <button type="button" class="btn btn-danger remove-image"
+                                                data-img="{{ $adv->id }}" data-src="ua">-</button>
+                                    </span>
+                                @endif
                             </div>
                         </div>
                         <div class="row">
@@ -52,11 +64,11 @@
                                 {{ Form::label('imgalt', 'Параметры картинки') }}
                                 <div class="">
                                     <div class="col-lg-6">
-                                        {!! Form::text('imgalt', null,
+                                        {!! Form::text('imgalt', $adv->img_alt ?? '',
                                                         ['placeholder'=>'Alt', 'id'=>'imgalt', 'class'=>'form-control']) !!}
                                     </div>
                                     <div class="col-lg-6">
-                                        {!! Form::text('imgtitle', null,
+                                        {!! Form::text('imgtitle', $adv->img_title ?? '',
                                                         ['placeholder'=>'Title', 'id'=>'imgtitle', 'class'=>'form-control']) !!}
                                     </div>
                                     <hr>
@@ -66,11 +78,11 @@
                                 {{ Form::label('uimgalt', 'Параметры картинки') }}
                                 <div class="">
                                     <div class="col-lg-6">
-                                        {!! Form::text('uimgalt', null,
+                                        {!! Form::text('uimgalt', $adv->uimg_alt ?? '',
                                                         ['placeholder'=>'Alt', 'id'=>'uimgalt', 'class'=>'form-control']) !!}
                                     </div>
                                     <div class="col-lg-6">
-                                        {!! Form::text('uimgtitle', null,
+                                        {!! Form::text('uimgtitle', $adv->uimg_title ?? '',
                                                         ['placeholder'=>'Title', 'id'=>'uimgtitle', 'class'=>'form-control']) !!}
                                     </div>
                                     <hr>
@@ -81,17 +93,18 @@
                         <div class="row">
                             <div class="col-lg-6">
                                 {{ Form::label('uimgalt', 'RU-текст') }}
-                                {{ Form::textarea('text', null, ['placeholder'=>'RU-Text', 'class'=>'form-control editor']) }}
+                                {{ Form::textarea('text', $adv->text ?? '', ['placeholder'=>'RU-Text', 'class'=>'form-control editor']) }}
                             </div>
                             <div class="col-lg-6">
                                 {{ Form::label('uimgalt', 'UA-текст') }}
-                                {{ Form::textarea('utext', null, ['placeholder'=>'UA-Text', 'class'=>'form-control editor']) }}
+                                {{ Form::textarea('utext', $adv->utext ?? '', ['placeholder'=>'UA-Text', 'class'=>'form-control editor']) }}
                             </div>
                         </div>
                         <hr>
                         <div class="">
                             <label>
-                                <input type="checkbox" {{ old('confirmed') ? 'checked' : ''}} value="1"
+                                <input type="checkbox"
+                                       {{ old('confirmed') ? 'checked' : ($adv->approved ? 'checked' : '')}} value="1"
                                        name="confirmed">
                                 Опубликовать
                             </label>

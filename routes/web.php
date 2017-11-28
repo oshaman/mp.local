@@ -43,6 +43,7 @@ Route::group(['prefix' => 'poisk'], function () {
  */
 Route::group(['prefix' => 'statjі'], function () {
     Route::get('/{loc}/{article_alias?}', 'ArticlesController@show')->name('articles')->where(['loc' => 'ru|ua', 'article_alias' => '[\w-]+']);
+    Route::get('/{cat_alias}/{loc}', 'ArticlesController@cats')->name('articles_cat')->where(['loc' => 'ru|ua', 'cat_alias' => '[\w-]+']);
 //    Route::get();
 });
 
@@ -121,6 +122,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::group(['prefix' => 'static'], function () {
         Route::get('/', 'Admin\StaticsController@show');
         Route::match(['get', 'post'], 'adv/{adv?}', 'Admin\StaticsController@updateAdv')->name('adv_admin')->where('adv', '[0-9]+');
+        Route::post('delimg', 'Admin\StaticsController@delimg');
     });
     /**
      * Main

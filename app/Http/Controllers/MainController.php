@@ -2,9 +2,9 @@
 
 namespace Fresh\Medpravda\Http\Controllers;
 
+use Fresh\Medpravda\Adv;
 use Fresh\Medpravda\Block;
-use Fresh\Medpravda\User;
-use Illuminate\Http\Request;
+use Fresh\Medpravda\Category;
 
 class MainController extends Controller
 {
@@ -34,7 +34,9 @@ class MainController extends Controller
     public function adv($loc = null)
     {
         $this->title = 'Реклама на сайте';
-        $this->content = view('main.adv')->render();
+
+        $advs = Adv::where(['approved' => 1])->get();
+        $this->content = view('main.adv')->with(['advs' => $advs])->render();
 
         return $this->renderOutput();
     }
@@ -46,6 +48,7 @@ class MainController extends Controller
 
         return $this->renderOutput();
     }
+
     /*public function analog($loc, $medicine=null)
     {
         if ('ru' == $loc) {
@@ -82,7 +85,8 @@ class MainController extends Controller
         $this->vars = array_add($this->vars, 'css', $this->jss);
 
         $this->block = Block::where('id', 1)->first();
-        $header = view('layouts.header.' . $this->spec)->with(['block' => $this->block])->render();
+        $cats = Category::get();
+        $header = view('layouts.header.' . $this->spec)->with(['block' => $this->block, 'cats' => $cats])->render();
         $this->vars = array_add($this->vars, 'header', $header);
 
         $footer = view('layouts.footer')->render();

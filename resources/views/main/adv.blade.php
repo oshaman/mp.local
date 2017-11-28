@@ -1,121 +1,42 @@
 <section class="full-content page-articles">
     <div class="wrap">
-        <div class="breadcrumbs mobile-display-none">
-            <a href="index.html">Главная</a>
-            <span>Размещение рекламы</span>
+        {{--BreadCrumbs--}}
+        <div class="bread-crumbs breadcrumbs mobile-display-none" id="breadcrumbs" itemscope
+             itemtype="http://schema.org/BreadcrumbList">
+            <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
+                <a href="{{ route('main') }}" itemprop="item">Главная</a>
+                <meta itemprop="position" content="1"/>
+            </div>
+            <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
+                <span itemprop="name" class="label1">Размещение рекламы</span>
+                <meta itemprop="position" content="2"/>
+            </div>
         </div>
+        {{--BreadCrumbs--}}
         <div class="admin-content">
-            <p>
-            <h1>Прайс-лист. Нативная реклама и баннеры</h1></p>
-            <p>Мы собрали все наши форматы вместе. Все цены указаны без НДС, действительны до 31 декабря 2017
-                года и не включают сезонные коэффициенты и скидки. Все цены указаны без НДС, действительны
-                до 31 декабря 2017 года и не включают сезонные коэффициенты и скидки. Мы собрали все наши
-                форматы вместе. Все цены указаны без НДС, действительны до 31 декабря 2017 года и не включают
-                сезонные коэффициенты и скидки. Все цены указаны без НДС, действительны до 31 декабря 2017 года
-                и не включают сезонные коэффициенты и скидки.</p>
-            <p>
-            <div class="section-title-meta-icon">
-                <h3>Веб: баннеры-перетяжки</h3>
-            </div>
-            </p>
-            <p>
-            <div class="full-width-image">
-                <img src="{{ asset('assets') }}/images/promo-page/promo-page-1.jpg">
-            </div>
-            </p>
-            <p>Классический горизонтальный формат баннеров, может быть интерактивным.  </p>
-            <p><b>Где показываются:</b> на всех страницах</p>
-            <p><b>Форматы и CPM (стоимость 1000 показов плюс сезонный коэффициент):</b></p>
-            <p>
-            <ul>
-                <li>700x90 - от 400грн</li>
-                <li>1000x90 - от 550грн</li>
-                <li>100%x120 - от 700грн</li>
-                <li>100%x240 - от 850грн</li>
-            </ul>
-            </p>
-            <p>
-            <div class="section-title-meta-icon">
-                <h3>Веб: баннеры-справа</h3>
-            </div>
-            </p>
-            <p>
-            <div class="full-width-image">
-                <img src="{{ asset('assets') }}/images/promo-page/promo-page-2.jpg">
-            </div>
-            </p>
-            <p>Классический вертикальный формат баннеров, может быть интерактивным.</p>
-            <p><b>Где показываются:</b> на всех страницах (за исключением тестов, игр, карточек, некоторых
-                статей)</p>
-            <p><b>Форматы и CPM (стоимость 1000 показов плюс сезонный коэффициент):</b></p>
-            <p>
-            <ul>
-                <li>300x300 - от 500грн</li>
-                <li>300x600 - от 900грн</li>
-            </ul>
-            </p>
-            <p>
-            <div class="section-title-meta-icon">
-                <h3>Приложения: баннер</h3>
-            </div>
-            </p>
-            <p>
-            <div class="full-width-image">
-                <img src="{{ asset('assets') }}/images/promo-page/promo-page-3.jpg">
-            </div>
-            </p>
-            <p>Стандартный горизонтальный баннер, может быть интерактивным, а также проигрывать звук при
-                нажатии.</p>
-            <p><b>Где показываются:</b> на всех страницах</p>
-            <p><b>CPM (стоимость 1000 показов плюс сезонный коэффициент): </b>800грн</p>
-            <p>
-            <div class="section-title-meta-icon">
-                <h3>Сезонные коэффициенты</h3>
-            </div>
-            </p>
-            <p>Коэффициенты зависят от месяца. Дешевле всего реклама на «МедПравде» стоит в январе, дороже
-                всего — в декабре, но это не значит, что цена планомерно повышается. Вот наши коэффициенты
-                от заявленных выше цен.</p>
-            <p>
-            <div class="full-width-image">
-                <img src="{{ asset('assets') }}/images/promo-page/promo-page-4.jpg">
-            </div>
-            </p>
-            <p>
-            <div class="section-title-meta-icon">
-                <h3>Наценки</h3>
-            </div>
-            </p>
-            <p>Коэффициенты зависят от месяца. Дешевле всего реклама на «МедПравде» стоит в январе, дороже
-                всего — в декабре, но это не значит, что цена планомерно повышается. Вот наши коэффициенты
-                от заявленных выше цен.</p>
-            <p>
-            <div class="full-width-image">
-                <img src="{{ asset('assets') }}/images/promo-page/promo-page-5.jpg">
-            </div>
-            </p>
-            <p>
-            <div class="section-title-meta-icon">
-                <h3>Объемные скидки</h3>
-            </div>
-            </p>
-            <p>
-            <p>Скидки не распространяются на все существующие нативные форматы: статьи, карточки, тесты, игры,
-                информер курсов валют и т. д., в том числе и вновь придуманные под запрос редакционные форматы
-            </p></p>
-            <p>
-            <div class="full-width-image">
-                <img src="{{ asset('assets') }}/images/promo-page/promo-page-6.jpg">
-            </div>
-            </p>
-            <p><a href="#!" class="button-white">Скачать прайслист PDF</a></p>
-            <p>
-            <div class="section-title-meta-icon">
-                <h3>Остались вопросы? Свяжитесь с нами!</h3>
-            </div>
-            </p>
-            <p><a href="mailto:medpravda@com.ua" class="e-mail">medpravda@com.ua</a></p>
-            <p><a href="tel:+380447654321" class="e-mail">+38 (044) 765-43-21</a></p>
+            @if(!empty($advs) && is_object($advs))
+                @foreach($advs as $adv)
+                    @if($loop->first)
+                        <p><h1>{{ $adv->title }}</h1></p>
+                        {!! $adv->text !!}
+                    @else
+                        <p>
+                        <div class="section-title-meta-icon">
+                            <h3>{{ $adv->title }}</h3>
+                        </div>
+                        </p>
+                        @if(!empty($adv->path))
+                            <p>
+                            <div class="full-width-image">
+                                <img src="{{ asset('asset') }}/images/rk/ru/{{ $adv->path }}"
+                                     alt="{{ $adv->img_alt ?? '' }}" title="{{ $adv->img_title ?? '' }}">
+                            </div>
+                            </p>
+                        @endif
+                        {!! $adv->text !!}
+                    @endif
+                @endforeach
+            @endif
         </div>
 
     </div>

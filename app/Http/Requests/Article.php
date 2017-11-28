@@ -34,8 +34,8 @@ class Article extends FormRequest
                 return false;
             }
 
-            if ($this->route()->hasParameter('article')) {
-                $model = \Fresh\Medpravda\Article::where('id', $this->route()->parameter('article'))->first();
+            if ($this->route()->hasParameter('article_id')) {
+                $model = \Fresh\Medpravda\Article::where('id', $this->route()->parameter('article_id'))->first();
                 if (null === $model) return true;
                 return ($model->alias !== $input->alias);
             }

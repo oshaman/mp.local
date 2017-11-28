@@ -6,6 +6,7 @@ use Fresh\Medpravda\Adv;
 use Validator;
 use Image;
 use Config;
+use File;
 
 class AdvsRepository extends Repository
 {
@@ -27,10 +28,10 @@ class AdvsRepository extends Repository
             'utitle' => 'required|string|between:3,255',
             'text' => 'nullable|string',
             'utext' => 'nullable|string',
-            'imgalt' => 'nullable|string|between:3,255',
-            'uimgalt' => 'nullable|string|between:3,255',
-            'imgtitle' => 'nullable|string|between:3,255',
-            'uimgtitle' => 'nullable|string|between:3,255',
+            'imgalt' => 'nullable|string|between:,255',
+            'uimgalt' => 'nullable|string|between:,255',
+            'imgtitle' => 'nullable|string|between:,255',
+            'uimgtitle' => 'nullable|string|between:,255',
             'image' => 'sometimes|mimes:jpg,bmp,png,jpeg|max:5120',
             'uimage' => 'sometimes|mimes:jpg,bmp,png,jpeg|max:5120',
             'confirmed' => 'boolean|nullable',
@@ -60,11 +61,12 @@ class AdvsRepository extends Repository
 
         if (!empty($data['confirmed'])) {
             $this->model->approved = 1;
-            $old_img = $this->model->path;
-            $old_uimg = $this->model->upath;
         } else {
             $this->model->approved = 0;
         }
+
+        $old_img = $this->model->path ?? null;
+        $old_uimg = $this->model->upath ?? null;
 
         if ($request->hasFile('image')) {
             $path = $this->mainImg($request->file('image'), $this->transliterate($data['title']), 'ru');
@@ -87,17 +89,17 @@ class AdvsRepository extends Repository
             } else {
                 $this->model->upath = $upath;
             }
-            if (!empty($uold_img)) {
+            if (!empty($old_uimg)) {
                 $this->deleteOldImage($old_uimg, 'ua');
             }
         }
 
         $res = $this->model->save();
-        dd($res);
+//        dd($res);
         if ($res) {
-
+            return ['status' => 'Статья обновлена'];
         }
-        return ['status' => 'Статья обновлена'];
+        $error[] = ['img' => 'Ошибка записи данных'];
     }
 
     /**
@@ -114,9 +116,8 @@ class AdvsRepository extends Repository
 
             $img = Image::make($image);
 
-            $img->resize(Config::get('settings.adv_img')['main']['width'], null, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save(public_path() . '/asset/images/rk/' . $loc . '/' . $path, 100);
+            $img->save(public_path() . '/asset/images/rk/' . $loc . '/' . $path, 100);;
+
             return $path;
         } else {
             return false;
@@ -135,6 +136,25 @@ class AdvsRepository extends Repository
         }
 
         return true;
+    }
+
+    public function delImg($request)
+    {
+        if ('ru' !== $request->get('data-src')) {
+            $src = 'u';
+        } else {
+            $src = '';
+        }
+
+        $model = $this->findById($request->get('data-img'));
+        if (null != $model) {
+            if (null != $model->{$src . 'path'}) {
+                $this->deleteOldImage($model->{$src . 'path'}, ($src ? 'ua' : 'ru'));
+            }
+            $model->{$src . 'path'} = null;
+            $model->save();
+        }
+        return ['success' => 'Картинка удалена'];
     }
 
 }

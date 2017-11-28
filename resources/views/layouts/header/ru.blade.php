@@ -12,10 +12,11 @@
         <div class="main-menu">
             <nav class="mobile-display-none">
                 <a href="{{ route('search') }}">Препараты</a>
-                <a href="{{ route('articles', ['loc'=>'ru']) }}">Интересно</a>
-                <a href="{{ route('articles', ['loc'=>'ru']) }}">Последние статьи</a>
-                <a href="{{ route('articles', ['loc'=>'ru']) }}">Новости медицины</a>
-                <a href="{{ route('articles', ['loc'=>'ru']) }}">Лечение</a>
+                @if(!empty($cats))
+                    @foreach($cats as $cat)
+                        <a href="{{ route('articles_cat', ['loc'=>'ru', 'cat'=>$cat->alias]) }}">{{ $cat->title }}</a>
+                    @endforeach
+                @endif
             </nav>
             <a class="burgerBtn">
                 <span></span>

@@ -147,7 +147,7 @@ class ArticlesRepository extends Repository
             $new['category_id'] = $data['category_id'];
         }
 
-        if ($data['imgalt'] !== $article->image->alt) {
+        if (empty($article->image->alt) || $data['imgalt'] !== $article->image->alt) {
             $new['imgalt'] = $data['imgalt'];
         } else {
             $new['imgalt'] = $article->image->alt;
@@ -157,7 +157,7 @@ class ArticlesRepository extends Repository
             $data['tags'] = null;
         }
 
-        if ($data['imgtitle'] !== $article->image->title) {
+        if (empty($article->image->title) || $data['imgtitle'] !== $article->image->title) {
             $new['imgtitle'] = $data['imgtitle'];
         } else {
             $new['imgtitle'] = $article->image->title;
@@ -207,7 +207,8 @@ class ArticlesRepository extends Repository
         $error = '';
         if (!empty($updated)) {
 
-            $old_img = $article->image->path;
+            $old_img = $article->image->path ?? null;
+
             // Main Image handle
             if ($request->hasFile('img')) {
                 $path = $this->mainImg($request->file('img'), $article->alias);
@@ -215,7 +216,11 @@ class ArticlesRepository extends Repository
                 if (false === $path) {
                     $error[] = ['img' => 'Ошибка загрузки картинки'];
                 } else {
-                    $img = $article->image()->update(['path' => $path, 'alt' => $new['imgalt'], 'title' => $new['imgtitle']]);
+                    if (empty($old_img)) {
+                        $img = $article->image()->create(['path' => $path, 'alt' => $new['imgalt'], 'title' => $new['imgtitle']]);
+                    } else {
+                        $img = $article->image()->update(['path' => $path, 'alt' => $new['imgalt'], 'title' => $new['imgtitle']]);
+                    }
                 }
 
                 if (empty($img)) {
