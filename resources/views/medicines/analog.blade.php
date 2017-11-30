@@ -10,7 +10,7 @@
                 </a>
             </div>
             <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                <a href="{{ route('search') }}" itemprop="item">
+                <a href="{{ route('sort') }}" itemprop="item">
                     <span itemprop="name" class="label1">Поиск препаратов</span>
                     <meta itemprop="position" content="2"/>
                 </a>
@@ -28,21 +28,18 @@
         </div>
         {{--BreadCrumbs--}}
 
-
         <h1 class="head-title">{{ $medicine->title }}: аналоги</h1>
         <div class="product-nav">
-            <a href="{{ route('medicine', ['medicine'=>$medicine->alias, 'loc'=>'ru']) }}" class="nav-button-grey">Официальная
+            <a href="{{ route('medicine_official', ['medicine'=>$medicine->alias, 'loc'=>'ru']) }}"
+               class="nav-button-grey">Официальная
                 инструкция</a>
-            <a href="{{ route('medicine_adaptive', ['medicine'=>$medicine->alias, 'loc'=>'ru']) }}"
+            <a href="{{ route('medicine', ['medicine'=>$medicine->alias, 'loc'=>'ru']) }}"
                class="nav-button-grey">Адаптированная инструкция</a>
             <a class="nav-button-grey active">Аналоги</a>
             <a href="{{ route('medicine_faq', ['medicine'=>$medicine->alias, 'loc'=>'ru']) }}" class="nav-button-grey">Вопросы</a>
         </div>
-        <div class="minzdrav">
-            Перед применением проконсультируйтесь со своим лечащим врачом!
-        </div>
         <div class="product-analog">
-            <h2 class="product-title">Совпадают действующие вещества</h2>
+            <h2 class="product-title">Форма выпуска</h2>
             <div class="product-nav product-nav-analog">
                 @foreach($forms as $alias=>$form)
                     <a class="nav-button-grey" data-form-id="{{ $alias }}">{{ $form }}</a>

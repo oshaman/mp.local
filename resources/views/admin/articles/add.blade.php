@@ -57,6 +57,20 @@
     </div>
 </div>
 <div class="">
+    {{ Form::label('description', 'Описание страницы(160 символов)') }}
+    <div>
+        {!! Form::text('description', old('description') ? : '' ,
+         ['placeholder'=>'description', 'id'=>'description', 'class'=>'form-control']) !!}
+    </div>
+</div>
+<div class="">
+    {{ Form::label('priority', 'Приоритет(0-255)') }}
+    <div>
+        {!! Form::number('priority', old('priority') ? : '' ,
+         ['id'=>'priority', 'class'=>'form-control']) !!}
+    </div>
+</div>
+<div class="">
     {{ Form::label('tags', 'Тэги') }}
     @if(!empty($tags))
         <div>

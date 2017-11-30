@@ -50,6 +50,8 @@ return [
     'pharmagroup_name_id' => 'Фармакологическая группа',
     'fabricator_name_id' => 'Производитель',
     'innname_id' => 'Международное название',
+    'description' => 'Описание',
+    'priority' => 'Приоритет',
 //    Категории препаратов
     'alias1' => 'ЧПУ',
     'alias2' => 'ЧПУ',

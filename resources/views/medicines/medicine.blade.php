@@ -11,7 +11,7 @@
                     </a>
                 </div>
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <a href="{{ route('search') }}" itemprop="item">
+                    <a href="{{ route('sort') }}" itemprop="item">
                         <span itemprop="name" class="label1">Поиск препаратов</span>
                         <meta itemprop="position" content="2"/>
                     </a>
@@ -26,7 +26,7 @@
             <div class="clone-to" data-number="3"></div>
             <div class="product-nav">
                 <a class="nav-button-grey active">Официальная инструкция</a>
-                <a href="{{ route('medicine_adaptive', ['medicine'=>$medicine->alias, 'loc'=>'ru']) }}"
+                <a href="{{ route('medicine', ['medicine'=>$medicine->alias, 'loc'=>'ru']) }}"
                    class="nav-button-grey">Адаптированная инструкция</a>
                 <a href="{{ route('medicine_analog', ['medicine'=>$medicine->alias, 'loc'=>'ru']) }}"
                    class="nav-button-grey">Аналоги</a>
@@ -35,8 +35,8 @@
             </div>
             <div class="product-nav-img">
                 <div class="product-nav-block">
-                    <h2 class="product-title">{{ $medicine->title }} инструкция и цена в аптеках</h2>
-                    <a href="{{ route('medicine', ['loc'=>'ua', 'medicine'=>$medicine->alias]) }}" class="button-blue">Перевести</a>
+                    <a href="{{ route('medicine_official', ['loc'=>'ua', 'medicine'=>$medicine->alias]) }}"
+                       class="button-blue">Перевести</a>
                     <ul class="top-product-nav">
                         @if(!empty($medicine->consist))
                             <li>
@@ -228,8 +228,10 @@
 
 
             <div class="print">
-                <a href="#"><img src="{{ asset('assets') }}/images/main/icons.png" alt="Версия для печати">Версия для
-                    печати</a>
+                <a href="{{ route('toprint', ['loc'=>'ru', 'medicine'=>$medicine->alias, 'vr'=>'main']) }}">
+                    <img src="{{ asset('assets') }}/images/main/icons.png" alt="Версия для печати">
+                    Версия для печати
+                </a>
             </div>
             <div class="product-info-down">
                 @if(!empty($medicine->dose))

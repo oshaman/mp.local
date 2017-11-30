@@ -29,15 +29,15 @@
             @endif
         </div>
         {{--BreadCrumbs--}}
-        <h1 class="head-title">Результаты поиска:@if(!empty($farm))
-            <a>{{ str_limit($farm->title, 48) }}</a>@endif</h1>
-    </div>
+        <h1 class="product-title">Сортировка по:</h1>
 
+        @include('search.nav')
+    </div>
     <div class="section-title-meta-icon">
         <h3>
-            ПОИСК ПРЕПАРАТОВ:&nbsp;
-            @if(!empty($farm->title))
-                <a>{{ str_limit($farm->title, 40) }}</a>
+            Сортировка препаратов по фармакологической группе:&nbsp;
+            @if(!empty($letter))
+                <a>{{ $letter }}</a>
             @endif
         </h3>
         <div class="section-meta-icon">
@@ -48,16 +48,8 @@
     </div>
     <div class="wrap">
         <div class="product-analog">
-            <h2 class="product-title">Сортировка препаратов по фармакологической группе</h2>
-
-            @include('search.nav')
-
             <div class="search-alfavit">
-                <h2 class="product-title">Сортировка препаратов по фармакологической группе
-                    @if(!empty($farm->title))
-                        {{ $farm->title }}
-                    @endif
-                </h2>
+
                 <div class="search-alfavit-column">
                     <div class="search-left-content">
                         <div class="first-alfavit">

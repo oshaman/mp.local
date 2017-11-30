@@ -9,7 +9,15 @@ abstract class Repository
 
     protected $model = false;
 
-
+    /**
+     * @param string $select
+     * @param bool $take
+     * @param bool $pagination
+     * @param bool $where
+     * @param bool $order
+     * @param bool $with
+     * @return bool
+     */
     public function get($select = '*', $take = false, $pagination = false, $where = false, $order = false, $with = false)
     {
         $builder = $this->model->select($select);
@@ -40,6 +48,10 @@ abstract class Repository
         return $this->check($builder->get());
     }
 
+    /**
+     * @param $result
+     * @return bool
+     */
     protected function check($result)
     {
 
@@ -72,6 +84,11 @@ abstract class Repository
 
     }
 
+    /**
+     * @param $alias
+     * @param array $attr
+     * @return mixed
+     */
     public function one($alias, $attr = array())
     {
         $result = $this->model->where('alias', $alias)->first();
@@ -79,6 +96,11 @@ abstract class Repository
         return $result;
     }
 
+    /**
+     * @param $id
+     * @param array $attr
+     * @return mixed
+     */
     public function findById($id, $attr = array())
     {
         $result = $this->model->where('id', $id)->first();
@@ -86,6 +108,10 @@ abstract class Repository
         return $result;
     }
 
+    /**
+     * @param $string
+     * @return mixed|string
+     */
     public function transliterate($string)
     {
         $str = mb_strtolower($string, 'UTF-8');
@@ -139,6 +165,10 @@ abstract class Repository
         return $str;
     }
 
+    /**
+     * @param $seo
+     * @return mixed
+     */
     public function convertSeo($seo)
     {
         if (is_string($seo) && is_object(json_decode($seo)) && (json_last_error() == JSON_ERROR_NONE)) {
@@ -147,6 +177,10 @@ abstract class Repository
         return $seo;
     }
 
+    /**
+     * @param $date
+     * @return false|string
+     */
     public function convertDate($date)
     {
         $midnight = strtotime('today midnight');

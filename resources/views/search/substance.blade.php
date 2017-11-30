@@ -25,16 +25,15 @@
             @endif
         </div>
         {{--BreadCrumbs--}}
-        <h1 class="head-title">
-            Результаты поиска: @if(!empty($substance))<a>{{ $substance->title }}</a>@endif
-        </h1>
-    </div>
+        <h1 class="product-title">Сортировка по:</h1>
 
+        @include('search.nav')
+    </div>
     <div class="section-title-meta-icon">
         <h3>
-            ПОИСК ПРЕПАРАТОВ:&nbsp;
-            @if(!empty($substance->title))
-                <a>{{ $substance->title }}</a>
+            Сортировка препаратов по действующему веществу:&nbsp;
+            @if(!empty($letter))
+                <a>{{ $letter }}</a>
             @endif
         </h3>
         <div class="section-meta-icon">
@@ -45,16 +44,7 @@
     </div>
     <div class="wrap">
         <div class="product-analog">
-            <h2 class="product-title">Сортировка препаратов по действующему веществу</h2>
-
-            @include('search.nav')
-
             <div class="search-alfavit">
-                <h2 class="product-title">Сортировка препаратов по действующему веществу
-                    @if(!empty($substance->title))
-                        {{ $substance->title }}
-                    @endif
-                </h2>
                 <div class="search-alfavit-column">
                     <div class="search-left-content">
                         <div class="first-alfavit">
@@ -64,7 +54,8 @@
                             {{ link_to_route('search_substance', 'L', ['ru', null, 'substance' =>'L'], ['class'=>'nav-button-grey']) }}
                             {{ link_to_route('search_substance', 'P', ['ru', null, 'substance' =>'P'], ['class'=>'nav-button-grey']) }}
                             {{ link_to_route('search_substance', 'T', ['ru', null, 'substance' =>'T'], ['class'=>'nav-button-grey']) }}
-                            <hr>
+                        </div>
+                        <div class="first-alfavit">
                             {{ link_to_route('search_substance', 'А', ['ru', null, 'substance' =>'А'], ['class'=>'nav-button-grey']) }}
                             {{ link_to_route('search_substance', 'Б', ['ru', null, 'substance' =>'Б'], ['class'=>'nav-button-grey']) }}
                             {{ link_to_route('search_substance', 'В', ['ru', null, 'substance' =>'В'], ['class'=>'nav-button-grey']) }}

@@ -24,37 +24,26 @@
             @endif
         </div>
         {{--BreadCrumbs--}}
-        <h1 class="head-title">
-            Результаты поиска:&nbsp;@if(!empty($mnn)) :
-            <a>{{ str_limit($mnn->title, 48) }}</a>@endif
-        </h1>
-    </div>
+        <h1 class="product-title">Сортировка по:</h1>
 
+        @include('search.nav')
+    </div>
     <div class="section-title-meta-icon">
-            <h3>
-                ПОИСК ПРЕПАРАТОВ:&nbsp;
-                @if(!empty($mnn->title))
-                    <a>{{ $mnn->title }}</a>
-                @endif
-            </h3>
+        <h3>
+            Сортировка препаратов по международному названию:&nbsp;
+            @if(!empty($letter))
+                <a>{{ $letter }}</a>
+            @endif
+        </h3>
         <div class="section-meta-icon">
             <div class="section-icon">
-                <img src="{{ asset('assets') }}/images/title-icons/found.png" alt="Препарат">
+                <img src="{{ asset('assets') }}/images/title-icons/found.png" alt="иконка Также ищут">
             </div>
         </div>
     </div>
     <div class="wrap">
         <div class="product-analog">
-            <h2 class="product-title">Сортировка препаратов по международному названию</h2>
-
-            @include('search.nav')
-
             <div class="search-alfavit">
-                <h2 class="product-title">Сортировка препаратов по международному названию
-                    @if(!empty($mnn->title))
-                        {{ $mnn->title }}
-                    @endif
-                </h2>
                 <div class="search-alfavit-column">
                     <div class="search-left-content">
                         <div class="first-alfavit">

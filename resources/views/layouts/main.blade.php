@@ -14,7 +14,7 @@
             j.src =
                 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
             f.parentNode.insertBefore(j, f);
-        })(window, document, 'script', 'dataLayer', 'GTM-K35X9FL');</script>
+        })(window, document, 'script', 'dataLayer', 'GTM-5SZ98T6');</script>
     <!-- End Google Tag Manager -->
     @if(!empty($seo->seo_keywords))
         <meta name="keywords" content="{{ $seo->seo_keywords }}">
@@ -54,7 +54,7 @@
 <body>
 <!-- Google Tag Manager (noscript) -->
 <noscript>
-    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K35X9FL"
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5SZ98T6"
             height="0" width="0" style="display:none;visibility:hidden"></iframe>
 </noscript>
 <!-- End Google Tag Manager (noscript) -->
@@ -72,7 +72,8 @@
 <!-- WRAP -->
 <div class="main-wrapper
         @if('main' == Route::currentRouteName()) main-page @endif
-@if('articles' == Route::currentRouteName()) articles @endif
+@if('articles' == Route::currentRouteName()) single-article @endif
+@if('articles_cat' == Route::currentRouteName()) articles @endif
         ">
     @yield('header')
 

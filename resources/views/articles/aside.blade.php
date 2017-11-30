@@ -1,7 +1,10 @@
 <aside class="right-section">
     <div class="mobile-display-none">
+        <div class="banner-reklama order-first">
+            <a href="#!"><img src="{{ asset('assets') }}/images/promotion/promo-aside-300-300.jpg" alt="Aloe vera"></a>
+        </div>
         <div class="section-title-meta-icon border-top-none">
-            <h3>Новости медицины</h3>
+            <h3>Топ статьи</h3>
             <div class="section-meta-icon">
                 <div class="section-icon">
                     <img src="{{ asset('assets') }}/images/title-icons/main-icon-4.png" alt="иконка Новости медицины">
@@ -91,8 +94,8 @@
             </div>
         </div>
     </div>
-    <div class="banner-reklama order-first">
-        <a href="#!"><img src="{{ asset('assets') }}/images/promotion/promo-aside-300-300.jpg" alt="Aloe vera"></a>
+    <div class="banner-reklama order-fourth">
+        <a href="#!"><img src="{{ asset('assets') }}/images/promotion/promo-aside-300-300.jpg" alt="Dentalcare"></a>
     </div>
     <div class="order-third">
         <div class="section-title-meta-icon">
@@ -186,12 +189,9 @@
             </div>
         </div>
     </div>
-    <div class="banner-reklama order-fourth">
-        <a href="#!"><img src="{{ asset('assets') }}/images/promotion/promo-aside-300-300.jpg" alt="Dentalcare"></a>
-    </div>
     <div class="mobile-display-none">
         <div class="section-title-meta-icon">
-            <h3>Популярные теги</h3>
+            <h3>Популярные тематики</h3>
             <div class="section-meta-icon">
                 <div class="section-icon">
                     <img src="{{ asset('assets') }}/images/title-icons/main-icon-6.png" alt="иконка Популярные теги">

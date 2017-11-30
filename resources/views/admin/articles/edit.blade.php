@@ -66,6 +66,20 @@
         {!! Form::file('img', ['accept'=>'image/*', 'id'=>'img', 'class'=>'form-control']) !!}
     </div>
 </div>
+<div class="">
+    {{ Form::label('description', 'Описание страницы(160 символов)') }}
+    <div>
+        {!! Form::text('description', old('description') ? : ($article->description ?? ''),
+         ['placeholder'=>'description', 'id'=>'description', 'class'=>'form-control']) !!}
+    </div>
+</div>
+<div class="">
+    {{ Form::label('priority', 'Приоритет(0-255)') }}
+    <div>
+        {!! Form::number('priority', old('priority') ? : ($article->priority ?? ''),
+         ['id'=>'priority', 'class'=>'form-control']) !!}
+    </div>
+</div>
 @if('ru' == $spec)
 <div class="">
     {{ Form::label('tags', 'Тэги') }}

@@ -38,16 +38,16 @@
             @endif
         </div>
         {{--BreadCrumbs--}}
-        <h1 class="head-title">Результаты поиска:
-            @if(!empty($atx))<a>{{ str_limit($atx->class, 48) }}</a>@endif
-        </h1>
+        <h1 class="product-title">Сортировка по:</h1>
+
+        @include('search.nav')
     </div>
 
     <div class="section-title-meta-icon">
         <h3>
-            ПОИСК ПРЕПАРАТОВ:&nbsp;
-            @if(!empty($atx->name))
-                <a>{{ str_limit($atx->name, 40) }}</a>
+            Сортировка препаратов по ATX:&nbsp;
+            @if(!empty($letter))
+                <a>{{ $letter }}</a>
             @endif
         </h3>
         <div class="section-meta-icon">
@@ -58,16 +58,7 @@
     </div>
     <div class="wrap">
         <div class="product-analog">
-            <h2 class="product-title">Сортировка препаратов по ATX-классификации</h2>
-
-            @include('search.nav')
-
             <div class="search-alfavit">
-                <h2 class="product-title">Сортировка препаратов по ATX-классификации
-                    @if(!empty($atx->name))
-                        - {{ $atx->name }}
-                    @endif
-                </h2>
                 <div class="search-alfavit-column">
                     @if(!empty($parents))
                         <div class="search-left-content admin-content">

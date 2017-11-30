@@ -8,12 +8,12 @@
                 <meta itemprop="position" content="1"/>
             </div>
             <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                <span itemprop="name" class="label1">{{ $cat->title ?? '' }}</span>
+                <span itemprop="name" class="label1">{{ $cat->title ?? ($tag->name ?? '') }}</span>
                 <meta itemprop="position" content="2"/>
             </div>
         </div>
         {{--BreadCrumbs--}}
-        <h1 class="head-title blue-circle">{{ $cat->title ?? '' }}</h1>
+        <h1 class="head-title blue-circle">{{ $cat->title ?? ($tag->name ?? '') }}</h1>
     </div>
     @if(!empty($articles))
         <div class="big-news margin-minus all-big-news">
@@ -52,37 +52,37 @@
             <div class="two-big-news">
                 @foreach($articles as $article)
                     @continue($loop->first)
-            <article class="news">
-                <a href="{{ route('articles', ['loc'=>'ru', 'article_alias'=>$article->alias]) }}">
-                    <div class="article-img">
-                        @if(!empty($article->image->path))
-                            <img src="{{ asset('asset').'/images/articles/ru/middle/'.$article->image->path }}"
-                                 alt="{{ $article->image->alt }}" title="{{ $article->image->title }}">
-                        @else
-                            <img src="{{ asset('asset')}}/images/articles/mp.png"
-                                 alt="MedPravda" title="MedPravda">
-                        @endif
-                        <div class="views"><span>{{ $article->view }}</span></div>
-                    </div>
-                    <div class="article-info">
-                        <h4 class="article-title">{{ $article->title }}</h4>
-                        <p class="article-category">Статистика минздрава</p>
-                        <div class="article-text">{!! str_limit($article->content, 156) !!}</div>
-                        <div class="date-link">
-                            <div class="article-date">
-                                {{ $article->created_at->format('d')
-                                        . ' '  . trans('ru.'.$article->created_at->format('m'))
-                                        . ' '  . $article->created_at->format('Y')
-                                }}
+                    <article class="news">
+                        <a href="{{ route('articles', ['loc'=>'ru', 'article_alias'=>$article->alias]) }}">
+                            <div class="article-img">
+                                @if(!empty($article->image->path))
+                                    <img src="{{ asset('asset').'/images/articles/ru/middle/'.$article->image->path }}"
+                                         alt="{{ $article->image->alt }}" title="{{ $article->image->title }}">
+                                @else
+                                    <img src="{{ asset('asset')}}/images/articles/mp.png"
+                                         alt="MedPravda" title="MedPravda">
+                                @endif
+                                <div class="views"><span>{{ $article->view }}</span></div>
                             </div>
-                            <span class="btn-link">
-                                Подробнее
 
-                        </span>
-                        </div>
-                    </div>
-                </a>
-            </article>
+                            <div class="article-info">
+                                <h4 class="article-title">{{ $article->title }}</h4>
+                                <p class="article-category">Статистика минздрава</p>
+                                <div class="article-text">{!! str_limit($article->content, 156) !!}</div>
+                                <div class="date-link">
+                                    <div class="article-date">
+                                        {{ $article->created_at->format('d')
+                                                . ' '  . trans('ru.'.$article->created_at->format('m'))
+                                                . ' '  . $article->created_at->format('Y')
+                                        }}
+                                    </div>
+                                    <span class="btn-link">
+                                    Подробнее
+                                </span>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
                 @endforeach
             </div>
         </div>

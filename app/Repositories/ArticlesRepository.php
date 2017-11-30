@@ -35,6 +35,14 @@ class ArticlesRepository extends Repository
 
         $article['title'] = $data['title'];
 
+        if (!empty($data['description'])) {
+            $article['description'] = $data['description'];
+        }
+
+        if (!empty($data['priority'])) {
+            $article['priority'] = (int)$data['priority'];
+        }
+
         $article['category_id'] = $data['category_id'];
 
         $article['alias'] = $data['alias'];
@@ -73,7 +81,8 @@ class ArticlesRepository extends Repository
             $article['seo'] = json_encode($obj);
         }
         //        Content
-        $article['content'] = $data['content'];
+        $re = '/(<em>|<strong>|<b>|<\/em>|<\/strong>|<\/b>|&nbsp;|&raquo;|&laquo;|&ndash;|&mdash;|&shy;|<div[^>]+>|<\/div>)/';
+        $article['content'] = preg_replace($re, ' ', $data['content']);
 
         $new = $this->model->firstOrCreate($article);
         $uarticle['id'] = $new->id;
@@ -139,6 +148,10 @@ class ArticlesRepository extends Repository
         if ($data['title'] !== $article->title) {
             $new['title'] = $data['title'];
         }
+
+        $new['description'] = $data['description'] ?? null;
+        $new['priority'] = $data['priority'] ?? null;
+
         if ($data['alias'] !== $article->alias) {
             $new['alias'] = $data['alias'];
         }
@@ -193,7 +206,8 @@ class ArticlesRepository extends Repository
         }
 
         //        Content
-        $new['content'] = $data['content'];
+        $re = '/(<em>|<strong>|<b>|<\/em>|<\/strong>|<\/b>|&nbsp;|&raquo;|&laquo;|&ndash;|&mdash;|&shy;|<div[^>]+>|<\/div>)/';
+        $new['content'] = preg_replace($re, ' ', $data['content']);
 //        END Content
 
         $updated = $article->fill($new)->save();
@@ -345,18 +359,17 @@ class ArticlesRepository extends Repository
      * @param $tag
      * @return articles collection
      */
-    public function getByTag($tag, $own)
+    public function getByTag($tag)
     {
         $articles = $this->model->whereHas('tags', function ($q) use ($tag) {
             $q->where('tag_id', $tag)->select('title', 'alias');
         });
 
-        $articles->with(['image', 'category'])->where('own', $own);
+        $articles->with(['image', 'category'])->where('approved', 1);
 
-        return $this->check($articles->paginate(Config::get('settings.paginate_tags')));
+        return $this->check($articles->paginate(9));
 
     }
-
 
     /**
      * Clear
@@ -379,5 +392,51 @@ class ArticlesRepository extends Repository
         !empty($cat) ? Cache::forget('articles_cats' . $cat) : null;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getMain($cat, $takes)
+    {
+        $prems = $this->getPrems($cat);
+
+        if ($prems->isNotEmpty()) {
+            $ids = [];
+            foreach ($prems as $prem) {
+                $ids[] = $prem->id;
+            }
+        }
+
+
+        $builder = $this->model->with('image');
+
+        $where = [['category_id', $cat], ['approved', 1]];
+        $builder->where($where);
+
+        if (!empty($ids)) {
+            $take = $takes - count($ids);
+            $builder->whereNotIn('id', $ids);
+        } else {
+            $take = $takes;
+        }
+
+        $articles = $builder->take($take)->orderBy('created_at', 'desc')->get();
+
+        $res = $prems->concat($articles);
+//                dd($res);
+        return $res;
+
+    }
+
+    /**
+     * @param $cat
+     * @param int $take
+     * @return mixed
+     */
+    public function getPrems($cat, $take = 8)
+    {
+        $where = [['category_id', $cat], ['priority', '>', 0], ['approved', 1]];
+        $prems = $this->model->where($where)->take($take)->orderBy('priority', 'desc')->with(['image'])->get();
+        return $prems;
+    }
 
 }

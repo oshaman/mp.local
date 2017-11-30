@@ -34,18 +34,6 @@
         </div>
     </div>
     <div class="wrap">
-        <div class="product-analog">
-            <h2 class="product-title">Сортировка препаратов по алфавиту</h2>
-            <div class="product-nav product-nav-analog">
-                <a href="{{ route('search_alpha', 'ru') }}" class="nav-button-grey">По алфавиту</a>
-                <a href="{{ route('search_fabricator', 'ru') }}" class="nav-button-grey">По производителю</a>
-                <a href="{{ route('search_mnn', 'ru') }}" class="nav-button-grey">По международному названию (МНН)</a>
-                <a href="{{ route('search_atx', 'ru') }}" class="nav-button-grey">По АТХ-классификации</a>
-                <a href="{{ route('search_farm', 'ru') }}" class="nav-button-grey">По фармакотерапевтической группе</a>
-                <a href="{{ route('search_substance', 'ru') }}" class="nav-button-grey">По действующему веществу</a>
-            </div>
-        </div>
-
         @if(!empty($titles))
             @foreach($titles as $title)
                 <div class="search-result">

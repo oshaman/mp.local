@@ -17,7 +17,7 @@
             {{--content_css: "{{asset('css')}}/tinimce.css,",--}}
             importcss_file_filter: "{{asset('css')}}/tinimce.css",
             importcss_append: true,
-            style_formats: [
+            /*style_formats: [
                 {
                     title: 'Шаблоны', items: [
 
@@ -29,7 +29,7 @@
 //                    {title: 'Цитата', block: 'blockquote'},
                 ]
                 },
-            ],
+            ],*/
 
 
             plugins: [

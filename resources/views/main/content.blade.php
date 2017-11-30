@@ -25,7 +25,7 @@
                             задумываясь,
                             что подобная реакция организма сама по себе показатель проблем.</p>
                     </div>
-                    <a href="{{ route('search') }}" class="button-blue">Подробнее</a>
+                    <a href="{{ route('sort') }}" class="button-blue">Подробнее</a>
                 </div>
 
             </div>
@@ -113,7 +113,7 @@
                     <div class="box-number-info-text">
                         мед препаратов
                     </div>
-                    <a href="{{ route('search') }}" class="button-blue">Все мед препараты</a>
+                    <a href="{{ route('sort') }}" class="button-blue">Все мед препараты</a>
                 </div>
             </div>
             <div class="box-number">
@@ -137,7 +137,7 @@
                     <div class="box-number-info-text">
                         партнеров
                     </div>
-                    <a href="{{ route('search') }}" class="button-blue">Все партнеры</a>
+                    <a href="{{ route('adv') }}" class="button-blue">Все партнеры</a>
                 </div>
             </div>
         </div>
@@ -182,7 +182,8 @@
     <!-- end Поиск препаратов -->
 
     <!-- ТОП СТАТЬИ -->
-    <section class="mobile-display-none">
+    {{--<section class="mobile-display-none">--}}
+    <section>
         <div class="section-title-meta-icon">
             <h3>{{ $blocks[2]->title ?? '' }}</h3>
             <div class="section-meta-icon">
@@ -210,202 +211,38 @@
             </div>
         </div>
         <div class="section-interest-art wrap">
-            <article class="article-articles">
-                <a href="single-article.html">
-                    <div class="article-img">
-                        <img src="{{ asset('assets') }}/images/index/top-art.jpg">
-                        <div class="views"><span>2143</span></div>
-                    </div>
-                    <div class="article-info">
-                        <h4 class="article-title">Очки нам больше никогда не
-                            понадобятся!</h4>
-                        <p class="article-category">Статистика минздрава</p>
-                        <p class="article-text">Больше людей, испытывающих головне боли, предпочитают "заглушать" их
-                            таблетками, не
-                            задумываясь,
-                            что подобная реакция организма сама по себе показатель проблем. Больше людей,
-                            испытывающих головне боли, предпочитают "заглушать" их таблетками, не задумываясь,
-                            что подобная реакция организма сама по себе показатель проблем.</p>
-                        <div class="date-link">
-                            <div class="article-date">1 сентбря 2017</div>
-                            <span class="btn-link">Подробнее</span>
-                        </div>
-                    </div>
-                </a>
-                <div class="article-border"></div>
-            </article>
-            <article class="article-articles">
-                <a href="single-article.html">
-                    <div class="article-img">
-                        <img src="{{ asset('assets') }}/images/index/top-art.jpg">
-                        <div class="views"><span>2143</span></div>
-                    </div>
-                    <div class="article-info">
-                        <h4 class="article-title">Очки нам больше никогда не
-                            понадобятся!</h4>
-                        <p class="article-category">Статистика минздрава</p>
-                        <p class="article-text">Больше людей, испытывающих головне боли, предпочитают "заглушать" их
-                            таблетками, не
-                            задумываясь,
-                            что подобная реакция организма сама по себе показатель проблем. Больше людей,
-                            испытывающих головне боли, предпочитают "заглушать" их таблетками, не задумываясь,
-                            что подобная реакция организма сама по себе показатель проблем.</p>
-                        <div class="date-link">
-                            <div class="article-date">1 сентбря 2017</div>
-                            <span class="btn-link">Подробнее</span>
-                        </div>
-                    </div>
-                </a>
-                <div class="article-border"></div>
-            </article>
-            <article class="article-articles">
-                <a href="single-article.html">
-                    <div class="article-img">
-                        <img src="{{ asset('assets') }}/images/index/top-art.jpg">
-                        <div class="views"><span>2143</span></div>
-                    </div>
-                    <div class="article-info">
-                        <h4 class="article-title">Очки нам больше никогда не
-                            понадобятся!</h4>
-                        <p class="article-category">Статистика минздрава</p>
-                        <p class="article-text">Больше людей, испытывающих головне боли, предпочитают "заглушать" их
-                            таблетками, не
-                            задумываясь,
-                            что подобная реакция организма сама по себе показатель проблем. Больше людей,
-                            испытывающих головне боли, предпочитают "заглушать" их таблетками, не задумываясь,
-                            что подобная реакция организма сама по себе показатель проблем.</p>
-                        <div class="date-link">
-                            <div class="article-date">1 сентбря 2017</div>
-                            <span class="btn-link">Подробнее</span>
-                        </div>
-                    </div>
-                </a>
-                <div class="article-border"></div>
-            </article>
-            <article class="article-articles">
-                <a href="single-article.html">
-                    <div class="article-img">
-                        <img src="{{ asset('assets') }}/images/index/top-art.jpg">
-                        <div class="views"><span>2143</span></div>
-                    </div>
-                    <div class="article-info">
-                        <h4 class="article-title">Очки нам больше никогда не
-                            понадобятся!</h4>
-                        <p class="article-category">Статистика минздрава</p>
-                        <p class="article-text">Больше людей, испытывающих головне боли, предпочитают "заглушать" их
-                            таблетками, не
-                            задумываясь,
-                            что подобная реакция организма сама по себе показатель проблем. Больше людей,
-                            испытывающих головне боли, предпочитают "заглушать" их таблетками, не задумываясь,
-                            что подобная реакция организма сама по себе показатель проблем.</p>
-                        <div class="date-link">
-                            <div class="article-date">1 сентбря 2017</div>
-                            <span class="btn-link">Подробнее</span>
-                        </div>
-                    </div>
-                </a>
-                <div class="article-border"></div>
-            </article>
-            <article class="article-articles">
-                <a href="single-article.html">
-                    <div class="article-img">
-                        <img src="{{ asset('assets') }}/images/index/top-art.jpg">
-                        <div class="views"><span>2143</span></div>
-                    </div>
-                    <div class="article-info">
-                        <h4 class="article-title">Очки нам больше никогда не
-                            понадобятся!</h4>
-                        <p class="article-category">Статистика минздрава</p>
-                        <p class="article-text">Больше людей, испытывающих головне боли, предпочитают "заглушать" их
-                            таблетками, не
-                            задумываясь,
-                            что подобная реакция организма сама по себе показатель проблем. Больше людей,
-                            испытывающих головне боли, предпочитают "заглушать" их таблетками, не задумываясь,
-                            что подобная реакция организма сама по себе показатель проблем.</p>
-                        <div class="date-link">
-                            <div class="article-date">1 сентбря 2017</div>
-                            <span class="btn-link">Подробнее</span>
-                        </div>
-                    </div>
-                </a>
-                <div class="article-border"></div>
-            </article>
-            <article class="article-articles">
-                <a href="single-article.html">
-                    <div class="article-img">
-                        <img src="{{ asset('assets') }}/images/index/top-art.jpg">
-                        <div class="views"><span>2143</span></div>
-                    </div>
-                    <div class="article-info">
-                        <h4 class="article-title">Очки нам больше никогда не
-                            понадобятся!</h4>
-                        <p class="article-category">Статистика минздрава</p>
-                        <p class="article-text">Больше людей, испытывающих головне боли, предпочитают "заглушать" их
-                            таблетками, не
-                            задумываясь,
-                            что подобная реакция организма сама по себе показатель проблем. Больше людей,
-                            испытывающих головне боли, предпочитают "заглушать" их таблетками, не задумываясь,
-                            что подобная реакция организма сама по себе показатель проблем.</p>
-                        <div class="date-link">
-                            <div class="article-date">1 сентбря 2017</div>
-                            <span class="btn-link">Подробнее</span>
-                        </div>
-                    </div>
-                </a>
-                <div class="article-border"></div>
-            </article>
-            <article class="article-articles">
-                <a href="single-article.html">
-                    <div class="article-img">
-                        <img src="{{ asset('assets') }}/images/index/top-art.jpg">
-                        <div class="views"><span>2143</span></div>
-                    </div>
-                    <div class="article-info">
-                        <h4 class="article-title">Очки нам больше никогда не
-                            понадобятся!</h4>
-                        <p class="article-category">Статистика минздрава</p>
-                        <p class="article-text">Больше людей, испытывающих головне боли, предпочитают "заглушать" их
-                            таблетками, не
-                            задумываясь,
-                            что подобная реакция организма сама по себе показатель проблем. Больше людей,
-                            испытывающих головне боли, предпочитают "заглушать" их таблетками, не задумываясь,
-                            что подобная реакция организма сама по себе показатель проблем.</p>
-                        <div class="date-link">
-                            <div class="article-date">1 сентбря 2017</div>
-                            <span class="btn-link">Подробнее</span>
-                        </div>
-                    </div>
-                </a>
-                <div class="article-border"></div>
-            </article>
-            <article class="article-articles">
-                <a href="single-article.html">
-                    <div class="article-img">
-                        <img src="{{ asset('assets') }}/images/index/top-art.jpg">
-                        <div class="views"><span>2143</span></div>
-                    </div>
-                    <div class="article-info">
-                        <h4 class="article-title">Очки нам больше никогда не
-                            понадобятся!</h4>
-                        <p class="article-category">Статистика минздрава</p>
-                        <p class="article-text">Больше людей, испытывающих головне боли, предпочитают "заглушать" их
-                            таблетками, не
-                            задумываясь,
-                            что подобная реакция организма сама по себе показатель проблем. Больше людей,
-                            испытывающих головне боли, предпочитают "заглушать" их таблетками, не задумываясь,
-                            что подобная реакция организма сама по себе показатель проблем.</p>
-                        <div class="date-link">
-                            <div class="article-date">1 сентбря 2017</div>
-                            <span class="btn-link">Подробнее</span>
-                        </div>
-                    </div>
-                </a>
-                <div class="article-border"></div>
-            </article>
+            @if(!empty($articles['tops']) && $articles['tops']->isNotEmpty())
+                @foreach($articles['tops'] as $top)
+                    <article class="article-articles">
+                        <a href="{{ route('articles', ['loc'=>'ru', 'article_alias'=>$top->alias]) }}">
+                            <div class="article-img">
+                                <img src="{{ asset('asset/images/articles/ru/middle').'/'.$top->image->path }}"
+                                     alt="{{ $top->image->alt ?? '' }}"
+                                     title="{{ $top->image->title ?? ($top->image->alt ?? '') }}">
+                                <div class="views"><span>{{ $top->view }}</span></div>
+                            </div>
+                            <div class="article-info">
+                                <h4 class="article-title">{{ $top->title }}</h4>
+                                <div class="date-link">
+                                    <div class="article-date">
+                                        {{ $top->created_at->format('d')
+                                            . ' '  . trans('ru.'.$top->created_at->format('m'))
+                                            . ' '  . $top->created_at->format('Y')
+                                        }}
+                                    </div>
+                                    <span class="btn-link">Подробнее</span>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="article-border"></div>
+                    </article>
+                @endforeach
+            @endif
         </div>
 
         <div>
-            <a href="{{ route('articles', ['loc'=>'ru']) }}" class="button-white">Больше статей</a>
+            <a href="{{ route('articles_cat', ['loc'=>'ru', 'cat_alias'=>'top-stati']) }}" class="button-white">
+                Больше статей</a>
         </div>
     </section>
     <!-- end ТОП СТАТЬИ -->
@@ -426,15 +263,6 @@
                         @if(!empty($blocks[3]->third))
                             {{ link_to_route('search', $blocks[3]->third, ['search' =>$blocks[3]->third]) }}
                         @endif
-                        {{--@if(!empty($blocks[3]->fourth))
-                            {{ link_to_route('search', $blocks[3]->fourth, ['search' =>$blocks[3]->fourth]) }}
-                        @endif
-                        @if(!empty($blocks[3]->fifth))
-                            {{ link_to_route('search', $blocks[3]->fifth, ['search' =>$blocks[3]->fifth]) }}
-                        @endif
-                        @if(!empty($blocks[3]->sixth))
-                            {{ link_to_route('search', $blocks[3]->sixth, ['search' =>$blocks[3]->sixth]) }}
-                        @endif--}}
                         <div class="section-icon">
                             <img src="{{ asset('assets') }}/images/title-icons/main-icon-3.png"
                                  alt="иконка Последние статьи">
@@ -444,148 +272,67 @@
                 <div class="last-arts">
                     <div class="two-column-articles article-wrap section-interest-art">
                         <div class="left-column big-news">
-                            <article class="news">
-                                <a href="single-article.html">
-                                    <div class="article-img">
-                                        <img src="{{ asset('assets') }}/images/news/article-big.jpg">
-                                        <div class="views"><span>2143</span></div>
-                                    </div>
-                                    <div class="article-info">
-                                        <h4 class="article-title">В Украине увеличилась
-                                            численность
-                                            населения</h4>
-                                        <p class="article-category">Статистика минздрава</p>
-                                        <p class="article-text">Больше людей, испытывающих головне боли, предпочитают
-                                            "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем. Больше
-                                            людей,
-                                            испытывающих головне боли, предпочитают "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем.</p>
-                                        <div class="date-link">
-                                            <div class="article-date">1 сентбря 2017</div>
-                                            <span class="btn-link">Подробнее</span>
+                            @if(!empty($articles['diets']) && $articles['diets']->isNotEmpty())
+                                <article class="news">
+                                    <a href="{{ route('articles',
+                                                    ['loc'=>'ru', 'article_alias'=>$articles['diets'][0]->alias]) }}">
+                                        <div class="article-img">
+                                            <img src="{{ asset('asset/images/articles/ru/middle').'/'.$articles['diets'][0]->image->path }}"
+                                                 alt="{{ $articles['diets'][0]->image->alt ?? '' }}"
+                                                 title="{{ $articles['diets'][0]->image->title ?? ($articles['diets'][0]->image->alt ?? '') }}">
+                                            <div class="views"><span>{{ $articles['diets'][0]->view }}</span></div>
                                         </div>
-                                    </div>
-                                </a>
-                                <div class="article-border"></div>
-                            </article>
+                                        <div class="article-info">
+                                            <h4 class="article-title">{{ $articles['diets'][0]->title }}</h4>
+                                            <div class="date-link">
+                                                <div class="article-date">
+                                                    {{ $articles['diets'][0]->created_at->format('d')
+                                                        . ' '  . trans('ru.'.$articles['diets'][0]->created_at->format('m'))
+                                                        . ' '  . $articles['diets'][0]->created_at->format('Y')
+                                                    }}
+                                                </div>
+                                                <span class="btn-link">Подробнее</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <div class="article-border"></div>
+                                </article>
+                            @endif
                         </div>
                         <div class="right-column">
-                            <article class="news">
-                                <a href="single-article.html">
-                                    <div class="article-img">
-                                        <img src="{{ asset('assets') }}/images/news/article.jpg">
-                                        <div class="views"><span>2143</span></div>
-                                    </div>
-                                    <div class="article-info">
-                                        <h4 class="article-title">В Украине увеличилась
-                                            численность
-                                            населения</h4>
-                                        <p class="article-category">Статистика минздрава</p>
-                                        <p class="article-text">Больше людей, испытывающих головне боли, предпочитают
-                                            "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем. Больше
-                                            людей,
-                                            испытывающих головне боли, предпочитают "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем.</p>
-                                        <div class="date-link">
-                                            <div class="article-date">1 сентбря 2017</div>
-                                            <span class="btn-link">Подробнее</span>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="article-border"></div>
-                            </article>
-                            <article class="news">
-                                <a href="single-article.html">
-                                    <div class="article-img">
-                                        <img src="{{ asset('assets') }}/images/news/article.jpg">
-                                        <div class="views"><span>2143</span></div>
-                                    </div>
-                                    <div class="article-info">
-                                        <h4 class="article-title">В Украине увеличилась
-                                            численность
-                                            населения</h4>
-                                        <p class="article-category">Статистика минздрава</p>
-                                        <p class="article-text">Больше людей, испытывающих головне боли, предпочитают
-                                            "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем. Больше
-                                            людей,
-                                            испытывающих головне боли, предпочитают "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем.</p>
-                                        <div class="date-link">
-                                            <div class="article-date">1 сентбря 2017</div>
-                                            <span class="btn-link">Подробнее</span>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="article-border"></div>
-                            </article>
-                            <article class="news">
-                                <a href="single-article.html">
-                                    <div class="article-img">
-                                        <img src="{{ asset('assets') }}/images/news/article.jpg">
-                                        <div class="views"><span>2143</span></div>
-                                    </div>
-                                    <div class="article-info">
-                                        <h4 class="article-title">В Украине увеличилась
-                                            численность
-                                            населения</h4>
-                                        <p class="article-category">Статистика минздрава</p>
-                                        <p class="article-text">Больше людей, испытывающих головне боли, предпочитают
-                                            "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем. Больше
-                                            людей,
-                                            испытывающих головне боли, предпочитают "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем.</p>
-                                        <div class="date-link">
-                                            <div class="article-date">1 сентбря 2017</div>
-                                            <span class="btn-link">Подробнее</span>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="article-border"></div>
-                            </article>
-                            <article class="news">
-                                <a href="single-article.html">
-                                    <div class="article-img">
-                                        <img src="{{ asset('assets') }}/images/news/article.jpg">
-                                        <div class="views"><span>2143</span></div>
-                                    </div>
-                                    <div class="article-info">
-                                        <h4 class="article-title">В Украине увеличилась
-                                            численность
-                                            населения</h4>
-                                        <p class="article-category">Статистика минздрава</p>
-                                        <p class="article-text">Больше людей, испытывающих головне боли, предпочитают
-                                            "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем. Больше
-                                            людей,
-                                            испытывающих головне боли, предпочитают "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем.</p>
-                                        <div class="date-link">
-                                            <div class="article-date">1 сентбря 2017</div>
-                                            <span class="btn-link">Подробнее</span>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="article-border"></div>
-                            </article>
+                            @if(!empty($articles['diets']) && $articles['diets']->isNotEmpty())
+                                @foreach($articles['diets'] as $article)
+                                    @continue($loop->first)
+                                    <article class="news">
+                                        <a href="{{ route('articles',
+                                                    ['loc'=>'ru', 'article_alias'=>$article->alias]) }}">
+                                            <div class="article-img">
+                                                <img src="{{ asset('asset/images/articles/ru/small').'/'.$article->image->path }}">
+                                                <div class="views"><span>{{ $article->view }}</span></div>
+                                            </div>
+                                            <div class="article-info">
+                                                <h4 class="article-title">{{ $article->title }}</h4>
+                                                <div class="date-link">
+                                                    <div class="article-date">
+                                                        {{ $article->created_at->format('d')
+                                                            . ' '  . trans('ru.'.$article->created_at->format('m'))
+                                                            . ' '  . $article->created_at->format('Y')
+                                                        }}
+                                                    </div>
+                                                    <span class="btn-link">Подробнее</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <div class="article-border"></div>
+                                    </article>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div>
-                    <a href="{{ route('articles', ['loc'=>'ru']) }}" class="button-white">Больше статей</a>
+                    <a href="{{ route('articles_cat', ['loc'=>'ru', 'cat_alias'=>'pitanie-i-dieta']) }}"
+                       class="button-white">Больше статей</a>
                 </div>
             </section>
             <section class="section-commercial-arts">
@@ -601,15 +348,6 @@
                         @if(!empty($blocks[4]->third))
                             {{ link_to_route('search', $blocks[4]->third, ['search' =>$blocks[4]->third]) }}
                         @endif
-                        {{--@if(!empty($blocks[4]->fourth))
-                            {{ link_to_route('search', $blocks[4]->fourth, ['search' =>$blocks[4]->fourth]) }}
-                        @endif
-                        @if(!empty($blocks[4]->fifth))
-                            {{ link_to_route('search', $blocks[4]->fifth, ['search' =>$blocks[4]->fifth]) }}
-                        @endif
-                        @if(!empty($blocks[4]->sixth))
-                            {{ link_to_route('search', $blocks[4]->sixth, ['search' =>$blocks[4]->sixth]) }}
-                        @endif--}}
                         <div class="section-icon">
                             <img src="{{ asset('assets') }}/images/title-icons/main-icon-5.png"
                                  alt="иконка Коммерчиские статьи">
@@ -618,235 +356,102 @@
                 </div>
                 <div class="last-arts">
                     <div class="two-column-articles article-wrap section-interest-art">
-                        <div class="left-column big-news">
-                            <article class="news">
-                                <a href="single-article.html">
-                                    <div class="article-img">
-                                        <img src="{{ asset('assets') }}/images/news/article-big.jpg">
-                                        <div class="views"><span>2143</span></div>
-                                    </div>
-                                    <div class="article-info">
-                                        <h4 class="article-title">В Украине увеличилась
-                                            численность
-                                            населения</h4>
-                                        <p class="article-category">Статистика минздрава</p>
-                                        <p class="article-text">Больше людей, испытывающих головне боли, предпочитают
-                                            "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем. Больше
-                                            людей,
-                                            испытывающих головне боли, предпочитают "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем.</p>
-                                        <div class="date-link">
-                                            <div class="article-date">1 сентбря 2017</div>
-                                            <span class="btn-link">Подробнее</span>
+                        <div class="two-big-news">
+                            @if(!empty($articles['intims']) && $articles['intims']->isNotEmpty())
+                                <article class="news">
+                                    <a href="{{ route('articles',
+                                                    ['loc'=>'ru', 'article_alias'=>$articles['intims'][0]->alias]) }}">
+                                        <div class="article-img">
+                                            <img src="{{ asset('asset/images/articles/ru/middle').'/'.$articles['intims'][0]->image->path }}"
+                                                 alt="{{ $articles['intims'][0]->image->alt ?? '' }}"
+                                                 title="{{ $articles['intims'][0]->image->title ?? ($articles['intims'][0]->image->alt ?? '') }}">
+                                            <div class="views"><span>{{ $articles['intims'][0]->view }}</span></div>
                                         </div>
-                                    </div>
-                                </a>
-                                <div class="article-border"></div>
-                            </article>
-                            <article class="news">
-                                <a href="single-article.html">
-                                    <div class="article-img">
-                                        <img src="{{ asset('assets') }}/images/news/article.jpg">
-                                        <div class="views"><span>2143</span></div>
-                                    </div>
-                                    <div class="article-info">
-                                        <h4 class="article-title">В Украине увеличилась
-                                            численность
-                                            населения</h4>
-                                        <p class="article-category">Статистика минздрава</p>
-                                        <p class="article-text">Больше людей, испытывающих головне боли, предпочитают
-                                            "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем. Больше
-                                            людей,
-                                            испытывающих головне боли, предпочитают "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем.</p>
-                                        <div class="date-link">
-                                            <div class="article-date">1 сентбря 2017</div>
-                                            <span class="btn-link">Подробнее</span>
+                                        <div class="article-info">
+                                            <h4 class="article-title">{{ $articles['intims'][0]->title }}</h4>
+                                            <div class="date-link">
+                                                <div class="article-date">
+                                                    {{ $articles['intims'][0]->created_at->format('d')
+                                                        . ' '  . trans('ru.'.$articles['intims'][0]->created_at->format('m'))
+                                                        . ' '  . $articles['intims'][0]->created_at->format('Y')
+                                                    }}
+                                                </div>
+                                                <span class="btn-link">Подробнее</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                                <div class="article-border"></div>
-                            </article>
-                            <article class="news">
-                                <a href="single-article.html">
-                                    <div class="article-img">
-                                        <img src="{{ asset('assets') }}/images/news/article.jpg">
-                                        <div class="views"><span>2143</span></div>
-                                    </div>
-                                    <div class="article-info">
-                                        <h4 class="article-title">В Украине увеличилась
-                                            численность
-                                            населения</h4>
-                                        <p class="article-category">Статистика минздрава</p>
-                                        <p class="article-text">Больше людей, испытывающих головне боли, предпочитают
-                                            "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем. Больше
-                                            людей,
-                                            испытывающих головне боли, предпочитают "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем.</p>
-                                        <div class="date-link">
-                                            <div class="article-date">1 сентбря 2017</div>
-                                            <span class="btn-link">Подробнее</span>
+                                    </a>
+                                    <div class="article-border"></div>
+                                </article>
+                                <article class="news">
+                                    <a href="{{ route('articles',
+                                                    ['loc'=>'ru', 'article_alias'=>$articles['intims'][1]->alias]) }}">
+                                        <div class="article-img">
+                                            <img src="{{ asset('asset/images/articles/ru/middle').'/'.$articles['intims'][1]->image->path }}"
+                                                 alt="{{ $articles['intims'][1]->image->alt ?? '' }}"
+                                                 title="{{ $articles['intims'][1]->image->title ?? ($articles['intims'][1]->image->alt ?? '') }}">
+                                            <div class="views"><span>{{ $articles['intims'][1]->view }}</span></div>
                                         </div>
-                                    </div>
-                                </a>
-                                <div class="article-border"></div>
-                            </article>
-                            <article class="news">
-                                <a href="single-article.html">
-                                    <div class="article-img">
-                                        <img src="{{ asset('assets') }}/images/news/article.jpg">
-                                        <div class="views"><span>2143</span></div>
-                                    </div>
-                                    <div class="article-info">
-                                        <h4 class="article-title">В Украине увеличилась
-                                            численность
-                                            населения</h4>
-                                        <p class="article-category">Статистика минздрава</p>
-                                        <p class="article-text">Больше людей, испытывающих головне боли, предпочитают
-                                            "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем. Больше
-                                            людей,
-                                            испытывающих головне боли, предпочитают "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем.</p>
-                                        <div class="date-link">
-                                            <div class="article-date">1 сентбря 2017</div>
-                                            <span class="btn-link">Подробнее</span>
+                                        <div class="article-info">
+                                            <h4 class="article-title">{{ $articles['intims'][1]->title }}</h4>
+                                            <div class="date-link">
+                                                <div class="article-date">
+                                                    {{ $articles['intims'][1]->created_at->format('d')
+                                                        . ' '  . trans('ru.'.$articles['intims'][1]->created_at->format('m'))
+                                                        . ' '  . $articles['intims'][1]->created_at->format('Y')
+                                                    }}
+                                                </div>
+                                                <span class="btn-link">Подробнее</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                                <div class="article-border"></div>
-                            </article>
+                                    </a>
+                                    <div class="article-border"></div>
+                                </article>
+                            @endif
                         </div>
-                        <div class="right-column big-news">
-                            <article class="news">
-                                <a href="single-article.html">
-                                    <div class="article-img">
-                                        <img src="{{ asset('assets') }}/images/news/article-big.jpg">
-                                        <div class="views"><span>2143</span></div>
-                                    </div>
-                                    <div class="article-info">
-                                        <h4 class="article-title">В Украине увеличилась
-                                            численность
-                                            населения</h4>
-                                        <p class="article-category">Статистика минздрава</p>
-                                        <p class="article-text">Больше людей, испытывающих головне боли, предпочитают
-                                            "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем. Больше
-                                            людей,
-                                            испытывающих головне боли, предпочитают "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем.</p>
-                                        <div class="date-link">
-                                            <div class="article-date">1 сентбря 2017</div>
-                                            <span class="btn-link">Подробнее</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </article>
-                            <article class="news">
-                                <a href="single-article.html">
-                                    <div class="article-img">
-                                        <img src="{{ asset('assets') }}/images/news/article.jpg">
-                                        <div class="views"><span>2143</span></div>
-                                    </div>
-                                    <div class="article-info">
-                                        <h4 class="article-title">В Украине увеличилась
-                                            численность
-                                            населения</h4>
-                                        <p class="article-category">Статистика минздрава</p>
-                                        <p class="article-text">Больше людей, испытывающих головне боли, предпочитают
-                                            "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем. Больше
-                                            людей,
-                                            испытывающих головне боли, предпочитают "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем.</p>
-                                        <div class="date-link">
-                                            <div class="article-date">1 сентбря 2017</div>
-                                            <span class="btn-link">Подробнее</span>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="article-border"></div>
-                            </article>
-                            <article class="news">
-                                <a href="single-article.html">
-                                    <div class="article-img">
-                                        <img src="{{ asset('assets') }}/images/news/article.jpg">
-                                        <div class="views"><span>2143</span></div>
-                                    </div>
-                                    <div class="article-info">
-                                        <h4 class="article-title">В Украине увеличилась
-                                            численность
-                                            населения</h4>
-                                        <p class="article-category">Статистика минздрава</p>
-                                        <p class="article-text">Больше людей, испытывающих головне боли, предпочитают
-                                            "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем. Больше
-                                            людей,
-                                            испытывающих головне боли, предпочитают "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем.</p>
-                                        <div class="date-link">
-                                            <div class="article-date">1 сентбря 2017</div>
-                                            <span class="btn-link">Подробнее</span>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="article-border"></div>
-                            </article>
-                            <article class="news">
-                                <a href="single-article.html">
-                                    <div class="article-img">
-                                        <img src="{{ asset('assets') }}/images/news/article.jpg">
-                                        <div class="views"><span>2143</span></div>
-                                    </div>
-                                    <div class="article-info">
-                                        <h4 class="article-title">В Украине увеличилась
-                                            численность
-                                            населения</h4>
-                                        <p class="article-category">Статистика минздрава</p>
-                                        <p class="article-text">Больше людей, испытывающих головне боли, предпочитают
-                                            "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем. Больше
-                                            людей,
-                                            испытывающих головне боли, предпочитают "заглушать" их таблетками, не
-                                            задумываясь,
-                                            что подобная реакция организма сама по себе показатель проблем.</p>
-                                        <div class="date-link">
-                                            <div class="article-date">1 сентбря 2017</div>
-                                            <span class="btn-link">Подробнее</span>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="article-border"></div>
-                            </article>
+                        <div>
+                            <div class="small-news">
+                                @if(!empty($articles['intims']) && $articles['intims']->isNotEmpty())
+                                    @foreach($articles['intims'] as $article)
+                                        @continue($loop->first)
+                                        @continue(1 == $loop->index)
+                                        <article class="news">
+                                            <a href="{{ route('articles',
+                                                    ['loc'=>'ru', 'article_alias'=>$article->alias]) }}">
+                                                <div class="article-img">
+                                                    <img src="{{ asset('asset/images/articles/ru/small').'/'.$article->image->path }}">
+                                                    <div class="views"><span>{{ $article->view }}</span></div>
+                                                </div>
+                                                <div class="article-info">
+                                                    <h4 class="article-title">{{ $article->title }}</h4>
+                                                    <div class="date-link">
+                                                        <div class="article-date">
+                                                            {{ $article->created_at->format('d')
+                                                                . ' '  . trans('ru.'.$article->created_at->format('m'))
+                                                                . ' '  . $article->created_at->format('Y')
+                                                            }}
+                                                        </div>
+                                                        <span class="btn-link">Подробнее</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <div class="article-border"></div>
+                                        </article>
+                                    @endforeach
+                                @endif
                         </div>
                     </div>
                 </div>
                 <div>
-                    <a href="{{ route('articles', ['loc'=>'ru']) }}" class="button-white">Больше статей</a>
+                    <a href="{{ route('articles_cat', ['loc'=>'ru', 'cat_alias'=>'intimnye-temy']) }}"
+                       class="button-white">Больше статей</a>
                 </div>
             </section>
         </div>
+
+
         <aside class="news-med">
             <div class="section-title-meta-icon">
-                <h3>Новости медицины</h3>
+                <h3>{{ $blocks[6]->title ?? '' }}</h3>
                 <div class="section-meta-icon">
                     <div class="section-icon">
                         <img src="{{ asset('assets') }}/images/title-icons/main-icon-4.png"
@@ -856,146 +461,40 @@
             </div>
             <div class="news-med-arts">
                 <div class="article-wrap big-news">
-                    <article class="news">
-                        <a href="single-article.html">
-                            <div class="article-img">
-                                <img src="{{ asset('assets') }}/images/news/article-big.jpg">
-                                <div class="views"><span>2143</span></div>
-                            </div>
-                            <div class="article-info">
-                                <h4 class="article-title">В Украине увеличилась
-                                    численность
-                                    населения. Больше людей, испытывающих головне боли, предпочитают
-                                    "заглушать" их таблетками</h4>
-                                <p class="article-category">Статистика минздрава</p>
-                                <p class="article-text">Больше людей, испытывающих головне боли, предпочитают
-                                    "заглушать" их таблетками, не
-                                    задумываясь,
-                                    что подобная реакция организма сама по себе показатель проблем. Больше людей,
-                                    испытывающих головне боли, предпочитают "заглушать" их таблетками, не задумываясь,
-                                    что подобная реакция организма сама по себе показатель проблем.</p>
-                                <div class="date-link">
-                                    <div class="article-date">1 сентбря 2017</div>
-                                    <span class="btn-link">Подробнее</span>
-                                </div>
-                            </div>
-                        </a>
-                    </article>
-                    <article class="news">
-                        <a href="single-article.html">
-                            <div class="article-img">
-                                <img src="{{ asset('assets') }}/images/news/article.jpg">
-                                <div class="views"><span>2143</span></div>
-                            </div>
-                            <div class="article-info">
-                                <h4 class="article-title">В Украине увеличилась
-                                    численность
-                                    населения</h4>
-                                <p class="article-category">Статистика минздрава</p>
-                                <p class="article-text">Больше людей, испытывающих головне боли, предпочитают
-                                    "заглушать" их таблетками, не
-                                    задумываясь,
-                                    что подобная реакция организма сама по себе показатель проблем. Больше
-                                    людей,
-                                    испытывающих головне боли, предпочитают "заглушать" их таблетками, не
-                                    задумываясь,
-                                    что подобная реакция организма сама по себе показатель проблем.</p>
-                                <div class="date-link">
-                                    <div class="article-date">1 сентбря 2017</div>
-                                    <span class="btn-link">Подробнее</span>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="article-border"></div>
-                    </article>
-                    <article class="news">
-                        <a href="single-article.html">
-                            <div class="article-img">
-                                <img src="{{ asset('assets') }}/images/news/article.jpg">
-                                <div class="views"><span>2143</span></div>
-                            </div>
-                            <div class="article-info">
-                                <h4 class="article-title">В Украине увеличилась
-                                    численность
-                                    населения</h4>
-                                <p class="article-category">Статистика минздрава</p>
-                                <p class="article-text">Больше людей, испытывающих головне боли, предпочитают
-                                    "заглушать" их таблетками, не
-                                    задумываясь,
-                                    что подобная реакция организма сама по себе показатель проблем. Больше
-                                    людей,
-                                    испытывающих головне боли, предпочитают "заглушать" их таблетками, не
-                                    задумываясь,
-                                    что подобная реакция организма сама по себе показатель проблем.</p>
-                                <div class="date-link">
-                                    <div class="article-date">1 сентбря 2017</div>
-                                    <span class="btn-link">Подробнее</span>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="article-border"></div>
-                    </article>
-                    <article class="news">
-                        <a href="single-article.html">
-                            <div class="article-img">
-                                <img src="{{ asset('assets') }}/images/news/article.jpg">
-                                <div class="views"><span>2143</span></div>
-                            </div>
-                            <div class="article-info">
-                                <h4 class="article-title">В Украине увеличилась
-                                    численность
-                                    населения</h4>
-                                <p class="article-category">Статистика минздрава</p>
-                                <p class="article-text">Больше людей, испытывающих головне боли, предпочитают
-                                    "заглушать" их таблетками, не
-                                    задумываясь,
-                                    что подобная реакция организма сама по себе показатель проблем. Больше
-                                    людей,
-                                    испытывающих головне боли, предпочитают "заглушать" их таблетками, не
-                                    задумываясь,
-                                    что подобная реакция организма сама по себе показатель проблем.</p>
-                                <div class="date-link">
-                                    <div class="article-date">1 сентбря 2017</div>
-                                    <span class="btn-link">Подробнее</span>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="article-border"></div>
-                    </article>
-                    <article class="news">
-                        <a href="single-article.html">
-                            <div class="article-img">
-                                <img src="{{ asset('assets') }}/images/news/article.jpg">
-                                <div class="views"><span>2143</span></div>
-                            </div>
-                            <div class="article-info">
-                                <h4 class="article-title">В Украине увеличилась
-                                    численность
-                                    населения</h4>
-                                <p class="article-category">Статистика минздрава</p>
-                                <p class="article-text">Больше людей, испытывающих головне боли, предпочитают
-                                    "заглушать" их таблетками, не
-                                    задумываясь,
-                                    что подобная реакция организма сама по себе показатель проблем. Больше
-                                    людей,
-                                    испытывающих головне боли, предпочитают "заглушать" их таблетками, не
-                                    задумываясь,
-                                    что подобная реакция организма сама по себе показатель проблем.</p>
-                                <div class="date-link">
-                                    <div class="article-date">1 сентбря 2017</div>
-                                    <span class="btn-link">Подробнее</span>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="article-border"></div>
-                    </article>
+                    @if(!empty($articles['delusions']) && $articles['delusions']->isNotEmpty())
+                        @foreach($articles['delusions'] as $article)
+                            <article class="news">
+                                <a href="{{ route('articles',
+                                                ['loc'=>'ru', 'article_alias'=>$article->alias]) }}">
+                                    <div class="article-img">
+                                        <img src="{{ asset('asset/images/articles/ru/small').'/'.$article->image->path }}">
+                                        <div class="views"><span>{{ $article->view }}</span></div>
+                                    </div>
+                                    <div class="article-info">
+                                        <h4 class="article-title">{{ $article->title }}</h4>
+                                        <div class="date-link">
+                                            <div class="article-date">
+                                                {{ $article->created_at->format('d')
+                                                    . ' '  . trans('ru.'.$article->created_at->format('m'))
+                                                    . ' '  . $article->created_at->format('Y')
+                                                }}
+                                            </div>
+                                            <span class="btn-link">Подробнее</span>
+                                        </div>
+                                    </div>
+                                </a>
+                                <div class="article-border"></div>
+                            </article>
+                        @endforeach
+                    @endif
                 </div>
                 <div>
-                    <a href="#!" class="button-white">Все новости</a>
+                    <a href="{{ route('articles_cat', ['loc'=>'ru', 'cat_alias'=>'zabluzhdeniya']) }}"
+                       class="button-white">Все новости</a>
                 </div>
             </div>
             <div class="section-title-meta-icon">
-                <h3>Популярные теги</h3>
+                <h3>{{ $blocks[0]->title ?? '' }}</h3>
                 <div class="section-meta-icon">
                     <div class="section-icon">
                         <img src="{{ asset('assets') }}/images/title-icons/main-icon-6.png"
@@ -1068,121 +567,48 @@
                 @if(!empty($blocks[5]->third))
                     {{ link_to_route('search', $blocks[5]->third, ['search' =>$blocks[5]->third]) }}
                 @endif
-                {{--@if(!empty($blocks[5]->fourth))
-                    {{ link_to_route('search', $blocks[5]->fourth, ['search' =>$blocks[5]->fourth]) }}
-                @endif
-                @if(!empty($blocks[5]->fifth))
-                    {{ link_to_route('search', $blocks[5]->fifth, ['search' =>$blocks[5]->fifth]) }}
-                @endif
-                @if(!empty($blocks[5]->sixth))
-                    {{ link_to_route('search', $blocks[5]->sixth, ['search' =>$blocks[5]->sixth]) }}
-                @endif--}}
                 <div class="section-icon">
                     <img src="{{ asset('assets') }}/images/title-icons/main-icon-2.png" alt="иконка Топ статьи">
                 </div>
             </div>
         </div>
         <div class="section-interest-art wrap">
-            <article class="article-articles">
-                <a href="single-article.html">
-                    <div class="article-img">
-                        <img src="{{ asset('assets') }}/images/index/top-art.jpg">
-                        <div class="views"><span>2143</span></div>
-                    </div>
-                    <div class="article-info">
-                        <h4 class="article-title">Очки нам больше никогда не
-                            понадобятся!</h4>
-                        <p class="article-category">Статистика минздрава</p>
-                        <p class="article-text">Больше людей, испытывающих головне боли, предпочитают "заглушать" их
-                            таблетками, не
-                            задумываясь,
-                            что подобная реакция организма сама по себе показатель проблем. Больше людей,
-                            испытывающих головне боли, предпочитают "заглушать" их таблетками, не задумываясь,
-                            что подобная реакция организма сама по себе показатель проблем.</p>
-                        <div class="date-link">
-                            <div class="article-date">1 сентбря 2017</div>
-                            <span class="btn-link">Подробнее</span>
-                        </div>
-                    </div>
-                </a>
-                <div class="article-border"></div>
-            </article>
-            <article class="article-articles">
-                <a href="single-article.html">
-                    <div class="article-img">
-                        <img src="{{ asset('assets') }}/images/index/top-art.jpg">
-                        <div class="views"><span>2143</span></div>
-                    </div>
-                    <div class="article-info">
-                        <h4 class="article-title">Очки нам больше никогда не
-                            понадобятся!</h4>
-                        <p class="article-category">Статистика минздрава</p>
-                        <p class="article-text">Больше людей, испытывающих головне боли, предпочитают "заглушать" их
-                            таблетками, не
-                            задумываясь,
-                            что подобная реакция организма сама по себе показатель проблем. Больше людей,
-                            испытывающих головне боли, предпочитают "заглушать" их таблетками, не задумываясь,
-                            что подобная реакция организма сама по себе показатель проблем.</p>
-                        <div class="date-link">
-                            <div class="article-date">1 сентбря 2017</div>
-                            <span class="btn-link">Подробнее</span>
-                        </div>
-                    </div>
-                </a>
-                <div class="article-border"></div>
-            </article>
-            <article class="article-articles">
-                <a href="single-article.html">
-                    <div class="article-img">
-                        <img src="{{ asset('assets') }}/images/index/top-art.jpg">
-                        <div class="views"><span>2143</span></div>
-                    </div>
-                    <div class="article-info">
-                        <h4 class="article-title">Очки нам больше никогда не
-                            понадобятся!</h4>
-                        <p class="article-category">Статистика минздрава</p>
-                        <p class="article-text">Больше людей, испытывающих головне боли, предпочитают "заглушать" их
-                            таблетками, не
-                            задумываясь,
-                            что подобная реакция организма сама по себе показатель проблем. Больше людей,
-                            испытывающих головне боли, предпочитают "заглушать" их таблетками, не задумываясь,
-                            что подобная реакция организма сама по себе показатель проблем.</p>
-                        <div class="date-link">
-                            <div class="article-date">1 сентбря 2017</div>
-                            <span class="btn-link">Подробнее</span>
-                        </div>
-                    </div>
-                </a>
-                <div class="article-border"></div>
-            </article>
-            <article class="article-articles">
-                <a href="single-article.html">
-                    <div class="article-img">
-                        <img src="{{ asset('assets') }}/images/index/top-art.jpg">
-                        <div class="views"><span>2143</span></div>
-                    </div>
-                    <div class="article-info">
-                        <h4 class="article-title">Очки нам больше никогда не
-                            понадобятся!</h4>
-                        <p class="article-category">Статистика минздрава</p>
-                        <p class="article-text">Больше людей, испытывающих головне боли, предпочитают "заглушать" их
-                            таблетками, не
-                            задумываясь,
-                            что подобная реакция организма сама по себе показатель проблем. Больше людей,
-                            испытывающих головне боли, предпочитают "заглушать" их таблетками, не задумываясь,
-                            что подобная реакция организма сама по себе показатель проблем.</p>
-                        <div class="date-link">
-                            <div class="article-date">1 сентбря 2017</div>
-                            <span class="btn-link">Подробнее</span>
-                        </div>
-                    </div>
-                </a>
-                <div class="article-border"></div>
-            </article>
+            @if(!empty($articles['fitotherapy']) && $articles['fitotherapy']->isNotEmpty())
+                @foreach($articles['fitotherapy'] as $article)
+                    <article class="article-articles">
+                        <a href="{{ route('articles',
+                                                ['loc'=>'ru', 'article_alias'=>$article->alias]) }}">
+                            <div class="article-img">
+                                <img src="{{ asset('asset/images/articles/ru/small').'/'.$article->image->path }}">
+                                <div class="views"><span>{{ $article->view }}</span></div>
+                            </div>
+                            <div class="article-info">
+                                <h4 class="article-title">{{ $article->title }}</h4>
+                                <div class="date-link">
+                                    <div class="article-date">
+                                        {{ $article->created_at->format('d')
+                                            . ' '  . trans('ru.'.$article->created_at->format('m'))
+                                            . ' '  . $article->created_at->format('Y')
+                                        }}
+                                    </div>
+                                    <span class="btn-link">Подробнее</span>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="article-border"></div>
+                    </article>
+                @endforeach
+            @endif
         </div>
         <div>
-            <a href="{{ route('articles', ['loc'=>'ru']) }}" class="button-white">Больше статей</a>
+            <a href="{{ route('articles_cat', ['loc'=>'ru', 'cat_alias'=>'fitoterapiya']) }}"
+               class="button-white">Больше статей</a>
         </div>
     </section>
     <!-- end Интересные СТАТЬИ -->
+</div>
+<div class="SEO-text">
+    @if(!empty($seo))
+        {!! $seo->seo_text !!}
+    @endif
 </div>

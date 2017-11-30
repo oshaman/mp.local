@@ -24,12 +24,13 @@
             @endif
         </div>
         {{--BreadCrumbs--}}
-        <h1 class="head-title">Результаты поиска:&nbsp;{{ $letter ?? '' }}</h1>
-    </div>
+        <h1 class="product-title">Сортировка по:</h1>
 
+        @include('search.nav')
+    </div>
     <div class="section-title-meta-icon">
         <h3>
-            ПОИСК ПРЕПАРАТОВ:&nbsp;
+            Сортировка препаратов по алфавиту:&nbsp;
             @if(!empty($letter))
                 <a>{{ $letter }}</a>
             @endif
@@ -42,12 +43,7 @@
     </div>
     <div class="wrap">
         <div class="product-analog">
-            <h2 class="product-title">Сортировка препаратов по алфавиту</h2>
-
-            @include('search.nav')
-
             <div class="search-alfavit">
-                <h2 class="product-title">Сортировка препаратов по алфавиту</h2>
                 <div class="search-alfavit-column">
                     <div class="search-left-content">
                         <div class="first-alfavit">

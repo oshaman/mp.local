@@ -14,21 +14,25 @@
 Route::get('/', 'IndexController@main')->name('main');
 Route::get('reklama/{loc?}', 'MainController@adv')->name('adv');
 Route::get('onas/{loc?}', 'MainController@about')->name('about');
+Route::get('soglashenie/{loc?}', 'MainController@convention')->name('convention');
+Route::get('usloviya/{loc?}', 'MainController@conditions')->name('conditions');
 
 Route::match(['get', 'post'], 'main', 'MainController@index');
 
-Route::get('preparat/{loc}/{medicine}/{act?}', 'MedicineController@medicine')
+Route::get('preparat/{loc}/{medicine}', 'MedicineController@medicine')
     ->name('medicine')
-    ->where(['medicine' => '[\w-]+', 'loc' => 'ru|ua', 'act' => 'analogi|adaptinaya-instrukcija|chastye-voprosy']);
+    ->where(['medicine' => '[\w-]+', 'loc' => 'ru|ua']);
 Route::get('preparat/{loc}/{medicine}/analog', 'MedicineController@analog')->name('medicine_analog')->where(['medicine' => '[\w-]+', 'loc' => 'ru|ua']);
-Route::get('preparat/{loc}/{medicine}/adaptive', 'MedicineController@adaptive')->name('medicine_adaptive')->where(['medicine' => '[\w-]+', 'loc' => 'ru|ua']);
+Route::get('preparat/{loc}/{medicine}/official', 'MedicineController@official')->name('medicine_official')
+    ->where(['medicine' => '[\w-]+', 'loc' => 'ru|ua']);
 Route::get('preparat/{loc}/{medicine}/faq', 'MedicineController@faq')->name('medicine_faq')->where(['medicine' => '[\w-]+', 'loc' => 'ru|ua']);
-
+Route::get('preparat/{loc}/{medicine}/print/{vr}', 'MedicineController@toprint')->name('toprint')
+    ->where(['medicine' => '[\w-]+', 'loc' => 'ru|ua', 'vr' => 'main|adaptive']);
 /**
  * SEARCH
  */
-Route::group(['prefix' => 'poisk'], function () {
-    Route::get('/', 'SearchController@show')->name('search');
+Route::group(['prefix' => 'sort'], function () {
+    Route::get('/', 'SearchController@show')->name('sort');
     Route::get('/alfavit/{loc}/{val?}', 'SearchController@alpha')->name('search_alpha')->where(['val' => '[\wа-яА-Яё-]+', 'loc' => 'ru|ua']);
     Route::get('/proizvoditel/{loc}/{val?}/{fabricator?}', 'SearchController@fabricator')
         ->name('search_fabricator')->where(['val' => '[\wа-яА-Яё]+', 'loc' => 'ru|ua', 'fabricator' => '[\w-]+']);
@@ -38,12 +42,16 @@ Route::group(['prefix' => 'poisk'], function () {
     Route::get('/veshestvo/{loc}/{val?}', 'SearchController@substance')->name('search_substance')->where(['val' => '[\w-]+', 'loc' => 'ru|ua']);
 });
 
+Route::match(['get', 'post'], 'poisk', 'SearchController@search')->name('search');
+
 /**
  * Articles
  */
 Route::group(['prefix' => 'statjі'], function () {
     Route::get('/{loc}/{article_alias?}', 'ArticlesController@show')->name('articles')->where(['loc' => 'ru|ua', 'article_alias' => '[\w-]+']);
     Route::get('/{cat_alias}/{loc}', 'ArticlesController@cats')->name('articles_cat')->where(['loc' => 'ru|ua', 'cat_alias' => '[\w-]+']);
+    Route::get('/teg/{loc}/{tag_alias}', 'ArticlesController@tag')
+        ->name('articles_tag')->where(['loc' => 'ru|ua', 'tag_alias' => '[\w-]+']);
 //    Route::get();
 });
 
@@ -80,6 +88,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::match(['get', 'post'], 'edit/{tag}', ['uses' => 'Admin\TagsController@edit', 'as' => 'edit_tags'])->where('tag', '[0-9]+');
         Route::get('delete/{tag}', ['uses' => 'Admin\TagsController@destroy', 'as' => 'delete_tag'])->where('tag', '[0-9]+');
     });
+    /**
+     * Slider 1
+     */
+    Route::match(['post', 'get'], 'mainslider/{mainslider?}', 'Admin\SlidersController@updateSlider')
+        ->name('main_slider')->where('mainslider', '[0-9]+');
     /**
      * Medicine
      */
@@ -123,11 +136,20 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::get('/', 'Admin\StaticsController@show');
         Route::match(['get', 'post'], 'adv/{adv?}', 'Admin\StaticsController@updateAdv')->name('adv_admin')->where('adv', '[0-9]+');
         Route::post('delimg', 'Admin\StaticsController@delimg');
+//        AboutUs
+        Route::match(['get', 'post'], 'about', 'Admin\StaticsController@updateAbout')->name('about_admin');
     });
     /**
      * Main
      */
     Route::get('main-admin', 'Admin\MainController@show')->name('main_admin');
+    /**
+     * Admin SEO
+     */
+    Route::group(['prefix' => 'seo'], function () {
+        Route::get('/', 'Admin\SeoController@index')->name('seo_admin');
+        Route::match(['post', 'get'], 'edit/{seo}', 'Admin\SeoController@edit')->name('seo_update')->where('seo', '[0-9]+');
+    });
 });
 //Auth
 Route::get('login', 'Auth\AuthController@showLoginForm')->name('login');

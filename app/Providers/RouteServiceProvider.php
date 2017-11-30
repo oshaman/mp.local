@@ -30,6 +30,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('block', \Fresh\Medpravda\Block::class);
         Route::model('article', \Fresh\Medpravda\Article::class);
 //        Route::model('medicine', \Fresh\Medpravda\Medicine::class);
+        Route::model('seo', \Fresh\Medpravda\Seo::class);
 
 
         Route::bind('article_alias', function ($value, \Illuminate\Routing\Route $route) {

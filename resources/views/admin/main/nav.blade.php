@@ -11,6 +11,11 @@
             @else
                 <li><a href="{{ route('blocks') }}">Блоки заголовков</a></li>
             @endif
+            @if('main_slider' == Route::currentRouteName())
+                <li><a class="btn btn-default">Главный слайдер</a></li>
+            @else
+                <li><a href="{{ route('main_slider') }}">Главный слайдер</a></li>
+            @endif
         </ul>
     </div>
 </nav>

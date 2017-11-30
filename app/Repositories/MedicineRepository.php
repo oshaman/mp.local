@@ -196,7 +196,7 @@ class MedicineRepository extends Repository
                 foreach ($request->file('slider') as $slider) {
                     $slider_path[$i]['alt'] = $input['imgalt'][$i];
                     $slider_path[$i]['title'] = $input['imgtitle'][$i];
-                    $slider_path[$i]['path'] = $this->sliderImg($slider, $input['alias']);
+                    $slider_path[$i]['path'] = $this->sliderImg($slider, $model->alias);
                     $i++;
                 }
 

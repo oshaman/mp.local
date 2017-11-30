@@ -92,11 +92,11 @@
                         <hr>
                         <div class="row">
                             <div class="col-lg-6">
-                                {{ Form::label('uimgalt', 'RU-текст') }}
+                                {{ Form::label('text', 'RU-текст') }}
                                 {{ Form::textarea('text', $adv->text ?? '', ['placeholder'=>'RU-Text', 'class'=>'form-control editor']) }}
                             </div>
                             <div class="col-lg-6">
-                                {{ Form::label('uimgalt', 'UA-текст') }}
+                                {{ Form::label('utext', 'UA-текст') }}
                                 {{ Form::textarea('utext', $adv->utext ?? '', ['placeholder'=>'UA-Text', 'class'=>'form-control editor']) }}
                             </div>
                         </div>

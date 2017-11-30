@@ -56,5 +56,9 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('STATIC_ADMIN', function ($user) {
             return (('admin' === $user->role->name) || ('editor' === $user->role->name));
         });
+
+        Gate::define('SEO_ADMIN', function ($user) {
+            return (('admin' === $user->role->name) || ('editor' === $user->role->name));
+        });
     }
 }

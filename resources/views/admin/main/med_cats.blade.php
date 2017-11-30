@@ -6,7 +6,7 @@
                 <div class="panel-heading">
                     <h4 class="panel-title">
                         <a data-toggle="collapse" data-parent="#accordion" href="#{{ $loop->iteration }}">
-                            Блок № {{ $loop->iteration }}:</a>
+                            Блок № {{ $loop->iteration .': '. $cat->title }}</a>
                     </h4>
                 </div>
                 <div id="{{ $loop->iteration }}" class="panel-collapse collapse">

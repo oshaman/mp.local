@@ -75,6 +75,9 @@ class Article extends FormRequest
         if ($this->isMethod('post')) {
             $rules = [
                 'title' => ['required', 'string', 'between:4,255'],
+                'description' => ['nullable', 'string', 'between:4,160'],
+
+                'priority' => ['numeric', 'max:255', 'nullable'],
 
                 'tags' => 'array',
                 'img' => 'mimes:jpg,bmp,png,jpeg|max:5120',

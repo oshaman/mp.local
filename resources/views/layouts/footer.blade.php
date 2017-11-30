@@ -1,6 +1,6 @@
 <footer>
     <div class="minzdrav">
-        Самолечение может быть опасным для вашего здоровья!
+        <img src="{{ asset('assets') }}/images/main/minzdrav.png">
     </div>
 
     <div class="footer-content">
@@ -16,22 +16,14 @@
                 <div class="footer-column mobile-display-none">
                     <h6>Теги</h6>
                     <div class="meta-btn-footer">
-                        <a href="#!" class="btn-meta">Беременность</a>
-                        <a href="#!" class="btn-meta">Грипп</a>
-                        <a href="#!" class="btn-meta">Аспирин</a>
-                        <a href="#!" class="btn-meta">Алергия</a>
-                        <a href="#!" class="btn-meta">Аспирин</a>
-                        <a href="#!" class="btn-meta">Грипп</a>
-                        <a href="#!" class="btn-meta">Алергия</a>
-                        <a href="#!" class="btn-meta">Беременность</a>
-                        <a href="#!" class="btn-meta">Грипп</a>
-                        <a href="#!" class="btn-meta">Аспирин</a>
-                        <a href="#!" class="btn-meta">Алергия</a>
-                        <a href="#!" class="btn-meta">Аспирин</a>
-                        <a href="#!" class="btn-meta">Беременность</a>
-                        <a href="#!" class="btn-meta">Грипп</a>
-                        <a href="#!" class="btn-meta">Алергия</a>
-                        <a href="#!" class="btn-meta">Беременность</a>
+                        @if(!empty($tags))
+                            @foreach($tags as $tag)
+                                <a href="{{ route('articles_tag', ['loc'=>'ru', 'tag_alias'=>$tag->alias]) }}"
+                                   class="btn-meta">
+                                    {{ $tag->name }}
+                                </a>
+                            @endforeach
+                        @endif
                     </div>
                     <div class="phone-footer">
                         <a href="tel:+380445455441">+38 (044) 545-5441</a>
@@ -54,19 +46,36 @@
                 <div class="footer-column">
                     <h6>Меню</h6>
                     <nav class="footer-menu">
-                        <a href="#!">Последние статьи</a>
-                        <a href="#!">Препараты</a>
-                        <a href="#!">Новости медицины</a>
-                        <a href="#!">Лечение</a>
-                        <a href="#!">Интересно</a>
-                        <a href="{{ route('about') }}">О нас</a>
-                        <a href="{{ route('adv') }}">Реклама</a>
+                        @if(!empty($cats))
+                            @foreach($cats as $cat)
+                                @if('articles_cat' == Route::currentRouteName() && $cat->alias == Request::segment(2))
+                                    <a>{{ $cat->title }}</a>
+                                @else
+                                    <a href="{{ route('articles_cat', ['loc'=>'ru', 'cat'=>$cat->alias]) }}">{{ $cat->title }}</a>
+                                @endif
+                            @endforeach
+                        @endif
+                        @if('about' == Route::currentRouteName())
+                            <a>О нас</a>
+                        @else
+                            <a href="{{ route('about') }}">О нас</a>
+                        @endif
+                        @if('adv' == Route::currentRouteName())
+                            <a>Реклама</a>
+                        @else
+                            <a href="{{ route('adv') }}">Реклама</a>
+                        @endif
+                        @if('conditions' == Route::currentRouteName())
+                            <a>Условия использования сайта</a>
+                        @else
+                            <a href="{{ route('conditions') }}">Условия использования сайта</a>
+                        @endif
+                        @if('conditions' == Route::currentRouteName())
+                            <a>Соглашение о конфиденциальности</a>
+                        @else
+                            <a href="{{ route('convention') }}">Соглашение о конфиденциальности</a>
+                        @endif
                     </nav>
-                    <div class="terms-email mobile-display-none">
-                        <p>Условия использования сайта</p>
-                        <p>Соглашение о конфиденциальности</p>
-                        <a href="mailto:info@medpravda.com.ua" class="e-mail">info@medpravda.com.ua</a>
-                    </div>
                 </div>
             </div>
             <div class="copyright-logo">
@@ -88,7 +97,7 @@
             </div>
         </div>
     </div>
-    <a href="#" class="totop totop-img">
+    <a class="totop totop-img">
         <img src="{{ asset('assets') }}/images/main/totop.png">
     </a>
     <div class="totop totop-color">

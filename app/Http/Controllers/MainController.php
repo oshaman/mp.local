@@ -2,9 +2,11 @@
 
 namespace Fresh\Medpravda\Http\Controllers;
 
+use Fresh\Medpravda\About;
 use Fresh\Medpravda\Adv;
 use Fresh\Medpravda\Block;
 use Fresh\Medpravda\Category;
+use Fresh\Medpravda\Tag;
 
 class MainController extends Controller
 {
@@ -31,6 +33,10 @@ class MainController extends Controller
         return view('test')->with('content', $content);
     }
 
+    /**
+     * @param null $loc
+     * @return $this
+     */
     public function adv($loc = null)
     {
         $this->title = 'Реклама на сайте';
@@ -41,10 +47,45 @@ class MainController extends Controller
         return $this->renderOutput();
     }
 
+    /**
+     * @param null $loc
+     * @return $this
+     */
+    public function convention($loc = null)
+    {
+        $this->title = 'Соглашение о конфиденциальности';
+
+//        $advs = Adv::where(['approved' => 1])->get();
+        $convention = '';
+        $this->content = view('main.convention')->with(['convention' => $convention])->render();
+
+        return $this->renderOutput();
+    }
+
+    /**
+     * @param null $loc
+     * @return $this
+     */
+    public function conditions($loc = null)
+    {
+        $this->title = 'Условия использования сайта';
+
+//        $advs = Adv::where(['approved' => 1])->get();
+        $conditions = '';
+        $this->content = view('main.conditions')->with(['conditions' => $conditions])->render();
+
+        return $this->renderOutput();
+    }
+
+    /**
+     * @param null $loc
+     * @return $this
+     */
     public function about($loc = null)
     {
         $this->title = 'О нас';
-        $this->content = view('main.about')->render();
+        $about = About::find(1);
+        $this->content = view('main.about')->with(['about' => $about])->render();
 
         return $this->renderOutput();
     }
@@ -89,7 +130,8 @@ class MainController extends Controller
         $header = view('layouts.header.' . $this->spec)->with(['block' => $this->block, 'cats' => $cats])->render();
         $this->vars = array_add($this->vars, 'header', $header);
 
-        $footer = view('layouts.footer')->render();
+        $tags = Tag::get();
+        $footer = view('layouts.footer')->with(['cats' => $cats, 'tags' => $tags])->render();
         $this->vars = array_add($this->vars, 'footer', $footer);
 
         if ($this->content) {

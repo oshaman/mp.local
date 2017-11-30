@@ -2,8 +2,12 @@
 <header>
     <div class="wrap">
         <div class="logo">
-            <a @if('main' !== Route::currentRouteName())href="{{ route('main') }}"@endif>
+            @if('main' == Route::currentRouteName())
                 <img src="{{ asset('assets') }}/images/main/logo.png" alt="Логотип МЕД правда"></a>
+            @else
+                <a href="{{ route('main') }}">
+                    <img src="{{ asset('assets') }}/images/main/logo.png" alt="Логотип МЕД правда"></a>
+            @endif
         </div>
         <div class="search">
             <input type="search" name="search" id="search" placeholder="Поиск по сайту">
@@ -11,10 +15,15 @@
         </div>
         <div class="main-menu">
             <nav class="mobile-display-none">
-                <a href="{{ route('search') }}">Препараты</a>
+                <a href="{{ route('sort') }}">Препараты</a>
                 @if(!empty($cats))
                     @foreach($cats as $cat)
-                        <a href="{{ route('articles_cat', ['loc'=>'ru', 'cat'=>$cat->alias]) }}">{{ $cat->title }}</a>
+                        @continue($loop->index > 3)
+                        @if('articles_cat' == Route::currentRouteName() && $cat->alias == Request::segment(2))
+                            <a>{{ $cat->title }}</a>
+                        @else
+                            <a href="{{ route('articles_cat', ['loc'=>'ru', 'cat'=>$cat->alias]) }}">{{ $cat->title }}</a>
+                        @endif
                     @endforeach
                 @endif
             </nav>
