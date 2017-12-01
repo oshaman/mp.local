@@ -37,7 +37,7 @@
         @if(!empty($titles))
             @foreach($titles as $title)
                 <div class="search-result">
-                    <a href="{{ route('medicine', ['loc'=>'ru', 'medicine'=> $title->alias]) }}">
+                    <a href="{{ route('medicine', ['medicine'=> $title->alias]) }}">
                         <h3>{{ $title->title }}</h3></a>
                 </div>
             @endforeach

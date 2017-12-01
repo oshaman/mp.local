@@ -10,7 +10,7 @@
                     <meta itemprop="position" content="1"/>
                 </div>
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <a href="{{ route('articles_cat', ['cat_alias'=>$article->category->alias, 'loc'=>'ru']) }}"
+                    <a href="{{ route('articles_cat', ['cat_alias'=>$article->category->alias]) }}"
                        itemprop="item">{{ $article->category->title }}</a>
                     <meta itemprop="position" content="2"/>
                 </div>
@@ -46,7 +46,7 @@
                     <span class="meta-title">Популярные теги:</span>
                     @if(!empty($article->tags) && $article->tags->isNotEmpty())
                         @foreach($article->tags as $tag)
-                            <a href="{{ route('articles_tag', ['loc'=>'ru', 'tag_alias'=>$tag->alias]) }}"
+                            <a href="{{ route('articles_tag', ['tag_alias'=>$tag->alias]) }}"
                                class="btn-meta">
                                 {{ $tag->name }}
                             </a>
@@ -77,7 +77,7 @@
                     @if(null != $same[0])
                         <div class="left-column big-news">
                             <article class="news">
-                                <a href="{{ route('articles', ['loc'=>'ru', 'article_alias'=>$same[0]->alias]) }}">
+                                <a href="{{ route('articles', ['article_alias'=>$same[0]->alias]) }}">
                                     <div class="article-img">
                                         <img src="{{ asset('asset').'/images/articles/ru/middle/'.$same[0]->image->path }}"
                                              alt="{{ $same[0]->image->alt }}" title="{{ $same[0]->image->title }}">
@@ -106,7 +106,7 @@
                             @foreach($same as $item)
                                 @continue($loop->first)
                                 <article class="news">
-                                    <a href="{{ route('articles', ['loc'=>'ru', 'article_alias'=>$item->alias]) }}">
+                                    <a href="{{ route('articles', ['article_alias'=>$item->alias]) }}">
                                         <div class="article-img">
                                             <img src="{{ asset('asset').'/images/articles/ru/small/'.$item->image->path }}"
                                                  alt="{{ $item->image->alt }}" title="{{ $item->image->title }}">
@@ -134,7 +134,7 @@
                 </div>
             </div>
             <div>
-                <a href="{{ route('articles_cat', ['cat_alias'=>$article->category->alias, 'loc'=>'ru']) }}"
+                <a href="{{ route('articles_cat', ['cat_alias'=>$article->category->alias]) }}"
                    class="button-white">Больше статей</a>
             </div>
         </section>

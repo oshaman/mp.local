@@ -13,4 +13,5 @@ return [
     ],
 
     'paginate_tags' => 25,
+    'slider' => ['width' => 1170, 'height' => 496],
 ];

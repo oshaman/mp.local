@@ -15,11 +15,11 @@
             @endempty
             @if(!empty($atx->parents))
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <a href="{{ route('search_atx', ['loc'=>'ru']) }}">Сортировка по ATX-классификации</a>
+                    <a href="{{ route('search_atx') }}">Сортировка по ATX-классификации</a>
                     <meta itemprop="position" content="2"/>
                 </div>
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <a href="{{ route('search_atx', ['loc'=>'ru', 'val'=>$atx->parents->class ]) }}">{{ $atx->parents->class}}</a>
+                    <a href="{{ route('search_atx', ['val'=>$atx->parents->class ]) }}">{{ $atx->parents->class}}</a>
                     <meta itemprop="position" content="3"/>
                 </div>
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
@@ -28,7 +28,7 @@
                 </div>
             @elseif(!empty($atx))
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <a href="{{ route('search_atx', ['loc'=>'ru']) }}">Сортировка по ATX-классификации</a>
+                    <a href="{{ route('search_atx') }}">Сортировка по ATX-классификации</a>
                     <meta itemprop="position" content="2"/>
                 </div>
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
@@ -56,9 +56,9 @@
             </div>
         </div>
     </div>
-    <div class="wrap">
+    <div class="">
         <div class="product-analog">
-            <div class="search-alfavit">
+            <div class="search-alfavit wrap">
                 <div class="search-alfavit-column">
                     @if(!empty($parents))
                         <div class="search-left-content admin-content">
@@ -67,7 +67,7 @@
                                     @foreach($parents as $parent)
                                         @continue('none' == $parent->name)
                                         <li>
-                                            <a href="{{ route('search_atx', ['loc'=>'ru', 'val'=>$parent->class ]) }}">{{ $parent->class .' - '. $parent->name}}</a>
+                                            <a href="{{ route('search_atx', ['val'=>$parent->class ]) }}">{{ $parent->class .' - '. $parent->name}}</a>
                                         </li>
                                     @endforeach
                                 </ul>
@@ -76,12 +76,29 @@
                     @endif
                 </div>
             </div>
+            @if(!empty($classes))
+                <div class="atx">
+                    <div class="wrap">
+                        @foreach($classes as $key=>$item)
+                            @if($loop->last)
+                                <a>
+                                    {{ $key .' - '. $item['name'] }}
+                                </a>
+                            @else
+                                <a href="{{ route('search_atx', ['val'=>$item['class'] ]) }}">
+                                    {{ $key .' - '. $item['name'] }}
+                                </a>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+            @endif
             @if(!empty($atx->children))
-                <div class="search-result  admin-content">
+                <div class="search-result  admin-content wrap">
                     <ul>
                         @foreach($atx->children as $class)
                             <li>
-                                <a href="{{ route('search_atx', ['loc'=>'ru', 'val'=>$class->class ]) }}">{{ $class->class .' - '. $class->name}}</a>
+                                <a href="{{ route('search_atx', ['val'=>$class->class ]) }}">{{ $class->class .' - '. $class->name}}</a>
                             </li>
                         @endforeach
                     </ul>
@@ -89,12 +106,12 @@
             @endif
 
             @if(!empty($classifications))
-                <div class="search-left-content admin-content">
+                <div class="search-left-content admin-content wrap">
                     @foreach($classifications as $class=>$medicines)
                         <h4>{{ $class .' - '.($medicines['name']) }}</h4>
                         @foreach($medicines as $k=>$medicine)
                             @continue('name' === $k)
-                            <a href="{{ route('medicine', ['loc'=>'ru', 'medicine'=> $medicine->alias]) }}">
+                            <a href="{{ route('medicine', ['medicine'=> $medicine->alias]) }}">
                                 {{ $medicine->title }}</br>
                             </a>
                         @endforeach

@@ -5,7 +5,7 @@
             <img src="{{ asset('assets') }}/images/index/slider.jpg">
         </div>
         <div class="mobile-first-screen-info">
-            Сайт поиска препаратов
+            Сайт пошуку преператів
         </div>
     </section>
     <!-- END MOBILE SLIDER -->
@@ -18,15 +18,15 @@
                         <div class="slider-images">
                             <img src="{{ asset('asset') }}/images/slider/{{ $slider->path }}"
                                  alt="{{ $slider->alt }}" title="{{ $slider->title }}">
-                    </div>
+                        </div>
                         <div class="slider-info">
                             <div class="slider-info-text">
                                 <h2>{{ $slider->description }}</h2>
                                 <p>{{ $slider->text }}</p>
                             </div>
-                            <a href="{{ $slider->link ?? route('sort') }}" class="button-blue">Подробнее</a>
+                            <a href="{{ $slider->link ?? route('sort') }}" class="button-blue">Детальніше</a>
+                        </div>
                     </div>
-                </div>
                 @endforeach
             @endif
         </div>
@@ -79,9 +79,9 @@
                         20 000
                     </div>
                     <div class="box-number-info-text">
-                        мед препаратов
+                        мед препаратів
                     </div>
-                    <a href="{{ route('sort') }}" class="button-blue">Все мед препараты</a>
+                    <a href="{{ route('sort', ['loc'=>'ua']) }}" class="button-blue">Всі мед препарати</a>
                 </div>
             </div>
             <div class="box-number">
@@ -91,9 +91,9 @@
                         5 000
                     </div>
                     <div class="box-number-info-text">
-                        фарм производителей
+                        фарм виробників
                     </div>
-                    <a href="{{ route('search_fabricator') }}" class="button-blue">Все фарм производители</a>
+                    <a href="{{ route('search_fabricator') }}" class="button-blue">Всі фарм виробники</a>
                 </div>
             </div>
             <div class="box-number">
@@ -103,9 +103,9 @@
                         2 000
                     </div>
                     <div class="box-number-info-text">
-                        партнеров
+                        партнерів
                     </div>
-                    <a href="{{ route('adv') }}" class="button-blue">Все партнеры</a>
+                    <a href="{{ route('adv', ['loc'=>'ua']) }}" class="button-blue">Всі партнери</a>
                 </div>
             </div>
         </div>
@@ -115,18 +115,9 @@
     <!-- Поиск препаратов -->
     <section class="section-product-search">
         <div class="section-title-meta-icon">
-            <h3>{{ $blocks[1]->title ?? '' }}</h3>
+            <h3>{{ $blocks[1]->utitle ?? '' }}</h3>
             <div class="section-meta-icon">
-                @if(!empty($blocks[1]->first))
-                    {{ link_to_route('search', $blocks[1]->first, ['search' =>$blocks[1]->first]) }}
-                @endif
-                @if(!empty($blocks[1]->second))
-                    {{ link_to_route('search', $blocks[1]->second, ['search' =>$blocks[1]->second]) }}
-                @endif
-                @if(!empty($blocks[1]->third))
-                    {{ link_to_route('search', $blocks[1]->third, ['search' =>$blocks[1]->third]) }}
-                @endif
-                {{--@if(!empty($blocks[1]->fourth))
+                @if(!empty($blocks[1]->fourth))
                     {{ link_to_route('search', $blocks[1]->fourth, ['search' =>$blocks[1]->fourth]) }}
                 @endif
                 @if(!empty($blocks[1]->fifth))
@@ -134,7 +125,7 @@
                 @endif
                 @if(!empty($blocks[1]->sixth))
                     {{ link_to_route('search', $blocks[1]->sixth, ['search' =>$blocks[1]->sixth]) }}
-                @endif--}}
+                @endif
                 <div class="section-icon">
                     <img src="{{ asset('assets') }}/images/title-icons/found.png" alt="иконка Также ищут">
                 </div>
@@ -145,7 +136,7 @@
             @include('main.medicines_cats', $med_cats)
             {{--Витрина--}}
             <div>
-                <a href="{{ route('search') }}" class="button-white">Больше препаратов</a>
+                <a href="{{ route('search', ['loc' => 'ua']) }}" class="button-white">Больше препаратов</a>
             </div>
         </div>
     </section>
@@ -417,17 +408,15 @@
                                         </article>
                                     @endforeach
                                 @endif
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div>
-                    <a href="{{ route('articles_cat', ['cat_alias'=>'intimnye-temy']) }}"
-                       class="button-white">Больше статей</a>
-                </div>
+                    <div>
+                        <a href="{{ route('articles_cat', ['cat_alias'=>'intimnye-temy']) }}"
+                           class="button-white">Больше статей</a>
+                    </div>
             </section>
         </div>
-
-
         <aside class="news-med">
             <div class="section-title-meta-icon">
                 <h3>{{ $blocks[6]->title ?? '' }}</h3>
@@ -446,8 +435,12 @@
                                 <a href="{{ route('articles',
                                                 ['article_alias'=>$article->alias]) }}">
                                     <div class="article-img">
-                                        <img src="{{ asset('asset/images/articles/ru/small').'/'.$article->image->path }}">
-                                        <div class="views"><span>{{ $article->view }}</span></div>
+                                        @if(!empty($article->image->path))
+                                            <img src="{{ asset('asset/images/articles/ru/small').'/'.$article->image->path }}">
+                                        @else
+                                            <img src="{{ asset('asset/images/articles/mp.png') }}">
+                                        @endif
+                                        <div class="views"><span>{{ $article->view ?? 0}}</span></div>
                                     </div>
                                     <div class="article-info">
                                         <h4 class="article-title">{{ $article->title }}</h4>

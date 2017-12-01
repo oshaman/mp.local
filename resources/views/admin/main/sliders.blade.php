@@ -12,25 +12,25 @@
                 </div>
                 <div id="collapse{{ $loop->iteration }}" class="panel-collapse collapse">
                     <div class="panel-body">
-                        {!! Form::open(['url'=>route('main_slider', $slider->id), 'method'=>'post', 'class'=>'form-horizontal']) !!}
-                        <div class="row">
+                        {!! Form::open(['url'=>route('main_slider', $slider->id), 'method'=>'post', 'class'=>'form-horizontal', 'files'=>true]) !!}
+                        <div class="">
                             {{ Form::label('description', 'Заголовок') }}
                             <div>
                                 {!! Form::text('description', $slider->description ?? '',
                                  ['placeholder'=>'Заголовок', 'class'=>'form-control']) !!}
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="">
                             {{ Form::label('text', 'Текст(160 символов)') }}
                             <div>
                                 {!! Form::text('text', $slider->text ?? '',
                                  ['placeholder'=>'Текст', 'class'=>'form-control']) !!}
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="">
                             {{ Form::label('link', 'Ссылка') }}
                             <div>
-                                {!! Form::text('link', old('link') ? : ($slider->text->link ?? ''),
+                                {!! Form::text('link', $slider->link ?? '',
                                  ['placeholder'=>'Ссылка', 'class'=>'form-control']) !!}
                             </div>
                         </div>
@@ -45,11 +45,11 @@
                             {{ Form::label('img', 'Параметры картинки') }}
                             <div class="">
                                 <div class="col-lg-6">
-                                    {!! Form::text('alt', old('alt') ? : ($slider->alt ?? ''),
+                                    {!! Form::text('alt', $slider->alt ?? '',
                                         ['placeholder'=>'Alt', 'id'=>'alt', 'class'=>'form-control']) !!}
                                 </div>
                                 <div class="col-lg-6">
-                                    {!! Form::text('title', old('title') ? : ($slider->title ?? ''),
+                                    {!! Form::text('title', $slider->title ?? '',
                                         ['placeholder'=>'Title', 'id'=>'title', 'class'=>'form-control']) !!}
                                 </div>
                             </div>
@@ -61,8 +61,8 @@
                         <div class="">
                             <label>
                                 <input type="checkbox"
-                                       {{ (old('approved') || !empty($slider->approved)) ? 'checked' : '' }} value="1"
-                                       name="confirmed"> Опубликовать</label>
+                                       {{ !empty($slider->approved) ? 'checked' : '' }} value="1"
+                                       name="approved"> Опубликовать</label>
                         </div>
                         <hr>
                         {!! Form::button('Сохранить', ['class' => 'btn btn-large btn-primary','type'=>'submit']) !!}

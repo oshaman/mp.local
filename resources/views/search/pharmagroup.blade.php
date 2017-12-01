@@ -10,7 +10,7 @@
             @if(!empty($farm))
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
                     <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                        <a href="{{ route('search_farm', 'ru') }}" itemprop="item">Сортировка по фармакологической
+                        <a href="{{ route('search_farm') }}" itemprop="item">Сортировка по фармакологической
                             группе</a>
                         <meta itemprop="position" content="2"/>
                     </div>
@@ -53,32 +53,32 @@
                 <div class="search-alfavit-column">
                     <div class="search-left-content">
                         <div class="first-alfavit">
-                            {{ link_to_route('search_farm', 'А', ['ru', null, 'farmgroup' =>'А'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Б', ['ru', null, 'farmgroup' =>'Б'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'В', ['ru', null, 'farmgroup' =>'В'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Г', ['ru', null, 'farmgroup' =>'Г'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Д', ['ru', null, 'farmgroup' =>'Д'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Е', ['ru', null, 'farmgroup' =>'Е'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Ж', ['ru', null, 'farmgroup' =>'Ж'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'З', ['ru', null, 'farmgroup' =>'З'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'И', ['ru', null, 'farmgroup' =>'И'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'К', ['ru', null, 'farmgroup' =>'К'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Л', ['ru', null, 'farmgroup' =>'Л'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'М', ['ru', null, 'farmgroup' =>'М'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Н', ['ru', null, 'farmgroup' =>'Н'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'О', ['ru', null, 'farmgroup' =>'О'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'П', ['ru', null, 'farmgroup' =>'П'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Р', ['ru', null, 'farmgroup' =>'Р'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'С', ['ru', null, 'farmgroup' =>'С'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Т', ['ru', null, 'farmgroup' =>'Т'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'У', ['ru', null, 'farmgroup' =>'У'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Ф', ['ru', null, 'farmgroup' =>'Ф'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Х', ['ru', null, 'farmgroup' =>'Х'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Ц', ['ru', null, 'farmgroup' =>'Ц'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Ш', ['ru', null, 'farmgroup' =>'Ш'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Щ', ['ru', null, 'farmgroup' =>'Щ'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Э', ['ru', null, 'farmgroup' =>'Э'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Я', ['ru', null, 'farmgroup' =>'Я'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'А', [null, 'farmgroup' =>'А'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'Б', [null, 'farmgroup' =>'Б'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'В', [null, 'farmgroup' =>'В'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'Г', [null, 'farmgroup' =>'Г'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'Д', [null, 'farmgroup' =>'Д'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'Е', [null, 'farmgroup' =>'Е'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'Ж', [null, 'farmgroup' =>'Ж'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'З', [null, 'farmgroup' =>'З'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'И', [null, 'farmgroup' =>'И'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'К', [null, 'farmgroup' =>'К'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'Л', [null, 'farmgroup' =>'Л'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'М', [null, 'farmgroup' =>'М'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'Н', [null, 'farmgroup' =>'Н'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'О', [null, 'farmgroup' =>'О'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'П', [null, 'farmgroup' =>'П'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'Р', [null, 'farmgroup' =>'Р'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'С', [null, 'farmgroup' =>'С'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'Т', [null, 'farmgroup' =>'Т'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'У', [null, 'farmgroup' =>'У'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'Ф', [null, 'farmgroup' =>'Ф'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'Х', [null, 'farmgroup' =>'Х'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'Ц', [null, 'farmgroup' =>'Ц'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'Ш', [null, 'farmgroup' =>'Ш'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'Щ', [null, 'farmgroup' =>'Щ'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'Э', [null, 'farmgroup' =>'Э'], ['class'=>'nav-button-grey']) }}
+                            {{ link_to_route('search_farm', 'Я', [null, 'farmgroup' =>'Я'], ['class'=>'nav-button-grey']) }}
                         </div>
                     </div>
                 </div>
@@ -89,7 +89,7 @@
                 @endif
                 @foreach($medicines as $medicine)
                     <div class="search-result">
-                        <a href="{{ route('medicine', ['loc'=>'ru', 'medicine'=> $medicine->alias]) }}">
+                        <a href="{{ route('medicine', ['medicine'=> $medicine->alias]) }}">
                             <h3>{{ $medicine->title }}</h3></a>
                     </div>
                 @endforeach
@@ -97,7 +97,7 @@
             @if(!empty($farms))
                 @foreach($farms as $farm)
                     <div class="search-result">
-                        <a href="{{ route('search_farm', ['loc'=>'ru', 'val'=>$farm->alias]) }}">
+                        <a href="{{ route('search_farm', ['val'=>$farm->alias]) }}">
                             <h3>{{ $farm->title }}</h3></a>
                     </div>
                 @endforeach

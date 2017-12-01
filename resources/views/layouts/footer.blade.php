@@ -18,7 +18,7 @@
                     <div class="meta-btn-footer">
                         @if(!empty($tags))
                             @foreach($tags as $tag)
-                                <a href="{{ route('articles_tag', ['loc'=>'ru', 'tag_alias'=>$tag->alias]) }}"
+                                <a href="{{ route('articles_tag', ['tag_alias'=>$tag->alias]) }}"
                                    class="btn-meta">
                                     {{ $tag->name }}
                                 </a>
@@ -31,19 +31,6 @@
                     </div>
                 </div>
                 <div class="footer-column">
-                    <h6>О нас</h6>
-                    <div class="about-content">
-                        <p>Идейные соображения высшего порядка, а также укрепление и развитие структуры позволяет
-                            выполнять важные задания по разработке модели развития. Разнообразный и богатый опыт
-                            начало повседневной работы по формированию позиции требуют определения и уточнения
-                            модели развития. Таким образом и наша консультация с широким активом требуют от нас
-                            анализа модели развития. Не следует, однако уже забывать, что постоянное
-                            информационно-пропагандистское обеспечение нашей деятельности обеспечивает широкому
-                            кругу (специалистов) участие в формировании модели развития.</p>
-                    </div>
-                    <a class="btn-link" id="show">Подробнее <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                </div>
-                <div class="footer-column">
                     <h6>Меню</h6>
                     <nav class="footer-menu">
                         @if(!empty($cats))
@@ -51,7 +38,7 @@
                                 @if('articles_cat' == Route::currentRouteName() && $cat->alias == Request::segment(2))
                                     <a>{{ $cat->title }}</a>
                                 @else
-                                    <a href="{{ route('articles_cat', ['loc'=>'ru', 'cat'=>$cat->alias]) }}">{{ $cat->title }}</a>
+                                    <a href="{{ route('articles_cat', ['cat'=>$cat->alias]) }}">{{ $cat->title }}</a>
                                 @endif
                             @endforeach
                         @endif
@@ -65,7 +52,7 @@
                         @else
                             <a href="{{ route('adv') }}">Реклама</a>
                         @endif
-                        @if('conditions' == Route::currentRouteName())
+                        {{--@if('conditions' == Route::currentRouteName())
                             <a>Условия использования сайта</a>
                         @else
                             <a href="{{ route('conditions') }}">Условия использования сайта</a>
@@ -74,19 +61,41 @@
                             <a>Соглашение о конфиденциальности</a>
                         @else
                             <a href="{{ route('convention') }}">Соглашение о конфиденциальности</a>
-                        @endif
+                        @endif--}}
                     </nav>
+                    <div class="terms-email mobile-display-none">
+                        <a>Условия использования сайта</a>
+                        <a>Соглашение о конфиденциальности</a>
+                        <a href="mailto:info@medpravda.com.ua" class="e-mail">info@medpravda.com.ua</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h6>Препараты</h6>
+                    <div class="meta-btn-footer">
+                        @if(!empty($tags))
+                            @foreach($tags as $tag)
+                                <a href="{{ route('articles_tag', ['tag_alias'=>$tag->alias]) }}"
+                                   class="btn-meta">
+                                    {{ $tag->name }}
+                                </a>
+                            @endforeach
+                        @endif
+                    </div>
                 </div>
             </div>
+        </div>
+    </div>
             <div class="copyright-logo">
-                <div class="copyright1">
+                <div class="copy-block logo">
+                    <a href="http://medpravda.com.ua">
+                        <img src="http://medpravda.com.ua/assets/images/main/logo.png" alt="Логотип МЕД правда"></a>
+                </div>
+                <div class="copy-block copyright">
                     <p>Сайт является стандартизированным Интернет-изданием, предназначенным для врачей и других
                         профессиональных медицинских работников</p>
-                </div>
-                <div class="copyright">
                     <p>Copyright @ 2010 - 2017 “Ассоциация независимых разработчиков”</p>
                 </div>
-                <div class="fresh">
+                <div class="copy-block fresh">
                     <div class="created">САЙТ РАЗРАБОТАН</div>
                     <a href="http://freshweb.agency/?utm_source=our-sites&utm_medium=medpravda" target="_blank">
                         <div class="fresh-logo">
@@ -95,8 +104,6 @@
                     <div class="creative">CREATIVE WEB AGENCY</div>
                 </div>
             </div>
-        </div>
-    </div>
     <a class="totop totop-img">
         <img src="{{ asset('assets') }}/images/main/totop.png">
     </a>
@@ -105,4 +112,5 @@
             <div class="line"></div>
         </div>
     </div>
+
 </footer>

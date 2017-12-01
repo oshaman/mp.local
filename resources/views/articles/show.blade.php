@@ -18,7 +18,7 @@
     @if(!empty($articles))
         <div class="big-news margin-minus all-big-news">
             <article class="news">
-                <a href="{{ route('articles', ['loc'=>'ru', 'article_alias'=>$articles[0]->alias]) }}">
+                <a href="{{ route('articles', ['article_alias'=>$articles[0]->alias]) }}">
                     <div class="article-img">
                         @if(!empty($articles[0]->image->path))
                             <img src="{{ asset('asset').'/images/articles/ru/main/'.$articles[0]->image->path }}"
@@ -53,7 +53,7 @@
                 @foreach($articles as $article)
                     @continue($loop->first)
                     <article class="news">
-                        <a href="{{ route('articles', ['loc'=>'ru', 'article_alias'=>$article->alias]) }}">
+                        <a href="{{ route('articles', ['article_alias'=>$article->alias]) }}">
                             <div class="article-img">
                                 @if(!empty($article->image->path))
                                     <img src="{{ asset('asset').'/images/articles/ru/middle/'.$article->image->path }}"
@@ -68,7 +68,7 @@
                             <div class="article-info">
                                 <h4 class="article-title">{{ $article->title }}</h4>
                                 <p class="article-category">Статистика минздрава</p>
-                                <div class="article-text">{!! str_limit($article->content, 156) !!}</div>
+                                <div class="article-text">{!! str_limit(strip_tags($article->content), 156) !!}</div>
                                 <div class="date-link">
                                     <div class="article-date">
                                         {{ $article->created_at->format('d')

@@ -45,6 +45,7 @@
     <table class="table">
         <thead>
         <tr>
+            <th>На главной</th>
             <th>Тэг</th>
             <th>UA-тэг</th>
             <th>ЧПУ</th>
@@ -54,6 +55,7 @@
         <tbody>
         @foreach($tags as $tag)
             <tr>
+                <td>{!! $tag->approved ? '<a><span class="glyphicon glyphicon-plus"></span></a>' : '' !!}</td>
                 <td>{{ $tag->name }}</td>
                 <td>{{ $tag->uname }}</td>
                 <td>{{ $tag->alias }}</td>

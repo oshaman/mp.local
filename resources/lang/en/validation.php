@@ -52,7 +52,7 @@ return [
     'json' => 'The :attribute must be a valid JSON string.',
     'max' => [
         'numeric' => 'Поле :attribute не может содержать число больше :max.',
-        'file' => 'The :attribute may not be greater than :max kilobytes.',
+        'file' => 'Файл :attribute должен быть не больше :max килобайт.',
         'string' => 'The :attribute may not be greater than :max characters.',
         'array' => 'The :attribute may not have more than :max items.',
     ],

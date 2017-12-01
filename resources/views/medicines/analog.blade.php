@@ -16,7 +16,7 @@
                 </a>
             </div>
             <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                <a href="{{ route('medicine', ['loc'=>'ru', 'medicine'=>$medicine->alias]) }}" itemprop="item">
+                <a href="{{ route('medicine', ['medicine'=>$medicine->alias]) }}" itemprop="item">
                     <span itemprop="name" class="label1">{{ $medicine->title }}</span>
                     <meta itemprop="position" content="3"/>
                 </a>
@@ -30,13 +30,13 @@
 
         <h1 class="head-title">{{ $medicine->title }}: аналоги</h1>
         <div class="product-nav">
-            <a href="{{ route('medicine_official', ['medicine'=>$medicine->alias, 'loc'=>'ru']) }}"
+            <a href="{{ route('medicine_official', ['medicine'=>$medicine->alias]) }}"
                class="nav-button-grey">Официальная
                 инструкция</a>
-            <a href="{{ route('medicine', ['medicine'=>$medicine->alias, 'loc'=>'ru']) }}"
+            <a href="{{ route('medicine', ['medicine'=>$medicine->alias]) }}"
                class="nav-button-grey">Адаптированная инструкция</a>
             <a class="nav-button-grey active">Аналоги</a>
-            <a href="{{ route('medicine_faq', ['medicine'=>$medicine->alias, 'loc'=>'ru']) }}" class="nav-button-grey">Вопросы</a>
+            <a href="{{ route('medicine_faq', ['medicine'=>$medicine->alias]) }}" class="nav-button-grey">Вопросы</a>
         </div>
         <div class="product-analog">
             <h2 class="product-title">Форма выпуска</h2>
@@ -47,12 +47,12 @@
             </div>
             @foreach($analogs as $analog)
                 <div class="analog {{ $analog->form->alias }}">
-                    <a href="{{ route('medicine', ['loc'=>'ru', 'medicine'=>$analog->alias]) }}">
+                    <a href="{{ route('medicine', ['medicine'=>$analog->alias]) }}">
                         <h3>{{ $analog->title }}</h3></a>
                     <div>
                         <span>Действующие вещества:</span>
                         @foreach($analog->substance as $substance)
-                            <a href="{{ route('search_substance', ['loc'=>'ru', 'val'=>$substance->alias]) }}">
+                            <a href="{{ route('search_substance', ['val'=>$substance->alias]) }}">
                                 {{ $substance->title }}
                             </a>
                             @if($loop->last)
@@ -64,7 +64,7 @@
                     </div>
                     <div>
                         <span>Код АТХ:</span>
-                        <a href="{{ route('search_atx', ['loc'=>'ru', 'val'=>$analog->classification->class ]) }}">
+                        <a href="{{ route('search_atx', ['val'=>$analog->classification->class ]) }}">
                             {{ $analog->classification->class }}
                         </a>
                     </div>

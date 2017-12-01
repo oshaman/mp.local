@@ -81,7 +81,8 @@ class ArticlesRepository extends Repository
             $article['seo'] = json_encode($obj);
         }
         //        Content
-        $re = '/(<em>|<strong>|<b>|<\/em>|<\/strong>|<\/b>|&nbsp;|&raquo;|&laquo;|&ndash;|&mdash;|&shy;|<div[^>]+>|<\/div>)/';
+        $re = '/(<em>|<strong>|<b>|<\/em>|<\/strong>|<\/b>|&nbsp;|&raquo;|&laquo;
+                            |&ndash;|&mdash;|&shy;|<div[^>]+>|<\/div>|<span[^>]+>|<\/span>)/';
         $article['content'] = preg_replace($re, ' ', $data['content']);
 
         $new = $this->model->firstOrCreate($article);
@@ -206,7 +207,8 @@ class ArticlesRepository extends Repository
         }
 
         //        Content
-        $re = '/(<em>|<strong>|<b>|<\/em>|<\/strong>|<\/b>|&nbsp;|&raquo;|&laquo;|&ndash;|&mdash;|&shy;|<div[^>]+>|<\/div>)/';
+        $re = '/(<em>|<strong>|<b>|<\/em>|<\/strong>|<\/b>|&nbsp;|&raquo;|&laquo;
+                    |&ndash;|&mdash;|&shy;|<div[^>]+>|<\/div>|<span[^>]+>|<\/span>)/';
         $new['content'] = preg_replace($re, ' ', $data['content']);
 //        END Content
 
@@ -422,6 +424,8 @@ class ArticlesRepository extends Repository
         $articles = $builder->take($take)->orderBy('created_at', 'desc')->get();
 
         $res = $prems->concat($articles);
+
+        $res = $this->clearContent($res);
 //                dd($res);
         return $res;
 
@@ -437,6 +441,17 @@ class ArticlesRepository extends Repository
         $where = [['category_id', $cat], ['priority', '>', 0], ['approved', 1]];
         $prems = $this->model->where($where)->take($take)->orderBy('priority', 'desc')->with(['image'])->get();
         return $prems;
+    }
+
+    public function clearContent($res)
+    {
+        $res = $res->transform(function ($item) {
+            if ($item->content) {
+                $item->content = strip_tags($item->content);
+            }
+            return $item;
+        });
+        return $res;
     }
 
 }

@@ -39,6 +39,9 @@ class UarticlesRepository extends Repository
             $new['title'] = $data['title'];
         }
 
+        $new['description'] = $data['description'] ?? null;
+        $new['priority'] = $data['priority'] ?? null;
+
         if (!empty($article->image->alt)) {
             if ($data['imgalt'] !== $article->image->alt) {
                 $new['imgalt'] = $data['imgalt'];
@@ -86,7 +89,9 @@ class UarticlesRepository extends Repository
         }
 
         //        Content
-        $new['content'] = $data['content'];
+        $re = '/(<em>|<strong>|<b>|<\/em>|<\/strong>|<\/b>|&nbsp;|&raquo;|&laquo;
+                    |&ndash;|&mdash;|&shy;|<div[^>]+>|<\/div>|<span[^>]+>|<\/span>)/';
+        $new['content'] = preg_replace($re, ' ', $data['content']);
 //        END Content
 
         $updated = $article->fill($new)->save();
@@ -183,15 +188,15 @@ class UarticlesRepository extends Repository
      * @param $tag
      * @return articles collection
      */
-    public function getByTag($tag, $own)
+    public function getByTag($tag)
     {
         $articles = $this->model->whereHas('tags', function ($q) use ($tag) {
             $q->where('tag_id', $tag)->select('title', 'alias');
         });
 
-        $articles->with(['image', 'category'])->where('own', $own);
+        $articles->with(['image', 'category'])->where('approved', 1);
 
-        return $this->check($articles->paginate(Config::get('settings.paginate_tags')));
+        return $this->check($articles->paginate(9));
 
     }
 
@@ -215,6 +220,66 @@ class UarticlesRepository extends Repository
         !empty($id) ? Cache::store('file')->forget('patients_article-' . $id) : null;
         !empty($cat) ? Cache::forget('docs_cats' . $cat) : null;
         !empty($cat) ? Cache::forget('articles_cats' . $cat) : null;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMain($cat, $takes)
+    {
+        $prems = $this->getPrems($cat);
+
+        if ($prems->isNotEmpty()) {
+            $ids = [];
+            foreach ($prems as $prem) {
+                $ids[] = $prem->id;
+            }
+        }
+
+
+        $builder = $this->model->with('image');
+
+        $where = [['category_id', $cat], ['approved', 1]];
+        $builder->where($where);
+
+        if (!empty($ids)) {
+            $take = $takes - count($ids);
+            $builder->whereNotIn('id', $ids);
+        } else {
+            $take = $takes;
+        }
+
+        $articles = $builder->take($take)->orderBy('created_at', 'desc')->get();
+
+        $res = $prems->concat($articles);
+
+        $res = $this->clearContent($res);
+//                dd($res);
+        return $res;
+
+    }
+
+    /**
+     * @param $cat
+     * @param int $take
+     * @return mixed
+     */
+    public function getPrems($cat, $take = 8)
+    {
+        $where = [['category_id', $cat], ['priority', '>', 0], ['approved', 1]];
+        $prems = $this->model->where($where)->take($take)->orderBy('priority', 'desc')->with(['image'])->get();
+        return $prems;
+    }
+
+    public function clearContent($res)
+    {
+        $res = $res->transform(function ($item) {
+            if ($item->content) {
+                $item->content = strip_tags($item->content);
+            }
+            return $item;
+        });
+        return $res;
     }
 
 }

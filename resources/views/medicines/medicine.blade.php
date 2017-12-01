@@ -26,16 +26,16 @@
             <div class="clone-to" data-number="3"></div>
             <div class="product-nav">
                 <a class="nav-button-grey active">Официальная инструкция</a>
-                <a href="{{ route('medicine', ['medicine'=>$medicine->alias, 'loc'=>'ru']) }}"
+                <a href="{{ route('medicine', ['medicine'=>$medicine->alias]) }}"
                    class="nav-button-grey">Адаптированная инструкция</a>
-                <a href="{{ route('medicine_analog', ['medicine'=>$medicine->alias, 'loc'=>'ru']) }}"
+                <a href="{{ route('medicine_analog', ['medicine'=>$medicine->alias]) }}"
                    class="nav-button-grey">Аналоги</a>
-                <a href="{{ route('medicine_faq', ['medicine'=>$medicine->alias, 'loc'=>'ru']) }}"
+                <a href="{{ route('medicine_faq', ['medicine'=>$medicine->alias]) }}"
                    class="nav-button-grey">Вопросы</a>
             </div>
             <div class="product-nav-img">
                 <div class="product-nav-block">
-                    <a href="{{ route('medicine_official', ['loc'=>'ua', 'medicine'=>$medicine->alias]) }}"
+                    <a href="{{ route('medicine_official', ['medicine'=>$medicine->alias, 'loc'=>'ua']) }}"
                        class="button-blue">Перевести</a>
                     <ul class="top-product-nav">
                         @if(!empty($medicine->consist))
@@ -228,7 +228,7 @@
 
 
             <div class="print">
-                <a href="{{ route('toprint', ['loc'=>'ru', 'medicine'=>$medicine->alias, 'vr'=>'main']) }}">
+                <a href="{{ route('toprint', ['medicine'=>$medicine->alias, 'vr'=>'main']) }}">
                     <img src="{{ asset('assets') }}/images/main/icons.png" alt="Версия для печати">
                     Версия для печати
                 </a>
@@ -244,7 +244,7 @@
                     <div id="proizvoditel">
                         <h5>Производитель:</h5>
                         <a href="{{ route('search_fabricator',
-                        ['loc'=>'ru', 'val'=>'A', 'fabricator'=> $medicine->fabricator_name->alias]) }}">
+                        ['val'=>'A', 'fabricator'=> $medicine->fabricator_name->alias]) }}">
                             <p>{{ $medicine->fabricator_name->title }}</p>
                         </a>
                     </div>
@@ -252,7 +252,7 @@
                 @if(!empty($medicine->innname->title))
                     <div id="mhh">
                         <h5>МНН:</h5>
-                        <a href="{{ route('search_mnn', ['loc'=>'ru', 'val'=> $medicine->innname->alias]) }}">
+                        <a href="{{ route('search_mnn', ['val'=> $medicine->innname->alias]) }}">
                             <p>{{ $medicine->innname->title }}</p>
                         </a>
                     </div>
@@ -260,7 +260,7 @@
                 @if(!empty($medicine->pharmagroup->title))
                     <div id="farm-group">
                         <h5>Фарм. группа:</h5>
-                        <a href="{{ route('search_farm', ['loc'=>'ru', 'val'=>$medicine->pharmagroup->alias]) }}">
+                        <a href="{{ route('search_farm', ['val'=>$medicine->pharmagroup->alias]) }}">
                             <p>{{ $medicine->pharmagroup->title }}</p>
                         </a>
                     </div>
@@ -275,7 +275,7 @@
                     <div id="kod-atx">
                         <h5>Код АТХ:</h5>
                         @foreach($classes as $class=>$name)
-                            <a href="{{ route('search_atx', ['loc'=>'ru', 'val'=>$name['class'] ]) }}">
+                            <a href="{{ route('search_atx', ['val'=>$name['class'] ]) }}">
                                 <p>{{ $class .' - '. $name['name'] }}</p>
                             </a>
                         @endforeach

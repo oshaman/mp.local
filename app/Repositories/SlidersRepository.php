@@ -20,55 +20,51 @@ class SlidersRepository extends Repository
         $this->model = $slider;
     }
 
-    public function updateAdv($request, $adv = null)
+    public function updateSlider($request, $mainslider = null)
     {
         $validator = Validator::make($request->all(), [
-            'title' => 'required|string|between:3,255',
-            'utitle' => 'required|string|between:3,255',
-            'text' => 'nullable|string',
-            'utext' => 'nullable|string',
-            'imgalt' => 'nullable|string|between:,255',
-            'uimgalt' => 'nullable|string|between:,255',
-            'imgtitle' => 'nullable|string|between:,255',
-            'uimgtitle' => 'nullable|string|between:,255',
-            'image' => 'sometimes|mimes:jpg,bmp,png,jpeg|max:5120',
-            'uimage' => 'sometimes|mimes:jpg,bmp,png,jpeg|max:5120',
-            'confirmed' => 'boolean|nullable',
+            'description' => 'required|string|between:3,24',
+            'text' => 'nullable|string|between:3,196',
+            'link' => 'nullable|string',
+
+            'img' => 'sometimes|mimes:jpg,bmp,png,jpeg|max:5120',
+            'alt' => 'nullable|string|between:,255',
+            'title' => 'nullable|string|between:,255',
+            'approved' => 'boolean|nullable',
         ]);
 
         if ($validator->fails()) {
             return ['error' => $validator];
         }
 
-        if (null !== $adv) {
-            $this->model = $this->findById($adv);
+        if (null !== $mainslider) {
+            $this->model = $this->findById($mainslider);
         }
 
-        $data = $request->except('_token', 'image', 'uimage');
+        $data = $request->except('_token', 'img');
 
-        $this->model->title = $data['title'];
-        $this->model->utitle = $data['utitle'];
+        $this->model->description = $data['description'];
 
         $this->model->text = $data['text'];
-        $this->model->utext = $data['utext'];
+        $this->model->link = $data['link'];
 
-        $this->model->img_alt = $data['imgalt'];
-        $this->model->uimg_alt = $data['uimgalt'];
+        $this->model->alt = $data['alt'];
 
-        $this->model->img_title = $data['imgtitle'];
-        $this->model->uimg_title = $data['uimgtitle'];
+        $this->model->title = $data['title'];
 
-        if (!empty($data['confirmed'])) {
+        if (!empty($data['approved'])) {
             $this->model->approved = 1;
         } else {
             $this->model->approved = 0;
         }
 
         $old_img = $this->model->path ?? null;
-        $old_uimg = $this->model->upath ?? null;
 
-        if ($request->hasFile('image')) {
-            $path = $this->mainImg($request->file('image'), $this->transliterate($data['title']), 'ru');
+//                dd($this->model);
+
+
+        if ($request->hasFile('img')) {
+            $path = $this->mainImg($request->file('img'), $this->transliterate($data['description']));
 
             if (false === $path) {
                 $error[] = ['img' => 'Ошибка загрузки картинки'];
@@ -76,20 +72,7 @@ class SlidersRepository extends Repository
                 $this->model->path = $path;
             }
             if (!empty($old_img)) {
-                $this->deleteOldImage($old_img, 'ru');
-            }
-        }
-
-        if ($request->hasFile('uimage')) {
-            $upath = $this->mainImg($request->file('uimage'), $this->transliterate($data['utitle']), 'ua');
-
-            if (false === $upath) {
-                $error[] = ['img' => 'Ошибка загрузки картинки'];
-            } else {
-                $this->model->upath = $upath;
-            }
-            if (!empty($old_uimg)) {
-                $this->deleteOldImage($old_uimg, 'ua');
+                $this->deleteOldImage($old_img);
             }
         }
 
@@ -114,7 +97,9 @@ class SlidersRepository extends Repository
 
             $img = Image::make($image);
 
-            $img->save(public_path() . '/asset/images/slider' . '/' . $path, 100);;
+            $img->fit(Config::get('settings.slider')['width'], Config::get('settings.slider')['height'])
+                ->save(public_path() . '/asset/images/slider' . '/' . $path, 100);
+//            $img->save(public_path() . '/asset/images/slider' . '/' . $path, 100);
 
             return $path;
         } else {
@@ -127,7 +112,7 @@ class SlidersRepository extends Repository
      * @param $path
      * @return true
      */
-    public function deleteOldImage($path, $loc)
+    public function deleteOldImage($path)
     {
         if (File::exists(public_path('/asset/images/slider' . '/') . $path)) {
             File::delete(public_path('/asset/images/slider' . '/') . $path);

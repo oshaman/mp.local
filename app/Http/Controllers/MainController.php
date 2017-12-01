@@ -21,17 +21,17 @@ class MainController extends Controller
     protected $spec = 'ru';
     protected $seo = null;
 
-    public function medicine($loc, $medicine, $act = null)
-    {
-        $act = $act ?? 'medicine';
+    /* public function medicine($medicine, $act = null)
+     {
+         $act = $act ?? 'medicine';
 
-        if ('ru' == $loc) {
-            $content = 'RU-' . $act . '-' . $medicine;
-        } else {
-            $content = 'UA-' . $act . '-' . $medicine;
-        }
-        return view('test')->with('content', $content);
-    }
+         if ('ru' == $loc) {
+             $content = 'RU-' . $act . '-' . $medicine;
+         } else {
+             $content = 'UA-' . $act . '-' . $medicine;
+         }
+         return view('test')->with('content', $content);
+     }*/
 
     /**
      * @param null $loc
@@ -130,7 +130,7 @@ class MainController extends Controller
         $header = view('layouts.header.' . $this->spec)->with(['block' => $this->block, 'cats' => $cats])->render();
         $this->vars = array_add($this->vars, 'header', $header);
 
-        $tags = Tag::get();
+        $tags = Tag::select(['name', 'alias'])->where(['approved' => 1])->skip(15)->take(15)->get();
         $footer = view('layouts.footer')->with(['cats' => $cats, 'tags' => $tags])->render();
         $this->vars = array_add($this->vars, 'footer', $footer);
 

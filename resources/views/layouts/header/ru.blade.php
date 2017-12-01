@@ -22,7 +22,7 @@
                         @if('articles_cat' == Route::currentRouteName() && $cat->alias == Request::segment(2))
                             <a>{{ $cat->title }}</a>
                         @else
-                            <a href="{{ route('articles_cat', ['loc'=>'ru', 'cat'=>$cat->alias]) }}">{{ $cat->title }}</a>
+                            <a href="{{ route('articles_cat', ['cat'=>$cat->alias]) }}">{{ $cat->title }}</a>
                         @endif
                     @endforeach
                 @endif
@@ -63,9 +63,10 @@
             @endif--}}
         </div>
         <div class="search">
-            <form method="GET" action="{{ route('search') }}" accept-charset="UTF-8">
+            {!! Form::open(['url'=>route('search'), 'method'=>'post']) !!}
                 <input type="search" name="search" id="search" placeholder="Поиск по сайту">
-            </form>
+            <input type="hidden" name="stats">
+            {{ Form::close() }}
             <span class="img-search"></span>
         </div>
     </div>

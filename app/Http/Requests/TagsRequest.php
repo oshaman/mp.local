@@ -67,7 +67,25 @@ class TagsRequest extends FormRequest
         if ($this->isMethod('post')) {
             $rules = [
                 'tag' => ['required', 'between:3, 64', 'regex:#^[а-яА-ЯёЁ0-9\s-]+$#u'],
-                'utag' => ['required', 'between:3, 64', 'regex:#^[а-яА-ЯёЁіІїЇiI0-9\s-\']+$#u'],
+                'utag' => ['required', 'between:3, 64', 'regex:#^[а-яА-ЯёЁіІїЇiIЄє0-9\s-\']+$#u'],
+
+                'seo_title' => 'string|nullable',
+                'seo_keywords' => 'string|nullable',
+                'seo_description' => 'string|nullable',
+                'seo_text' => 'string|nullable',
+                'og_image' => 'string|nullable',
+                'og_title' => 'string|nullable',
+                'og_description' => 'string|nullable',
+
+                'useo_title' => 'string|nullable',
+                'useo_keywords' => 'string|nullable',
+                'useo_description' => 'string|nullable',
+                'useo_text' => 'string|nullable',
+                'uog_image' => 'string|nullable',
+                'uog_title' => 'string|nullable',
+                'uog_description' => 'string|nullable',
+
+                'approved' => 'boolean|nullable',
             ];
             return $rules;
         }
