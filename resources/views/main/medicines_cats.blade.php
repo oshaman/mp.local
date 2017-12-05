@@ -8,7 +8,7 @@
             </div>
             @if(!empty($cat->alias_1[0]))
                 <article class="article-products">
-                    <a href="{{ route('medicine', ['medicine'=>$cat->alias_1[0]->alias, 'loc'=>'ua']) }}">
+                    <a href="{{ route('medicine', ['medicine'=>$cat->alias_1[0]->alias, 'loc'=>$loc]) }}">
                         <div class="article-img">
                             @if(!empty($cat->alias_1[0]->image[0]->path))
                                 <img src="{{ asset('asset/images/medicine/main/').'/'.$cat->alias_1[0]->image[0]->path }}"
@@ -24,7 +24,7 @@
             @endif
             @if(!empty($cat->alias2[0]))
                 <article class="article-products mobile-display-none">
-                    <a href="{{ route('medicine', ['medicine'=>$cat->alias_2[0]->alias, 'loc'=>'ua']) }}">
+                    <a href="{{ route('medicine', ['medicine'=>$cat->alias_2[0]->alias, 'loc'=>$loc]) }}">
                         <div class="article-img">
                             @if(!empty($cat->alias_2[0]->image[0]->path))
                                 <img src="{{ asset('asset/images/medicine/main/').'/'.$cat->alias_2[0]->image[0]->path }}"
@@ -40,7 +40,7 @@
             @endif
             @if(!empty($cat->alias_3[0]))
                 <article class="article-products mobile-display-none">
-                    <a href="{{ route('medicine', ['medicine'=>$cat->alias_3[0]->alias, 'loc'=>'ua']) }}">
+                    <a href="{{ route('medicine', ['medicine'=>$cat->alias_3[0]->alias, 'loc'=>$loc]) }}">
                         <div class="article-img">
                             @if(!empty($cat->alias_3[0]->image[0]->path))
                                 <img src="{{ asset('asset/images/medicine/main/').'/'.$cat->alias_3[0]->image[0]->path }}"

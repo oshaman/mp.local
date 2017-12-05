@@ -18,20 +18,8 @@ class MainController extends Controller
     protected $jss = null;
     protected $aside = null;
     protected $block = null;
-    protected $spec = 'ru';
     protected $seo = null;
-
-    /* public function medicine($medicine, $act = null)
-     {
-         $act = $act ?? 'medicine';
-
-         if ('ru' == $loc) {
-             $content = 'RU-' . $act . '-' . $medicine;
-         } else {
-             $content = 'UA-' . $act . '-' . $medicine;
-         }
-         return view('test')->with('content', $content);
-     }*/
+    protected $loc = '';
 
     /**
      * @param null $loc
@@ -90,35 +78,9 @@ class MainController extends Controller
         return $this->renderOutput();
     }
 
-    /*public function analog($loc, $medicine=null)
-    {
-        if ('ru' == $loc) {
-            $content = 'RU-analog-'.$medicine;
-        } else {
-            $content = 'UA-analog-'.$medicine;
-        }
-        return view('test')->with('content', $content);
-    }
-
-    public function adaptive($loc, $medicine=null)
-    {
-        if ('ru' == $loc) {
-            $content = 'RU-adaptive-'.$medicine;
-        } else {
-            $content = 'UA-adaptive-'.$medicine;
-        }
-        return view('test')->with('content', $content);
-    }
-
-    public function faqMed($loc, $medicine=null)
-    {
-        if ('ru' == $loc) {
-            $content = 'RU-faq-'.$medicine;
-        } else {
-            $content = 'UA-faq-'.$medicine;
-        }
-        return view('test')->with('content', $content);
-    }*/
+    /**
+     * @return $this
+     */
     public function renderOutput()
     {
         $this->vars = array_add($this->vars, 'title', $this->title);
@@ -127,11 +89,21 @@ class MainController extends Controller
 
         $this->block = Block::where('id', 1)->first();
         $cats = Category::get();
-        $header = view('layouts.header.' . $this->spec)->with(['block' => $this->block, 'cats' => $cats])->render();
+
+        if (empty($this->loc)) {
+            $header = view('layouts.header.ru')
+                ->with(['block' => $this->block, 'cats' => $cats])->render();
+        } else {
+            $header = view('layouts.header.ua')->with(['block' => $this->block, 'cats' => $cats])->render();
+        }
         $this->vars = array_add($this->vars, 'header', $header);
 
-        $tags = Tag::select(['name', 'alias'])->where(['approved' => 1])->skip(15)->take(15)->get();
-        $footer = view('layouts.footer')->with(['cats' => $cats, 'tags' => $tags])->render();
+        $tags = Tag::select(['name', 'uname', 'alias'])->where(['approved' => 1])->skip(15)->take(15)->get();
+        if (empty($this->loc)) {
+            $footer = view('layouts.footer.ru')->with(['cats' => $cats, 'tags' => $tags])->render();
+        } else {
+            $footer = view('layouts.footer.ua')->with(['cats' => $cats, 'tags' => $tags])->render();
+        }
         $this->vars = array_add($this->vars, 'footer', $footer);
 
         if ($this->content) {

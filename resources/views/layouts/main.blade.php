@@ -36,7 +36,7 @@
         @if(!empty($seo->seo_title))
             {{ $seo->seo_title . ' - ' . env('APP_NAME') }}
         @else
-            {{ $title ? ($title.' - '. env('APP_NAME')) : env('APP_NAME') }}
+            {{ $title ?? env('APP_NAME') }}
         @endif
     </title>
     <meta charset="UTF-8">
@@ -72,8 +72,8 @@
 <!-- WRAP -->
 <div class="main-wrapper
         @if('main' == Route::currentRouteName()) main-page @endif
-@if('articles' == Route::currentRouteName()) single-article @endif
-@if('articles_cat' == Route::currentRouteName()) articles @endif
+@if(('articles' == Route::currentRouteName()) || ('ua_articles' == Route::currentRouteName())) single-article @endif
+@if(('articles_cat' == Route::currentRouteName()) || ('ua_articles_cat' == Route::currentRouteName())) articles @endif
         ">
     @yield('header')
 

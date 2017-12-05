@@ -6,12 +6,12 @@
             <div class="bread-crumbs breadcrumbs mobile-display-none" id="breadcrumbs" itemscope
                  itemtype="http://schema.org/BreadcrumbList">
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <a href="{{ route('main') }}" itemprop="item">Главная</a>
+                    <a href="{{ route('main', ['loc'=>'ua']) }}" itemprop="item">Головна</a>
                     <meta itemprop="position" content="1"/>
                 </div>
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <a href="{{ route('articles_cat', ['cat_alias'=>$article->category->alias]) }}"
-                       itemprop="item">{{ $article->category->title }}</a>
+                    <a href="{{ route('ua_articles_cat', ['cat_alias'=>$article->category->alias]) }}"
+                       itemprop="item">{{ $article->category->utitle }}</a>
                     <meta itemprop="position" content="2"/>
                 </div>
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
@@ -25,7 +25,7 @@
                 <div class="date-link">
                     <div class="article-date">
                         {{ $article->created_at->format('d')
-                                        . ' '  . trans('ru.'.$article->created_at->format('m'))
+                                        . ' '  . trans('ua.'.$article->created_at->format('m'))
                                         . ' '  . $article->created_at->format('Y')
                                 }}
                     </div>
@@ -33,7 +33,7 @@
                 </div>
                 <div class="admin-content">
                     <div class="full-width-image">
-                        <img src="{{ asset('asset').'/images/articles/ru/middle/'.$article->image->path }}"
+                        <img src="{{ asset('asset').'/images/articles/ua/middle/'.$article->image->path }}"
                              alt="{{ $article->image->alt }}" title="{{ $article->image->title }}">
                     </div>
                     {{--Main Content--}}
@@ -43,29 +43,29 @@
             </div>
             <div class="down-meta-share">
                 <div class="top-meta">
-                    <span class="meta-title">Популярные теги:</span>
+                    <span class="meta-title">Теги:</span>
                     @if(!empty($article->tags) && $article->tags->isNotEmpty())
                         @foreach($article->tags as $tag)
-                            <a href="{{ route('articles_tag', ['tag_alias'=>$tag->alias]) }}"
+                            <a href="{{ route('ua_articles_tag', ['tag_alias'=>$tag->alias]) }}"
                                class="btn-meta">
-                                {{ $tag->name }}
+                                {{ $tag->uname }}
                             </a>
                         @endforeach
                     @endif
                 </div>
                 <div class="share">
-                    <span>Поделиться</span>
+                    <span>Поділитися</span>
                     <a href="!#"><i class="fa fa-facebook-square" aria-hidden="true"></i></a>
-                    <a href="!#"><i class="fa fa-twitter-square" aria-hidden="true"></i></a></div>
+                    <a href="!#"><i class="fa fa-twitter-square" aria-hidden="true"></i></a>
+                </div>
             </div>
         </div>
         <section class="section-last-arts">
             <div class="section-title-meta-icon">
-                <h3>Другие статьи</h3>
+                <h3>Інші статті</h3>
                 <div class="section-meta-icon">
-                    <a href="#!">Новости</a>
-                    <a href="#!">Препараты</a>
-                    <a href="#!">Минздрав</a>
+                    <a href="#!">Новини</a>
+                    <a href="#!">Препарати</a>
                     <div class="section-icon">
                         <img src="{{ asset('assets') }}/images/title-icons/main-icon-3.png"
                              alt="иконка Последние статьи">
@@ -77,9 +77,9 @@
                     @if(null != $same[0])
                         <div class="left-column big-news">
                             <article class="news">
-                                <a href="{{ route('articles', ['article_alias'=>$same[0]->alias]) }}">
+                                <a href="{{ route('ua_articles', ['article_alias'=>$same[0]->alias]) }}">
                                     <div class="article-img">
-                                        <img src="{{ asset('asset').'/images/articles/ru/middle/'.$same[0]->image->path }}"
+                                        <img src="{{ asset('asset').'/images/articles/ua/middle/'.$same[0]->image->path }}"
                                              alt="{{ $same[0]->image->alt }}" title="{{ $same[0]->image->title }}">
                                         <div class="views"><span>{{ $same[0]->view }}</span></div>
                                     </div>
@@ -89,11 +89,11 @@
                                         <div class="date-link">
                                             <div class="article-date">
                                                 {{ $same[0]->created_at->format('d')
-                                                    . ' '  . trans('ru.'.$same[0]->created_at->format('m'))
+                                                    . ' '  . trans('ua.'.$same[0]->created_at->format('m'))
                                                     . ' '  . $same[0]->created_at->format('Y')
                                                 }}
                                             </div>
-                                            <span class="btn-link">Подробнее</span>
+                                            <span class="btn-link">Детальніше</span>
                                         </div>
                                     </div>
                                 </a>
@@ -106,9 +106,9 @@
                             @foreach($same as $item)
                                 @continue($loop->first)
                                 <article class="news">
-                                    <a href="{{ route('articles', ['article_alias'=>$item->alias]) }}">
+                                    <a href="{{ route('ua_articles', ['article_alias'=>$item->alias]) }}">
                                         <div class="article-img">
-                                            <img src="{{ asset('asset').'/images/articles/ru/small/'.$item->image->path }}"
+                                            <img src="{{ asset('asset').'/images/articles/ua/small/'.$item->image->path }}"
                                                  alt="{{ $item->image->alt }}" title="{{ $item->image->title }}">
                                             <div class="views"><span>{{ $item->view }}</span></div>
                                         </div>
@@ -118,11 +118,11 @@
                                             <div class="date-link">
                                                 <div class="article-date">
                                                     {{ $item->created_at->format('d')
-                                                        . ' '  . trans('ru.'.$item->created_at->format('m'))
+                                                        . ' '  . trans('ua.'.$item->created_at->format('m'))
                                                         . ' '  . $item->created_at->format('Y')
                                                     }}
                                                 </div>
-                                                <span class="btn-link">Подробнее</span>
+                                                <span class="btn-link">Детальніше</span>
                                             </div>
                                         </div>
                                     </a>
@@ -134,8 +134,8 @@
                 </div>
             </div>
             <div>
-                <a href="{{ route('articles_cat', ['cat_alias'=>$article->category->alias]) }}"
-                   class="button-white">Больше статей</a>
+                <a href="{{ route('ua_articles_cat', ['cat_alias'=>$article->category->alias]) }}"
+                   class="button-white">Більше статей</a>
             </div>
         </section>
         <div class="SEO-text">

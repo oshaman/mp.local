@@ -31,8 +31,8 @@
     <div class="section-title-meta-icon">
         <h3>
             Сортировка препаратов по международному названию:&nbsp;
-            @if(!empty($letter))
-                <a>{{ $letter }}</a>
+            @if(!empty($mnn->title))
+                <a>{{ str_limit($mnn->title, 48) }}</a>
             @endif
         </h3>
         <div class="section-meta-icon">

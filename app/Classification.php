@@ -17,6 +17,14 @@ class Classification extends Model
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function umedicines()
+    {
+        return $this->hasMany('Fresh\Medpravda\Umedicine');
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function children()

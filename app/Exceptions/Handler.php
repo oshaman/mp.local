@@ -48,6 +48,25 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($this->isHttpException($exception)) {
+            $statusCode = $exception->getStatusCode();
+
+            switch ($statusCode) {
+                case '404' :
+
+                    $block = \Fresh\Medpravda\Block::where('id', 1)->first();
+                    $cats = \Fresh\Medpravda\Category::get();
+                    $header = view('layouts.header.ru')->with(['block' => $block, 'cats' => $cats])->render();
+
+                    $tags = \Fresh\Medpravda\Tag::select(['name', 'alias'])
+                        ->where(['approved' => 1])->skip(15)->take(15)->get();
+                    $footer = view('layouts.footer.ru')->with(['cats' => $cats, 'tags' => $tags])->render();
+
+                    return response()->view('errors.404',
+                        ['header' => $header, 'footer' => $footer], 404);
+            }
+        }
+
         return parent::render($request, $exception);
     }
 }

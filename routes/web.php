@@ -18,75 +18,97 @@ Route::get('onas/{loc?}', 'MainController@about')->name('about');
 Route::get('soglashenie/{loc?}', 'MainController@convention')->name('convention');
 Route::get('usloviya/{loc?}', 'MainController@conditions')->name('conditions');
 
+Route::group(['prefix' => 'ua'], function () {
+    Route::group(['prefix' => 'sort'], function () {
+//        SORT ===============================>
+//        alpha
+        Route::get('/alfavit/{val?}', 'SearchController@alphau')
+            ->name('search_alpha_u')->where(['val' => '[\wа-яА-Яё-]+']);
+//      fabric
+        Route::get('/proizvoditel/{val?}/{fabricator?}', 'SearchController@fabricatoru')
+            ->name('search_fabricator_u')->where(['val' => '[\wа-яА-Яё]+', 'fabricator' => '[\w-]+']);
+//        mnn
+        Route::get('/mnn/{val?}', 'SearchController@mnnu')->name('search_mnn_u')->where(['val' => '[\w-]+']);
+//        atx
+        Route::get('/atx/{val?}', 'SearchController@atxu')->name('search_atx_u')->where(['val' => '[\w]+']);
+//      pharm
+        Route::get('/farm-gruppa/{val?}', 'SearchController@farmu')->name('search_farm_u')->where(['val' => '[\w-]+']);
+
+//      substance
+        Route::get('/veshestvo/{val?}', 'SearchController@substanceu')->name('search_substance_u')->where(['val' => '[\w-]+', 'loc' => 'ua']);
+    });
+//        SORT ===============================>
+//        MEDICINE ===============================>
+    Route::get('preparat/{medicine}', 'MedicineController@medicineUa')
+        ->name('medicine_ua')->where(['medicine' => '[\w-]+']);
+    Route::get('preparat/{medicine}/analog', 'MedicineController@analogUa')
+        ->name('medicine_analog_ua')->where(['medicine' => '[\w-]+']);
+    Route::get('preparat/{medicine}/official', 'MedicineController@officialUa')->name('medicine_official_ua')
+        ->where(['medicine' => '[\w-]+']);
+    Route::get('preparat/{medicine}/faq', 'MedicineController@faqUa')
+        ->name('medicine_faq_ua')->where(['medicine' => '[\w-]+']);
+    Route::get('preparat/{medicine}/print/{vr}', 'MedicineController@toprintUa')->name('toprint_ua')
+        ->where(['medicine' => '[\w-]+', 'vr' => 'main|adaptive']);
+//        MEDICINE ===============================>
+//        ARTICLES ===============================>
+    Route::group(['prefix' => 'statjі'], function () {
+        Route::get('/{ua_article_alias?}', 'ArticlesController@uaShow')->name('ua_articles')->where(['ua_article_alias' => '[\w-]+']);
+        Route::get('/cat/{cat_alias}', 'ArticlesController@uaCats')->name('ua_articles_cat')->where(['cat_alias' => '[\w-]+']);
+        Route::get('/teg/{tag_alias}', 'ArticlesController@uaTag')
+            ->name('ua_articles_tag')->where(['tag_alias' => '[\w-]+']);
+    });
+
+});
+
+
 Route::match(['get', 'post'], 'main', 'MainController@index');
 
-Route::get('preparat/{medicine}/{loc?}', 'MedicineController@medicine')
+Route::get('preparat/{medicine}', 'MedicineController@medicine')
     ->name('medicine')
-    ->where(['medicine' => '[\w-]+', 'loc' => 'ua']);
+    ->where(['medicine' => '[\w-]+']);
 
 
-Route::get('preparat/{medicine}/analog/{loc?}', 'MedicineController@analog')
-    ->name('medicine_analog')->where(['medicine' => '[\w-]+', 'loc' => 'ua']);
-Route::get('preparat/{medicine}/official/{loc?}', 'MedicineController@official')->name('medicine_official')
+Route::get('preparat/{medicine}/analog', 'MedicineController@analog')
+    ->name('medicine_analog')->where(['medicine' => '[\w-]+']);
+Route::get('preparat/{medicine}/official', 'MedicineController@official')->name('medicine_official')
     ->where(['medicine' => '[\w-]+', 'loc' => 'ua']);
-Route::get('preparat/{medicine}/faq/{loc?}', 'MedicineController@faq')
-    ->name('medicine_faq')->where(['medicine' => '[\w-]+', 'loc' => 'ua']);
-Route::get('preparat/{medicine}/print/{vr}/{loc?}', 'MedicineController@toprint')->name('toprint')
-    ->where(['medicine' => '[\w-]+', 'vr' => 'main|adaptive', 'loc' => 'ua']);
+Route::get('preparat/{medicine}/faq', 'MedicineController@faq')
+    ->name('medicine_faq')->where(['medicine' => '[\w-]+']);
+Route::get('preparat/{medicine}/print/{vr}', 'MedicineController@toprint')->name('toprint')
+    ->where(['medicine' => '[\w-]+', 'vr' => 'main|adaptive']);
 /**
  * SEARCH
  */
 Route::group(['prefix' => 'sort'], function () {
     Route::get('/', 'SearchController@show')->name('sort');
 
-    Route::group(['prefix' => 'alfavit'], function () {
-        Route::get('/{val?}', 'SearchController@alpha')->name('search_alpha')->where(['val' => '[\wа-яА-Яё-]+']);
-        Route::get('ua/{val?}', 'SearchController@alphau')
-            ->name('search_alpha_u')->where(['val' => '[\wа-яА-Яё-]+']);
-    });
+    Route::get('/alfavit/{val?}', 'SearchController@alpha')->name('search_alpha')->where(['val' => '[\wа-яА-Яё-]+']);
 
-    Route::group(['prefix' => 'proizvoditel'], function () {
-        Route::get('/{val?}/{fabricator?}', 'SearchController@fabricator')
-            ->name('search_fabricator')->where(['val' => '[\wа-яА-Яё]+', 'fabricator' => '[\w-]+']);
-        Route::get('/ua/{val?}/{fabricator?}', 'SearchController@fabricatoru')
-            ->name('search_fabricatoru')->where(['val' => '[\wа-яА-Яё]+', 'fabricator' => '[\w-]+']);
-    });
+    Route::get('/proizvoditel/{val?}/{fabricator?}', 'SearchController@fabricator')
+        ->name('search_fabricator')->where(['val' => '[\wа-яА-Яё]+', 'fabricator' => '[\w-]+']);
 
-    Route::group(['prefix' => 'mnn'], function () {
-        Route::get('/{val?}', 'SearchController@mnn')
-            ->name('search_mnn')->where(['val' => '[\w-]+']);
-        Route::get('/ua/{val?}', 'SearchController@mnnu')
-            ->name('search_mnnu')->where(['val' => '[\w-]+']);
-    });
+    Route::get('/mnn/{val?}', 'SearchController@mnn')->name('search_mnn')->where(['val' => '[\w-]+']);
 
-    Route::group(['prefix' => 'atx'], function () {
-        Route::get('/{val?}', 'SearchController@atx')->name('search_atx')->where(['val' => '[\w]+']);
-        Route::get('/ua/{val?}', 'SearchController@atxa')->name('search_atxa')->where(['val' => '[\w]+']);
+    Route::get('/atx/{val?}', 'SearchController@atx')->name('search_atx')->where(['val' => '[\w]+']);
 
-    });
-    Route::group(['prefix' => 'farm-gruppa'], function () {
-        Route::get('/{val?}', 'SearchController@farm')->name('search_farm')->where(['val' => '[\w-]+']);
-        Route::get('/ua/{val?}', 'SearchController@farmu')->name('search_farmu')->where(['val' => '[\w-]+']);
-    });
-    Route::group(['prefix' => 'veshestvo'], function () {
-        Route::get('/{val?}', 'SearchController@substance')->name('search_substance')->where(['val' => '[\w-]+']);
-        Route::get('/ua/{val?}', 'SearchController@substanceu')->name('search_substanceu')->where(['val' => '[\w-]+', 'loc' => 'ua']);
-    });
+    Route::get('/farm-gruppa/{val?}', 'SearchController@farm')->name('search_farm')->where(['val' => '[\w-]+']);
+
+    Route::get('/veshestvo/{val?}', 'SearchController@substance')->name('search_substance')->where(['val' => '[\w-]+']);
 
 });
 
 Route::match(['get', 'post'], 'poisk/{loc?}', 'SearchController@search')
     ->name('search')->where(['loc' => 'ua']);
+Route::match(['get', 'post'], 'presearch', 'SearchController@presearch')->name('presearch');
 
 /**
  * Articles
  */
 Route::group(['prefix' => 'statjі'], function () {
-    Route::get('/{article_alias?}/{loc?}', 'ArticlesController@show')->name('articles')->where(['loc' => 'ua', 'article_alias' => '[\w-]+']);
-    Route::get('/cat/{cat_alias}/{loc?}', 'ArticlesController@cats')->name('articles_cat')->where(['loc' => 'ua', 'cat_alias' => '[\w-]+']);
-    Route::get('/teg/{tag_alias}/{loc?}', 'ArticlesController@tag')
-        ->name('articles_tag')->where(['loc' => 'ua', 'tag_alias' => '[\w-]+']);
-//    Route::get();
+    Route::get('/{article_alias?}', 'ArticlesController@show')->name('articles')->where(['article_alias' => '[\w-]+']);
+    Route::get('/cat/{cat_alias}', 'ArticlesController@cats')->name('articles_cat')->where(['cat_alias' => '[\w-]+']);
+    Route::get('/teg/{tag_alias}', 'ArticlesController@tag')
+        ->name('articles_tag')->where(['tag_alias' => '[\w-]+']);
 });
 
 

@@ -36,22 +36,6 @@
                             </div>
                         </div>
                         <div class="col-lg-6">
-                            {{ Form::label('second', 'Тэг-2') }}
-                            <div>
-                                {!! Form::text('second', $block->second ?? '',
-                                 ['placeholder'=>'Морфин', 'class'=>'form-control']) !!}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            {{ Form::label('third', 'Тэг-3') }}
-                            <div>
-                                {!! Form::text('third', $block->third ?? '',
-                                 ['placeholder'=>'Морфин', 'class'=>'form-control']) !!}
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
                             {{ Form::label('fourth', 'Тэг-4') }}
                             <div>
                                 {!! Form::text('fourth', $block->fourth ?? '',
@@ -61,9 +45,25 @@
                     </div>
                     <div class="row">
                         <div class="col-lg-6">
+                            {{ Form::label('second', 'Тэг-2') }}
+                            <div>
+                                {!! Form::text('second', $block->second ?? '',
+                                 ['placeholder'=>'Морфин', 'class'=>'form-control']) !!}
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
                             {{ Form::label('fifth', 'Тэг-5') }}
                             <div>
                                 {!! Form::text('fifth', $block->fifth ?? '',
+                                 ['placeholder'=>'Морфин', 'class'=>'form-control']) !!}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {{ Form::label('third', 'Тэг-3') }}
+                            <div>
+                                {!! Form::text('third', $block->third ?? '',
                                  ['placeholder'=>'Морфин', 'class'=>'form-control']) !!}
                             </div>
                         </div>

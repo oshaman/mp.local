@@ -58,6 +58,12 @@ class TagsRepository extends Repository
             $tag->uname = $request->utag;
         }
 
+        if (!empty($request->approved)) {
+            $tag->approved = 1;
+        } else {
+            $tag->approved = 0;
+        }
+
         if (empty($request->alias)) {
             $alias = $this->transliterate($request->tag);
             if ($alias != $tag->alias) {

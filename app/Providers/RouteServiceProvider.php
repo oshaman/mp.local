@@ -34,11 +34,11 @@ class RouteServiceProvider extends ServiceProvider
 
 
         Route::bind('article_alias', function ($value, \Illuminate\Routing\Route $route) {
-            if ('ua' !== $route->parameter('loc')) {
-                return \Fresh\Medpravda\Article::where('alias', $value)->first();
-            } else {
-                return \Fresh\Medpravda\UArticle::where('alias', $value)->first();
-            }
+            return \Fresh\Medpravda\Article::where('alias', $value)->first();
+        });
+
+        Route::bind('ua_article_alias', function ($value) {
+            return \Fresh\Medpravda\UArticle::where('alias', $value)->first();
         });
     }
 

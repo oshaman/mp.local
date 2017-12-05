@@ -1,9 +1,16 @@
-@extends('layouts.main', ['title'=>'404'])
+@extends('layouts.main')
+
+{{--@section('header')
+    {!! $header !!}
+@endsection--}}
+
+@section('header')
+    {!! $header !!}
+@endsection
 
 @section('content')
-    <div class="page-404">
-        <div class="num-404">404</div>
-        <div class="text-404">УПС... такой страницы больше не существует...</div>
+    <div class="page-four wrap">
+        <div class="text-four">УПС... такой страницы больше не существует...</div>
         <h2>Возможно Вы искали:</h2>
         <div class="admin-content">
             <ul>
@@ -16,3 +23,6 @@
     </div>
 @endsection
 
+@section('footer')
+    {!! $footer !!}
+@endsection

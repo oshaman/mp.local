@@ -1,4 +1,4 @@
-<h1>Редактирование категории</h1>
+<h1>Редактирование тэга</h1>
 
 {!! Form::open(['url' => route('edit_tags', $tag->id), 'class'=>'form-horizontal','method'=>'POST' ]) !!}
 <div class="">
@@ -13,6 +13,13 @@
     <div class="">
         {!! Form::text('alias', old('alias') ? : ($tag->alias ?? '') , ['placeholder'=>'psihiatr...', 'id'=>'cat', 'class'=>'form-control eng-alias']) !!}
     </div>
+    <div class="col-lg-6">
+        <label>
+            <input type="checkbox" {{ old('approved') ? 'checked' : ''}} value="1" name="approved">
+            На главную
+        </label>
+    </div>
+    <hr>
     <!-- SEO -->
     <div class="panel-heading">
         <h2>

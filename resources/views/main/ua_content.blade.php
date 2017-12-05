@@ -31,7 +31,6 @@
             @endif
         </div>
 
-
         <div class="pagination">
             <div class="slide">
                 <div class="inner">
@@ -64,7 +63,7 @@
     <!-- НА САЙТЕ -->
     <section class="section-on-site">
         <div class="section-title-meta-icon">
-            <h3>На сайте</h3>
+            <h3>На сайті</h3>
             <div class="section-meta-icon">
                 <div class="section-icon">
                     <img src="{{ asset('assets') }}/images/title-icons/main-icon-1.png" alt="иконка на сайте">
@@ -72,7 +71,7 @@
             </div>
         </div>
         <div class="box-number-three">
-            <div class="box-number">
+            <a href="{{ route('search_alpha_u') }}" class="box-number">
                 <img src="{{ asset('assets') }}/images/index/main-1.jpg">
                 <div class="box-number-info">
                     <div class="box-number-num">
@@ -81,10 +80,10 @@
                     <div class="box-number-info-text">
                         мед препаратів
                     </div>
-                    <a href="{{ route('sort', ['loc'=>'ua']) }}" class="button-blue">Всі мед препарати</a>
+                    <span class="button-blue">Всі мед препарати</span>
                 </div>
-            </div>
-            <div class="box-number">
+            </a>
+            <a href="{{ route('search_fabricator_u') }}" class="box-number">
                 <img src="{{ asset('assets') }}/images/index/main-2.jpg">
                 <div class="box-number-info">
                     <div class="box-number-num">
@@ -93,10 +92,10 @@
                     <div class="box-number-info-text">
                         фарм виробників
                     </div>
-                    <a href="{{ route('search_fabricator') }}" class="button-blue">Всі фарм виробники</a>
+                    <span class="button-blue">Всі фарм виробники</span>
                 </div>
-            </div>
-            <div class="box-number">
+            </a>
+            <a href="{{ route('adv', ['loc'=>'ua']) }}" class="box-number">
                 <img src="{{ asset('assets') }}/images/index/main-3.jpg">
                 <div class="box-number-info">
                     <div class="box-number-num">
@@ -105,9 +104,9 @@
                     <div class="box-number-info-text">
                         партнерів
                     </div>
-                    <a href="{{ route('adv', ['loc'=>'ua']) }}" class="button-blue">Всі партнери</a>
+                    <span class="button-blue">Всі партнери</span>
                 </div>
-            </div>
+            </a>
         </div>
     </section>
     <!-- end НА САЙТЕ -->
@@ -136,7 +135,7 @@
             @include('main.medicines_cats', $med_cats)
             {{--Витрина--}}
             <div>
-                <a href="{{ route('search', ['loc' => 'ua']) }}" class="button-white">Больше препаратов</a>
+                <a href="{{ route('search', ['loc' => 'ua']) }}" class="button-white">Більше препаратів</a>
             </div>
         </div>
     </section>
@@ -146,18 +145,9 @@
     {{--<section class="mobile-display-none">--}}
     <section>
         <div class="section-title-meta-icon">
-            <h3>{{ $blocks[2]->title ?? '' }}</h3>
+            <h3>{{ $blocks[2]->utitle ?? '' }}</h3>
             <div class="section-meta-icon">
-                @if(!empty($blocks[2]->first))
-                    {{ link_to_route('search', $blocks[2]->first, ['search' =>$blocks[2]->first]) }}
-                @endif
-                @if(!empty($blocks[2]->second))
-                    {{ link_to_route('search', $blocks[2]->second, ['search' =>$blocks[2]->second]) }}
-                @endif
-                @if(!empty($blocks[2]->third))
-                    {{ link_to_route('search', $blocks[2]->third, ['search' =>$blocks[2]->third]) }}
-                @endif
-                {{--@if(!empty($blocks[2]->fourth))
+                @if(!empty($blocks[2]->fourth))
                     {{ link_to_route('search', $blocks[2]->fourth, ['search' =>$blocks[2]->fourth]) }}
                 @endif
                 @if(!empty($blocks[2]->fifth))
@@ -165,7 +155,7 @@
                 @endif
                 @if(!empty($blocks[2]->sixth))
                     {{ link_to_route('search', $blocks[2]->sixth, ['search' =>$blocks[2]->sixth]) }}
-                @endif--}}
+                @endif
                 <div class="section-icon">
                     <img src="{{ asset('assets') }}/images/title-icons/main-icon-2.png" alt="иконка Топ статьи">
                 </div>
@@ -175,9 +165,9 @@
             @if(!empty($articles['tops']) && $articles['tops']->isNotEmpty())
                 @foreach($articles['tops'] as $top)
                     <article class="article-articles">
-                        <a href="{{ route('articles', ['article_alias'=>$top->alias]) }}">
+                        <a href="{{ route('articles', ['loc'=>'ua', 'article_alias'=>$top->alias]) }}">
                             <div class="article-img">
-                                <img src="{{ asset('asset/images/articles/ru/middle').'/'.$top->image->path }}"
+                                <img src="{{ asset('asset/images/articles/ua/middle').'/'.$top->image->path }}"
                                      alt="{{ $top->image->alt ?? '' }}"
                                      title="{{ $top->image->title ?? ($top->image->alt ?? '') }}">
                                 <div class="views"><span>{{ $top->view }}</span></div>
@@ -187,11 +177,11 @@
                                 <div class="date-link">
                                     <div class="article-date">
                                         {{ $top->created_at->format('d')
-                                            . ' '  . trans('ru.'.$top->created_at->format('m'))
+                                            . ' '  . trans('ua.'.$top->created_at->format('m'))
                                             . ' '  . $top->created_at->format('Y')
                                         }}
                                     </div>
-                                    <span class="btn-link">Подробнее</span>
+                                    <span class="btn-link">Докладніше</span>
                                 </div>
                             </div>
                         </a>
@@ -202,8 +192,8 @@
         </div>
 
         <div>
-            <a href="{{ route('articles_cat', ['cat_alias'=>'top-stati']) }}" class="button-white">
-                Больше статей</a>
+            <a href="{{ route('articles_cat', ['loc'=>'ua', 'cat_alias'=>'top-stati']) }}" class="button-white">
+                Більше статей</a>
         </div>
     </section>
     <!-- end ТОП СТАТЬИ -->
@@ -213,20 +203,20 @@
         <div class="content last-commercial">
             <section class="section-last-arts">
                 <div class="section-title-meta-icon">
-                    <h3>{{ $blocks[3]->title ?? '' }}</h3>
+                    <h3>{{ $blocks[3]->utitle ?? '' }}</h3>
                     <div class="section-meta-icon">
-                        @if(!empty($blocks[3]->first))
-                            {{ link_to_route('search', $blocks[3]->first, ['search' =>$blocks[3]->first]) }}
+                        @if(!empty($blocks[3]->fourth))
+                            {{ link_to_route('search', $blocks[3]->fourth, ['search' =>$blocks[3]->fourth]) }}
                         @endif
-                        @if(!empty($blocks[3]->second))
-                            {{ link_to_route('search', $blocks[3]->second, ['search' =>$blocks[3]->second]) }}
+                        @if(!empty($blocks[3]->fifth))
+                            {{ link_to_route('search', $blocks[3]->fifth, ['search' =>$blocks[3]->fifth]) }}
                         @endif
-                        @if(!empty($blocks[3]->third))
-                            {{ link_to_route('search', $blocks[3]->third, ['search' =>$blocks[3]->third]) }}
+                        @if(!empty($blocks[3]->sixth))
+                            {{ link_to_route('search', $blocks[3]->sixth, ['search' =>$blocks[3]->sixth]) }}
                         @endif
                         <div class="section-icon">
                             <img src="{{ asset('assets') }}/images/title-icons/main-icon-3.png"
-                                 alt="иконка Последние статьи">
+                                 alt="Последние статьи">
                         </div>
                     </div>
                 </div>
@@ -236,9 +226,9 @@
                             @if(!empty($articles['diets']) && $articles['diets']->isNotEmpty())
                                 <article class="news">
                                     <a href="{{ route('articles',
-                                                    ['article_alias'=>$articles['diets'][0]->alias]) }}">
+                                                    ['loc'=>'ua', 'article_alias'=>$articles['diets'][0]->alias]) }}">
                                         <div class="article-img">
-                                            <img src="{{ asset('asset/images/articles/ru/middle').'/'.$articles['diets'][0]->image->path }}"
+                                            <img src="{{ asset('asset/images/articles/ua/middle').'/'.$articles['diets'][0]->image->path }}"
                                                  alt="{{ $articles['diets'][0]->image->alt ?? '' }}"
                                                  title="{{ $articles['diets'][0]->image->title ?? ($articles['diets'][0]->image->alt ?? '') }}">
                                             <div class="views"><span>{{ $articles['diets'][0]->view }}</span></div>
@@ -251,11 +241,11 @@
                                             <div class="date-link">
                                                 <div class="article-date">
                                                     {{ $articles['diets'][0]->created_at->format('d')
-                                                        . ' '  . trans('ru.'.$articles['diets'][0]->created_at->format('m'))
+                                                        . ' '  . trans('ua.'.$articles['diets'][0]->created_at->format('m'))
                                                         . ' '  . $articles['diets'][0]->created_at->format('Y')
                                                     }}
                                                 </div>
-                                                <span class="btn-link">Подробнее</span>
+                                                <span class="btn-link">Докладніше</span>
                                             </div>
                                         </div>
                                     </a>
@@ -269,9 +259,9 @@
                                     @continue($loop->first)
                                     <article class="news">
                                         <a href="{{ route('articles',
-                                                    ['article_alias'=>$article->alias]) }}">
+                                                    ['loc'=>'ua', 'article_alias'=>$article->alias]) }}">
                                             <div class="article-img">
-                                                <img src="{{ asset('asset/images/articles/ru/small').'/'.$article->image->path }}">
+                                                <img src="{{ asset('asset/images/articles/ua/small').'/'.$article->image->path }}">
                                                 <div class="views"><span>{{ $article->view }}</span></div>
                                             </div>
                                             <div class="article-info">
@@ -279,11 +269,11 @@
                                                 <div class="date-link">
                                                     <div class="article-date">
                                                         {{ $article->created_at->format('d')
-                                                            . ' '  . trans('ru.'.$article->created_at->format('m'))
+                                                            . ' '  . trans('ua.'.$article->created_at->format('m'))
                                                             . ' '  . $article->created_at->format('Y')
                                                         }}
                                                     </div>
-                                                    <span class="btn-link">Подробнее</span>
+                                                    <span class="btn-link">Докладніше</span>
                                                 </div>
                                             </div>
                                         </a>
@@ -295,22 +285,22 @@
                     </div>
                 </div>
                 <div>
-                    <a href="{{ route('articles_cat', ['cat_alias'=>'pitanie-i-dieta']) }}"
-                       class="button-white">Больше статей</a>
+                    <a href="{{ route('articles_cat', ['loc'=>'ua', 'cat_alias'=>'pitanie-i-dieta']) }}"
+                       class="button-white">Більше статей</a>
                 </div>
             </section>
             <section class="section-commercial-arts">
                 <div class="section-title-meta-icon">
-                    <h3>{{ $blocks[4]->title ?? '' }}</h3>
+                    <h3>{{ $blocks[4]->utitle ?? '' }}</h3>
                     <div class="section-meta-icon">
-                        @if(!empty($blocks[4]->first))
-                            {{ link_to_route('search', $blocks[4]->first, ['search' =>$blocks[4]->first]) }}
+                        @if(!empty($blocks[4]->fourth))
+                            {{ link_to_route('search', $blocks[4]->fourth, ['search' =>$blocks[4]->fourth]) }}
                         @endif
-                        @if(!empty($blocks[4]->second))
-                            {{ link_to_route('search', $blocks[4]->second, ['search' =>$blocks[4]->second]) }}
+                        @if(!empty($blocks[4]->fifth))
+                            {{ link_to_route('search', $blocks[4]->fifth, ['search' =>$blocks[4]->fifth]) }}
                         @endif
-                        @if(!empty($blocks[4]->third))
-                            {{ link_to_route('search', $blocks[4]->third, ['search' =>$blocks[4]->third]) }}
+                        @if(!empty($blocks[4]->sixth))
+                            {{ link_to_route('search', $blocks[4]->sixth, ['search' =>$blocks[4]->sixth]) }}
                         @endif
                         <div class="section-icon">
                             <img src="{{ asset('assets') }}/images/title-icons/main-icon-5.png"
@@ -324,9 +314,9 @@
                             @if(!empty($articles['intims']) && $articles['intims']->isNotEmpty())
                                 <article class="news">
                                     <a href="{{ route('articles',
-                                                    ['article_alias'=>$articles['intims'][0]->alias]) }}">
+                                                    ['loc'=>'ua', 'article_alias'=>$articles['intims'][0]->alias]) }}">
                                         <div class="article-img">
-                                            <img src="{{ asset('asset/images/articles/ru/middle').'/'.$articles['intims'][0]->image->path }}"
+                                            <img src="{{ asset('asset/images/articles/ua/middle').'/'.$articles['intims'][0]->image->path }}"
                                                  alt="{{ $articles['intims'][0]->image->alt ?? '' }}"
                                                  title="{{ $articles['intims'][0]->image->title ?? ($articles['intims'][0]->image->alt ?? '') }}">
                                             <div class="views"><span>{{ $articles['intims'][0]->view }}</span></div>
@@ -339,21 +329,22 @@
                                             <div class="date-link">
                                                 <div class="article-date">
                                                     {{ $articles['intims'][0]->created_at->format('d')
-                                                        . ' '  . trans('ru.'.$articles['intims'][0]->created_at->format('m'))
+                                                        . ' '  . trans('ua.'.$articles['intims'][0]->created_at->format('m'))
                                                         . ' '  . $articles['intims'][0]->created_at->format('Y')
                                                     }}
                                                 </div>
-                                                <span class="btn-link">Подробнее</span>
+                                                <span class="btn-link">Докладніше</span>
                                             </div>
                                         </div>
                                     </a>
                                     <div class="article-border"></div>
                                 </article>
+                                @if(!empty($articles['intims'][1]))
                                 <article class="news">
                                     <a href="{{ route('articles',
-                                                    ['article_alias'=>$articles['intims'][1]->alias]) }}">
+                                                    ['loc'=>'ua', 'article_alias'=>$articles['intims'][1]->alias]) }}">
                                         <div class="article-img">
-                                            <img src="{{ asset('asset/images/articles/ru/middle').'/'.$articles['intims'][1]->image->path }}"
+                                            <img src="{{ asset('asset/images/articles/ua/middle').'/'.$articles['intims'][1]->image->path }}"
                                                  alt="{{ $articles['intims'][1]->image->alt ?? '' }}"
                                                  title="{{ $articles['intims'][1]->image->title ?? ($articles['intims'][1]->image->alt ?? '') }}">
                                             <div class="views"><span>{{ $articles['intims'][1]->view }}</span></div>
@@ -366,29 +357,29 @@
                                             <div class="date-link">
                                                 <div class="article-date">
                                                     {{ $articles['intims'][1]->created_at->format('d')
-                                                        . ' '  . trans('ru.'.$articles['intims'][1]->created_at->format('m'))
+                                                        . ' '  . trans('ua.'.$articles['intims'][1]->created_at->format('m'))
                                                         . ' '  . $articles['intims'][1]->created_at->format('Y')
                                                     }}
                                                 </div>
-                                                <span class="btn-link">Подробнее</span>
+                                                <span class="btn-link">Докладніше</span>
                                             </div>
                                         </div>
                                     </a>
                                     <div class="article-border"></div>
                                 </article>
+                                @endif
                             @endif
                         </div>
                         <div>
                             <div class="small-news">
                                 @if(!empty($articles['intims']) && $articles['intims']->isNotEmpty())
                                     @foreach($articles['intims'] as $article)
-                                        @continue($loop->first)
-                                        @continue(1 == $loop->index)
+                                        @continue($loop->index < 2)
                                         <article class="news">
                                             <a href="{{ route('articles',
-                                                    ['article_alias'=>$article->alias]) }}">
+                                                    ['loc'=>'ua', 'article_alias'=>$article->alias]) }}">
                                                 <div class="article-img">
-                                                    <img src="{{ asset('asset/images/articles/ru/small').'/'.$article->image->path }}">
+                                                    <img src="{{ asset('asset/images/articles/ua/small').'/'.$article->image->path }}">
                                                     <div class="views"><span>{{ $article->view }}</span></div>
                                                 </div>
                                                 <div class="article-info">
@@ -396,11 +387,11 @@
                                                     <div class="date-link">
                                                         <div class="article-date">
                                                             {{ $article->created_at->format('d')
-                                                                . ' '  . trans('ru.'.$article->created_at->format('m'))
+                                                                . ' '  . trans('ua.'.$article->created_at->format('m'))
                                                                 . ' '  . $article->created_at->format('Y')
                                                             }}
                                                         </div>
-                                                        <span class="btn-link">Подробнее</span>
+                                                        <span class="btn-link">Докладніше</span>
                                                     </div>
                                                 </div>
                                             </a>
@@ -412,14 +403,23 @@
                         </div>
                     </div>
                     <div>
-                        <a href="{{ route('articles_cat', ['cat_alias'=>'intimnye-temy']) }}"
-                           class="button-white">Больше статей</a>
+                        <a href="{{ route('articles_cat', ['loc'=>'ua', 'cat_alias'=>'intimnye-temy']) }}"
+                           class="button-white">Більше статей</a>
                     </div>
             </section>
         </div>
         <aside class="news-med">
             <div class="section-title-meta-icon">
-                <h3>{{ $blocks[6]->title ?? '' }}</h3>
+                <h3>{{ $blocks[6]->utitle ?? '' }}</h3>
+                @if(!empty($blocks[4]->fourth))
+                    {{ link_to_route('search', $blocks[4]->fourth, ['search' =>$blocks[4]->fourth]) }}
+                @endif
+                @if(!empty($blocks[4]->fifth))
+                    {{ link_to_route('search', $blocks[4]->fifth, ['search' =>$blocks[4]->fifth]) }}
+                @endif
+                @if(!empty($blocks[4]->sixth))
+                    {{ link_to_route('search', $blocks[4]->sixth, ['search' =>$blocks[4]->sixth]) }}
+                @endif
                 <div class="section-meta-icon">
                     <div class="section-icon">
                         <img src="{{ asset('assets') }}/images/title-icons/main-icon-4.png"
@@ -433,10 +433,14 @@
                         @foreach($articles['delusions'] as $article)
                             <article class="news">
                                 <a href="{{ route('articles',
-                                                ['article_alias'=>$article->alias]) }}">
+                                                ['loc'=>'ua', 'article_alias'=>$article->alias]) }}">
                                     <div class="article-img">
                                         @if(!empty($article->image->path))
-                                            <img src="{{ asset('asset/images/articles/ru/small').'/'.$article->image->path }}">
+                                            @if($loop->first)
+                                                <img src="{{ asset('asset/images/articles/ua/middle').'/'.$article->image->path }}">
+                                            @else
+                                                <img src="{{ asset('asset/images/articles/ua/small').'/'.$article->image->path }}">
+                                            @endif
                                         @else
                                             <img src="{{ asset('asset/images/articles/mp.png') }}">
                                         @endif
@@ -452,11 +456,11 @@
                                         <div class="date-link">
                                             <div class="article-date">
                                                 {{ $article->created_at->format('d')
-                                                    . ' '  . trans('ru.'.$article->created_at->format('m'))
+                                                    . ' '  . trans('ua.'.$article->created_at->format('m'))
                                                     . ' '  . $article->created_at->format('Y')
                                                 }}
                                             </div>
-                                            <span class="btn-link">Подробнее</span>
+                                            <span class="btn-link">Докладніше</span>
                                         </div>
                                     </div>
                                 </a>
@@ -466,12 +470,12 @@
                     @endif
                 </div>
                 <div>
-                    <a href="{{ route('articles_cat', ['cat_alias'=>'zabluzhdeniya']) }}"
-                       class="button-white">Все новости</a>
+                    <a href="{{ route('articles_cat', ['loc'=>'ua', 'cat_alias'=>'zabluzhdeniya']) }}"
+                       class="button-white">Всі новини</a>
                 </div>
             </div>
             <div class="section-title-meta-icon">
-                <h3>{{ $blocks[0]->title ?? '' }}</h3>
+                <h3>{{ $blocks[0]->utitle ?? '' }}</h3>
                 <div class="section-meta-icon">
                     <div class="section-icon">
                         <img src="{{ asset('assets') }}/images/title-icons/main-icon-6.png"
@@ -482,15 +486,15 @@
             <div class="popular-meta">
                 @if(!empty($tags))
                     @foreach($tags as $tag)
-                        <a href="{{ route('articles_tag', ['tag_alias'=>$tag->alias]) }}"
+                        <a href="{{ route('articles_tag', ['loc'=>'ua', 'tag_alias'=>$tag->alias]) }}"
                            class="btn-meta">
-                            {{ $tag->name }}
+                            {{ $tag->uname }}
                         </a>
                     @endforeach
                 @endif
             </div>
             <div class="index-aside-promo">
-                <a href="{{ route('adv') }}">
+                <a href="{{ route('adv', ['loc'=>'ua']) }}">
                     <img src="{{ asset('assets') }}/images/promotion/main-reclama.jpg">
                 </a>
             </div>
@@ -538,16 +542,16 @@
     <!-- Интересные СТАТЬИ -->
     <section class="mobile-display-none">
         <div class="section-title-meta-icon">
-            <h3>{{ $blocks[5]->title ?? '' }}</h3>
+            <h3>{{ $blocks[5]->utitle ?? '' }}</h3>
             <div class="section-meta-icon">
-                @if(!empty($blocks[5]->first))
-                    {{ link_to_route('search', $blocks[5]->first, ['search' =>$blocks[5]->first]) }}
+                @if(!empty($blocks[5]->fourth))
+                    {{ link_to_route('search', $blocks[5]->fourth, ['search' =>$blocks[5]->fourth]) }}
                 @endif
-                @if(!empty($blocks[5]->second))
-                    {{ link_to_route('search', $blocks[5]->second, ['search' =>$blocks[5]->second]) }}
+                @if(!empty($blocks[5]->fifth))
+                    {{ link_to_route('search', $blocks[5]->fifth, ['search' =>$blocks[5]->fifth]) }}
                 @endif
-                @if(!empty($blocks[5]->third))
-                    {{ link_to_route('search', $blocks[5]->third, ['search' =>$blocks[5]->third]) }}
+                @if(!empty($blocks[5]->sixth))
+                    {{ link_to_route('search', $blocks[5]->sixth, ['search' =>$blocks[5]->sixth]) }}
                 @endif
                 <div class="section-icon">
                     <img src="{{ asset('assets') }}/images/title-icons/main-icon-2.png" alt="иконка Топ статьи">
@@ -559,9 +563,9 @@
                 @foreach($articles['fitotherapy'] as $article)
                     <article class="article-articles">
                         <a href="{{ route('articles',
-                                                ['article_alias'=>$article->alias]) }}">
+                                                ['loc'=>'ua', 'article_alias'=>$article->alias]) }}">
                             <div class="article-img">
-                                <img src="{{ asset('asset/images/articles/ru/small').'/'.$article->image->path }}">
+                                <img src="{{ asset('asset/images/articles/ua/small').'/'.$article->image->path }}">
                                 <div class="views"><span>{{ $article->view }}</span></div>
                             </div>
                             <div class="article-info">
@@ -573,7 +577,7 @@
                                             . ' '  . $article->created_at->format('Y')
                                         }}
                                     </div>
-                                    <span class="btn-link">Подробнее</span>
+                                    <span class="btn-link">Докладніше</span>
                                 </div>
                             </div>
                         </a>
@@ -583,8 +587,8 @@
             @endif
         </div>
         <div>
-            <a href="{{ route('articles_cat', ['cat_alias'=>'fitoterapiya']) }}"
-               class="button-white">Больше статей</a>
+            <a href="{{ route('articles_cat', ['loc'=>'ua', 'cat_alias'=>'fitoterapiya']) }}"
+               class="button-white">Більше статей</a>
         </div>
     </section>
     <!-- end Интересные СТАТЬИ -->

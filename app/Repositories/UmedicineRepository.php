@@ -153,4 +153,32 @@ class UmedicineRepository extends Repository
         return true;
     }
 
+    /**
+     * @param $substances
+     * @return mixed
+     */
+    public function getAnalogs($substances)
+    {
+        $ids = [];
+
+        foreach ($substances as $substance) {
+            $ids[] = $substance->id;
+        }
+
+        $medicines = $this->model->whereHas('substance', function ($query) use ($ids) {
+            $query->whereIn('substance_id', $ids);
+        })
+            ->with(['substance', 'classification', 'form'])
+//            ->take(3)
+            ->get();
+
+        $forms = [];
+        foreach ($medicines as $medicine) {
+            $forms[$medicine->form->alias] = $medicine->form->uname;
+        }
+        $result['medicines'] = $medicines;
+        $result['forms'] = $forms;
+        return $result;
+    }
+
 }

@@ -72,7 +72,7 @@
             </div>
         </div>
         <div class="box-number-three">
-            <div class="box-number">
+            <a href="{{ route('sort') }}" class="box-number">
                 <img src="{{ asset('assets') }}/images/index/main-1.jpg">
                 <div class="box-number-info">
                     <div class="box-number-num">
@@ -81,10 +81,10 @@
                     <div class="box-number-info-text">
                         мед препаратов
                     </div>
-                    <a href="{{ route('sort') }}" class="button-blue">Все мед препараты</a>
+                    <span class="button-blue">Все мед препараты</span>
                 </div>
-            </div>
-            <div class="box-number">
+            </a>
+            <a href="{{ route('search_fabricator') }}" class="box-number">
                 <img src="{{ asset('assets') }}/images/index/main-2.jpg">
                 <div class="box-number-info">
                     <div class="box-number-num">
@@ -93,10 +93,10 @@
                     <div class="box-number-info-text">
                         фарм производителей
                     </div>
-                    <a href="{{ route('search_fabricator') }}" class="button-blue">Все фарм производители</a>
+                    <span class="button-blue">Все фарм производители</span>
                 </div>
-            </div>
-            <div class="box-number">
+            </a>
+            <a href="{{ route('adv') }}" class="box-number">
                 <img src="{{ asset('assets') }}/images/index/main-3.jpg">
                 <div class="box-number-info">
                     <div class="box-number-num">
@@ -105,9 +105,9 @@
                     <div class="box-number-info-text">
                         партнеров
                     </div>
-                    <a href="{{ route('adv') }}" class="button-blue">Все партнеры</a>
+                    <span class="button-blue">Все партнеры</span>
                 </div>
-            </div>
+            </a>
         </div>
     </section>
     <!-- end НА САЙТЕ -->
@@ -126,15 +126,6 @@
                 @if(!empty($blocks[1]->third))
                     {{ link_to_route('search', $blocks[1]->third, ['search' =>$blocks[1]->third]) }}
                 @endif
-                {{--@if(!empty($blocks[1]->fourth))
-                    {{ link_to_route('search', $blocks[1]->fourth, ['search' =>$blocks[1]->fourth]) }}
-                @endif
-                @if(!empty($blocks[1]->fifth))
-                    {{ link_to_route('search', $blocks[1]->fifth, ['search' =>$blocks[1]->fifth]) }}
-                @endif
-                @if(!empty($blocks[1]->sixth))
-                    {{ link_to_route('search', $blocks[1]->sixth, ['search' =>$blocks[1]->sixth]) }}
-                @endif--}}
                 <div class="section-icon">
                     <img src="{{ asset('assets') }}/images/title-icons/found.png" alt="иконка Также ищут">
                 </div>
@@ -166,15 +157,6 @@
                 @if(!empty($blocks[2]->third))
                     {{ link_to_route('search', $blocks[2]->third, ['search' =>$blocks[2]->third]) }}
                 @endif
-                {{--@if(!empty($blocks[2]->fourth))
-                    {{ link_to_route('search', $blocks[2]->fourth, ['search' =>$blocks[2]->fourth]) }}
-                @endif
-                @if(!empty($blocks[2]->fifth))
-                    {{ link_to_route('search', $blocks[2]->fifth, ['search' =>$blocks[2]->fifth]) }}
-                @endif
-                @if(!empty($blocks[2]->sixth))
-                    {{ link_to_route('search', $blocks[2]->sixth, ['search' =>$blocks[2]->sixth]) }}
-                @endif--}}
                 <div class="section-icon">
                     <img src="{{ asset('assets') }}/images/title-icons/main-icon-2.png" alt="иконка Топ статьи">
                 </div>

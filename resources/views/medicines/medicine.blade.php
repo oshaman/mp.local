@@ -22,7 +22,7 @@
                 </div>
             </div>
             {{--BreadCrumbs--}}
-            <h1 class="head-title">{{ $medicine->title }} инструкция и цена в аптеках</h1>
+            <h1 class="head-title">{{ $medicine->title }} - инструкция</h1>
             <div class="clone-to" data-number="3"></div>
             <div class="product-nav">
                 <a class="nav-button-grey active">Официальная инструкция</a>
@@ -35,95 +35,95 @@
             </div>
             <div class="product-nav-img">
                 <div class="product-nav-block">
-                    <a href="{{ route('medicine_official', ['medicine'=>$medicine->alias, 'loc'=>'ua']) }}"
+                    <a href="{{ route('medicine_official_ua', ['medicine'=>$medicine->alias]) }}"
                        class="button-blue">Перевести</a>
                     <ul class="top-product-nav">
                         @if(!empty($medicine->consist))
                             <li>
-                                <img src="{{ asset('assets') }}/images/product-icon/blue-sostav.png" alt="Состав">
+                                <img src="{{ asset('assets') }}/images/product-icon/1_sostav.png" alt="Состав">
                                 <a href="#sostav">Состав</a>
                             </li>
                         @endif
                         @if(!empty($medicine->docs_form))
                             <li>
-                                <img src="{{ asset('assets') }}/images/product-icon/blue-farm-deistvie.png"
+                                <img src="{{ asset('assets') }}/images/product-icon/19_lek_forma.png"
                                      alt="Лекарственная форма">
                                 <a href="#lekforma">Лекарственная форма</a>
                             </li>
                         @endif
                         @if(!empty($medicine->physicochemical_char))
                             <li>
-                                <img src="{{ asset('assets') }}/images/product-icon/blue-farm-deistvie.png"
+                                <img src="{{ asset('assets') }}/images/product-icon/11_svoystva.png"
                                      alt="Основные физико-химические свойства">
                                 <a href="#fizhimsvoistva">Основные физико-химические свойства</a>
                             </li>
                         @endif
                         @if(!empty($medicine->fabricator))
                             <li>
-                                <img src="{{ asset('assets') }}/images/product-icon/blue-farm-deistvie.png"
+                                <img src="{{ asset('assets') }}/images/product-icon/20_proizvoditel.png"
                                      alt="Производитель">
                                 <a href="#proizvoditel">Производитель</a>
                             </li>
                         @endif
                         @if(!empty($medicine->addr_fabricator))
                             <li>
-                                <img src="{{ asset('assets') }}/images/product-icon/blue-farm-deistvie.png"
+                                <img src="{{ asset('assets') }}/images/product-icon/21_mesto_proizvoditelya.png"
                                      alt="Местонахождение производителя">
                                 <a href="#adresproizvoditelya">Местонахождение производителя</a>
                             </li>
                         @endif
                         @if(!empty($medicine->pharm_group))
                             <li>
-                                <img src="{{ asset('assets') }}/images/product-icon/blue-farm-deistvie.png"
+                                <img src="{{ asset('assets') }}/images/product-icon/18_farm_gruppa.png"
                                      alt="Фармакотерапевтическая группа">
                                 <a href="#farmgruppa">Фармакотерапевтическая группа</a>
                             </li>
                         @endif
                         @if(!empty($medicine->pharm_prop))
                             <li>
-                                <img src="{{ asset('assets') }}/images/product-icon/blue-farm-deistvie.png"
+                                <img src="{{ asset('assets') }}/images/product-icon/2_svoystva.png"
                                      alt="Фармакологические свойства">
                                 <a href="#farmsvoistva">Фармакологические свойства</a>
                             </li>
                         @endif
                         @if(!empty($medicine->indications))
                             <li>
-                                <img src="{{ asset('assets') }}/images/product-icon/blue-pokazanie-primemenia.png"
+                                <img src="{{ asset('assets') }}/images/product-icon/3_pokazaniya.png"
                                      alt="Показания к прменению">
                                 <a href="#pokazanij">Показания к применению</a>
                             </li>
                         @endif
                         @if(!empty($medicine->contraindications))
                             <li>
-                                <img src="{{ asset('assets') }}/images/product-icon/blue-protivopokazanie.png"
+                                <img src="{{ asset('assets') }}/images/product-icon/6_protivopokazaniya.png"
                                      alt="Противопоказания">
                                 <a href="#protivipokazaniya">Противопоказания</a>
                             </li>
                         @endif
                         @if(!empty($medicine->security))
                             <li>
-                                <img src="{{ asset('assets') }}/images/product-icon/blue-protivopokazanie.png"
+                                <img src="{{ asset('assets') }}/images/product-icon/12_mery_bezopasnosti.png"
                                      alt="Надлежащие меры безопасности при применении">
                                 <a href="#bezopastnost">Надлежащие меры безопасности при применении</a>
                             </li>
                         @endif
                         @if(!empty($medicine->application_features))
                             <li>
-                                <img src="{{ asset('assets') }}/images/product-icon/blue-protivopokazanie.png"
+                                <img src="{{ asset('assets') }}/images/product-icon/4_ primenenie.png"
                                      alt="Особенности применения">
                                 <a href="#osobennostprimeneniya">Особенности применения</a>
                             </li>
                         @endif
                         @if(!empty($medicine->pregnancy))
                             <li>
-                                <img src="{{ asset('assets') }}/images/product-icon/blue-protivopokazanie.png"
+                                <img src="{{ asset('assets') }}/images/product-icon/7_beremennost.png"
                                      alt="Применение в период беременности или кормления грудью">
                                 <a href="#beremennost">Применение в период беременности или кормления грудью</a>
                             </li>
                         @endif
                         @if(!empty($medicine->cars))
                             <li>
-                                <img src="{{ asset('assets') }}/images/product-icon/blue-protivopokazanie.png"
+                                <img src="{{ asset('assets') }}/images/product-icon/17_avto.png"
                                      alt="Способность влиять на скорость реакции при управлении автотранспортом">
                                 <a href="#avto">Способность влиять на скорость реакции при управлении
                                     автотранспортом</a>
@@ -131,70 +131,70 @@
                         @endif
                         @if(!empty($medicine->children))
                             <li>
-                                <img src="{{ asset('assets') }}/images/product-icon/blue-protivopokazanie.png"
+                                <img src="{{ asset('assets') }}/images/product-icon/13_deti.png"
                                      alt="Дети">
                                 <a href="#deti">Дети</a>
                             </li>
                         @endif
                         @if(!empty($medicine->app_mode))
                             <li>
-                                <img src="{{ asset('assets') }}/images/product-icon/blue-protivopokazanie.png"
+                                <img src="{{ asset('assets') }}/images/product-icon/23_sposob_primineniya.png"
                                      alt="Способ применения и дозы">
                                 <a href="#premenenieidosa">Способ применения и дозы</a>
                             </li>
                         @endif
                         @if(!empty($medicine->overdose))
                             <li>
-                                <img src="{{ asset('assets') }}/images/product-icon/blue-peredoz.png"
+                                <img src="{{ asset('assets') }}/images/product-icon/9_peredozirovka.png"
                                      alt="Передозировка">
                                 <a href="#peredoz">Передозировка</a>
                             </li>
                         @endif
                         @if(!empty($medicine->side_effects))
                             <li>
-                                <img src="{{ asset('assets') }}/images/product-icon/blue-pobochnue-deistvie.png"
+                                <img src="{{ asset('assets') }}/images/product-icon/5_pobochnie.png"
                                      alt="Побочные действия">
                                 <a href="#pobochnie">Побочные действия</a>
                             </li>
                         @endif
                         @if(!empty($medicine->interaction))
                             <li>
-                                <img src="{{ asset('assets') }}/images/product-icon/blue-lekarstv-vzaimodeistvie.png"
+                                <img src="{{ asset('assets') }}/images/product-icon/8_vzabmodeystvie.png"
                                      alt="Лекарственное взаимодействие">
                                 <a href="#vzaimodeistvie">Лекарственное взаимодействие</a>
                             </li>
                         @endif
                         @if(!empty($medicine->shelf_life))
                             <li>
-                                <img src="{{ asset('assets') }}/images/product-icon/blue-lekarstv-vzaimodeistvie.png"
+                                <img src="{{ asset('assets') }}/images/product-icon/14_srok.png"
                                      alt="Срок годности">
                                 <a href="#srokgodnosti">Срок годности</a>
                             </li>
                         @endif
                         @if(!empty($medicine->saving))
                             <li>
-                                <img src="{{ asset('assets') }}/images/product-icon/blue-lekarstv-vzaimodeistvie.png"
+                                <img src="{{ asset('assets') }}/images/product-icon/15_hranenie.png"
                                      alt="Условия хранения">
                                 <a href="#usloviyahraneniya">Условия хранения</a>
                             </li>
                         @endif
                         @if(!empty($medicine->packaging))
                             <li>
-                                <img src="{{ asset('assets') }}/images/product-icon/blue-lekarstv-vzaimodeistvie.png"
+                                <img src="{{ asset('assets') }}/images/product-icon/16_upakovka.png"
                                      alt="Упаковка">
                                 <a href="#upakovka">Упаковка</a>
                             </li>
                         @endif
                         @if(!empty($medicine->leave_cat))
                             <li>
-                                <img src="{{ asset('assets') }}/images/product-icon/blue-lekarstv-vzaimodeistvie.png"
+                                <img src="{{ asset('assets') }}/images/product-icon/10_kategoriya.png"
                                      alt="Категория отпуска">
                                 <a href="#kategoriyaotpuska">Категория отпуска</a>
                             </li>
                         @endif
                         @if(!empty($medicine->additionally))
                             <li>
-                                <img src="{{ asset('assets') }}/images/product-icon/blue-lekarstv-vzaimodeistvie.png"
+                                <img src="{{ asset('assets') }}/images/product-icon/22_dopolnitelno.png"
                                      alt="Дополнительно">
                                 <a href="#dopolnitelno">Дополнительно</a>
                             </li>
