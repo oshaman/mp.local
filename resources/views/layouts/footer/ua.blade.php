@@ -18,7 +18,7 @@
                     <div class="meta-btn-footer">
                         @if(!empty($tags))
                             @foreach($tags as $tag)
-                                <a href="{{ route('articles_tag', ['loc'=>'ua','tag_alias'=>$tag->alias]) }}"
+                                <a href="{{ route('ua_articles_tag', ['tag_alias'=>$tag->alias]) }}"
                                    class="btn-meta">
                                     {{ $tag->uname }}
                                 </a>
@@ -35,10 +35,10 @@
                     <nav class="footer-menu">
                         @if(!empty($cats))
                             @foreach($cats as $cat)
-                                @if('articles_cat' == Route::currentRouteName() && $cat->alias == Request::segment(2))
+                                @if('ua_articles_cat' == Route::currentRouteName() && $cat->alias == Request::segment(2))
                                     <a>{{ $cat->title }}</a>
                                 @else
-                                    <a href="{{ route('articles_cat', ['loc'=>'ua', 'cat'=>$cat->alias]) }}">{{ $cat->utitle }}</a>
+                                    <a href="{{ route('ua_articles_cat', ['cat'=>$cat->alias]) }}">{{ $cat->utitle }}</a>
                                 @endif
                             @endforeach
                         @endif
@@ -74,7 +74,7 @@
                     <div class="meta-btn-footer">
                         @if(!empty($tags))
                             @foreach($tags as $tag)
-                                <a href="{{ route('articles_tag', ['loc'=>'ua', 'tag_alias'=>$tag->alias]) }}"
+                                <a href="{{ route('ua_articles_tag', ['tag_alias'=>$tag->alias]) }}"
                                    class="btn-meta">
                                     {{ $tag->name }}
                                 </a>

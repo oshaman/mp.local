@@ -30,8 +30,6 @@
                 @endforeach
             @endif
         </div>
-
-
         <div class="pagination">
             <div class="slide">
                 <div class="inner">
@@ -136,7 +134,7 @@
             @include('main.medicines_cats', $med_cats)
             {{--Витрина--}}
             <div>
-                <a href="{{ route('search') }}" class="button-white">Больше препаратов</a>
+                <a href="{{ route('sort') }}" class="button-white">Больше препаратов</a>
             </div>
         </div>
     </section>
@@ -550,7 +548,7 @@
                         <a href="{{ route('articles',
                                                 ['article_alias'=>$article->alias]) }}">
                             <div class="article-img">
-                                <img src="{{ asset('asset/images/articles/ru/small').'/'.$article->image->path }}">
+                                <img src="{{ asset('asset/images/articles/ru/middle').'/'.$article->image->path }}">
                                 <div class="views"><span>{{ $article->view }}</span></div>
                             </div>
                             <div class="article-info">

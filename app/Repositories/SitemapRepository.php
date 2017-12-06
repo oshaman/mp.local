@@ -3,6 +3,7 @@
 namespace Fresh\Medpravda\Repositories;
 
 use App;
+use Fresh\Medpravda\Medicine;
 use URL;
 use Cache;
 use DB;
@@ -36,49 +37,44 @@ class SitemapRepository
 //    Articles
 //    medicines
         $sitemap_medicine = App::make("sitemap");
-        $medicines = medicine::with('image')->orderBy('created_at', 'desc')->get();
-        foreach ($medicines as $medicine) {
-            // get all images for the current post
-            $images = array();
 
-            $images[] = array(
-                'url' => asset('\asset\images\medicine\content\main\\') . $medicine->image->path,
-                'title' => $medicine->medicine_img->title,
-                'caption' => $medicine->medicine_img->alt
-            );
+//        $medicines = Medicine::with('image')->orderBy('created_at', 'desc')->get()->chunk(1000);
 
-            $sitemap_medicine->add(URL::to('doctor/medicine/' . $medicine->alias), $medicine->updated_at, '1.0', 'daily', $images);
-        }
+        Medicine::with('image')->orderBy('created_at', 'desc')->chunk(100, function ($medicines) use ($sitemap_medicine) {
+            foreach ($medicines as $medicine) {
+                // get all images for the current post
+                $images = array();
+                dd($medicine);
+                $images[] = array(
+                    'url' => asset('\asset\images\medicine\content\main\\') . $medicine->image->path,
+                    'title' => $medicine->medicine_img->title,
+                    'caption' => $medicine->medicine_img->alt
+                );
+
+                $sitemap_medicine->add(URL::to('/preparat/' . $medicine->alias), $medicine->updated_at, '1.0', 'daily', $images);
+            }
+        });
+
+
+
         $sitemap_medicine->store('xml', 'sitemap-medicine');
 //    medicines
-
+//static
         $sitemap_main = App::make("sitemap");
 
-        $horo_update = Horoscope::select('updated_at')->first();
         $sitemap_main->add(URL::to('/'), date('Y-m-d 00:00:00'), '0.6', 'daily');
-        $sitemap_main->add(URL::to('catalog/kliniki'), date('Y-m-d 00:00:00'), '0.8', 'daily');
-        $sitemap_main->add(URL::to('catalog/brendy'), date('Y-m-d 00:00:00'), '0.8', 'daily');
-        $sitemap_main->add(URL::to('catalog/distributory'), date('Y-m-d 00:00:00'), '0.8', 'daily');
-        $sitemap_main->add(URL::to('catalog/vrachi'), date('Y-m-d 00:00:00'), '0.8', 'daily');
+        $sitemap_main->add(URL::to('/ua'), date('Y-m-d 00:00:00'), '0.6', 'daily');
 
-        $statics = Static_page::select('updated_at', 'own')->get();
-        foreach ($statics as $page) {
-            $sitemap_main->add(route($page->own), $page->updated_at, '0.8', 'monthly');
-        }
 
-//        categories
-        $cats = Menu::with('category')->get();
-
-        foreach ($cats as $cat) {
-            $sitemap_main->add(route('article_cat', $cat->category->alias), $cat->category->updated_at, '0.8', 'weekly');
-        }
-//        categories
         $sitemap_main->store('xml', 'sitemap-main');
 
+//static
+//        MAIN
         $sitemap = App::make("sitemap");
 
         $sitemap->addSitemap(URL::to('sitemap-articles.xml'));
         $sitemap->addSitemap(URL::to('sitemap-main.xml'));
+        $sitemap->addSitemap(URL::to('sitemap-medicine.xml'));
 
         \Log::info('Sitemap updated - ' . date("d-m-Y H:i:s"));
         $sitemap->store('sitemapindex', 'sitemap');

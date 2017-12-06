@@ -68,7 +68,42 @@ class SearchRepository
         $result['substances'] = $this->getSubstances($query);
         $result['articles'] = $this->getArticles($query);
 
-        return array_filter($result);
+        $result = array_filter($result);
+
+        if (count($result) < 1) {
+
+            $articles = Article::select('title', 'alias')->where([['approved', 1], ['content', 'like', '%' . $query . '%']])->get();
+
+            $result['articles'] = $articles->isNotEmpty() ? $articles : null;
+
+            $query_f = '"' . $query . '"';
+            $match = 'consist, physicochemical_char, pharm_group, additionally, indications, pharm_prop, contraindications, security, application_features, pregnancy, cars, children, app_mode, overdose, side_effects, interaction';
+            $medicies = $this->med->select('title', 'alias')->whereRaw(
+                "MATCH($match) AGAINST(? IN BOOLEAN MODE) LIMIT 1000",
+                array($query_f)
+            )->get();
+
+            $result['medicines'] = $medicies->isNotEmpty() ? $medicies : null;
+
+            $result = array_filter($result);
+
+            if (count($result) < 1) {
+                $data = file_get_contents(asset('asset/titles.txt'));
+                $titles = unserialize($data);
+                foreach ($titles as $title) {
+                    similar_text($query, $title['title'], $percent);
+                    similar_text($query, $title['utitle'], $upercent);
+
+//                    dd($percent);
+                    if (($percent >= 75) || ($upercent >= 75)) {
+                        $result['medicines'][] = $title;
+                    };
+                }
+            }
+
+        }
+
+        return $result;
     }
 
     /**
@@ -203,6 +238,18 @@ class SearchRepository
 
         return $medicines;
 
+    }
+
+    public function getMedicine($val)
+    {
+        $medicines = $this->med->select('title', 'id', 'alias')->where('title', 'like', '%' . $val . '%')->get();
+//        dd($medicines);
+
+        if (null == $medicines) {
+            return ['error' => ['error' => 'Ошибка поиска.']];
+        }
+
+        return $medicines;
     }
 
     /**

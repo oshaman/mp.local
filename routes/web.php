@@ -57,6 +57,10 @@ Route::group(['prefix' => 'ua'], function () {
         Route::get('/teg/{tag_alias}', 'ArticlesController@uaTag')
             ->name('ua_articles_tag')->where(['tag_alias' => '[\w-]+']);
     });
+//        SEARCH ===============================>
+    Route::match(['get', 'post'], 'poisk/{val?}', 'SearchController@search')->where(['val' => '[\wа-яА-ЯёЁІіЇЇ\'-]+']);
+//        SEARCH ===============================>
+
 
 });
 
@@ -97,8 +101,8 @@ Route::group(['prefix' => 'sort'], function () {
 
 });
 
-Route::match(['get', 'post'], 'poisk/{loc?}', 'SearchController@search')
-    ->name('search')->where(['loc' => 'ua']);
+Route::match(['get', 'post'], 'poisk/{val?}', 'SearchController@search')
+    ->name('search')->where(['val' => '[\wа-яА-ЯёЁІіЇЇ\'-]+']);
 Route::match(['get', 'post'], 'presearch', 'SearchController@presearch')->name('presearch');
 
 /**

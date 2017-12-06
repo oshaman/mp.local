@@ -2,6 +2,7 @@
 
 namespace Fresh\Medpravda\Repositories;
 
+use Fresh\Medpravda\MedicineTitle;
 use Fresh\Medpravda\Umedicine;
 use Fresh\Medpravda\Uimage as Slider;
 use Image;
@@ -79,6 +80,7 @@ class UmedicineRepository extends Repository
             //Slider
         }
 
+        $this->putTitles();
 
         $error = [];
         return ['status' => 'Препарат обновлен', $error];
@@ -179,6 +181,22 @@ class UmedicineRepository extends Repository
         $result['medicines'] = $medicines;
         $result['forms'] = $forms;
         return $result;
+    }
+
+    /**
+     * @return bool
+     */
+    public function putTitles()
+    {
+        try {
+            $array = MedicineTitle::select('title', 'utitle', 'alias')->get();
+            $data = serialize($array->toArray());
+            file_put_contents(public_path('asset/titles.txt'), $data);
+        } catch (Exception $e) {
+            \Log::info('Ошибка записи тайтлов - ' . $e->getMessage());
+        }
+
+        return true;
     }
 
 }

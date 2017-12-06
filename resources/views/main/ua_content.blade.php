@@ -132,10 +132,10 @@
         </div>
         <div class="product-search">
             {{--Витрина--}}
-            @include('main.medicines_cats', $med_cats)
+            @include('main.ua_medicines_cats', $med_cats)
             {{--Витрина--}}
             <div>
-                <a href="{{ route('search', ['loc' => 'ua']) }}" class="button-white">Більше препаратів</a>
+                <a href="{{ route('sort') }}" class="button-white">Більше препаратів</a>
             </div>
         </div>
     </section>
@@ -565,7 +565,7 @@
                         <a href="{{ route('articles',
                                                 ['loc'=>'ua', 'article_alias'=>$article->alias]) }}">
                             <div class="article-img">
-                                <img src="{{ asset('asset/images/articles/ua/small').'/'.$article->image->path }}">
+                                <img src="{{ asset('asset/images/articles/ua/middle').'/'.$article->image->path }}">
                                 <div class="views"><span>{{ $article->view }}</span></div>
                             </div>
                             <div class="article-info">

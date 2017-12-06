@@ -52,15 +52,6 @@
             @if(!empty($block->third))
                 {{ link_to_route('search', $block->third, ['search' =>$block->third], ['class'=>'btn-meta']) }}
             @endif
-            {{--@if(!empty($block->fourth))
-                {{ link_to_route('search', $block->fourth, ['search' =>$block->fourth], ['class'=>'btn-meta']) }}
-            @endif
-            @if(!empty($block->fifth))
-                {{ link_to_route('search', $block->fifth, ['search' =>$block->fifth], ['class'=>'btn-meta']) }}
-            @endif
-            @if(!empty($block->sixth))
-                {{ link_to_route('search', $block->sixth, ['search' =>$block->sixth], ['class'=>'btn-meta']) }}
-            @endif--}}
         </div>
         <div class="search">
             {!! Form::open(['url'=>route('search'), 'method'=>'post']) !!}

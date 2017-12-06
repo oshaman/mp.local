@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-//        $schedule->call('\Fresh\Medpravda\Repositories\SitemapRepository@index')->dailyAt('02:40');
+        $schedule->call('\Fresh\Medpravda\Repositories\SitemapRepository@index')->dailyAt('17:33');
     }
 
     /**

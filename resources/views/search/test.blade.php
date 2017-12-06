@@ -5,7 +5,7 @@
             @foreach($collections as $item)
                 @switch($k)
                     @case('medicines')
-                    <a href="{{ route('medicine', $item->alias) }}">{{ $item->title }}</a>
+                    <a href="{{ route('medicine', $item['alias']) }}">{{ $item['title'] }}</a>
                     @break
 
                     @case('fabricators')

@@ -9,6 +9,7 @@ use Fresh\Medpravda\Form;
 use Fresh\Medpravda\Image as Slider;
 use Fresh\Medpravda\Innname;
 use Fresh\Medpravda\Medicine;
+use Fresh\Medpravda\MedicineTitle;
 use Fresh\Medpravda\Pharmagroup;
 use Fresh\Medpravda\Substance;
 use Fresh\Medpravda\Umedicine;
@@ -215,7 +216,7 @@ class MedicineRepository extends Repository
             //Slider
         }
 
-
+        $this->putTitles();
         $error = [];
         return ['status' => 'Препарат обновлен', $error];
     }
@@ -382,5 +383,21 @@ class MedicineRepository extends Repository
         }
 
         return $result;
+    }
+
+    /**
+     * @return bool
+     */
+    public function putTitles()
+    {
+        try {
+            $array = MedicineTitle::select('title', 'utitle', 'alias')->get();
+            $data = serialize($array->toArray());
+            file_put_contents(public_path('asset/titles.txt'), $data);
+        } catch (Exception $e) {
+            \Log::info('Ошибка записи тайтлов - ' . $e->getMessage());
+        }
+
+        return true;
     }
 }
