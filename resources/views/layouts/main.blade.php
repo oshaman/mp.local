@@ -79,6 +79,7 @@
 
     @yield('content')
     @yield('aside')
+    @yield('slider')
 
     @yield('footer')
 

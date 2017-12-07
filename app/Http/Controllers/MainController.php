@@ -18,6 +18,7 @@ class MainController extends Controller
     protected $jss = null;
     protected $aside = null;
     protected $block = null;
+    protected $slider = null;
     protected $seo = null;
     protected $loc = '';
 
@@ -25,12 +26,28 @@ class MainController extends Controller
      * @param null $loc
      * @return $this
      */
-    public function adv($loc = null)
+    public function adv()
     {
         $this->title = 'Реклама на сайте';
 
         $advs = Adv::where(['approved' => 1])->get();
         $this->content = view('main.adv')->with(['advs' => $advs])->render();
+
+        return $this->renderOutput();
+    }
+
+    /**
+     * @param null $loc
+     * @return $this
+     */
+    public function uaAdv()
+    {
+        $this->title = 'Реклама на сайті';
+
+        $this->loc = 'ua';
+
+        $advs = Adv::where(['approved' => 1])->get();
+        $this->content = view('main.adv')->with(['advs' => $advs, 'loc' => 'ua'])->render();
 
         return $this->renderOutput();
     }
@@ -69,11 +86,25 @@ class MainController extends Controller
      * @param null $loc
      * @return $this
      */
-    public function about($loc = null)
+    public function about()
     {
         $this->title = 'О нас';
         $about = About::find(1);
         $this->content = view('main.about')->with(['about' => $about])->render();
+
+        return $this->renderOutput();
+    }
+
+    /**
+     * @param null $loc
+     * @return $this
+     */
+    public function uaAbout()
+    {
+        $this->title = 'Про нас';
+        $about = About::find(2);
+        $this->loc = 'ua';
+        $this->content = view('main.about')->with(['about' => $about, 'loc' => $this->loc])->render();
 
         return $this->renderOutput();
     }
@@ -108,6 +139,10 @@ class MainController extends Controller
 
         if ($this->content) {
             $this->vars = array_add($this->vars, 'content', $this->content);
+        }
+
+        if ($this->slider) {
+            $this->vars = array_add($this->vars, 'slider', $this->slider);
         }
 
         if (empty($this->seo)) {

@@ -13,6 +13,11 @@
     {!! $aside !!}
 @endsection
 @endif
+
+@section('slider')
+    {!! $slider ?? '' !!}
+@endsection
+
 @if(!empty($jss))
 @section('jss')
     {!! $jss !!}

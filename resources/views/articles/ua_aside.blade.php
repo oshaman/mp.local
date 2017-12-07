@@ -4,7 +4,7 @@
             <a href="#!"><img src="{{ asset('assets') }}/images/promotion/promo-aside-300-300.jpg" alt="Aloe vera"></a>
         </div>
         <div class="section-title-meta-icon border-top-none">
-            <h3>Топ статьи</h3>
+            <h3>Топ статті</h3>
             <div class="section-meta-icon">
                 <div class="section-icon">
                     <img src="{{ asset('assets') }}/images/title-icons/main-icon-4.png" alt="иконка Новости медицины">
@@ -16,35 +16,35 @@
                 @if(!empty($articles) && $articles->isNotEmpty())
                     @foreach($articles as $article)
                         @continue($loop->index>3)
-                <article class="news">
-                    <a href="{{ route('articles', ['article_alias'=>$article->alias]) }}">
-                        <div class="article-img">
-                            <img src="{{ asset('asset').'/images/articles/ru/middle/'.$article->image->path }}"
-                                 alt="{{ $article->image->alt }}" title="{{ $article->image->title }}">
-                            <div class="views"><span>{{ $article->view }}</span></div>
-                        </div>
-                        <div class="article-info">
-                            <h4 class="article-title">{{ $article->title }}</h4>
-                            <p class="article-category">{{ str_limit($article->description, 24) }}</p>
-                            <div class="article-text">{!! str_limit($article->content, 128) !!}</div>
-                            <div class="date-link">
-                                <div class="article-date">
-                                    {{ $article->created_at->format('d')
-                                        . ' '  . trans('ru.'.$article->created_at->format('m'))
-                                        . ' '  . $article->created_at->format('Y')
-                                }}
+                        <article class="news">
+                            <a href="{{ route('ua_articles', ['ua_article_alias'=>$article->alias]) }}">
+                                <div class="article-img">
+                                    <img src="{{ asset('asset').'/images/articles/ua/middle/'.$article->image->path }}"
+                                         alt="{{ $article->image->alt }}" title="{{ $article->image->title }}">
+                                    <div class="views"><span>{{ $article->view }}</span></div>
                                 </div>
-                                <span class="btn-link">Подробнее</span>
-                            </div>
-                        </div>
-                    </a>
-                    <div class="article-border"></div>
-                </article>
+                                <div class="article-info">
+                                    <h4 class="article-title">{{ $article->title }}</h4>
+                                    <p class="article-category">{{ str_limit($article->description, 24) }}</p>
+                                    <div class="article-text">{!! str_limit($article->content, 128) !!}</div>
+                                    <div class="date-link">
+                                        <div class="article-date">
+                                            {{ $article->created_at->format('d')
+                                                . ' '  . trans('ua.'.$article->created_at->format('m'))
+                                                . ' '  . $article->created_at->format('Y')
+                                        }}
+                                        </div>
+                                        <span class="btn-link">Докладніше</span>
+                                    </div>
+                                </div>
+                            </a>
+                            <div class="article-border"></div>
+                        </article>
                     @endforeach
                 @endif
             </div>
             <div>
-                <a href="#!" class="button-white">Все новости</a>
+                <a href="#!" class="button-white">Всі новини</a>
             </div>
         </div>
     </div>
@@ -66,9 +66,9 @@
                     @foreach($articles as $article)
                         @continue($loop->index<4)
                         <article class="news">
-                            <a href="{{ route('articles', ['article_alias'=>$article->alias]) }}">
+                            <a href="{{ route('ua_articles', ['ua_article_alias'=>$article->alias]) }}">
                                 <div class="article-img">
-                                    <img src="{{ asset('asset').'/images/articles/ru/middle/'.$article->image->path }}"
+                                    <img src="{{ asset('asset').'/images/articles/ua/middle/'.$article->image->path }}"
                                          alt="{{ $article->image->alt }}" title="{{ $article->image->title }}">
                                     <div class="views"><span>{{ $article->view }}</span></div>
                                 </div>
@@ -79,11 +79,11 @@
                                     <div class="date-link">
                                         <div class="article-date">
                                             {{ $article->created_at->format('d')
-                                                . ' '  . trans('ru.'.$article->created_at->format('m'))
+                                                . ' '  . trans('ua.'.$article->created_at->format('m'))
                                                 . ' '  . $article->created_at->format('Y')
                                         }}
                                         </div>
-                                        <span class="btn-link">Подробнее</span>
+                                        <span class="btn-link">Докладніше</span>
                                     </div>
                                 </div>
                             </a>
@@ -93,13 +93,13 @@
                 @endif
             </div>
             <div>
-                <a href="#!" class="button-white">Все новости</a>
+                <a href="#!" class="button-white">Всі новини</a>
             </div>
         </div>
     </div>
     <div class="mobile-display-none">
         <div class="section-title-meta-icon">
-            <h3>Популярные тематики</h3>
+            <h3>Популярні тематики</h3>
             <div class="section-meta-icon">
                 <div class="section-icon">
                     <img src="{{ asset('assets') }}/images/title-icons/main-icon-6.png" alt="иконка Популярные теги">
@@ -109,7 +109,7 @@
         <div class="popular-meta">
             @if(!empty($tags))
                 @foreach($tags as $tag)
-                    <a href="{{ route('articles_tag', ['tag_alias'=>$tag->alias]) }}"
+                    <a href="{{ route('ua_articles_tag', ['tag_alias'=>$tag->alias]) }}"
                        class="btn-meta">
                         {{ $tag->name }}
                     </a>

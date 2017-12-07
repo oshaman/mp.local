@@ -3,10 +3,10 @@
     <div class="wrap">
         <div class="logo">
             @if('main' == Route::currentRouteName())
-                <img src="{{ asset('assets') }}/images/main/logo.png" alt="Логотип МЕД правда"></a>
+                <img src="{{ asset('assets') }}/images/main/logo_ua.png" alt="Логотип МЕД правда"></a>
             @else
                 <a href="{{ route('main') }}">
-                    <img src="{{ asset('assets') }}/images/main/logo.png" alt="Логотип МЕД правда"></a>
+                    <img src="{{ asset('assets') }}/images/main/logo_ua.png" alt="Логотип МЕД правда"></a>
             @endif
         </div>
         <div class="search">

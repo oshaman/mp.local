@@ -7,6 +7,7 @@ use Validator;
 use Image;
 use Config;
 use File;
+use Cache;
 
 class AboutRepository extends Repository
 {
@@ -25,6 +26,7 @@ class AboutRepository extends Repository
      */
     public function updateAbout($request)
     {
+
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|between:3,255',
             'text' => 'nullable|string',
@@ -73,7 +75,17 @@ class AboutRepository extends Repository
         }
 
         $res = $this->model->save();
-//        dd($res);
+
+        Cache::store('file')->forget('abouts_update_' . $this->model->id);
+
+        Cache::store('file')->rememberForever('abouts_update_' . $this->model->id, function () {
+
+            $u = $this->model->updated_at;
+            return (string)$u;
+        });
+
+
+
         if ($res) {
             return ['status' => 'Статья обновлена'];
         }

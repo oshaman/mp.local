@@ -32,7 +32,7 @@
         {{--BreadCrumbs--}}
         <h1 class="product-title">Сортировка по:</h1>
 
-        @include('search.nav')
+        @include('search.ua_nav')
     </div>
     <div class="section-title-meta-icon">
         <h3>

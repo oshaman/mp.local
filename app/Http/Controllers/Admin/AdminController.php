@@ -70,6 +70,10 @@ class AdminController extends Controller
                 $menu->add('Статичные страницы', 'admin/static');
             }
 
+            if (Gate::allows('STATIC_ADMIN')) {
+                $menu->add('Статистика', 'admin/static');
+            }
+
 
             if (Gate::allows('USERS_ADMIN')) {
                 $menu->add('test', array('route' => 'presearch'));

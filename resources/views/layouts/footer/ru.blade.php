@@ -87,8 +87,12 @@
     </div>
             <div class="copyright-logo">
                 <div class="copy-block logo">
-                    <a href="http://medpravda.com.ua">
-                        <img src="http://medpravda.com.ua/assets/images/main/logo.png" alt="Логотип МЕД правда"></a>
+                    @if('main' == Route::currentRouteName())
+                        <img src="{{ asset('assets') }}/images/main/logo_ru.png" alt="Логотип МЕД правда"></a>
+                    @else
+                        <a href="{{ route('main') }}">
+                            <img src="{{ asset('assets') }}/images/main/logo_ru.png" alt="Логотип МЕД правда"></a>
+                    @endif
                 </div>
                 <div class="copy-block copyright">
                     <p>Mедправда это стандартизированным Интернет-изданием, предназначенным для врачей и других

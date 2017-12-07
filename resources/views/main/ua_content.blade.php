@@ -165,7 +165,7 @@
             @if(!empty($articles['tops']) && $articles['tops']->isNotEmpty())
                 @foreach($articles['tops'] as $top)
                     <article class="article-articles">
-                        <a href="{{ route('articles', ['loc'=>'ua', 'article_alias'=>$top->alias]) }}">
+                        <a href="{{ route('ua_articles', ['ua_article_alias'=>$top->alias]) }}">
                             <div class="article-img">
                                 <img src="{{ asset('asset/images/articles/ua/middle').'/'.$top->image->path }}"
                                      alt="{{ $top->image->alt ?? '' }}"
@@ -192,7 +192,7 @@
         </div>
 
         <div>
-            <a href="{{ route('articles_cat', ['loc'=>'ua', 'cat_alias'=>'top-stati']) }}" class="button-white">
+            <a href="{{ route('ua_articles_cat', ['cat_alias'=>'top-stati']) }}" class="button-white">
                 Більше статей</a>
         </div>
     </section>
@@ -225,8 +225,8 @@
                         <div class="left-column big-news">
                             @if(!empty($articles['diets']) && $articles['diets']->isNotEmpty())
                                 <article class="news">
-                                    <a href="{{ route('articles',
-                                                    ['loc'=>'ua', 'article_alias'=>$articles['diets'][0]->alias]) }}">
+                                    <a href="{{ route('ua_articles',
+                                                    ['ua_article_alias'=>$articles['diets'][0]->alias]) }}">
                                         <div class="article-img">
                                             <img src="{{ asset('asset/images/articles/ua/middle').'/'.$articles['diets'][0]->image->path }}"
                                                  alt="{{ $articles['diets'][0]->image->alt ?? '' }}"
@@ -258,8 +258,7 @@
                                 @foreach($articles['diets'] as $article)
                                     @continue($loop->first)
                                     <article class="news">
-                                        <a href="{{ route('articles',
-                                                    ['loc'=>'ua', 'article_alias'=>$article->alias]) }}">
+                                        <a href="{{ route('ua_articles', ['ua_article_alias'=>$article->alias]) }}">
                                             <div class="article-img">
                                                 <img src="{{ asset('asset/images/articles/ua/small').'/'.$article->image->path }}">
                                                 <div class="views"><span>{{ $article->view }}</span></div>
@@ -285,7 +284,7 @@
                     </div>
                 </div>
                 <div>
-                    <a href="{{ route('articles_cat', ['loc'=>'ua', 'cat_alias'=>'pitanie-i-dieta']) }}"
+                    <a href="{{ route('ua_articles_cat', ['cat_alias'=>'pitanie-i-dieta']) }}"
                        class="button-white">Більше статей</a>
                 </div>
             </section>
@@ -313,8 +312,8 @@
                         <div class="two-big-news">
                             @if(!empty($articles['intims']) && $articles['intims']->isNotEmpty())
                                 <article class="news">
-                                    <a href="{{ route('articles',
-                                                    ['loc'=>'ua', 'article_alias'=>$articles['intims'][0]->alias]) }}">
+                                    <a href="{{ route('ua_articles',
+                                                    ['ua_article_alias'=>$articles['intims'][0]->alias]) }}">
                                         <div class="article-img">
                                             <img src="{{ asset('asset/images/articles/ua/middle').'/'.$articles['intims'][0]->image->path }}"
                                                  alt="{{ $articles['intims'][0]->image->alt ?? '' }}"
@@ -341,8 +340,8 @@
                                 </article>
                                 @if(!empty($articles['intims'][1]))
                                 <article class="news">
-                                    <a href="{{ route('articles',
-                                                    ['loc'=>'ua', 'article_alias'=>$articles['intims'][1]->alias]) }}">
+                                    <a href="{{ route('ua_articles',
+                                                    ['ua_article_alias'=>$articles['intims'][1]->alias]) }}">
                                         <div class="article-img">
                                             <img src="{{ asset('asset/images/articles/ua/middle').'/'.$articles['intims'][1]->image->path }}"
                                                  alt="{{ $articles['intims'][1]->image->alt ?? '' }}"
@@ -376,8 +375,7 @@
                                     @foreach($articles['intims'] as $article)
                                         @continue($loop->index < 2)
                                         <article class="news">
-                                            <a href="{{ route('articles',
-                                                    ['loc'=>'ua', 'article_alias'=>$article->alias]) }}">
+                                            <a href="{{ route('ua_articles', ['ua_article_alias'=>$article->alias]) }}">
                                                 <div class="article-img">
                                                     <img src="{{ asset('asset/images/articles/ua/small').'/'.$article->image->path }}">
                                                     <div class="views"><span>{{ $article->view }}</span></div>
@@ -403,7 +401,7 @@
                         </div>
                     </div>
                     <div>
-                        <a href="{{ route('articles_cat', ['loc'=>'ua', 'cat_alias'=>'intimnye-temy']) }}"
+                        <a href="{{ route('ua_articles_cat', ['cat_alias'=>'intimnye-temy']) }}"
                            class="button-white">Більше статей</a>
                     </div>
             </section>
@@ -432,8 +430,7 @@
                     @if(!empty($articles['delusions']) && $articles['delusions']->isNotEmpty())
                         @foreach($articles['delusions'] as $article)
                             <article class="news">
-                                <a href="{{ route('articles',
-                                                ['loc'=>'ua', 'article_alias'=>$article->alias]) }}">
+                                <a href="{{ route('ua_articles', ['ua_article_alias'=>$article->alias]) }}">
                                     <div class="article-img">
                                         @if(!empty($article->image->path))
                                             @if($loop->first)
@@ -470,7 +467,7 @@
                     @endif
                 </div>
                 <div>
-                    <a href="{{ route('articles_cat', ['loc'=>'ua', 'cat_alias'=>'zabluzhdeniya']) }}"
+                    <a href="{{ route('ua_articles_cat', ['cat_alias'=>'zabluzhdeniya']) }}"
                        class="button-white">Всі новини</a>
                 </div>
             </div>
@@ -486,7 +483,7 @@
             <div class="popular-meta">
                 @if(!empty($tags))
                     @foreach($tags as $tag)
-                        <a href="{{ route('articles_tag', ['loc'=>'ua', 'tag_alias'=>$tag->alias]) }}"
+                        <a href="{{ route('ua_articles_tag', ['tag_alias'=>$tag->alias]) }}"
                            class="btn-meta">
                             {{ $tag->uname }}
                         </a>
@@ -494,7 +491,7 @@
                 @endif
             </div>
             <div class="index-aside-promo">
-                <a href="{{ route('adv', ['loc'=>'ua']) }}">
+                <a href="{{ route('ua_adv') }}">
                     <img src="{{ asset('assets') }}/images/promotion/main-reclama.jpg">
                 </a>
             </div>
@@ -562,8 +559,8 @@
             @if(!empty($articles['fitotherapy']) && $articles['fitotherapy']->isNotEmpty())
                 @foreach($articles['fitotherapy'] as $article)
                     <article class="article-articles">
-                        <a href="{{ route('articles',
-                                                ['loc'=>'ua', 'article_alias'=>$article->alias]) }}">
+                        <a href="{{ route('ua_articles',
+                                                ['ua_article_alias'=>$article->alias]) }}">
                             <div class="article-img">
                                 <img src="{{ asset('asset/images/articles/ua/middle').'/'.$article->image->path }}">
                                 <div class="views"><span>{{ $article->view }}</span></div>
@@ -573,7 +570,7 @@
                                 <div class="date-link">
                                     <div class="article-date">
                                         {{ $article->created_at->format('d')
-                                            . ' '  . trans('ru.'.$article->created_at->format('m'))
+                                            . ' '  . trans('ua.'.$article->created_at->format('m'))
                                             . ' '  . $article->created_at->format('Y')
                                         }}
                                     </div>
@@ -587,7 +584,7 @@
             @endif
         </div>
         <div>
-            <a href="{{ route('articles_cat', ['loc'=>'ua', 'cat_alias'=>'fitoterapiya']) }}"
+            <a href="{{ route('ua_articles_cat', ['cat_alias'=>'fitoterapiya']) }}"
                class="button-white">Більше статей</a>
         </div>
     </section>

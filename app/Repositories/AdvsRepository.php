@@ -7,6 +7,7 @@ use Validator;
 use Image;
 use Config;
 use File;
+use Cache;
 
 class AdvsRepository extends Repository
 {
@@ -23,6 +24,8 @@ class AdvsRepository extends Repository
 
     public function updateAdv($request, $adv = null)
     {
+//        dd(Cache::store('file')->get('adv'));
+
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|between:3,255',
             'utitle' => 'required|string|between:3,255',
@@ -95,6 +98,14 @@ class AdvsRepository extends Repository
         }
 
         $res = $this->model->save();
+
+        Cache::store('file')->forget('adv');
+
+        Cache::store('file')->rememberForever('adv', function () {
+
+            $u = $this->model->updated_at;
+            return (string)$u;
+        });
 //        dd($res);
         if ($res) {
             return ['status' => 'Статья обновлена'];

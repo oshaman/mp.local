@@ -94,7 +94,7 @@
                 </div>
             @endif
             @if(!empty($atx->children))
-                <div class="search-result  admin-content wrap">
+                <div class="admin-content wrap">
                     <ul>
                         @foreach($atx->children as $class)
                             <li>

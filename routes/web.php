@@ -13,14 +13,16 @@
 
 Route::get('/{loc?}', 'IndexController@main')->name('main')->where(['loc' => 'ua']);
 
-Route::get('reklama/{loc?}', 'MainController@adv')->name('adv');
-Route::get('onas/{loc?}', 'MainController@about')->name('about');
+Route::get('reklama', 'MainController@adv')->name('adv');
+Route::get('onas', 'MainController@about')->name('about');
 Route::get('soglashenie/{loc?}', 'MainController@convention')->name('convention');
 Route::get('usloviya/{loc?}', 'MainController@conditions')->name('conditions');
 
 Route::group(['prefix' => 'ua'], function () {
-    Route::group(['prefix' => 'sort'], function () {
+    Route::get('/reklama', 'MainController@uaAdv')->name('ua_adv');
+    Route::get('/onas', 'MainController@uaAbout')->name('ua_about');
 //        SORT ===============================>
+    Route::group(['prefix' => 'sort'], function () {
 //        alpha
         Route::get('/alfavit/{val?}', 'SearchController@alphau')
             ->name('search_alpha_u')->where(['val' => '[\wа-яА-Яё-]+']);
@@ -203,6 +205,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
      * Main
      */
     Route::get('main-admin', 'Admin\MainController@show')->name('main_admin');
+    /**
+     * Statistic
+     */
+    Route::group(['prefix' => 'statistics'], function () {
+        Route::match(['post', 'get'], 'medicine', 'Admin\StatisticController@medicine')->name('stats_medicine');
+    });
     /**
      * Admin SEO
      */

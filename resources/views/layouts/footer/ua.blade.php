@@ -42,15 +42,15 @@
                                 @endif
                             @endforeach
                         @endif
-                        @if('about' == Route::currentRouteName())
+                        @if('ua_about' == Route::currentRouteName())
                             <a>Про нас</a>
                         @else
-                            <a href="{{ route('about', ['loc'=>'ua']) }}">Про нас</a>
+                            <a href="{{ route('ua_about') }}">Про нас</a>
                         @endif
-                        @if('adv' == Route::currentRouteName())
+                        @if('ua_adv' == Route::currentRouteName())
                             <a>Реклама</a>
                         @else
-                            <a href="{{ route('adv', ['loc'=>'ua']) }}">Реклама</a>
+                            <a href="{{ route('ua_adv') }}">Реклама</a>
                         @endif
                         {{--@if('conditions' == Route::currentRouteName())
                             <a>Условия использования сайта</a>
@@ -87,8 +87,12 @@
     </div>
     <div class="copyright-logo">
         <div class="copy-block logo">
-            <a href="http://medpravda.com.ua">
-                <img src="http://medpravda.com.ua/assets/images/main/logo.png" alt="Логотип МЕД правда"></a>
+            @if('main' == Route::currentRouteName())
+                <img src="{{ asset('assets') }}/images/main/logo_ua.png" alt="Логотип МЕД правда"></a>
+            @else
+                <a href="{{ route('main') }}">
+                    <img src="{{ asset('assets') }}/images/main/logo_ua.png" alt="Логотип МЕД правда"></a>
+            @endif
         </div>
         <div class="copy-block copyright">
             <p>Mедправда это стандартизированным Интернет-изданием, предназначенным для врачей и других
