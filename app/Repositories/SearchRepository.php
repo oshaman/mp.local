@@ -2,6 +2,7 @@
 
 namespace Fresh\Medpravda\Repositories;
 
+use function foo\func;
 use Fresh\Medpravda\Classification;
 use Fresh\Medpravda\Fabricator;
 use Fresh\Medpravda\Innname;
@@ -71,37 +72,54 @@ class SearchRepository
         $result = array_filter($result);
 
         if (count($result) < 1) {
+            $result['def'] = $this->byPercent($query);
+        }
 
-            $articles = Article::select('title', 'alias')->where([['approved', 1], ['content', 'like', '%' . $query . '%']])->get();
+        return $result;
+    }
 
-            $result['articles'] = $articles->isNotEmpty() ? $articles : null;
+    public function byPercent($query)
+    {
+        $data = file_get_contents(asset('asset/titles.txt'));
+        $titles = unserialize($data);
+        $result = [];
+        foreach ($titles as $title) {
+            similar_text($query, $title['title'], $percent);
+            similar_text($query, $title['utitle'], $upercent);
 
+//                    var_dump($percent);die;
+            if (($percent >= 75) || ($upercent >= 75)) {
+                $result[] = $title;
+            };
+        }
+        if (count($result) < 1) {
+            $result = array_filter($result);
+        }
+        return $result;
+    }
+
+    public function fullTextSearch($query)
+    {
+        $articles = Article::with(['image'])->where([['approved', 1], ['content', 'like', '%' . $query . '%']])
+            ->take(8)->get();
+
+        $result['articles'] = $articles->isNotEmpty() ? $articles : null;
+
+        $medicies = $this->med->select('title', 'alias')->where('title', 'like', '%' . $query . '%')->get();
+
+        if ($medicies->isNotEmpty()) {
+            $result['medicines'] = $medicies;
+        } else {
             $query_f = '"' . $query . '"';
             $match = 'consist, physicochemical_char, pharm_group, additionally, indications, pharm_prop, contraindications, security, application_features, pregnancy, cars, children, app_mode, overdose, side_effects, interaction';
             $medicies = $this->med->select('title', 'alias')->whereRaw(
-                "MATCH($match) AGAINST(? IN BOOLEAN MODE) LIMIT 1000",
+                "MATCH($match) AGAINST(? IN BOOLEAN MODE) LIMIT 50",
                 array($query_f)
             )->get();
 
             $result['medicines'] = $medicies->isNotEmpty() ? $medicies : null;
-
-            $result = array_filter($result);
-
-            if (count($result) < 1) {
-                $data = file_get_contents(asset('asset/titles.txt'));
-                $titles = unserialize($data);
-                foreach ($titles as $title) {
-                    similar_text($query, $title['title'], $percent);
-                    similar_text($query, $title['utitle'], $upercent);
-
-//                    dd($percent);
-                    if (($percent >= 75) || ($upercent >= 75)) {
-                        $result['medicines'][] = $title;
-                    };
-                }
-            }
-
         }
+
 
         return $result;
     }
@@ -211,7 +229,7 @@ class SearchRepository
 
         return $inns->isNotEmpty() ? $inns : null;
     }
-    
+
     /**
      * @param $request
      * @return array|bool
@@ -220,23 +238,22 @@ class SearchRepository
     {
         $validator = Validator::make($request->all(), [
             'search' => 'required|string|max:128',
-//            'categories' => 'nullable|integer|min:1|max:4294967295',
         ]);
 
         if ($validator->fails()) {
             return ['error' => $validator];
         }
 
-        $data = $request->all();
+        $query = $request->get('search');
 
-        if (empty($data['search'])) {
-            return false;
+//        dd($query);
+        $full = $this->fullTextSearch($query);
+        $full = array_filter($full);
+
+        if (empty($full['medicines']) || count($full) < 1) {
+            $full['medicines'] = $this->byPercent($query);
         }
-
-        $medicines = $this->med->select('title', 'id', 'alias')->where('title', 'like', '%' . $data['search'] . '%')->get();
-//        dd($medicines);
-
-        return $medicines;
+        return $full;
 
     }
 
@@ -335,11 +352,11 @@ class SearchRepository
         $atx = $this->atx->select('id', 'class', 'name', 'parent')->where('class', $val)->first();
 
         $result = null;
-
         if (!empty($atx)) {
 
             $atx->load('children');
             $atx->load('medicines');
+            dd($atx);
             $atx->load('parents');
 
             if (!empty($atx->medicines)) {

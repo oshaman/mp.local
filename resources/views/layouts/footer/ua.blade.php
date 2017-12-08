@@ -52,20 +52,18 @@
                         @else
                             <a href="{{ route('ua_adv') }}">Реклама</a>
                         @endif
-                        {{--@if('conditions' == Route::currentRouteName())
-                            <a>Условия использования сайта</a>
-                        @else
-                            <a href="{{ route('conditions') }}">Условия использования сайта</a>
-                        @endif
-                        @if('conditions' == Route::currentRouteName())
-                            <a>Соглашение о конфиденциальности</a>
-                        @else
-                            <a href="{{ route('convention') }}">Соглашение о конфиденциальности</a>
-                        @endif--}}
                     </nav>
                     <div class="terms-email mobile-display-none">
-                        <a>Условия использования сайта</a>
-                        <a>Соглашение о конфиденциальности</a>
+                        @if('ua_conditions' == Route::currentRouteName())
+                            <a>Умови використання сайту</a>
+                        @else
+                            <a href="{{ route('ua_conditions') }}">Умови використання сайту</a>
+                        @endif
+                        @if('ua_convention' == Route::currentRouteName())
+                            <a>Угода про конфіденційність</a>
+                        @else
+                            <a href="{{ route('ua_convention') }}">Угода про конфіденційність</a>
+                        @endif
                         <a href="mailto:info@medpravda.com.ua" class="e-mail">info@medpravda.com.ua</a>
                     </div>
                 </div>

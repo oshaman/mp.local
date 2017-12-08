@@ -15,12 +15,15 @@ Route::get('/{loc?}', 'IndexController@main')->name('main')->where(['loc' => 'ua
 
 Route::get('reklama', 'MainController@adv')->name('adv');
 Route::get('onas', 'MainController@about')->name('about');
-Route::get('soglashenie/{loc?}', 'MainController@convention')->name('convention');
-Route::get('usloviya/{loc?}', 'MainController@conditions')->name('conditions');
+Route::get('soglashenie', 'MainController@convention')->name('convention');
+Route::get('usloviya', 'MainController@conditions')->name('conditions');
 
 Route::group(['prefix' => 'ua'], function () {
     Route::get('/reklama', 'MainController@uaAdv')->name('ua_adv');
     Route::get('/onas', 'MainController@uaAbout')->name('ua_about');
+
+    Route::get('/soglashenie', 'MainController@uaConvention')->name('ua_convention');
+    Route::get('/usloviya', 'MainController@uaConditions')->name('ua_conditions');
 //        SORT ===============================>
     Route::group(['prefix' => 'sort'], function () {
 //        alpha
@@ -200,6 +203,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::post('delimg', 'Admin\StaticsController@delimg');
 //        AboutUs
         Route::match(['get', 'post'], 'about', 'Admin\StaticsController@updateAbout')->name('about_admin');
+//        convention
+        Route::match(['get', 'post'], 'convention', 'Admin\StaticsController@updateConvention')->name('convention_admin');
+//        conditions
+        Route::match(['get', 'post'], 'conditions', 'Admin\StaticsController@updateConditions')->name('conditions_admin');
     });
     /**
      * Main
@@ -210,6 +217,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
      */
     Route::group(['prefix' => 'statistics'], function () {
         Route::match(['post', 'get'], 'medicine', 'Admin\StatisticController@medicine')->name('stats_medicine');
+        Route::match(['post', 'get'], 'class', 'Admin\StatisticController@class')->name('stats_class');
     });
     /**
      * Admin SEO

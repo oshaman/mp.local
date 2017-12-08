@@ -111,7 +111,7 @@
                 @foreach($tags as $tag)
                     <a href="{{ route('ua_articles_tag', ['tag_alias'=>$tag->alias]) }}"
                        class="btn-meta">
-                        {{ $tag->name }}
+                        {{ $tag->uname }}
                     </a>
                 @endforeach
             @endif

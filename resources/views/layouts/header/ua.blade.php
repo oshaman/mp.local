@@ -10,7 +10,10 @@
             @endif
         </div>
         <div class="search">
-            <input type="search" name="search" id="search" placeholder="Поиск по сайту">
+            <input autocomplete="off" type="search" name="search" class="search-placeholder"
+                   placeholder="Поиск по сайту">
+            <input type="hidden" name="stats">
+            <div class="wrap-search"></div>
             <span class="img-search"></span>
         </div>
         <div class="main-menu">
@@ -55,8 +58,10 @@
         </div>
         <div class="search">
             {!! Form::open(['url'=>route('search'), 'method'=>'post']) !!}
-            <input type="search" name="search" id="search" placeholder="Пошук по сайту">
+            <input autocomplete="off" type="search" name="search" class="search-placeholder"
+                   placeholder="Пошук по сайту">
             <input type="hidden" name="stats">
+            <div class="wrap-search"></div>
             {{ Form::close() }}
             <span class="img-search"></span>
         </div>

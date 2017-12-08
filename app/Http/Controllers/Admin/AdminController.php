@@ -71,7 +71,7 @@ class AdminController extends Controller
             }
 
             if (Gate::allows('STATIC_ADMIN')) {
-                $menu->add('Статистика', 'admin/static');
+                $menu->add('Статистика', route('stats_medicine'));
             }
 
 

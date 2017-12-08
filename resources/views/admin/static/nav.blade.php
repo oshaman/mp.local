@@ -16,6 +16,16 @@
             @else
                 <li><a href="{{ route('seo_admin') }}">SEO</a></li>
             @endif
+            @if('convention_admin' == Route::currentRouteName())
+                <li><a class="btn btn-default">Конфиденциальность</a></li>
+            @else
+                <li><a href="{{ route('convention_admin') }}">Конфиденциальность</a></li>
+            @endif
+            @if('conditions_admin' == Route::currentRouteName())
+                <li><a class="btn btn-default">Условия</a></li>
+            @else
+                <li><a href="{{ route('conditions_admin') }}">Условия</a></li>
+            @endif
         </ul>
     </div>
 </nav>

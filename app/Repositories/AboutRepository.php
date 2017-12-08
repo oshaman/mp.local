@@ -85,9 +85,150 @@ class AboutRepository extends Repository
         });
 
 
+        if ($res) {
+            return ['status' => 'Данные обновлены'];
+        }
+        $error[] = ['img' => 'Ошибка записи данных'];
+    }
+
+    /**
+     * @param $request
+     * @return array
+     */
+    public function updateСonvention($request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|between:3,255',
+            'text' => 'nullable|string',
+            'alt' => 'nullable|string|between:,255',
+            'imgtitle' => 'nullable|string|between:,255',
+            'image' => 'sometimes|mimes:jpg,bmp,png,jpeg|max:5120',
+        ]);
+
+        if ($validator->fails()) {
+            return ['error' => $validator];
+        }
+
+        $data = $request->except('_token', 'image');
+
+
+        if ('ru' == $data['loc']) {
+            $id = 3;
+            $loc = 'ru';
+        } else {
+            $id = 4;
+            $loc = 'ua';
+        }
+        $this->model = $this->model->find($id);
+
+        $this->model->title = $data['title'];
+
+        $this->model->text = $data['text'];
+
+        $this->model->alt = $data['alt'];
+
+        $this->model->img_title = $data['imgtitle'];
+
+        if ($request->hasFile('image')) {
+            $old_img = $this->model->path ?? null;
+
+            $path = $this->mainImg($request->file('image'), $this->transliterate($data['title']), $loc);
+
+            if (false === $path) {
+                $error[] = ['img' => 'Ошибка загрузки картинки'];
+            } else {
+                $this->model->path = $path;
+            }
+            if (!empty($old_img)) {
+                $this->deleteOldImage($old_img, $loc);
+            }
+        }
+
+        $res = $this->model->save();
+
+        Cache::store('file')->forget('convention_update_' . $this->model->id);
+
+        Cache::store('file')->rememberForever('convention_update_' . $this->model->id, function () {
+
+            $u = $this->model->updated_at;
+            return (string)$u;
+        });
+
 
         if ($res) {
             return ['status' => 'Статья обновлена'];
+        }
+        $error[] = ['img' => 'Ошибка записи данных'];
+    }
+
+    /**
+     * @param $request
+     * @return array
+     */
+    public function updateConditions($request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|string|between:3,255',
+            'text' => 'nullable|string',
+            'alt' => 'nullable|string|between:,255',
+            'imgtitle' => 'nullable|string|between:,255',
+            'image' => 'sometimes|mimes:jpg,bmp,png,jpeg|max:5120',
+        ]);
+
+        if ($validator->fails()) {
+            return ['error' => $validator];
+        }
+
+        $data = $request->except('_token', 'image');
+
+
+        if ('ru' == $data['loc']) {
+            $id = 5;
+            $loc = 'ru';
+        } else {
+            $id = 6;
+            $loc = 'ua';
+        }
+        $this->model = $this->model->find($id);
+
+        $this->model->title = $data['title'];
+
+        $this->model->text = $data['text'];
+
+        $this->model->alt = $data['alt'];
+
+        $this->model->img_title = $data['imgtitle'];
+
+        if ($request->hasFile('image')) {
+            $old_img = $this->model->path ?? null;
+
+            $path = $this->mainImg($request->file('image'), $this->transliterate($data['title']), $loc);
+
+            if (false === $path) {
+                $error[] = ['img' => 'Ошибка загрузки картинки'];
+            } else {
+                $this->model->path = $path;
+            }
+            if (!empty($old_img)) {
+                $this->deleteOldImage($old_img, $loc);
+            }
+        }
+
+        $res = $this->model->save();
+
+        Cache::store('file')->forget('conditions_update_' . $this->model->id);
+
+        Cache::store('file')->rememberForever('conditions_update_' . $this->model->id, function () {
+
+            $u = $this->model->updated_at;
+            return (string)$u;
+        });
+
+
+        if ($res) {
+            return ['status' => 'Данные обновлены'];
         }
         $error[] = ['img' => 'Ошибка записи данных'];
     }

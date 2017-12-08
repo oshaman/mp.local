@@ -10,7 +10,11 @@
             </div>
             <div id="ru" class="panel-collapse collapse">
                 <div class="panel-body">
-                    {!! Form::open(['url' => route('about_admin'), 'method' => 'post', 'class' => 'form-horizontal', 'files' => true]) !!}
+                    @if('about_admin' == Route::CurrentRouteName())
+                        {!! Form::open(['url' => route('about_admin'), 'method' => 'post', 'class' => 'form-horizontal', 'files' => true]) !!}
+                    @elseif('convention_admin' == Route::CurrentRouteName())
+                        {!! Form::open(['url' => route('convention_admin'), 'method' => 'post', 'class' => 'form-horizontal', 'files' => true]) !!}
+                    @endif
                     <div>
                         {{ Form::label('title', 'Заголовок') }}
                         <div>
@@ -60,7 +64,13 @@
             </div>
             <div id="ua" class="panel-collapse collapse">
                 <div class="panel-body">
-                    {!! Form::open(['url' => route('about_admin'), 'method' => 'post', 'class' => 'form-horizontal', 'files' => true]) !!}
+                    @if('about_admin' == Route::CurrentRouteName())
+                        {!! Form::open(['url' => route('about_admin'), 'method' => 'post', 'class' => 'form-horizontal', 'files' => true]) !!}
+                    @elseif('convention_admin' == Route::CurrentRouteName())
+                        {!! Form::open(['url' => route('convention_admin'), 'method' => 'post', 'class' => 'form-horizontal', 'files' => true]) !!}
+                    @else
+                        {!! Form::open(['url' => route('conditions_admin'), 'method' => 'post', 'class' => 'form-horizontal', 'files' => true]) !!}
+                    @endif
                     <div>
                         {{ Form::label('title', 'Заголовок') }}
                         <div>

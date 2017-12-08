@@ -60,9 +60,23 @@ class MainController extends Controller
     {
         $this->title = 'Соглашение о конфиденциальности';
 
-//        $advs = Adv::where(['approved' => 1])->get();
-        $convention = '';
-        $this->content = view('main.convention')->with(['convention' => $convention])->render();
+        $about = About::find(3);
+        $this->content = view('main.about')->with(['about' => $about])->render();
+
+        return $this->renderOutput();
+    }
+
+    /**
+     * @param null $loc
+     * @return $this
+     */
+    public function uaConvention($loc = null)
+    {
+        $this->title = 'Угода про конфіденційність';
+        $this->loc = 'ua';
+
+        $about = About::find(4);
+        $this->content = view('main.about')->with(['about' => $about])->render();
 
         return $this->renderOutput();
     }
@@ -74,10 +88,23 @@ class MainController extends Controller
     public function conditions($loc = null)
     {
         $this->title = 'Условия использования сайта';
+        $about = About::find(5);
+        $this->content = view('main.about')->with(['about' => $about])->render();
 
-//        $advs = Adv::where(['approved' => 1])->get();
-        $conditions = '';
-        $this->content = view('main.conditions')->with(['conditions' => $conditions])->render();
+        return $this->renderOutput();
+    }
+
+    /**
+     * @param null $loc
+     * @return $this
+     */
+    public function uaConditions($loc = null)
+    {
+        $this->title = 'Умови використання сайту';
+        $this->loc = 'ua';
+
+        $about = About::find(6);
+        $this->content = view('main.about')->with(['about' => $about])->render();
 
         return $this->renderOutput();
     }
