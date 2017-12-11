@@ -226,6 +226,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::get('/', 'Admin\SeoController@index')->name('seo_admin');
         Route::match(['post', 'get'], 'edit/{seo}', 'Admin\SeoController@edit')->name('seo_update')->where('seo', '[0-9]+');
     });
+    /**
+     * Med Tags
+     */
+    Route::group(['prefix' => 'med-teg'], function () {
+        Route::match(['get', 'post'], '/', ['uses' => 'Admin\MedtagController@store', 'as' => 'med_tags_admin']);
+        Route::get('delete/{med_tag}', ['uses' => 'Admin\MedtagController@destroy', 'as' => 'delete_medtag'])->where('med_tag', '[0-9]+');
+    });
 });
 //Auth
 Route::get('login', 'Auth\AuthController@showLoginForm')->name('login');

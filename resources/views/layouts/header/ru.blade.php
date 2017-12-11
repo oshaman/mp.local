@@ -36,7 +36,7 @@
         </div>
         <div class="lang-menu mobile-display-none">
             <span class="active">Рус</span>
-            <a href="{{ str_replace(env('APP_URL'), env('APP_URL').'/ua', url()->full()) }}">Укр</a>
+            <a href="{{ str_replace(env('APP_URL'), env('APP_URL').'/ua', Request::url()) }}">Укр</a>
         </div>
     </div>
 </header>

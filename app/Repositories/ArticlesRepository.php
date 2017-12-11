@@ -126,8 +126,9 @@ class ArticlesRepository extends Repository
                 }
             }
 
-            /*$cat = $new->category->alias;
-            $this->clearArticlesCache(false, $cat);*/
+//            $cat = $new->category->alias;
+            $cat = false;
+            $this->clearArticlesCache(false, $cat);
             return ['status' => 'Статья добавлена', 'id' => $new->id];
         }
         return ['error' => $error];
@@ -261,7 +262,7 @@ class ArticlesRepository extends Repository
             }
 
 
-//            $this->clearArticlesCache($article->id);
+            $this->clearArticlesCache($article->id);
 
             return ['status' => 'Статья обновлена', $error];
         }
@@ -303,7 +304,7 @@ class ArticlesRepository extends Repository
                 File::delete(public_path('/asset/images/articles/ua/small/') . $uold_img);
             }
 
-//            $this->clearArticlesCache();
+            $this->clearArticlesCache();
 
             return ['status' => 'Статья удалена'];
         }
@@ -376,22 +377,13 @@ class ArticlesRepository extends Repository
     /**
      * Clear
      */
-    protected function clearArticlesCache($id = false)
+    protected function clearArticlesCache($id = false, $cat = false)
     {
-        Cache::forget('patientSidebar');
-        Cache::forget('docsArticleSidebar');
-        Cache::forget('docsSidebar');
-        Cache::forget('docsArticles');
         Cache::forget('main');
-        Cache::forget('eventSidebar');
-        Cache::forget('event_content');
-        Cache::forget('articles_last');
-        Cache::forget('docs_articles_last');
-        Cache::forget('blogs_sidebar');
-        !empty($id) ? Cache::store('file')->forget('docs_article-' . $id) : null;
-        !empty($id) ? Cache::store('file')->forget('patients_article-' . $id) : null;
-        !empty($cat) ? Cache::forget('docs_cats' . $cat) : null;
-        !empty($cat) ? Cache::forget('articles_cats' . $cat) : null;
+        Cache::forget('sort-aside-ru');
+        Cache::forget('sort-aside-ua');
+
+//        !empty($cat) ? Cache::forget('articles_cats' . $cat) : null;
     }
 
     /**

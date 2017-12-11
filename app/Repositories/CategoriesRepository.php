@@ -3,6 +3,7 @@
 namespace Fresh\Medpravda\Repositories;
 
 use Fresh\Medpravda\Category;
+use Cache;
 
 class CategoriesRepository extends Repository
 {
@@ -21,7 +22,7 @@ class CategoriesRepository extends Repository
         $data = $request->except('_token');
 
         $res = $this->model->fill($data)->save();
-
+        Cache::forget('main_cats');
         return $res;
     }
 
@@ -44,9 +45,13 @@ class CategoriesRepository extends Repository
             $cat->alias = $request->alias;
         }
         $res = $cat->save();
+        Cache::forget('main_cats');
         return $res;
     }
 
+    /**
+     * @return array
+     */
     public function catSelect()
     {
         $cats = $this->model->select(['title', 'id'])->get();

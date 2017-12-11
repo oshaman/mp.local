@@ -7,11 +7,13 @@ use Fresh\Medpravda\Adv;
 use Fresh\Medpravda\Block;
 use Fresh\Medpravda\Category;
 use Fresh\Medpravda\Tag;
+use Cache;
 
 class MainController extends Controller
 {
     protected $template = 'main.index';
-    protected $content = FALSE;
+    protected $content = false;
+    protected $lastModified = false;
     protected $title;
     protected $vars;
     protected $css = null;
@@ -30,8 +32,10 @@ class MainController extends Controller
     {
         $this->title = 'Реклама на сайте';
 
-        $advs = Adv::where(['approved' => 1])->get();
-        $this->content = view('main.adv')->with(['advs' => $advs])->render();
+        $this->content = Cache::rememberForever('adv', function () {
+            $advs = Adv::where(['approved' => 1])->get();
+            return view('main.adv')->with(['advs' => $advs])->render();
+        });
 
         return $this->renderOutput();
     }
@@ -45,9 +49,10 @@ class MainController extends Controller
         $this->title = 'Реклама на сайті';
 
         $this->loc = 'ua';
-
-        $advs = Adv::where(['approved' => 1])->get();
-        $this->content = view('main.adv')->with(['advs' => $advs, 'loc' => 'ua'])->render();
+        $this->content = Cache::rememberForever('ua_adv', function () {
+            $advs = Adv::where(['approved' => 1])->get();
+            return view('main.adv')->with(['advs' => $advs, 'loc' => 'ua'])->render();
+        });
 
         return $this->renderOutput();
     }
@@ -60,8 +65,10 @@ class MainController extends Controller
     {
         $this->title = 'Соглашение о конфиденциальности';
 
-        $about = About::find(3);
-        $this->content = view('main.about')->with(['about' => $about])->render();
+        $this->content = Cache::rememberForever('convention', function () {
+            $about = About::find(3);
+            return view('main.about')->with(['about' => $about])->render();
+        });
 
         return $this->renderOutput();
     }
@@ -74,9 +81,10 @@ class MainController extends Controller
     {
         $this->title = 'Угода про конфіденційність';
         $this->loc = 'ua';
-
-        $about = About::find(4);
-        $this->content = view('main.about')->with(['about' => $about])->render();
+        $this->content = Cache::rememberForever('ua_convention', function () {
+            $about = About::find(4);
+            return view('main.about')->with(['about' => $about])->render();
+        });
 
         return $this->renderOutput();
     }
@@ -88,8 +96,11 @@ class MainController extends Controller
     public function conditions($loc = null)
     {
         $this->title = 'Условия использования сайта';
-        $about = About::find(5);
-        $this->content = view('main.about')->with(['about' => $about])->render();
+
+        $this->content = Cache::rememberForever('conditions', function () {
+            $about = About::find(5);
+            return view('main.about')->with(['about' => $about])->render();
+        });
 
         return $this->renderOutput();
     }
@@ -103,8 +114,10 @@ class MainController extends Controller
         $this->title = 'Умови використання сайту';
         $this->loc = 'ua';
 
-        $about = About::find(6);
-        $this->content = view('main.about')->with(['about' => $about])->render();
+        $this->content = Cache::rememberForever('ua_conditions', function () {
+            $about = About::find(6);
+            return view('main.about')->with(['about' => $about])->render();
+        });
 
         return $this->renderOutput();
     }
@@ -116,8 +129,10 @@ class MainController extends Controller
     public function about()
     {
         $this->title = 'О нас';
-        $about = About::find(1);
-        $this->content = view('main.about')->with(['about' => $about])->render();
+        $this->content = Cache::rememberForever('about', function () {
+            $about = About::find(1);
+            return view('main.about')->with(['about' => $about])->render();
+        });
 
         return $this->renderOutput();
     }
@@ -129,9 +144,12 @@ class MainController extends Controller
     public function uaAbout()
     {
         $this->title = 'Про нас';
-        $about = About::find(2);
         $this->loc = 'ua';
-        $this->content = view('main.about')->with(['about' => $about, 'loc' => $this->loc])->render();
+
+        $this->content = Cache::rememberForever('ua_about', function () {
+            $about = About::find(2);
+            return view('main.about')->with(['about' => $about, 'loc' => $this->loc])->render();
+        });
 
         return $this->renderOutput();
     }
@@ -145,8 +163,14 @@ class MainController extends Controller
         $this->vars = array_add($this->vars, 'jss', $this->jss);
         $this->vars = array_add($this->vars, 'css', $this->jss);
 
-        $this->block = Block::where('id', 1)->first();
-        $cats = Category::get();
+        $this->block = Cache::remember('blocks', 60, function () {
+            return Block::where('id', 1)->first();
+        });
+
+
+        $cats = Cache::remember('main_cats', 60, function () {
+            return Category::get();
+        });
 
         if (empty($this->loc)) {
             $header = view('layouts.header.ru')
@@ -156,11 +180,24 @@ class MainController extends Controller
         }
         $this->vars = array_add($this->vars, 'header', $header);
 
-        $tags = Tag::select(['name', 'uname', 'alias'])->where(['approved' => 1])->skip(15)->take(15)->get();
+        $tags = Cache::remember('tags_main', 60, function () {
+            return Tag::select(['name', 'uname', 'alias'])->where(['approved' => 1])->skip(15)->take(15)->get();
+        });
+
         if (empty($this->loc)) {
-            $footer = view('layouts.footer.ru')->with(['cats' => $cats, 'tags' => $tags])->render();
+            $med_tags = Cache::remember('med-tags', 24 * 60, function () {
+                $meds = \Fresh\Medpravda\Medtag::take(14)->get();
+                return \Fresh\Medpravda\Medicine::select('title', 'alias')->whereIn('alias', $meds->toArray())->get();
+            });
+            $footer = view('layouts.footer.ru')
+                ->with(['cats' => $cats, 'tags' => $tags, 'med_tags' => $med_tags])->render();
         } else {
-            $footer = view('layouts.footer.ua')->with(['cats' => $cats, 'tags' => $tags])->render();
+            $med_tags = Cache::remember('med-tags', 24 * 60, function () {
+                $meds = \Fresh\Medpravda\Medtag::take(14)->get();
+                return \Fresh\Medpravda\Umedicine::select('title', 'alias')->whereIn('alias', $meds->toArray())->get();
+            });
+            $footer = view('layouts.footer.ua')
+                ->with(['cats' => $cats, 'tags' => $tags, 'med_tags' => $med_tags])->render();
         }
         $this->vars = array_add($this->vars, 'footer', $footer);
 
@@ -186,6 +223,10 @@ class MainController extends Controller
             $this->vars = array_add($this->vars, 'aside', $this->aside);
         }
 
+        if ($this->lastModified) {
+            $content = view($this->template)->with($this->vars);
+            return response($content)->header('Last-Modified', $this->lastModified);
+        }
         return view($this->template)->with($this->vars);
     }
 }

@@ -1,5 +1,7 @@
 <IfModule mod_rewrite.c>
     RewriteEngine on
+
+    AddDefaultCharset UTF-8
 #https
     #RewriteCond %{SERVER_PORT} !^443$
     #RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
@@ -8,7 +10,7 @@
     RewriteCond %{HTTP_HOST} ^www.(.*)$ [NC]
     RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
 #index
-    RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /index\.(php|html|htm)\ HTTP/
+    RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\\s(.*)/index\.(php|html|htm)\ [NC]
     RewriteRule ^(.*)index\.(php|html|htm)$ http://medpravda.com.ua/$1 [R=301,L]
 # slashes
     RewriteCond %{REQUEST_URI} ^(.*)/{2,}(.*)$

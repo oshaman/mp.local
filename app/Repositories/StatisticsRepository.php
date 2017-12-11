@@ -35,7 +35,7 @@ class StatisticsRepository
 
         switch ($data['period']) {
             case 1:
-                $res = MonthMedicine::select(DB::raw('medicine_alias AS alias, count(medicine_alias) AS nums'))
+                $res = MonthMedicine::select(DB::raw('(\'' . $data['alias'] . '\') AS alias, count(medicine_alias) AS nums'))
                     ->where('medicine_alias', $data['alias'])->first();
                 break;
             case 2:
@@ -43,15 +43,15 @@ class StatisticsRepository
                     ->where('medicine_alias', $data['alias'])->first();
                 break;
             case 3:
-                $res = SemesterMedicine::select(DB::raw('medicine_alias AS alias, count(medicine_alias) AS nums'))
+                $res = SemesterMedicine::select(DB::raw('(\'' . $data['alias'] . '\') AS alias, count(medicine_alias) AS nums'))
                     ->where('medicine_alias', $data['alias'])->first();
                 break;
             case 4:
-                $res = YearMedicine::select(DB::raw('medicine_alias AS alias, count(medicine_alias) AS nums'))
+                $res = YearMedicine::select(DB::raw('(\'' . $data['alias'] . '\') AS alias, count(medicine_alias) AS nums'))
                     ->where('medicine_alias', $data['alias'])->first();
                 break;
             default:
-                $res = WeekMedicine::select(DB::raw('medicine_alias, count(medicine_alias) AS nums'))
+                $res = WeekMedicine::select(DB::raw('(\'' . $data['alias'] . '\') AS alias, count(medicine_alias) AS nums'))
                     ->where('medicine_alias', $data['alias'])->first();
         }
         return $res;

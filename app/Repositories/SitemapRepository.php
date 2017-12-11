@@ -360,7 +360,6 @@ class SitemapRepository
         $sitemap_main->add(URL::to('ua/onas'), $about_update_ua, '0.8', 'monthly');
 //        About
 //        ADV
-        Cache::store('file')->forget('adv');
         $adv = Cache::store('file')->rememberForever('adv', function () {
             $date = Adv::select('updated_at')->max('updated_at');
             return $date;

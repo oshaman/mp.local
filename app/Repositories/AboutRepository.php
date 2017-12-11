@@ -75,15 +75,15 @@ class AboutRepository extends Repository
         }
 
         $res = $this->model->save();
-
+//sitemaps
         Cache::store('file')->forget('abouts_update_' . $this->model->id);
-
         Cache::store('file')->rememberForever('abouts_update_' . $this->model->id, function () {
-
             $u = $this->model->updated_at;
             return (string)$u;
         });
-
+//sitemaps
+        Cache::forget('about');
+        Cache::forget('ua_about');
 
         if ($res) {
             return ['status' => 'Данные обновлены'];
@@ -147,14 +147,16 @@ class AboutRepository extends Repository
 
         $res = $this->model->save();
 
+//        sitemaps
         Cache::store('file')->forget('convention_update_' . $this->model->id);
-
         Cache::store('file')->rememberForever('convention_update_' . $this->model->id, function () {
 
             $u = $this->model->updated_at;
             return (string)$u;
         });
-
+//sitemaps
+        Cache::forget('convention');
+        Cache::forget('ua_convention');
 
         if ($res) {
             return ['status' => 'Статья обновлена'];
@@ -218,14 +220,16 @@ class AboutRepository extends Repository
 
         $res = $this->model->save();
 
+//        sitemaps
         Cache::store('file')->forget('conditions_update_' . $this->model->id);
-
         Cache::store('file')->rememberForever('conditions_update_' . $this->model->id, function () {
 
             $u = $this->model->updated_at;
             return (string)$u;
         });
-
+//        sitemaps
+        Cache::forget('conditions');
+        Cache::forget('ua_conditions');
 
         if ($res) {
             return ['status' => 'Данные обновлены'];

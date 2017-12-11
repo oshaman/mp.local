@@ -1,3 +1,4 @@
+@include('admin.static.nav')
 <table class="table">
     <thead>
     <tr>

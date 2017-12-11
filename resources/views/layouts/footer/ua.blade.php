@@ -70,11 +70,11 @@
                 <div class="footer-column">
                     <h6>Препарати</h6>
                     <div class="meta-btn-footer">
-                        @if(!empty($tags))
-                            @foreach($tags as $tag)
-                                <a href="{{ route('ua_articles_tag', ['tag_alias'=>$tag->alias]) }}"
+                        @if(!empty($med_tags))
+                            @foreach($med_tags as $tag)
+                                <a href="{{ route('medicine_ua', ['medicine'=>$tag->alias]) }}"
                                    class="btn-meta">
-                                    {{ $tag->name }}
+                                    {{ $tag->title }}
                                 </a>
                             @endforeach
                         @endif

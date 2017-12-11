@@ -79,7 +79,7 @@ class AmedicineRepository extends Repository
             //Slider
         }
 
-
+        Cache::forget('medicine-' . $model->alias);
         $error = [];
         return ['status' => 'Препарат обновлен', $error];
     }

@@ -5,7 +5,11 @@
             @if('main' == Route::currentRouteName())
                 <img src="{{ asset('assets') }}/images/main/logo_ua.png" alt="Логотип МЕД правда"></a>
             @else
-                <a href="{{ route('main') }}">
+                @if ('ua' == Request::segment(1))
+                    <a href="{{ route('main', ['loc'=>'ua']) }}">
+                        @else
+                            <a href="{{ route('main') }}">
+                                @endif
                     <img src="{{ asset('assets') }}/images/main/logo_ua.png" alt="Логотип МЕД правда"></a>
             @endif
         </div>
@@ -35,7 +39,7 @@
             </a>
         </div>
         <div class="lang-menu mobile-display-none">
-            <a href="{{  str_replace('/ua', '', url()->full()) }}">Рус</a>
+            <a href="{{  str_replace('/ua', '', Request::url()) }}">Рус</a>
             <span class="active">Укр</span>
         </div>
     </div>

@@ -16,6 +16,11 @@
             @else
                 <li><a href="{{ route('main_slider') }}">Главный слайдер</a></li>
             @endif
+            @if('med_tags_admin' == Route::currentRouteName())
+                <li><a class="btn btn-default">Тэги-препараты</a></li>
+            @else
+                <li><a href="{{ route('med_tags_admin') }}">Тэги-препараты</a></li>
+            @endif
         </ul>
     </div>
 </nav>

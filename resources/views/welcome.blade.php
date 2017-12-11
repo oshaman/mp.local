@@ -73,20 +73,6 @@
                     {{ config('app.name', 'Laravel') }}
                 </a>
             </div>
-            <a href="{{ route('admin', ['loc'=>'ru', 'medicine'=> strtolower(str_random(7)) ]) }}"
-               class="btn btn-success">Admin</a>
-            <a href="{{ route('medicine', ['loc'=>'ru', 'medicine'=> strtolower(str_random(7)) ]) }}"
-               class="btn btn-primary">Medicine</a>
-            <a href="{{ route('medicine', ['loc'=>'ru', 'medicine'=> strtolower(str_random(7)), 'act'=>'analogi']) }}"
-               class="btn btn-primary">Analog</a>
-            <a href="{{ route('medicine', ['loc'=>'ru', 'medicine'=> strtolower(str_random(7)), 'act'=>'adaptinaya-instrukcija']) }}"
-               class="btn btn-primary">Adaptive</a>
-            <a href="{{ route('medicine', ['loc'=>'ru', 'medicine'=> strtolower(str_random(7)), 'act'=>'chastye-voprosy']) }}"
-               class="btn btn-primary">FAQ</a>
-            {{--<a href="{{ route('medicine_analog', ['loc'=>'ru', 'medicine'=>'test']) }}">Analog</a>--}}
-            {{--<a href="{{ route('medicine_adaptive', ['loc'=>'ru', 'medicine'=>'test']) }}">Adaptive</a>--}}
-            {{--<a href="{{ route('medicine_faq', ['loc'=>'ru', 'medicine'=>'test']) }}">FAQ</a>--}}
-
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
 

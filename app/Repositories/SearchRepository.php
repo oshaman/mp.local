@@ -88,7 +88,7 @@ class SearchRepository
             similar_text($query, $title['utitle'], $upercent);
 
 //                    var_dump($percent);die;
-            if (($percent >= 75) || ($upercent >= 75)) {
+            if (($percent >= 70) || ($upercent >= 70)) {
                 $result[] = $title;
             };
         }

@@ -24,8 +24,6 @@ class AdvsRepository extends Repository
 
     public function updateAdv($request, $adv = null)
     {
-//        dd(Cache::store('file')->get('adv'));
-
         $validator = Validator::make($request->all(), [
             'title' => 'required|string|between:3,255',
             'utitle' => 'required|string|between:3,255',
@@ -99,6 +97,7 @@ class AdvsRepository extends Repository
 
         $res = $this->model->save();
 
+        //sitemaps
         Cache::store('file')->forget('adv');
 
         Cache::store('file')->rememberForever('adv', function () {
@@ -106,7 +105,10 @@ class AdvsRepository extends Repository
             $u = $this->model->updated_at;
             return (string)$u;
         });
-//        dd($res);
+        //sitemaps
+        Cache::forget('adv');
+        Cache::forget('ua_adv');
+
         if ($res) {
             return ['status' => 'Статья обновлена'];
         }

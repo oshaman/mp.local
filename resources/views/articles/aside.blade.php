@@ -4,7 +4,11 @@
             <a href="#!"><img src="{{ asset('assets') }}/images/promotion/promo-aside-300-300.jpg" alt="Aloe vera"></a>
         </div>
         <div class="section-title-meta-icon border-top-none">
-            <h3>Топ статьи</h3>
+            @if(!empty($articles[0]) && (5 != $articles[0]->category_id))
+                <h3>Другие статьи</h3>
+            @else
+                <h3>Топ статьи</h3>
+            @endif
             <div class="section-meta-icon">
                 <div class="section-icon">
                     <img src="{{ asset('assets') }}/images/title-icons/main-icon-4.png" alt="иконка Новости медицины">
@@ -53,7 +57,11 @@
     </div>
     <div class="order-third">
         <div class="section-title-meta-icon">
-            <h3>Топ статьи</h3>
+            @if(!empty($articles[0]) && (5 != $articles[0]->category_id))
+                <h3>Другие статьи</h3>
+            @else
+                <h3>Топ статьи</h3>
+            @endif
             <div class="section-meta-icon">
                 <div class="section-icon">
                     <img src="{{ asset('assets') }}/images/title-icons/main-icon-2.png" alt="иконка Топ статьи">

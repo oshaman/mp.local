@@ -33,7 +33,7 @@
                 </div>
                 <div class="admin-content">
                     <div class="full-width-image">
-                        <img src="{{ asset('asset').'/images/articles/ru/middle/'.$article->image->path }}"
+                        <img src="{{ asset('asset').'/images/articles/ru/main/'.$article->image->path }}"
                              alt="{{ $article->image->alt }}" title="{{ $article->image->title }}">
                     </div>
                     {{--Main Content--}}

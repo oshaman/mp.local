@@ -4,6 +4,7 @@ namespace Fresh\Medpravda\Repositories;
 
 use Fresh\Medpravda\Block;
 use Validator;
+use Cache;
 
 class BlockRepository extends Repository
 {
@@ -16,6 +17,11 @@ class BlockRepository extends Repository
         $this->model = $block;
     }
 
+    /**
+     * @param $request
+     * @param $block
+     * @return array
+     */
     public function updateBlock($request, $block)
     {
         $validator = Validator::make($request->all(), [
@@ -37,6 +43,7 @@ class BlockRepository extends Repository
 
         try {
             $result = $block->fill($data)->save();
+            Cache::forget('blocks');
         } catch (Exception $e) {
             $result = ['error' => 'Ошибка записи.'];
             \Log::info('Ошибка записи блока - ' . $e->getMessage());

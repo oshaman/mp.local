@@ -16,6 +16,13 @@
             f.parentNode.insertBefore(j, f);
         })(window, document, 'script', 'dataLayer', 'GTM-5SZ98T6');</script>
     <!-- End Google Tag Manager -->
+    @if('ua' == Request::segment(1))
+        <link rel="alternate" href="{{ env('APP_URL') }}/ua/" hreflang="x-default"/>
+        <link rel="alternate" href="{{ env('APP_URL') }}" hreflang="ru"/>
+    @else
+        <link rel="alternate" href="{{ env('APP_URL') }}" hreflang="x-default"/>
+        <link rel="alternate" href="{{ env('APP_URL') }}/ua/" hreflang="uk-UA"/>
+    @endif
     @if(!empty($seo->seo_keywords))
         <meta name="keywords" content="{{ $seo->seo_keywords }}">
     @endif

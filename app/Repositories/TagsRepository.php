@@ -4,6 +4,7 @@ namespace Fresh\Medpravda\Repositories;
 
 use Fresh\Medpravda\Tag;
 use Gate;
+use Cache;
 
 class TagsRepository extends Repository
 {
@@ -39,7 +40,7 @@ class TagsRepository extends Repository
         }
 
         $res = $this->model->fill($tag)->save();
-
+        Cache::forget('tags_main');
         return $res;
     }
 
@@ -112,9 +113,8 @@ class TagsRepository extends Repository
         } else {
             $tag['useo'] = null;
         }
-        // seo handle
-
         $res = $tag->save();
+        Cache::forget('tags_main');
         return $res;
     }
 
@@ -125,6 +125,7 @@ class TagsRepository extends Repository
     public function deleteTag($tag)
     {
         if ($tag->delete()) {
+            Cache::forget('tags_main');
             return ['status' => 'Тег удален'];
         }
 

@@ -2,7 +2,6 @@
 
 namespace Fresh\Medpravda\Repositories;
 
-use function foo\func;
 use Fresh\Medpravda\Classification;
 use Fresh\Medpravda\Fabricator;
 use Fresh\Medpravda\Form;
@@ -13,6 +12,7 @@ use Fresh\Medpravda\MedicineTitle;
 use Fresh\Medpravda\Pharmagroup;
 use Fresh\Medpravda\Substance;
 use Fresh\Medpravda\Umedicine;
+use Cache;
 use Image;
 use Config;
 use Validator;
@@ -70,7 +70,6 @@ class MedicineRepository extends Repository
 
         $input = $request->except('_token', 'slider');
 
-//        dd($input);
         // SEO handle
         if (!empty($input['seo_title'] || !empty($input['seo_keywords']) || !empty($input['seo_description']) || !empty($input['seo_text'])
             || !empty($input['og_image']) || !empty($input['og_title']) || !empty($input['og_description']))) {
@@ -187,7 +186,7 @@ class MedicineRepository extends Repository
         }, $input);
 
         $updated = $model->fill($input)->save();
-//        dd($input);
+
 
         if (!empty($updated)) {
             //Slider
@@ -217,6 +216,7 @@ class MedicineRepository extends Repository
         }
 
         $this->putTitles();
+        Cache::forget('medicine-' . $model->alias);
         $error = [];
         return ['status' => 'Препарат обновлен', $error];
     }

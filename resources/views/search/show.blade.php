@@ -100,33 +100,35 @@
                                 </a>
                                 <div class="article-border"></div>
                             </article>
-                            <article class="news">
-                                <a href="{{ route('articles',
+                            @if(!empty($titles['articles'][1]))
+                                <article class="news">
+                                    <a href="{{ route('articles',
                                                     ['article_alias'=>$titles['articles'][1]->alias]) }}">
-                                    <div class="article-img">
-                                        <img src="{{ asset('asset/images/articles/ru/middle').'/'.$titles['articles'][1]->image->path }}"
-                                             alt="{{ $titles['articles'][1]->image->alt ?? '' }}"
-                                             title="{{ $titles['articles'][1]->image->title ?? ($titles['articles'][1]->image->alt ?? '') }}">
-                                        <div class="views"><span>{{ $titles['articles'][1]->view }}</span></div>
-                                    </div>
-                                    <div class="article-info">
-                                        <h4 class="article-title">{{ $titles['articles'][1]->title }}</h4>
-                                        <div class="article-text">
-                                            {!! str_limit($titles['articles'][1]->content, 160) !!}
+                                        <div class="article-img">
+                                            <img src="{{ asset('asset/images/articles/ru/middle').'/'.$titles['articles'][1]->image->path }}"
+                                                 alt="{{ $titles['articles'][1]->image->alt ?? '' }}"
+                                                 title="{{ $titles['articles'][1]->image->title ?? ($titles['articles'][1]->image->alt ?? '') }}">
+                                            <div class="views"><span>{{ $titles['articles'][1]->view }}</span></div>
                                         </div>
-                                        <div class="date-link">
-                                            <div class="article-date">
-                                                {{ $titles['articles'][1]->created_at->format('d')
-                                                    . ' '  . trans('ru.'.$titles['articles'][1]->created_at->format('m'))
-                                                    . ' '  . $titles['articles'][1]->created_at->format('Y')
-                                                }}
+                                        <div class="article-info">
+                                            <h4 class="article-title">{{ $titles['articles'][1]->title }}</h4>
+                                            <div class="article-text">
+                                                {!! str_limit($titles['articles'][1]->content, 160) !!}
                                             </div>
-                                            <span class="btn-link">Подробнее</span>
+                                            <div class="date-link">
+                                                <div class="article-date">
+                                                    {{ $titles['articles'][1]->created_at->format('d')
+                                                        . ' '  . trans('ru.'.$titles['articles'][1]->created_at->format('m'))
+                                                        . ' '  . $titles['articles'][1]->created_at->format('Y')
+                                                    }}
+                                                </div>
+                                                <span class="btn-link">Подробнее</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </a>
-                                <div class="article-border"></div>
-                            </article>
+                                    </a>
+                                    <div class="article-border"></div>
+                                </article>
+                            @endif
                         @endif
                     </div>
                     <div>
