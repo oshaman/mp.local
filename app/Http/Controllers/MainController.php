@@ -6,6 +6,7 @@ use Fresh\Medpravda\About;
 use Fresh\Medpravda\Adv;
 use Fresh\Medpravda\Block;
 use Fresh\Medpravda\Category;
+use Fresh\Medpravda\Seo;
 use Fresh\Medpravda\Tag;
 use Cache;
 
@@ -31,6 +32,7 @@ class MainController extends Controller
     public function adv()
     {
         $this->title = 'Реклама на сайте';
+        $this->getSeos('reklama');
 
         $this->content = Cache::rememberForever('adv', function () {
             $advs = Adv::where(['approved' => 1])->get();
@@ -47,7 +49,7 @@ class MainController extends Controller
     public function uaAdv()
     {
         $this->title = 'Реклама на сайті';
-
+        $this->getSeos('reklama/ua');
         $this->loc = 'ua';
         $this->content = Cache::rememberForever('ua_adv', function () {
             $advs = Adv::where(['approved' => 1])->get();
@@ -64,6 +66,7 @@ class MainController extends Controller
     public function convention($loc = null)
     {
         $this->title = 'Соглашение о конфиденциальности';
+        $this->getSeos('soglashenie');
 
         $this->content = Cache::rememberForever('convention', function () {
             $about = About::find(3);
@@ -81,6 +84,8 @@ class MainController extends Controller
     {
         $this->title = 'Угода про конфіденційність';
         $this->loc = 'ua';
+        $this->getSeos('soglashenie/ua');
+
         $this->content = Cache::rememberForever('ua_convention', function () {
             $about = About::find(4);
             return view('main.about')->with(['about' => $about])->render();
@@ -96,6 +101,7 @@ class MainController extends Controller
     public function conditions($loc = null)
     {
         $this->title = 'Условия использования сайта';
+        $this->getSeos('usloviya');
 
         $this->content = Cache::rememberForever('conditions', function () {
             $about = About::find(5);
@@ -113,6 +119,7 @@ class MainController extends Controller
     {
         $this->title = 'Умови використання сайту';
         $this->loc = 'ua';
+        $this->getSeos('usloviya/ua');
 
         $this->content = Cache::rememberForever('ua_conditions', function () {
             $about = About::find(6);
@@ -129,6 +136,7 @@ class MainController extends Controller
     public function about()
     {
         $this->title = 'О нас';
+        $this->getSeos('onas');
         $this->content = Cache::rememberForever('about', function () {
             $about = About::find(1);
             return view('main.about')->with(['about' => $about])->render();
@@ -145,6 +153,7 @@ class MainController extends Controller
     {
         $this->title = 'Про нас';
         $this->loc = 'ua';
+        $this->getSeos('onas/ua');
 
         $this->content = Cache::rememberForever('ua_about', function () {
             $about = About::find(2);
@@ -228,5 +237,14 @@ class MainController extends Controller
             return response($content)->header('Last-Modified', $this->lastModified);
         }
         return view($this->template)->with($this->vars);
+    }
+
+    /**
+     * @param $uri
+     */
+    public function getSeos($uri)
+    {
+        $rep = new \Fresh\Medpravda\Repositories\SeoRepository(new Seo());
+        $this->seo = $rep->oneSeo($uri);
     }
 }

@@ -31,8 +31,8 @@
     <div class="section-title-meta-icon">
         <h3>
             Сортировка препаратов по производителю:&nbsp;
-            @if(!empty($letter))
-                <a>{{ $letter }}</a>
+            @if(!empty($fabricator->title))
+                <a>{{ $fabricator->title }}</a>
             @endif
         </h3>
         <div class="section-meta-icon">
@@ -119,9 +119,6 @@
                 </div>
             </div>
             @if(!empty($medicines))
-                @if(!empty($fabricator->title))
-                    {{ $fabricator->title }}
-                @endif
                 @foreach($medicines as $medicine)
                     <div class="search-result">
                         <a href="{{ route('medicine', ['medicine'=> $medicine->alias]) }}">

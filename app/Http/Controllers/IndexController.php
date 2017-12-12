@@ -60,6 +60,8 @@ class IndexController extends MainController
 
         if ($loc) {
             $this->loc = $loc;
+            $this->seo = $this->seo_rep->oneSeo('/ua');
+
             $this->content = Cache::remember('ua-main', 60, function () {
 
                 $articles = [
@@ -78,19 +80,20 @@ class IndexController extends MainController
 
                 $tags = $this->t_rep->get(['name', 'uname', 'alias'], 15, false, ['approved' => 1]);
 
-                $seo = $this->seo_rep->oneSeo('/');
                 $med_cats = $this->med_cat->get('*', false, false,
                     false, false, ['alias_1', 'alias_2', 'alias_3']);
                 $blocks = $this->block_rep->get();
 
                 return view('main.ua_content')
                     ->with([
-                        'med_cats' => $med_cats, 'blocks' => $blocks, 'seo' => $seo, 'loc' => $this->loc,
+                        'med_cats' => $med_cats, 'blocks' => $blocks, 'seo' => $this->seo, 'loc' => $this->loc,
                         'articles' => $articles, 'sliders' => $sliders, 'tags' => $tags,
                     ])
                     ->render();
             });
         } else {
+            $this->seo = $this->seo_rep->oneSeo('/');
+
             $this->content = Cache::remember('main', 60, function () {
 
                 $articles = [
@@ -109,14 +112,13 @@ class IndexController extends MainController
 
                 $tags = $this->t_rep->get(['name', 'alias'], 15, false, ['approved' => 1]);
 
-                $seo = $this->seo_rep->oneSeo('/');
                 $med_cats = $this->med_cat->get('*', false, false,
                     false, false, ['alias_1', 'alias_2', 'alias_3']);
                 $blocks = $this->block_rep->get();
 
                 return view('main.content')
                     ->with([
-                        'med_cats' => $med_cats, 'blocks' => $blocks, 'seo' => $seo, 'loc' => null,
+                        'med_cats' => $med_cats, 'blocks' => $blocks, 'seo' => $this->seo, 'loc' => null,
                         'articles' => $articles, 'sliders' => $sliders, 'tags' => $tags,
                     ])
                     ->render();

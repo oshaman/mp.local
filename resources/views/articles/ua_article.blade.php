@@ -64,8 +64,6 @@
             <div class="section-title-meta-icon">
                 <h3>Інші статті</h3>
                 <div class="section-meta-icon">
-                    <a href="#!">Новини</a>
-                    <a href="#!">Препарати</a>
                     <div class="section-icon">
                         <img src="{{ asset('assets') }}/images/title-icons/main-icon-3.png"
                              alt="иконка Последние статьи">

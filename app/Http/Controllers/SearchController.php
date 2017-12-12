@@ -8,8 +8,11 @@ use Fresh\Medpravda\Repositories\ArticlesRepository;
 use Fresh\Medpravda\Repositories\ClassificationRepository;
 use Fresh\Medpravda\Repositories\SearchRepository;
 use Fresh\Medpravda\Repositories\UarticlesRepository;
+use Fresh\Medpravda\Seo;
 use Illuminate\Http\Request;
 use Cache;
+use DB;
+use Crawler;
 
 class SearchController extends MainController
 {
@@ -55,7 +58,6 @@ class SearchController extends MainController
             if (is_array($result) && !empty($result['error'])) {
                 return redirect()->route('search')->withErrors($result['error']);
             }
-            dd($result);
             $this->content = view('search.show')
                 ->with(['titles' => $result, 'search' => $request->get('search')])
                 ->render();
@@ -76,6 +78,8 @@ class SearchController extends MainController
             return $this->renderOutput();
         }
 
+        $rep = new \Fresh\Medpravda\Repositories\SeoRepository(new Seo());
+        $this->seo = $rep->oneSeo('poisk');
         $this->content = view('search.show')->render();
         return $this->renderOutput();
     }
@@ -149,33 +153,45 @@ class SearchController extends MainController
      * @param null $fabricator
      * @return $this
      */
-    public function fabricator($val = null, $fabricator = null)
+    public function fabricator(Request $request, $val = null, $fabricator = null)
     {
+        //          Last Modified
+        $lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `medicines` WHERE `approved`=1');
 
+        $LastModified_unix = strtotime($lastM[0]->last); // время последнего изменения страницы
+        $this->lastModified = gmdate("D, d M Y H:i:s \G\M\T", $LastModified_unix);
+        $IfModifiedSince = false;
+        if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
+            $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
+        }
+        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+            return response('304 Not Modified', 304);
+        }
+//           Last Modified
         $this->title = 'Поиск препаратов по производителю';
 
-        $medicines = null;
-        $fabricators = null;
-        $fabricator_name = null;
-
         if (!empty($fabricator)) {
+            $this->content = Cache::store('file')->remember('medicine-fabricator-' . $fabricator, 60, function () use ($fabricator, $val) {
+                $result = $this->search_rep->findByFabricator($fabricator);
+                $medicines = $result['medicines'] ?? null;
+                $fabricator_name = $result['fabricator'] ?? null;
 
-            $result = Cache::store('file')->remember('medicine-fabricator-' . $fabricator, 60, function () use ($fabricator) {
-                return $this->search_rep->findByFabricator($fabricator);
+                return view('search.fabricator')
+                    ->with(['medicines' => $medicines, 'fabricator' => $fabricator_name, 'val' => $val])
+                    ->render();
             });
-
-            $medicines = $result['medicines'] ?? null;
-            $fabricator_name = $result['fabricator'] ?? null;
         } elseif (!empty($val)) {
-            $fabricators = $this->search_rep->findFabricator($val);
+            $this->content = Cache::store('file')->remember('medicine-fabricators-' . $val, 60, function () use ($val) {
+                $fabricators = $this->search_rep->findFabricator($val);
+                return view('search.fabricator')->with(['fabricators' => $fabricators, 'val' => $val])
+                    ->render();
+            });
+        } else {
+            $this->content = Cache::remember('sort-fabricators', 24 * 60, function () {
+                return view('search.fabricator')->render();
+            });
         }
 
-//        dd($fabricators);
-
-
-        $this->content = view('search.fabricator')
-            ->with(['medicines' => $medicines, 'fabricators' => $fabricators, 'fabricator' => $fabricator_name, 'val' => $val])
-            ->render();
         $this->getAside('ru');
         return $this->renderOutput();
 
@@ -189,27 +205,41 @@ class SearchController extends MainController
      */
     public function mnn(Request $request, $val = null)
     {
+        //          Last Modified
+        $lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `umedicines` WHERE `approved`=1');
 
+        $LastModified_unix = strtotime($lastM[0]->last); // время последнего изменения страницы
+        $this->lastModified = gmdate("D, d M Y H:i:s \G\M\T", $LastModified_unix);
+        $IfModifiedSince = false;
+        if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
+            $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
+        }
+        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+            return response('304 Not Modified', 304);
+        }
+//           Last Modified
         $this->title = 'Поиск препаратов по международному названию';
-
         $mnns = null;
         $mnn = $request->get('mnn');
         if ($request->has('mnn') && 1 == strlen($mnn)) {
-            $mnns = Cache::store('file')->remember('medicine-mnns-' . $mnn, 60, function () use ($mnn) {
-                return $this->search_rep->findMnn($mnn);
+
+            $this->content = Cache::store('file')->remember('medicine-mnns-' . $mnn, 60, function () use ($mnn) {
+                $mnns = $this->search_rep->findMnn($mnn);
+
+                return view('search.mnn')->with(['mnns' => $mnns])->render();
             });
+
+        } elseif (!empty($val)) {
+            $this->content = Cache::store('file')->remember('medicine-mnns-' . $val, 60, function () use ($val) {
+                $result = $this->search_rep->findByMnn($val);
+                return view('search.mnn')
+                    ->with(['medicines' => $result['medicines'], 'mnn' => $result['mnn']])
+                    ->render();
+            });
+        } else {
+            $this->content = view('search.mnn')->render();
         }
 
-        $result = null;
-        if (!empty($val)) {
-            $result = Cache::store('file')->remember('medicine-mnns-' . $val, 60, function () use ($val) {
-                return $this->search_rep->findByMnn($val);
-            });
-        }
-
-        $this->content = view('search.mnn')
-            ->with(['medicines' => $result['medicines'], 'mnns' => $mnns, 'mnn' => $result['mnn']])
-            ->render();
         $this->getAside('ru');
 
         return $this->renderOutput();
@@ -221,42 +251,63 @@ class SearchController extends MainController
      * @param null $val
      * @return $this
      */
-    public function atx($val = null)
+    public function atx(Request $request, $val = null)
     {
         $this->title = 'Сортування препаратів за АТХ-класифікацією';
 
-
-        $classifications = null;
-        $result = null;
-        $parents = null;
-        $atx = null;
-        $classes = null;
         if (!empty($val)) {
-            //        Cache only store('file')===========================>
-            $result = $this->search_rep->findAtxChildren($val, true);
-            $classifications = $result['medicines'] ?? null;
-            $atx = $result['class'] ?? null;
 
-            if (!empty($result['class']->id)) {
-                $classes = $this->c_rep->getParents($result['class']->id);
+            $count = $this->c_rep->atxIsset($val);
 
-                if (true !== session('class-view-' . $result['class']->class)) {
+            if ($count > 0) {
+//          Last Modified
+                $lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `medicines` WHERE `approved`=1');
+
+                $LastModified_unix = strtotime($lastM[0]->last); // время последнего изменения страницы
+                $this->lastModified = gmdate("D, d M Y H:i:s \G\M\T", $LastModified_unix);
+                $IfModifiedSince = false;
+                if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
+                    $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
+                }
+                if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+                    return response('304 Not Modified', 304);
+                }
+//           Last Modified
+                if (true !== session('class-view-' . $val) && !Crawler::isCrawler()) {
                     $stats = new ClassificationStatistic();
 
-                    $stats->fill(['class_alias' => $result['class']->class, 'created_at' => date('Y-m-d H:i:s')]);
+                    $stats->fill(['class_alias' => $val, 'created_at' => date('Y-m-d H:i:s')]);
                     $stats->save();
-                    session()->put('class-view-' . $result['class']->class, true);
+                    session()->put('class-view-' . $val, true);
                 }
+
+                $this->content = Cache::store('file')->remember('sort-atx-' . $val, 24 * 60, function () use ($val) {
+
+                    $result = $this->search_rep->findAtxChildren($val, true);
+                    $classifications = $result['medicines'] ?? null;
+                    $atx = $result['class'] ?? null;
+
+                    if (!empty($result['class']->id)) {
+                        $classes = $this->c_rep->getParents($result['class']->id);
+
+                        return view('search.atx')->with(
+                            ['classifications' => $classifications,
+                                'atx' => $atx, 'classes' => $classes, 'letter' => $val])
+                            ->render();
+                    }
+                });
+            } else {
+                return redirect()->back();
             }
+
         } else {
             $parents = $this->search_rep->findAtxParents();
+            $this->content = view('search.atx')
+                ->with(
+                    ['parents' => $parents, 'letter' => $val])
+                ->render();
         }
 
-        $this->content = view('search.atx')
-            ->with(
-                ['classifications' => $classifications,
-                    'atx' => $atx, 'parents' => $parents, 'classes' => $classes, 'letter' => $val])
-            ->render();
         $this->getAside('ru');
         return $this->renderOutput();
 
@@ -270,25 +321,39 @@ class SearchController extends MainController
      */
     public function farm(Request $request, $val = null)
     {
+        //          Last Modified
+        $lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `medicines` WHERE `approved`=1');
 
+        $LastModified_unix = strtotime($lastM[0]->last); // время последнего изменения страницы
+        $this->lastModified = gmdate("D, d M Y H:i:s \G\M\T", $LastModified_unix);
+        $IfModifiedSince = false;
+        if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
+            $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
+        }
+        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+            return response('304 Not Modified', 304);
+        }
+//           Last Modified
         $this->title = 'Поиск препаратов по фармакологической группе';
 
-        $farms = null;
-
         if ($request->has('farmgroup') && (2 >= strlen($request->get('farmgroup')))) {
-            $farms = $this->search_rep->findPharmGroups($request->get('farmgroup'));
+
+            $farm = $request->get('farmgroup');
+            $this->content = Cache::store('file')->remember('sort-farm-' . $farm, 60, function () use ($farm) {
+                $farms = $this->search_rep->findPharmGroups($farm);
+                return view('search.pharmagroup')->with(['farms' => $farms])->render();
+            });
+        } elseif (!empty($val)) {
+            $this->content = Cache::store('file')->remember('sort-farms-' . $val, 60, function () use ($val) {
+                $result = $this->search_rep->findByPharma($val);
+                return view('search.pharmagroup')
+                    ->with(['medicines' => $result['medicines'], 'farm' => $result['pharma']])
+                    ->render();
+            });
+        } else {
+            $this->content = view('search.pharmagroup')->render();
         }
 
-        $result = null;
-        if (!empty($val)) {
-            $result = $this->search_rep->findByPharma($val);
-        }
-
-//        dd($farms);
-
-        $this->content = view('search.pharmagroup')
-            ->with(['medicines' => $result['medicines'], 'farms' => $farms, 'farm' => $result['pharma']])
-            ->render();
         $this->getAside('ru');
 
         return $this->renderOutput();
@@ -369,32 +434,46 @@ class SearchController extends MainController
      * @param null $fabricator
      * @return $this
      */
-    public function fabricatoru($val = null, $fabricator = null)
+    public function fabricatoru(Request $request, $val = null, $fabricator = null)
     {
+//          Last Modified
+        $lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `medicines` WHERE `approved`=1');
 
+        $LastModified_unix = strtotime($lastM[0]->last); // время последнего изменения страницы
+        $this->lastModified = gmdate("D, d M Y H:i:s \G\M\T", $LastModified_unix);
+        $IfModifiedSince = false;
+        if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
+            $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
+        }
+        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+            return response('304 Not Modified', 304);
+        }
+//           Last Modified
         $this->title = 'Пошук препаратів за виробником';
         $this->loc = 'ua';
-
-        $medicines = null;
-        $fabricators = null;
-        $fabricator_name = null;
-
         if (!empty($fabricator)) {
-            $result = $this->search_rep->findByFabricator($fabricator);
-            $medicines = $result['medicines'] ?? null;
-            $fabricator_name = $result['fabricator'] ?? null;
+            $this->content = Cache::store('file')->remember('ua-medicine-fabricator-' . $fabricator, 60, function () use ($fabricator, $val) {
+                $result = $this->search_rep->findByFabricator($fabricator);
+                $medicines = $result['medicines'] ?? null;
+                $fabricator_name = $result['fabricator'] ?? null;
+
+                return view('search.ua_fabricator')
+                    ->with(['medicines' => $medicines, 'fabricator' => $fabricator_name, 'val' => $val])
+                    ->render();
+            });
         } elseif (!empty($val)) {
-            $fabricators = $this->search_rep->findFabricator($val, true);
+            $this->content = Cache::store('file')->remember('ua-medicine-fabricators-' . $val, 60, function () use ($val) {
+                $fabricators = $this->search_rep->findFabricator($val, true);
+                return view('search.ua_fabricator')->with(['fabricators' => $fabricators, 'val' => $val])
+                    ->render();
+            });
+        } else {
+            $this->content = Cache::remember('ua-sort-fabricators', 24 * 60, function () {
+                return view('search.ua_fabricator')->render();
+            });
         }
 
-//        dd($fabricators);
-
-
-        $this->content = view('search.ua_fabricator')
-            ->with(['medicines' => $medicines, 'fabricators' => $fabricators, 'fabricator' => $fabricator_name, 'val' => $val])
-            ->render();
         $this->getAside('ua');
-
         return $this->renderOutput();
 
     }
@@ -407,23 +486,42 @@ class SearchController extends MainController
      */
     public function mnnu(Request $request, $val = null)
     {
+//          Last Modified
+        $lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `umedicines` WHERE `approved`=1');
 
+        $LastModified_unix = strtotime($lastM[0]->last); // время последнего изменения страницы
+        $this->lastModified = gmdate("D, d M Y H:i:s \G\M\T", $LastModified_unix);
+        $IfModifiedSince = false;
+        if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
+            $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
+        }
+        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+            return response('304 Not Modified', 304);
+        }
+//           Last Modified
         $this->title = 'Пошук препаратів за міжнародною назвою';
         $this->loc = 'ua';
-
         $mnns = null;
-        if ($request->has('mnn') && 1 == strlen($request->get('mnn'))) {
-            $mnns = $this->search_rep->findMnn($request->get('mnn'));
+        $mnn = $request->get('mnn');
+        if ($request->has('mnn') && 1 == strlen($mnn)) {
+
+            $this->content = Cache::store('file')->remember('ua-medicine-mnns-' . $mnn, 60, function () use ($mnn) {
+                $mnns = $this->search_rep->findMnn($mnn);
+
+                return view('search.ua_mnn')->with(['mnns' => $mnns])->render();
+            });
+
+        } elseif (!empty($val)) {
+            $this->content = Cache::store('file')->remember('ua-medicine-mnns-' . $val, 60, function () use ($val) {
+                $result = $this->search_rep->findByMnn($val);
+                return view('search.ua_mnn')
+                    ->with(['medicines' => $result['medicines'], 'mnn' => $result['mnn']])
+                    ->render();
+            });
+        } else {
+            $this->content = view('search.ua_mnn')->render();
         }
 
-        $result = null;
-        if (!empty($val)) {
-            $result = $this->search_rep->findByMnn($val);
-        }
-
-        $this->content = view('search.ua_mnn')
-            ->with(['medicines' => $result['medicines'], 'mnns' => $mnns, 'mnn' => $result['mnn']])
-            ->render();
         $this->getAside('ua');
 
         return $this->renderOutput();
@@ -435,44 +533,58 @@ class SearchController extends MainController
      * @param null $val
      * @return $this
      */
-    public function atxu($val = null)
+    public function atxu(Request $request, $val = null)
     {
         $this->title = 'Пошук препаратів за АТХ-класифікацією';
 
-        $this->loc = 'ua';
+        $count = $this->c_rep->atxIsset($val);
 
-        $classifications = null;
-        $result = null;
-        $parents = null;
-        $atx = null;
-        $classes = null;
-        if (!empty($val)) {
-            //        Cache only store('file')===========================>
-            $result = $this->search_rep->findUAtxChildren($val);
-            $classifications = $result['medicines'] ?? null;
-            $atx = $result['class'] ?? null;
+        if ($count > 0) {
+//          Last Modified
+            $lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `medicines` WHERE `approved`=1');
 
-            if (!empty($result['class']->id)) {
-                $classes = $this->c_rep->getParents($result['class']->id);
-
-//                dd($result['class']);
-                if (true !== session('class-view-' . $result['class']->class)) {
-                    $stats = new ClassificationStatistic();
-
-                    $stats->fill(['class_alias' => $result['class']->class, 'created_at' => date('Y-m-d H:i:s')]);
-                    $stats->save();
-                    session()->put('class-view-' . $result['class']->class, true);
-                }
+            $LastModified_unix = strtotime($lastM[0]->last); // время последнего изменения страницы
+            $this->lastModified = gmdate("D, d M Y H:i:s \G\M\T", $LastModified_unix);
+            $IfModifiedSince = false;
+            if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
+                $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
             }
+            if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+                return response('304 Not Modified', 304);
+            }
+//           Last Modified
+            if (true !== session('class-view-' . $val) && !Crawler::isCrawler()) {
+                $stats = new ClassificationStatistic();
+
+                $stats->fill(['class_alias' => $val, 'created_at' => date('Y-m-d H:i:s')]);
+                $stats->save();
+                session()->put('class-view-' . $val, true);
+            }
+
+            $this->content = Cache::store('file')->remember('sort-ua-atx-' . $val, 24 * 60, function () use ($val) {
+
+                $result = $this->search_rep->findAtxChildren($val, true);
+                $classifications = $result['medicines'] ?? null;
+                $atx = $result['class'] ?? null;
+
+                if (!empty($result['class']->id)) {
+                    $classes = $this->c_rep->getParents($result['class']->id);
+
+                    return view('search.ua_atx')->with(
+                        ['classifications' => $classifications,
+                            'atx' => $atx, 'classes' => $classes, 'letter' => $val])
+                        ->render();
+                }
+            });
         } else {
             $parents = $this->search_rep->findAtxParents();
+            $this->content = view('search.ua_atx')
+                ->with(
+                    ['parents' => $parents, 'letter' => $val])
+                ->render();
         }
 
-        $this->content = view('search.ua_atx')
-            ->with(
-                ['classifications' => $classifications,
-                    'atx' => $atx, 'parents' => $parents, 'classes' => $classes, 'letter' => $val])
-            ->render();
+
         $this->getAside('ua');
 
         return $this->renderOutput();
@@ -487,27 +599,41 @@ class SearchController extends MainController
      */
     public function farmu(Request $request, $val = null)
     {
+        //          Last Modified
+        $lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `medicines` WHERE `approved`=1');
 
+        $LastModified_unix = strtotime($lastM[0]->last); // время последнего изменения страницы
+        $this->lastModified = gmdate("D, d M Y H:i:s \G\M\T", $LastModified_unix);
+        $IfModifiedSince = false;
+        if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
+            $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
+        }
+        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+            return response('304 Not Modified', 304);
+        }
+//           Last Modified
         $this->title = 'Сортування за фармокологічною групою';
 
         $this->loc = 'ua';
 
-        $farms = null;
-
         if ($request->has('farmgroup') && (2 >= strlen($request->get('farmgroup')))) {
-            $farms = $this->search_rep->findPharmGroups($request->get('farmgroup'), true);
+
+            $farm = $request->get('farmgroup');
+            $this->content = Cache::store('file')->remember('ua-sort-farm-' . $farm, 60, function () use ($farm) {
+                $farms = $this->search_rep->findPharmGroups($farm, true);
+                return view('search.ua_pharmagroup')->with(['farms' => $farms])->render();
+            });
+        } elseif (!empty($val)) {
+            $this->content = Cache::store('file')->remember('ua-sort-farms-' . $val, 60, function () use ($val) {
+                $result = $this->search_rep->findByPharma($val, true);
+                return view('search.ua_pharmagroup')
+                    ->with(['medicines' => $result['medicines'], 'farm' => $result['pharma']])
+                    ->render();
+            });
+        } else {
+            $this->content = view('search.ua_pharmagroup')->render();
         }
 
-        $result = null;
-        if (!empty($val)) {
-            $result = $this->search_rep->findByPharma($val, true);
-        }
-
-//        dd($result);
-
-        $this->content = view('search.ua_pharmagroup')
-            ->with(['medicines' => $result['medicines'], 'farms' => $farms, 'farm' => $result['pharma']])
-            ->render();
         $this->getAside('ua');
 
         return $this->renderOutput();

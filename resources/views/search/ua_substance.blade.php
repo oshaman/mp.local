@@ -91,9 +91,6 @@
                 </div>
             </div>
             @if(!empty($medicines))
-                @if(!empty($substance->utitle))
-                    {{ $substance->utitle }}
-                @endif
                 @foreach($medicines as $medicine)
                     <div class="search-result">
                         <a href="{{ route('medicine_ua', ['medicine'=> $medicine->alias]) }}">

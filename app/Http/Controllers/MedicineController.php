@@ -13,6 +13,7 @@ use Fresh\Medpravda\Repositories\UarticlesRepository;
 use Fresh\Medpravda\Repositories\UmedicineRepository;
 use Illuminate\Http\Request;
 use Cache;
+use Crawler;
 
 class MedicineController extends MainController
 {
@@ -70,7 +71,7 @@ class MedicineController extends MainController
         if (empty($res)) {
             abort(404);
         }
-
+//        dd($res);
         //            Last Modify
         $LastModified_unix = strtotime($res->updated_at); // время последнего изменения страницы
         $this->lastModified = gmdate("D, d M Y H:i:s \G\M\T", $LastModified_unix);
@@ -83,8 +84,10 @@ class MedicineController extends MainController
         }
 //            Last Modify
 
-        if (true !== session('medicine-' . $res->alias)) {
+        if (true !== session('medicine-' . $res->alias) && !Crawler::isCrawler()) {
+            $res->timestamps = false;
             $res->increment('view');
+            $res->timestamps = true;
 
             $this->med_stat->fill(['medicine_alias' => $res->alias, 'created_at' => date('Y-m-d H:i:s')]);
             $this->med_stat->save();
@@ -100,6 +103,10 @@ class MedicineController extends MainController
 
 
         $this->content = view('medicines.adaptive')->with(['medicine' => $res, 'classes' => $class])->render();
+
+        $this->seo = $this->med_rep->convertSeo($res->seo);
+//        dd($this->seo->seo_title);
+
 
         $articles = $this->a_rep->get(['title', 'alias', 'description'], 8, false,
             [['approved', 1]], ['priority', 'desc'], ['image']);
@@ -189,8 +196,10 @@ class MedicineController extends MainController
         }
 //            Last Modify
 
-        if (true !== session('medicine-' . $res->alias)) {
+        if (true !== session('medicine-' . $res->alias) && !Crawler::isCrawler()) {
+            $res->timestamps = false;
             $res->increment('view');
+            $res->timestamps = true;
 
             $this->med_stat->fill(['medicine_alias' => $res->alias, 'created_at' => date('Y-m-d H:i:s')]);
             $this->med_stat->save();
@@ -202,6 +211,7 @@ class MedicineController extends MainController
         $class = Cache::store('file')->remember('meddicine_atx_' . $res->classification_id, 24 * 60, function () use ($res) {
             return $this->c_rep->getParents($res->classification_id);
         });
+        $this->seo = $this->med_rep->convertSeo($res->seo);
 
         $this->content = view('medicines.medicine')->with(['medicine' => $res, 'classes' => $class])->render();
 
@@ -320,8 +330,10 @@ class MedicineController extends MainController
         }
 //            Last Modify
 
-        if (true !== session('medicine-' . $res->alias)) {
+        if (true !== session('medicine-' . $res->alias) && !Crawler::isCrawler()) {
+            $res->timestamps = false;
             $res->increment('view');
+            $res->timestamps = true;
 
             $this->med_stat->fill(['medicine_alias' => $res->alias, 'created_at' => date('Y-m-d H:i:s')]);
             $this->med_stat->save();
@@ -336,6 +348,7 @@ class MedicineController extends MainController
         });
 
         $this->content = view('medicines.ua_adaptive')->with(['medicine' => $res, 'classes' => $class])->render();
+        $this->seo = $this->med_rep->convertSeo($res->seo);
 
         $articles = $this->ua_rep->get(['title', 'alias', 'description'], 8, false,
             [['approved', 1]], ['priority', 'desc'], ['image']);
@@ -423,8 +436,10 @@ class MedicineController extends MainController
         }
 //            Last Modify
 
-        if (true !== session('medicine-' . $res->alias)) {
+        if (true !== session('medicine-' . $res->alias) && !Crawler::isCrawler()) {
+            $res->timestamps = false;
             $res->increment('view');
+            $res->timestamps = true;
 
             $this->med_stat->fill(['medicine_alias' => $res->alias, 'created_at' => date('Y-m-d H:i:s')]);
             $this->med_stat->save();
@@ -437,6 +452,7 @@ class MedicineController extends MainController
         $class = Cache::store('file')->remember('meddicine_atx_' . $res->classification_id, 24 * 60, function () use ($res) {
             return $this->c_rep->getParents($res->classification_id);
         });
+        $this->seo = $this->med_rep->convertSeo($res->seo);
 
         $this->content = view('medicines.ua_medicine')->with(['medicine' => $res, 'classes' => $class])->render();
 

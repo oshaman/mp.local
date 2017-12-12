@@ -9,6 +9,7 @@ use Fresh\Medpravda\Repositories\UarticlesRepository;
 use Fresh\Medpravda\Tag;
 use Illuminate\Http\Request;
 use Cache;
+use DB;
 
 class ArticlesController extends MainController
 {
@@ -25,11 +26,9 @@ class ArticlesController extends MainController
 
     public function show(Request $request, $article = null, $loc = null)
     {
-        Cache::store('file')->flush();
-
         if ($article) {
             //            Last Modify
-            /*$LastModified_unix = strtotime($article->updated_at); // время последнего изменения страницы
+            $LastModified_unix = strtotime($article->updated_at); // время последнего изменения страницы
             $this->lastModified = gmdate("D, d M Y H:i:s \G\M\T", $LastModified_unix);
             $IfModifiedSince = false;
             if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
@@ -37,37 +36,38 @@ class ArticlesController extends MainController
             }
             if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
                 return response('304 Not Modified', 304);
-            }*/
+            }
 //            Last Modify
+            $article->timestamps = false;
             $article->increment('view');
+            $article->timestamps = true;
 
             $cat_id = $article->category_id;
 
             $article = Cache::store('file')->remember('ru_article-' . $article->id, 60, function () use ($article) {
-                if (!empty($article->seo)) {
-                    $article->seo = $this->rua_rep->convertSeo($article->seo);
-                } else {
-                    $article->seo = new \stdClass();
-                }
                 $article->created = $this->rua_rep->convertDate($article->created_at);
                 $article->load('category');
                 $article->load('tags');
                 $article->load('image');
-                $article->seo->og_image = asset('/asset/images/articles/ru/main') . '/' . ($article->image->path ?? '../../../mp.png');
-
-                if (empty($article->seo->og_description)) {
-                    $article->seo->og_description = str_limit(strip_tags($article->content), 240);
-                }
-
-                if (empty($article->seo->og_title)) {
-                    $article->seo->og_title = str_limit(strip_tags($article->title), 240);
-                }
-
                 return $article;
             });
+            if (!empty($article->seo)) {
+                $article->seo = $this->rua_rep->convertSeo($article->seo);
+            } else {
+                $article->seo = new \stdClass();
+            }
+            $article->seo->og_image = asset('/asset/images/articles/ru/main') . '/' . ($article->image->path ?? '../../../mp.png');
 
+            if (empty($article->seo->og_description)) {
+                $article->seo->og_description = str_limit(strip_tags($article->content), 240);
+            }
 
-//            dd($article);
+            if (empty($article->seo->og_title)) {
+                $article->seo->og_title = str_limit(strip_tags($article->title), 240);
+            }
+
+            $this->seo = $article->seo;
+
             $where = ['category_id' => $article->category_id, 'approved' => 1];
             $same = $this->rua_rep->get('*', 5, false, $where, false, ['image']);
 //            dd($same[0]);
@@ -100,7 +100,7 @@ class ArticlesController extends MainController
     public function cats(Request $request, $cat_alias)
     {
 //  Last Modified
-        /*$lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `articles` WHERE `approved`=1');
+        $lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `articles` WHERE `approved`=1');
 
         $LastModified_unix = strtotime($lastM[0]->last); // время последнего изменения страницы
         $this->lastModified = gmdate("D, d M Y H:i:s \G\M\T", $LastModified_unix);
@@ -110,29 +110,34 @@ class ArticlesController extends MainController
         }
         if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
             return response('304 Not Modified', 304);
-        }*/
+        }
 //  Last Modified
         if (empty($cat_alias)) {
             $cat_alias = 'top-stati';
         }
 
         $cat = Category::where('alias', $cat_alias)->first();
-
         if (null == $cat) {
             abort(404);
         }
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+
+        $this->content = Cache::remember('article-cat-' . $cat->id . $currentPage, 60, function () use ($cat) {
+            $articles = $this->rua_rep->get('*', false, 9,
+                ['category_id' => $cat->id, 'approved' => 1], ['created_at', 'desc'], ['image', 'tags']);
+            return view('articles.show')->with(['articles' => $articles, 'cat' => $cat])
+                ->render();
+        });
+
+
+
         $this->title = $cat->name;
-
-        $articles = $this->rua_rep->get('*', false, 9, ['category_id' => $cat->id, 'approved' => 1], ['created_at', 'desc'], ['image', 'tags']);
-
         if (5 == $cat->id) {
             $this->getAside('ru', true);
         } else {
             $this->getAside('ru');
         }
 
-        $this->content = view('articles.show')->with(['articles' => $articles, 'cat' => $cat])
-            ->render();
         return $this->renderOutput();
 
     }
@@ -140,7 +145,7 @@ class ArticlesController extends MainController
     public function tag(Request $request, $tag_alias)
     {
         //  Last Modified
-        /*$lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `articles` WHERE `approved`=1');
+        $lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `articles` WHERE `approved`=1');
 
         $LastModified_unix = strtotime($lastM[0]->last); // время последнего изменения страницы
         $this->lastModified = gmdate("D, d M Y H:i:s \G\M\T", $LastModified_unix);
@@ -150,9 +155,8 @@ class ArticlesController extends MainController
         }
         if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
             return response('304 Not Modified', 304);
-        }*/
+        }
 //  Last Modified
-        Cache::flush();
         $tag = Tag::where('alias', $tag_alias)->first();
 
         if (null == $tag) {
@@ -167,7 +171,8 @@ class ArticlesController extends MainController
                 ->with(['articles' => $articles, 'tag' => $tag])
                 ->render();
         });
-//        $this->getSeo('statyi/teg');
+        $this->seo = $this->t_rep->convertSeo($tag->seo);
+
         $this->title = $tag->name;
 
         $this->getAside('ru');
@@ -179,11 +184,9 @@ class ArticlesController extends MainController
 //    UA================================================>
     public function uaShow(Request $request, $article = null)
     {
-        Cache::store('file')->flush();
-
         if ($article) {
             //            Last Modify
-            /*$LastModified_unix = strtotime($article->updated_at); // время последнего изменения страницы
+            $LastModified_unix = strtotime($article->updated_at); // время последнего изменения страницы
             $this->lastModified = gmdate("D, d M Y H:i:s \G\M\T", $LastModified_unix);
             $IfModifiedSince = false;
             if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
@@ -191,42 +194,45 @@ class ArticlesController extends MainController
             }
             if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
                 return response('304 Not Modified', 304);
-            }*/
+            }
 //            Last Modify
             $this->loc = 'ua';
-
+            $article->timestamps = false;
             $article->increment('view');
+            $article->timestamps = true;
+
             $cat_id = $article->category_id;
-//dd($article);
 
             $article = Cache::store('file')->remember('ua_article-' . $article->id, 60, function () use ($article) {
-                if (!empty($article->seo)) {
-                    $article->seo = $this->uaa_rep->convertSeo($article->seo);
-                } else {
-                    $article->seo = new \stdClass();
-                }
+
                 $article->created = $this->uaa_rep->convertDate($article->created_at);
                 $article->load('category');
                 $article->load('tags');
                 $article->load('image');
-                $article->seo->og_image = asset('/asset/images/articles/ua/main') . '/' . ($article->image->path ?? '../../../mp.png');
-
-                if (empty($article->seo->og_description)) {
-                    $article->seo->og_description = str_limit(strip_tags($article->content), 240);
-                }
-
-                if (empty($article->seo->og_title)) {
-                    $article->seo->og_title = str_limit(strip_tags($article->title), 240);
-                }
 
                 return $article;
             });
 
+            if (!empty($article->seo)) {
+                $article->seo = $this->uaa_rep->convertSeo($article->seo);
+            } else {
+                $article->seo = new \stdClass();
+            }
+            $article->seo->og_image = asset('/asset/images/articles/ua/main') . '/' . ($article->image->path ?? '../../../mp.png');
 
-//            dd($article);
+            if (empty($article->seo->og_description)) {
+                $article->seo->og_description = str_limit(strip_tags($article->content), 240);
+            }
+
+            if (empty($article->seo->og_title)) {
+                $article->seo->og_title = str_limit(strip_tags($article->title), 240);
+            }
+
+            $this->seo = $article->seo;
+
             $where = ['category_id' => $article->category_id, 'approved' => 1];
             $same = $this->uaa_rep->get('*', 5, false, $where, false, ['image']);
-//            dd($same[0]);
+
 
             if (5 == $cat_id) {
                 $this->getAside('ua', true);
@@ -244,7 +250,6 @@ class ArticlesController extends MainController
         $articles = $this->uaa_rep->get('*', false, 9, ['category_id' => 4, 'approved' => 1],
             ['created_at', 'desc'], ['image', 'tags']);
 
-//        dd($articles);
         $this->getAside('ua');
         $this->content = view('articles.ua_show')->with(['articles' => $articles, 'cat' => $cat])
             ->render();
@@ -260,7 +265,7 @@ class ArticlesController extends MainController
     public function uaCats(Request $request, $cat_alias)
     {
 //  Last Modified
-        /*$lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `articles` WHERE `approved`=1');
+        $lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `articles` WHERE `approved`=1');
 
         $LastModified_unix = strtotime($lastM[0]->last); // время последнего изменения страницы
         $this->lastModified = gmdate("D, d M Y H:i:s \G\M\T", $LastModified_unix);
@@ -270,7 +275,7 @@ class ArticlesController extends MainController
         }
         if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
             return response('304 Not Modified', 304);
-        }*/
+        }
 //  Last Modified
         $this->loc = 'ua';
 
@@ -279,9 +284,14 @@ class ArticlesController extends MainController
         if (null == $cat) {
             abort(404);
         }
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 
-        $articles = $this->uaa_rep->get('*', false, 9,
-            ['category_id' => $cat->id, 'approved' => 1], ['created_at', 'desc'], ['image', 'tags']);
+        $this->content = Cache::remember('ua-article-cat-' . $cat->id . $currentPage, 60, function () use ($cat) {
+            $articles = $this->uaa_rep->get('*', false, 9,
+                ['category_id' => $cat->id, 'approved' => 1], ['created_at', 'desc'], ['image', 'tags']);
+            return view('articles.ua_show')->with(['articles' => $articles, 'cat' => $cat])
+                ->render();
+        });
 
 //        dd($articles);
         if (5 == $cat->id) {
@@ -289,16 +299,14 @@ class ArticlesController extends MainController
         } else {
             $this->getAside('ua');
         }
-        $this->content = view('articles.ua_show')->with(['articles' => $articles, 'cat' => $cat])
-            ->render();
-        return $this->renderOutput();
 
+        return $this->renderOutput();
     }
 
     public function uaTag(Request $request, $tag_alias, $loc = null)
     {
         //  Last Modified
-        /*$lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `articles` WHERE `approved`=1');
+        $lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `articles` WHERE `approved`=1');
 
         $LastModified_unix = strtotime($lastM[0]->last); // время последнего изменения страницы
         $this->lastModified = gmdate("D, d M Y H:i:s \G\M\T", $LastModified_unix);
@@ -308,7 +316,7 @@ class ArticlesController extends MainController
         }
         if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
             return response('304 Not Modified', 304);
-        }*/
+        }
 //  Last Modified
         $this->loc = 'ua';
 
@@ -320,20 +328,24 @@ class ArticlesController extends MainController
 
         $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 
-        $this->content = Cache::remember('articles_tags' . $tag->alias . $currentPage, 60, function () use ($tag) {
+        $this->content = Cache::remember('ua_articles_tags' . $tag->alias . $currentPage, 60, function () use ($tag) {
             $articles = $this->uaa_rep->getByTag($tag->id);
             return view('articles.ua_show')
                 ->with(['articles' => $articles, 'tag' => $tag])
                 ->render();
         });
-//        $this->getSeo('statyi/teg');
+        $this->seo = $this->t_rep->convertSeo($tag->useo);
+
         $this->title = $tag->uname;
         $this->getAside('ua');
 
         return $this->renderOutput();
     }
 
-
+    /**
+     * @param $loc
+     * @param bool $cat
+     */
     public function getAside($loc, $cat = false)
     {
         if ($cat) {
@@ -348,7 +360,7 @@ class ArticlesController extends MainController
                 $where, ['priority', 'desc'], ['image']);
             $this->aside = view('articles.aside')->with(['articles' => $articles, 'tags' => $tags])->render();
         } else {
-            $articles = $this->uaa_rep->get(['title', 'alias', 'description'], 8, false,
+            $articles = $this->uaa_rep->get(['title', 'alias', 'description', 'category_id'], 8, false,
                 $where, ['priority', 'desc'], ['image']);
             $this->aside = view('articles.ua_aside')->with(['articles' => $articles, 'tags' => $tags])->render();
         }

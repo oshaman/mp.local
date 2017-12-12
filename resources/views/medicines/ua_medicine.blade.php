@@ -11,7 +11,7 @@
                     </a>
                 </div>
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <a href="{{ route('sort') }}" itemprop="item">
+                    <a href="{{ route('search_alpha_u') }}" itemprop="item">
                         <span itemprop="name" class="label1">Пошук препаратів</span>
                         <meta itemprop="position" content="2"/>
                     </a>

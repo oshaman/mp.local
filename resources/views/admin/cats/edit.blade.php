@@ -25,7 +25,7 @@
     </div>
     {{ Form::label('utitle', 'UA-Название категории') }}
     <div class="">
-        {!! Form::text('utitle', old('utitle') ? : ($category->title ?? ''),
+        {!! Form::text('utitle', old('utitle') ? : ($category->utitle ?? ''),
            ['placeholder'=>'Психиатр...', 'id'=>'utitle', 'class'=>'form-control']) !!}
     </div>
     {{ Form::label('title', 'ЧПУ категории') }}

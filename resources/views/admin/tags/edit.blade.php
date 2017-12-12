@@ -15,7 +15,8 @@
     </div>
     <div class="col-lg-6">
         <label>
-            <input type="checkbox" {{ old('approved') ? 'checked' : ''}} value="1" name="approved">
+            <input type="checkbox" {{ (old('approved') || !empty($tag->approved)) ? 'checked' : ''}} value="1"
+                   name="approved">
             На главную
         </label>
     </div>

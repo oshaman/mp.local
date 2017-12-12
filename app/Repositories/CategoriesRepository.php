@@ -46,6 +46,8 @@ class CategoriesRepository extends Repository
         }
         $res = $cat->save();
         Cache::forget('main_cats');
+        Cache::forget('article-cat-' . $cat->id);
+        Cache::forget('ua-article-cat-' . $cat->id);
         return $res;
     }
 

@@ -261,8 +261,7 @@ class ArticlesRepository extends Repository
                 $error[] = ['tag' => 'Ошибка записи тегов'];
             }
 
-
-            $this->clearArticlesCache($article->id);
+            $this->clearArticlesCache($article->id, $article->category_id);
 
             return ['status' => 'Статья обновлена', $error];
         }
@@ -286,7 +285,8 @@ class ArticlesRepository extends Repository
             $uold_img = $uarticle->image->path;
         }
 
-//        dd($article);
+        $id = $article->id;
+        $cat = $article->category_id;
 
         if ($article->delete()) {
 
@@ -304,7 +304,7 @@ class ArticlesRepository extends Repository
                 File::delete(public_path('/asset/images/articles/ua/small/') . $uold_img);
             }
 
-            $this->clearArticlesCache();
+            $this->clearArticlesCache($id, $cat);
 
             return ['status' => 'Статья удалена'];
         }
@@ -382,6 +382,9 @@ class ArticlesRepository extends Repository
         Cache::forget('main');
         Cache::forget('sort-aside-ru');
         Cache::forget('sort-aside-ua');
+        Cache::forget('sort-aside-ua');
+        !empty($cat) ? Cache::forget('article-cat-' . $cat) : null;
+        !empty($id) ? Cache::store('file')->forget('ru_article-' . $id) : null;
 
 //        !empty($cat) ? Cache::forget('articles_cats' . $cat) : null;
     }

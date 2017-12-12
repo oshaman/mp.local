@@ -17,6 +17,10 @@ class ClassificationRepository extends Repository
         $this->model = $classification;
     }
 
+    /**
+     * @param $id
+     * @return array
+     */
     public function getParents($id)
     {
         $result = $this->model->where('id', $id)->first();
@@ -28,4 +32,8 @@ class ClassificationRepository extends Repository
         return array_reverse($this->parents_array);
     }
 
+    public function atxIsset($class)
+    {
+        return $this->model->where('class', $class)->count();
+    }
 }

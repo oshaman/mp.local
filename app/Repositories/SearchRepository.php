@@ -2,7 +2,6 @@
 
 namespace Fresh\Medpravda\Repositories;
 
-use function foo\func;
 use Fresh\Medpravda\Classification;
 use Fresh\Medpravda\Fabricator;
 use Fresh\Medpravda\Innname;
@@ -356,7 +355,6 @@ class SearchRepository
 
             $atx->load('children');
             $atx->load('medicines');
-            dd($atx);
             $atx->load('parents');
 
             if (!empty($atx->medicines)) {

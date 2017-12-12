@@ -21,7 +21,7 @@
         <div class="title-product-info">
             <img src="{{ asset('assets') }}/images/product-icon/black/11_svoystva.png"
                  alt="Основні фізико-хімічні властивості">
-            <h4>Основные Основні фізико-хімічні властивості свойства</h4>
+            <h4>Основні фізико-хімічні властивості свойства</h4>
         </div>
         {!! $medicine->physicochemical_char !!}
     </div>

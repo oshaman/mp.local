@@ -39,7 +39,7 @@ class StatisticsRepository
                     ->where('medicine_alias', $data['alias'])->first();
                 break;
             case 2:
-                $res = QuarterMedicine::select(DB::raw('medicine_alias, count(medicine_alias) AS nums'))
+                $res = QuarterMedicine::select(DB::raw('(\'' . $data['alias'] . '\') AS alias, count(medicine_alias) AS nums'))
                     ->where('medicine_alias', $data['alias'])->first();
                 break;
             case 3:

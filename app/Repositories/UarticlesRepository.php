@@ -129,7 +129,7 @@ class UarticlesRepository extends Repository
                 }
             }
 
-            $this->clearArticlesCache($article->id);
+            $this->clearArticlesCache($article->id, $article->category_id);
 
             return ['status' => 'Статья обновлена', $error];
         }
@@ -206,8 +206,9 @@ class UarticlesRepository extends Repository
     protected function clearArticlesCache($id = false, $cat = false)
     {
         Cache::forget('ua-main');
-//
-//        !empty($id) ? Cache::store('file')->forget('docs_article-' . $id) : null;
+        !empty($cat) ? Cache::forget('ua-article-cat-' . $cat) : null;
+        !empty($id) ? Cache::store('file')->forget('ua_article-' . $id) : null;
+
 //
 //        !empty($cat) ? Cache::forget('articles_cats' . $cat) : null;
     }

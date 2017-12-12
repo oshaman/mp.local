@@ -216,7 +216,7 @@ class MedicineRepository extends Repository
         }
 
         $this->putTitles();
-        Cache::forget('medicine-' . $model->alias);
+        Cache::store('file')->forget('off-medicine-' . $model->alias);
         $error = [];
         return ['status' => 'Препарат обновлен', $error];
     }

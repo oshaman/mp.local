@@ -26,6 +26,8 @@
     <div class="section-title-meta-icon">
         @if(!empty($search))
             <h3>Поиск препаратов:&nbsp;<a href="#!">{{ $search .' ('.count($titles['medicines'] ?? 0).')'}}</a></h3>
+        @else
+            <h3>Поиск препаратов:</h3>
         @endif
         <div class="section-meta-icon">
             <div class="section-icon">

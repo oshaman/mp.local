@@ -39,20 +39,20 @@ class Cats extends FormRequest
                 $model = $this->route()->parameter('cat');
 
                 if (null === $model) return true;
-                return (($model->title !== $input->title) && !empty($input->title));
+                return ((mb_strtolower($model->title) !== mb_strtolower($input->title)) && !empty($input->title));
             }
 
-            return !empty($input->title);
+            return empty($input->title);
         });
         $validator->sometimes('utitle', 'unique:categories,utitle', function ($input) {
             if ($this->route()->hasParameter('cat') && $this->isMethod('post')) {
                 $model = $this->route()->parameter('cat');
 
                 if (null === $model) return true;
-                return (($model->utitle !== $input->utitle) && !empty($input->utitle));
+                return ((mb_strtolower($model->utitle) !== mb_strtolower($input->utitle)) && !empty($input->utitle));
             }
 
-            return !empty($input->utitle);
+            return empty($input->utitle);
         });
 
         return $validator;

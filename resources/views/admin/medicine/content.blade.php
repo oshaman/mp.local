@@ -21,9 +21,9 @@
     {!! Form::close() !!}
 </div>
 <hr>
-<div class="">
+{{--<div class="">
     {!! Html::link(route('medicine_create'),'Создать препарат',['class' => 'btn btn-success']) !!}
-</div>
+</div>--}}
 <div class="">
     <table class="table">
         <thead>

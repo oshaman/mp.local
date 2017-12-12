@@ -8,6 +8,7 @@ use Image;
 use Config;
 use Validator;
 use File;
+use Cache;
 
 class UamedicineRepository extends Repository
 {
@@ -78,7 +79,7 @@ class UamedicineRepository extends Repository
             }
             //Slider
         }
-        Cache::forget('medicine-' . $model->alias);
+        Cache::store('file')->forget('medicine-ua-' . $model->alias);
 
         $error = [];
         return ['status' => 'Препарат обновлен', $error];
