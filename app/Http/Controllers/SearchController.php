@@ -253,7 +253,7 @@ class SearchController extends MainController
      */
     public function atx(Request $request, $val = null)
     {
-        $this->title = 'Сортування препаратів за АТХ-класифікацією';
+        $this->title = 'Сортировка препаратов по АТХ-классификации';
 
         if (!empty($val)) {
 
@@ -281,6 +281,10 @@ class SearchController extends MainController
                     session()->put('class-view-' . $val, true);
                 }
 
+                $this->seo = Cache::store('file')->remember('atx-seo-' . $val, 24 * 60, function () use ($val) {
+                    return $this->c_rep->getSeo($val);
+                });
+
                 $this->content = Cache::store('file')->remember('sort-atx-' . $val, 24 * 60, function () use ($val) {
 
                     $result = $this->search_rep->findAtxChildren($val, true);
@@ -292,7 +296,7 @@ class SearchController extends MainController
 
                         return view('search.atx')->with(
                             ['classifications' => $classifications,
-                                'atx' => $atx, 'classes' => $classes, 'letter' => $val])
+                                'atx' => $atx, 'classes' => $classes, 'letter' => $val, 'atxseo' => $this->seo])
                             ->render();
                     }
                 });
@@ -535,9 +539,10 @@ class SearchController extends MainController
      */
     public function atxu(Request $request, $val = null)
     {
-        $this->title = 'Пошук препаратів за АТХ-класифікацією';
+        $this->title = 'Сортування препаратів за АТХ-класифікацією';
 
         $count = $this->c_rep->atxIsset($val);
+        $this->loc = 'ua';
 
         if ($count > 0) {
 //          Last Modified
@@ -561,6 +566,10 @@ class SearchController extends MainController
                 session()->put('class-view-' . $val, true);
             }
 
+            $this->seo = Cache::store('file')->remember('ua-atx-seo-' . $val, 24 * 60, function () use ($val) {
+                return $this->c_rep->getSeo($val, true);
+            });
+
             $this->content = Cache::store('file')->remember('sort-ua-atx-' . $val, 24 * 60, function () use ($val) {
 
                 $result = $this->search_rep->findAtxChildren($val, true);
@@ -572,7 +581,7 @@ class SearchController extends MainController
 
                     return view('search.ua_atx')->with(
                         ['classifications' => $classifications,
-                            'atx' => $atx, 'classes' => $classes, 'letter' => $val])
+                            'atx' => $atx, 'classes' => $classes, 'letter' => $val, 'atxseo' => $this->seo])
                         ->render();
                 }
             });

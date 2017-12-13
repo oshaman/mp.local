@@ -1,4 +1,4 @@
-<?php
+must be between<?php
 
 return [
 
@@ -19,7 +19,7 @@ return [
     'after_or_equal' => 'The :attribute must be a date after or equal to :date.',
     'alpha' => 'The :attribute may only contain letters.',
     'alpha_dash' => 'Поле :attribute может содержать только буквы, цифры, тире и подчеркивание.',
-    'alpha_num' => 'The :attribute may only contain letters and numbers.',
+    'alpha_num' => 'Поле :attribute может содержать только буквы и цифры.',
     'array' => 'The :attribute must be an array.',
     'before' => 'The :attribute must be a date before :date.',
     'before_or_equal' => 'The :attribute must be a date before or equal to :date.',
@@ -35,7 +35,7 @@ return [
     'date_format' => 'The :attribute does not match the format :format.',
     'different' => 'The :attribute and :other must be different.',
     'digits' => 'The :attribute must be :digits digits.',
-    'digits_between' => 'The :attribute must be between :min and :max digits.',
+    'digits_between' => 'В поле :attribute должны быть числа от :min до :max.',
     'dimensions' => 'The :attribute has invalid image dimensions.',
     'distinct' => 'The :attribute field has a duplicate value.',
     'email' => 'В поле :attribute должен быть реальный адрес электронной почты.',
@@ -86,7 +86,7 @@ return [
     'timezone' => 'The :attribute must be a valid zone.',
     'unique' => ':attribute уже используется.',
     'uploaded' => 'The :attribute failed to upload.',
-    'url' => 'Запрещенные символы в поле :attribute.',
+    'url' => 'Не правильный формат в поле :attribute.',
 
     /*
     |--------------------------------------------------------------------------

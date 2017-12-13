@@ -58,8 +58,16 @@ class AdminController extends Controller
                 $menu->add('Редактирование препаратов', array('route' => 'medicine_admin'));
             }
 
+            if (Gate::allows('UPDATE_MEDICINE')) {
+                $menu->add('ATX', array('route' => 'atx_admin'));
+            }
+
             if (Gate::allows('UPDATE_ARTICLES')) {
                 $menu->add('Редактирование статей',array('route' => 'articles_admin'));
+            }
+
+            if (Gate::allows('UPDATE_ARTICLES')) {
+                $menu->add('Темы', array('route' => 'themes_admin'));
             }
 
             if (Gate::allows('MAIN_ADMIN')) {

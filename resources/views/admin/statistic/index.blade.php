@@ -31,5 +31,5 @@
     </div>
 </div>
 <hr>
-{!! Form::button('Поиск', ['class' => 'btn btn-primary btn-block ','type'=>'submit']) !!}
+{!! Form::button('Поиск', ['class' => 'btn btn-primary btn-block','type'=>'submit']) !!}
 {{ Form::close() }}

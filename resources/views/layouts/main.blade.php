@@ -86,6 +86,7 @@
     @yield('header')
 
     @yield('content')
+
     @yield('aside')
     @yield('slider')
 

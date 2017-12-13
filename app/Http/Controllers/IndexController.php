@@ -65,11 +65,10 @@ class IndexController extends MainController
             $this->content = Cache::remember('ua-main', 60, function () {
 
                 $articles = [
-                    'tops' => $this->ua_rep->getMain(5, 8),
-                    'diets' => $this->ua_rep->getMain(3, 5),
+                    'tops' => $this->ua_rep->getMain(5, 5),
+                    'diets' => $this->ua_rep->getMain(3, 4),
                     'delusions' => $this->ua_rep->getMain(2, 5),
                     'intims' => $this->ua_rep->getMain(4, 8),
-                    'fitotherapy' => $this->ua_rep->getMain(1, 4),
                 ];
 
                 $sliders = $this->s_rep->get(
@@ -97,11 +96,10 @@ class IndexController extends MainController
             $this->content = Cache::remember('main', 60, function () {
 
                 $articles = [
-                    'tops' => $this->a_rep->getMain(5, 8),
-                    'diets' => $this->a_rep->getMain(3, 5),
+                    'tops' => $this->a_rep->getMain(5, 5),
+                    'diets' => $this->a_rep->getMain(3, 4),
                     'delusions' => $this->a_rep->getMain(2, 5),
                     'intims' => $this->a_rep->getMain(4, 8),
-                    'fitotherapy' => $this->a_rep->getMain(1, 4),
                 ];
 
                 $sliders = $this->s_rep->get(

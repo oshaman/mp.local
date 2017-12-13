@@ -119,8 +119,10 @@
                 </div>
             @endif
         </div>
-        <div class="SEO-text">
-
-        </div>
+        @if(!empty($atxseo))
+            <div class="SEO-text">
+                {!! $atxseo->seo_text !!}
+            </div>
+        @endif
     </div>
 </section>

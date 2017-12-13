@@ -279,7 +279,7 @@ class SitemapRepository
                 'caption' => $post->image->alt
             );
 
-            $sitemap_article->add(URL::to('statjі/' . $post->alias), $post->updated_at, '1.0', 'daily', $images);
+            $sitemap_article->add(URL::to('fresh-articles/' . $post->alias), $post->updated_at, '1.0', 'daily', $images);
 
         }
 
@@ -300,7 +300,7 @@ class SitemapRepository
                 'caption' => $post_ua->image->alt
             );
 
-            $sitemap_ua_article->add(URL::to('ua/statjі/' . $post_ua->alias), $post_ua->updated_at, '1.0', 'daily', $ua_images);
+            $sitemap_ua_article->add(URL::to('ua/fresh-articles/' . $post_ua->alias), $post_ua->updated_at, '1.0', 'daily', $ua_images);
 
         }
 
@@ -313,9 +313,9 @@ class SitemapRepository
         Category::select('alias')->chunk(500, function ($medicines) use ($sitemap_categories, $sitemap_categories_ua) {
             foreach ($medicines as $medicine) {
 
-                $sitemap_categories->add(URL::to('/statjі/cat/' . $medicine->alias),
+                $sitemap_categories->add(URL::to('/fresh-articles/cat/' . $medicine->alias),
                     $medicine->updated_at, '1.0', 'daily');
-                $sitemap_categories_ua->add(URL::to('/ua/statjі/cat/' . $medicine->alias),
+                $sitemap_categories_ua->add(URL::to('/ua/fresh-articles/cat/' . $medicine->alias),
                     $medicine->updated_at, '1.0', 'daily');
             }
         });
@@ -330,9 +330,9 @@ class SitemapRepository
         Tag::select('alias')->chunk(500, function ($medicines) use ($sitemap_tags, $sitemap_tags_ua) {
             foreach ($medicines as $medicine) {
 
-                $sitemap_tags->add(URL::to('/statjі/teg/' . $medicine->alias),
+                $sitemap_tags->add(URL::to('/fresh-articles/tag/' . $medicine->alias),
                     $medicine->updated_at, '1.0', 'daily');
-                $sitemap_tags_ua->add(URL::to('/ua/statjі/teg/' . $medicine->alias),
+                $sitemap_tags_ua->add(URL::to('/ua/fresh-articles/tag/' . $medicine->alias),
                     $medicine->updated_at, '1.0', 'daily');
             }
         });

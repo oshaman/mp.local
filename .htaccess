@@ -10,14 +10,13 @@
     RewriteCond %{HTTP_HOST} ^www.(.*)$ [NC]
     RewriteRule ^(.*)$ http://%1/$1 [R=301,L]
 #index
-    RewriteCond %{THE_REQUEST} ^[A-Z]{3,}\\s(.*)/index\.(php|html|htm)\ [NC]
-    RewriteRule ^(.*)index\.(php|html|htm)$ http://medpravda.com.ua/$1 [R=301,L]
+    RewriteCond %{THE_REQUEST} ^[A-Z]{2,9}\ /([^/]+/)*(default|index|main)\.(html|php|htm)\ HTTP/ [NC]
+    RewriteRule ^(([^/]+/)*)(default|main|index)\.(html|php|htm)$ http://medpravda.com.ua/$1 [L,R=301]
 # slashes
-    RewriteCond %{REQUEST_URI} ^(.*)/{2,}(.*)$
-    RewriteRule . %1/%2 [R=301,L]
 
     RewriteCond %{THE_REQUEST} //+
     RewriteRule ^(.*) /$1 [R=301,L]
+
 #
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteCond %{REQUEST_URI} ^(.+)/$

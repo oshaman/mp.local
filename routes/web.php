@@ -56,10 +56,10 @@ Route::group(['prefix' => 'ua'], function () {
         ->where(['medicine' => '[\w-]+', 'vr' => 'main|adaptive']);
 //        MEDICINE ===============================>
 //        ARTICLES ===============================>
-    Route::group(['prefix' => 'statjі'], function () {
+    Route::group(['prefix' => 'fresh-articles'], function () {
         Route::get('/{ua_article_alias?}', 'ArticlesController@uaShow')->name('ua_articles')->where(['ua_article_alias' => '[\w-]+']);
         Route::get('/cat/{cat_alias}', 'ArticlesController@uaCats')->name('ua_articles_cat')->where(['cat_alias' => '[\w-]+']);
-        Route::get('/teg/{tag_alias}', 'ArticlesController@uaTag')
+        Route::get('/tag/{tag_alias}', 'ArticlesController@uaTag')
             ->name('ua_articles_tag')->where(['tag_alias' => '[\w-]+']);
     });
 //        SEARCH ===============================>
@@ -113,10 +113,10 @@ Route::match(['get', 'post'], 'presearch', 'SearchController@presearch')->name('
 /**
  * Articles
  */
-Route::group(['prefix' => 'statjі'], function () {
+Route::group(['prefix' => 'fresh-articles'], function () {
     Route::get('/{article_alias?}', 'ArticlesController@show')->name('articles')->where(['article_alias' => '[\w-]+']);
     Route::get('/cat/{cat_alias}', 'ArticlesController@cats')->name('articles_cat')->where(['cat_alias' => '[\w-]+']);
-    Route::get('/teg/{tag_alias}', 'ArticlesController@tag')
+    Route::get('/tag/{tag_alias}', 'ArticlesController@tag')
         ->name('articles_tag')->where(['tag_alias' => '[\w-]+']);
 });
 
@@ -227,11 +227,30 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::match(['post', 'get'], 'edit/{seo}', 'Admin\SeoController@edit')->name('seo_update')->where('seo', '[0-9]+');
     });
     /**
+     * Admin ATX SEO
+     */
+    Route::group(['prefix' => 'atx'], function () {
+        Route::match(['post', 'get'], '/', 'Admin\ClassificationsController@index')->name('atx_admin');
+        Route::match(['post', 'get'], 'edit/{atx}', 'Admin\ClassificationsController@updateAtx')->name('atx_update')->where('atx', '[0-9]+');
+    });
+    /**
      * Med Tags
      */
     Route::group(['prefix' => 'med-teg'], function () {
         Route::match(['get', 'post'], '/', ['uses' => 'Admin\MedtagController@store', 'as' => 'med_tags_admin']);
         Route::get('delete/{med_tag}', ['uses' => 'Admin\MedtagController@destroy', 'as' => 'delete_medtag'])->where('med_tag', '[0-9]+');
+    });
+    /**
+     * Themes
+     */
+    Route::group(['prefix' => 'topthemes'], function () {
+
+        Route::get('/', ['uses' => 'Admin\ThemesController@index', 'as' => 'themes_admin']);
+        Route::match(['get', 'post'], 'create', ['uses' => 'Admin\ThemesController@createTheme', 'as' => 'themes_add']);
+        Route::match(['get', 'post'], 'edit/{theme}', ['uses' => 'Admin\ThemesController@edit', 'as' => 'themes_update'])
+            ->where(['theme' => '[0-9]+']);
+        Route::get('del/{theme}', ['uses' => 'Admin\ThemesController@del', 'as' => 'delete_theme'])->where('theme', '[0-9]+');
+
     });
 });
 //Auth

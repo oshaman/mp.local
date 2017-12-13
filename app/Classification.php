@@ -47,4 +47,9 @@ class Classification extends Model
     {
         return $this->hasMany('Fresh\Medpravda\Classification', 'parent', 'id');
     }
+
+    public function seo()
+    {
+        return $this->hasOne('Fresh\Medpravda\Classseo');
+    }
 }

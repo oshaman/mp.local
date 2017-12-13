@@ -1,5 +1,5 @@
 <aside class="right-section">
-    <div class="banner-reklama order-first">
+    <div class="banner-reklama order-first mobile-display-none">
         <a href="promotion.html"><img class="mobile-display-none"
                                       src="{{ asset('assets') }}/images/promotion/banner1.jpg" alt="Aloe vera">
             <img class="banner-reklama-mobile" src="{{ asset('assets') }}/images/promotion/promo-aside-300-300.jpg"

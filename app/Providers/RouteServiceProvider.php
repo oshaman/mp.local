@@ -25,6 +25,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         parent::boot();
         Route::model('tag', \Fresh\Medpravda\Tag::class);
+        Route::model('atx', \Fresh\Medpravda\Classification::class);
         Route::model('med_tag', \Fresh\Medpravda\Medtag::class);
         Route::model('med_cat', \Fresh\Medpravda\MedicinesCat::class);
         Route::model('cat', \Fresh\Medpravda\Category::class);
@@ -32,6 +33,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::model('article', \Fresh\Medpravda\Article::class);
 //        Route::model('medicine', \Fresh\Medpravda\Medicine::class);
         Route::model('seo', \Fresh\Medpravda\Seo::class);
+        Route::model('theme', \Fresh\Medpravda\Toptheme::class);
 
 
         Route::bind('article_alias', function ($value, \Illuminate\Routing\Route $route) {

@@ -7,6 +7,12 @@
         {!! $medicine->consist !!}
     </div>
 @endif
+<div class="banner-reklama order-first desktop-display-none">
+    <a href="promotion.html"><img class="mobile-display-none"
+                                  src="{{ asset('assets') }}/images/promotion/banner1.jpg" alt="Aloe vera">
+        <img class="banner-reklama-mobile" src="{{ asset('assets') }}/images/promotion/promo-aside-300-300.jpg"
+             alt="Aloe vera"></a>
+</div>
 @if(!empty($medicine->docs_form))
     <div id="lekforma" class="top-product-nav-info admin-content">
         <div class="title-product-info">
@@ -83,8 +89,9 @@
     </div>
 @endif
 
-<div class="clone-to" data-number="1"></div>
-
+</div>
+    <div class="clone-to" data-number="1"></div>
+    <div class="wrap">
 
 @if(!empty($medicine->security))
     <div id="bezopastnost" class="top-product-nav-info admin-content">
@@ -217,4 +224,6 @@
         {!! $medicine->additionally !!}
     </div>
 @endif
-<div class="clone-to" data-number="1"></div>
+    </div>
+    <div class="clone-to" data-number="1"></div>
+    <div class="wrap">

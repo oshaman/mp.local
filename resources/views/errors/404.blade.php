@@ -5,7 +5,7 @@
 @endsection--}}
 
 @section('header')
-    {!! $header !!}
+    {!! $header ?? ''!!}
 @endsection
 
 @section('content')
@@ -43,5 +43,5 @@
 @endsection
 
 @section('footer')
-    {!! $footer !!}
+    {!! $footer ?? ''!!}
 @endsection

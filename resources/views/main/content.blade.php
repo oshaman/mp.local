@@ -222,26 +222,26 @@
                 <div class="last-arts">
                     <div class="two-column-articles article-wrap section-interest-art">
                         <div class="left-column big-news">
-                            @if(!empty($articles['diets']) && $articles['diets']->isNotEmpty())
+                            @if(!empty($articles['tops']) && $articles['tops']->isNotEmpty())
                                 <article class="news">
                                     <a href="{{ route('articles',
-                                                    ['article_alias'=>$articles['diets'][0]->alias]) }}">
+                                                    ['article_alias'=>$articles['tops'][0]->alias]) }}">
                                         <div class="article-img">
-                                            <img src="{{ asset('asset/images/articles/ru/middle').'/'.$articles['diets'][0]->image->path }}"
-                                                 alt="{{ $articles['diets'][0]->image->alt ?? '' }}"
-                                                 title="{{ $articles['diets'][0]->image->title ?? ($articles['diets'][0]->image->alt ?? '') }}">
-                                            <div class="views"><span>{{ $articles['diets'][0]->view }}</span></div>
+                                            <img src="{{ asset('asset/images/articles/ru/middle').'/'.$articles['tops'][0]->image->path }}"
+                                                 alt="{{ $articles['tops'][0]->image->alt ?? '' }}"
+                                                 title="{{ $articles['tops'][0]->image->title ?? ($articles['tops'][0]->image->alt ?? '') }}">
+                                            <div class="views"><span>{{ $articles['tops'][0]->view }}</span></div>
                                         </div>
                                         <div class="article-info">
-                                            <h4 class="article-title">{{ $articles['diets'][0]->title }}</h4>
+                                            <h4 class="article-title">{{ $articles['tops'][0]->title }}</h4>
                                             <div class="article-text">
-                                                {!! str_limit($articles['diets'][0]->content, 160) !!}
+                                                {!! str_limit($articles['tops'][0]->content, 160) !!}
                                             </div>
                                             <div class="date-link">
                                                 <div class="article-date">
-                                                    {{ $articles['diets'][0]->created_at->format('d')
-                                                        . ' '  . trans('ru.'.$articles['diets'][0]->created_at->format('m'))
-                                                        . ' '  . $articles['diets'][0]->created_at->format('Y')
+                                                    {{ $articles['tops'][0]->created_at->format('d')
+                                                        . ' '  . trans('ru.'.$articles['tops'][0]->created_at->format('m'))
+                                                        . ' '  . $articles['tops'][0]->created_at->format('Y')
                                                     }}
                                                 </div>
                                                 <span class="btn-link">Подробнее</span>
@@ -253,8 +253,8 @@
                             @endif
                         </div>
                         <div class="right-column">
-                            @if(!empty($articles['diets']) && $articles['diets']->isNotEmpty())
-                                @foreach($articles['diets'] as $article)
+                            @if(!empty($articles['tops']) && $articles['tops']->isNotEmpty())
+                                @foreach($articles['tops'] as $article)
                                     @continue($loop->first)
                                     <article class="news">
                                         <a href="{{ route('articles',
@@ -284,7 +284,7 @@
                     </div>
                 </div>
                 <div>
-                    <a href="{{ route('articles_cat', ['cat_alias'=>'pitanie-i-dieta']) }}"
+                    <a href="{{ route('articles_cat', ['cat_alias'=>'top-stati']) }}"
                        class="button-white">Больше статей</a>
                 </div>
             </section>
@@ -542,8 +542,8 @@
             </div>
         </div>
         <div class="section-interest-art wrap">
-            @if(!empty($articles['fitotherapy']) && $articles['fitotherapy']->isNotEmpty())
-                @foreach($articles['fitotherapy'] as $article)
+            @if(!empty($articles['diets']) && $articles['diets']->isNotEmpty())
+                @foreach($articles['diets'] as $article)
                     <article class="article-articles">
                         <a href="{{ route('articles',
                                                 ['article_alias'=>$article->alias]) }}">
@@ -570,7 +570,7 @@
             @endif
         </div>
         <div>
-            <a href="{{ route('articles_cat', ['cat_alias'=>'fitoterapiya']) }}"
+            <a href="{{ route('articles_cat', ['cat_alias'=>'pitanie-i-dieta']) }}"
                class="button-white">Больше статей</a>
         </div>
     </section>

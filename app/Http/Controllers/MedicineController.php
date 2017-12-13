@@ -71,7 +71,6 @@ class MedicineController extends MainController
         if (empty($res)) {
             abort(404);
         }
-//        dd($res);
         //            Last Modify
         $LastModified_unix = strtotime($res->updated_at); // время последнего изменения страницы
         $this->lastModified = gmdate("D, d M Y H:i:s \G\M\T", $LastModified_unix);
@@ -105,8 +104,16 @@ class MedicineController extends MainController
         $this->content = view('medicines.adaptive')->with(['medicine' => $res, 'classes' => $class])->render();
 
         $this->seo = $this->med_rep->convertSeo($res->seo);
-//        dd($this->seo->seo_title);
 
+        if (empty($this->seo->og_image)) {
+            if (isset($this->seo->og_image)) {
+                $this->seo->og_image = asset('assets/images') . '/meta_pics/medicines_ru.jpg';
+            } else {
+                $obj = new \stdClass;
+                $obj->og_image = asset('assets/images') . '/meta_pics/medicines_ru.jpg';
+                $this->seo = $obj;
+            }
+        }
 
         $articles = $this->a_rep->get(['title', 'alias', 'description'], 8, false,
             [['approved', 1]], ['priority', 'desc'], ['image']);
@@ -212,6 +219,16 @@ class MedicineController extends MainController
             return $this->c_rep->getParents($res->classification_id);
         });
         $this->seo = $this->med_rep->convertSeo($res->seo);
+
+        if (empty($this->seo->og_image)) {
+            if (isset($this->seo->og_image)) {
+                $this->seo->og_image = asset('assets/images') . '/meta_pics/medicines_ru.jpg';
+            } else {
+                $obj = new \stdClass;
+                $obj->og_image = asset('assets/images') . '/meta_pics/medicines_ru.jpg';
+                $this->seo = $obj;
+            }
+        }
 
         $this->content = view('medicines.medicine')->with(['medicine' => $res, 'classes' => $class])->render();
 
@@ -350,6 +367,16 @@ class MedicineController extends MainController
         $this->content = view('medicines.ua_adaptive')->with(['medicine' => $res, 'classes' => $class])->render();
         $this->seo = $this->med_rep->convertSeo($res->seo);
 
+        if (empty($this->seo->og_image)) {
+            if (isset($this->seo->og_image)) {
+                $this->seo->og_image = asset('assets/images') . '/meta_pics/medicines_ukr.jpg';
+            } else {
+                $obj = new \stdClass;
+                $obj->og_image = asset('assets/images') . '/meta_pics/medicines_ukr.jpg';
+                $this->seo = $obj;
+            }
+        }
+
         $articles = $this->ua_rep->get(['title', 'alias', 'description'], 8, false,
             [['approved', 1]], ['priority', 'desc'], ['image']);
 
@@ -453,6 +480,15 @@ class MedicineController extends MainController
             return $this->c_rep->getParents($res->classification_id);
         });
         $this->seo = $this->med_rep->convertSeo($res->seo);
+        if (empty($this->seo->og_image)) {
+            if (isset($this->seo->og_image)) {
+                $this->seo->og_image = asset('assets/images') . '/meta_pics/medicines_ukr.jpg';
+            } else {
+                $obj = new \stdClass;
+                $obj->og_image = asset('assets/images') . '/meta_pics/medicines_ukr.jpg';
+                $this->seo = $obj;
+            }
+        }
 
         $this->content = view('medicines.ua_medicine')->with(['medicine' => $res, 'classes' => $class])->render();
 
