@@ -81,13 +81,11 @@ class ArticlesController extends MainController
             return $this->renderOutput();
         }
 
-        $cat = Category::where('id', 5)->first();
-        $articles = $this->rua_rep->get('*', false, 9, ['category_id' => 5, 'approved' => 1],
-            ['created_at', 'desc'], ['image', 'tags']);
-
-        $this->getAside('ru');
-        $this->content = view('articles.show')->with(['articles' => $articles, 'cat' => $cat])
-            ->render();
+        $this->content = Cache::remember('article-categories', 60, function () {
+            $cats = $this->rua_rep->getCats();
+            return view('articles.cats')->with(['cats' => $cats])
+                ->render();
+        });
         return $this->renderOutput();
     }
 
@@ -99,6 +97,9 @@ class ArticlesController extends MainController
      */
     public function cats(Request $request, $cat_alias)
     {
+        if ('top-stati' == $cat_alias) {
+            return redirect(route('top_articles'), 301);
+        }
 //  Last Modified
         $lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `articles` WHERE `approved`=1');
 
@@ -112,9 +113,6 @@ class ArticlesController extends MainController
             return response('304 Not Modified', 304);
         }
 //  Last Modified
-        if (empty($cat_alias)) {
-            $cat_alias = 'top-stati';
-        }
 
         $cat = Category::where('alias', $cat_alias)->first();
         if (null == $cat) {
@@ -129,8 +127,6 @@ class ArticlesController extends MainController
                 ->render();
         });
 
-
-
         $this->title = $cat->name;
         if (5 == $cat->id) {
             $this->getAside('ru', true);
@@ -139,9 +135,49 @@ class ArticlesController extends MainController
         }
 
         return $this->renderOutput();
-
     }
 
+    /**
+     * @param Request $request
+     * @return $this|\Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function topArticles(Request $request)
+    {
+        //  Last Modified
+        $lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `articles` WHERE `approved`=1');
+
+        $LastModified_unix = strtotime($lastM[0]->last); // время последнего изменения страницы
+        $this->lastModified = gmdate("D, d M Y H:i:s \G\M\T", $LastModified_unix);
+        $IfModifiedSince = false;
+        if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
+            $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
+        }
+        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+            return response('304 Not Modified', 304);
+        }
+//  Last Modified
+
+        $cat = Category::where('id', 5)->first();
+
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+
+        $this->content = Cache::remember('article-top-' . $cat->id . $currentPage, 60, function () use ($cat) {
+            $articles = $this->rua_rep->get('*', false, 9,
+                ['category_id' => $cat->id, 'approved' => 1], ['created_at', 'desc'], ['image', 'tags']);
+            return view('articles.show')->with(['articles' => $articles, 'cat' => $cat])
+                ->render();
+        });
+
+        $this->getAside('ru');
+
+        return $this->renderOutput();
+    }
+
+    /**
+     * @param Request $request
+     * @param $tag_alias
+     * @return $this|\Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
     public function tag(Request $request, $tag_alias)
     {
         //  Last Modified
@@ -245,14 +281,11 @@ class ArticlesController extends MainController
             return $this->renderOutput();
         }
         $this->loc = 'ua';
-
-        $cat = Category::where('id', 1)->first();
-        $articles = $this->uaa_rep->get('*', false, 9, ['category_id' => 4, 'approved' => 1],
-            ['created_at', 'desc'], ['image', 'tags']);
-
-        $this->getAside('ua');
-        $this->content = view('articles.ua_show')->with(['articles' => $articles, 'cat' => $cat])
-            ->render();
+        $this->content = Cache::remember('ua-article-categories', 60, function () {
+            $cats = $this->uaa_rep->getCats();
+            return view('articles.ua_cats')->with(['cats' => $cats])
+                ->render();
+        });
         return $this->renderOutput();
     }
 
@@ -262,8 +295,11 @@ class ArticlesController extends MainController
      * @param $loc
      * @return $this
      */
-    public function uaCats(Request $request, $cat_alias)
+    public function uaCats(Request $request, $cat_alias = null)
     {
+        if ('top-stati' == $cat_alias) {
+            return redirect(route('ua_top_articles'), 301);
+        }
 //  Last Modified
         $lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `articles` WHERE `approved`=1');
 
@@ -277,6 +313,7 @@ class ArticlesController extends MainController
             return response('304 Not Modified', 304);
         }
 //  Last Modified
+
         $this->loc = 'ua';
 
         $cat = Category::where('alias', $cat_alias)->first();
@@ -303,6 +340,50 @@ class ArticlesController extends MainController
         return $this->renderOutput();
     }
 
+    /**
+     * @param Request $request
+     * @return $this|\Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
+    public function topUarticles(Request $request)
+    {
+        //  Last Modified
+        $lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `articles` WHERE `approved`=1');
+
+        $LastModified_unix = strtotime($lastM[0]->last); // время последнего изменения страницы
+        $this->lastModified = gmdate("D, d M Y H:i:s \G\M\T", $LastModified_unix);
+        $IfModifiedSince = false;
+        if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
+            $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
+        }
+        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+            return response('304 Not Modified', 304);
+        }
+//  Last Modified
+
+        $this->loc = 'ua';
+
+        $cat = Category::where('id', 5)->first();
+
+        $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+
+        $this->content = Cache::remember('ua-article-top-' . $cat->id . $currentPage, 60, function () use ($cat) {
+            $articles = $this->uaa_rep->get('*', false, 9,
+                ['category_id' => $cat->id, 'approved' => 1], ['created_at', 'desc'], ['image', 'tags']);
+            return view('articles.ua_show')->with(['articles' => $articles, 'cat' => $cat])
+                ->render();
+        });
+
+        $this->getAside('ua', true);
+
+        return $this->renderOutput();
+    }
+
+    /**
+     * @param Request $request
+     * @param $tag_alias
+     * @param null $loc
+     * @return $this|\Illuminate\Contracts\Routing\ResponseFactory|\Symfony\Component\HttpFoundation\Response
+     */
     public function uaTag(Request $request, $tag_alias, $loc = null)
     {
         //  Last Modified
@@ -364,6 +445,5 @@ class ArticlesController extends MainController
                 $where, ['priority', 'desc'], ['image']);
             $this->aside = view('articles.ua_aside')->with(['articles' => $articles, 'tags' => $tags])->render();
         }
-
     }
 }

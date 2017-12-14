@@ -24,6 +24,11 @@ Route::group(['prefix' => 'ua'], function () {
 
     Route::get('/soglashenie', 'MainController@uaConvention')->name('ua_convention');
     Route::get('/usloviya', 'MainController@uaConditions')->name('ua_conditions');
+
+
+    Route::get('/top-themes', 'ThemesController@uaThemes')->name('ua_themes');
+
+    Route::get('/top-articles', 'ArticlesController@topUarticles')->name('ua_top_articles');
 //        SORT ===============================>
     Route::group(['prefix' => 'sort'], function () {
 //        alpha
@@ -58,7 +63,7 @@ Route::group(['prefix' => 'ua'], function () {
 //        ARTICLES ===============================>
     Route::group(['prefix' => 'fresh-articles'], function () {
         Route::get('/{ua_article_alias?}', 'ArticlesController@uaShow')->name('ua_articles')->where(['ua_article_alias' => '[\w-]+']);
-        Route::get('/cat/{cat_alias}', 'ArticlesController@uaCats')->name('ua_articles_cat')->where(['cat_alias' => '[\w-]+']);
+        Route::get('cat/{cat_alias}', 'ArticlesController@uaCats')->name('ua_articles_cat')->where(['cat_alias' => '[\w-]+']);
         Route::get('/tag/{tag_alias}', 'ArticlesController@uaTag')
             ->name('ua_articles_tag')->where(['tag_alias' => '[\w-]+']);
     });
@@ -76,6 +81,7 @@ Route::get('preparat/{medicine}', 'MedicineController@medicine')
     ->name('medicine')
     ->where(['medicine' => '[\w-]+']);
 
+Route::get('/top-themes', 'ThemesController@themes')->name('themes');
 
 Route::get('preparat/{medicine}/analog', 'MedicineController@analog')
     ->name('medicine_analog')->where(['medicine' => '[\w-]+']);
@@ -110,6 +116,7 @@ Route::match(['get', 'post'], 'poisk/{val?}', 'SearchController@search')
     ->name('search')->where(['val' => '[\wа-яА-ЯёЁІіЇЇ\'-]+']);
 Route::match(['get', 'post'], 'presearch', 'SearchController@presearch')->name('presearch');
 
+Route::get('/top-articles', 'ArticlesController@topArticles')->name('top_articles');
 /**
  * Articles
  */
@@ -252,6 +259,10 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::get('del/{theme}', ['uses' => 'Admin\ThemesController@del', 'as' => 'delete_theme'])->where('theme', '[0-9]+');
 
     });
+    /**
+     * Admin Menus
+     */
+    Route::match(['post', 'get'], 'menus', 'Admin\MenusController@index')->name('menus');
 });
 //Auth
 Route::get('login', 'Auth\AuthController@showLoginForm')->name('login');

@@ -22,6 +22,7 @@
         <thead>
         <tr>
             <th>Заголовок</th>
+            <th>Локализация</th>
         </tr>
         </thead>
         @if (!empty($themes[0]))
@@ -29,6 +30,7 @@
             @foreach ($themes as $theme)
                 <tr>
                     <td>{{ $theme->title }}</td>
+                    <td>{{ $theme->loc }}</td>
                     <td>
                         {!! Form::open(['url' => route('themes_update',['theme'=> $theme->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
                         {!! Form::button('Редактировать', ['class' => 'btn btn-warning','type'=>'submit']) !!}

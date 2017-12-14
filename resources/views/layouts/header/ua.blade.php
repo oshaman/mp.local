@@ -3,7 +3,7 @@
     <div class="wrap">
         <div class="logo">
             @if('main' == Route::currentRouteName())
-                <img src="{{ asset('assets') }}/images/main/logo_ua.png" alt="Логотип МЕД правда"></a>
+                <img src="{{ asset('assets') }}/images/main/logo_ua.png" alt="Логотип МЕД правда">
             @else
                 @if ('ua' == Request::segment(1))
                     <a href="{{ route('main', ['loc'=>'ua']) }}">
@@ -22,17 +22,43 @@
         </div>
         <div class="main-menu">
             <nav class="mobile-display-none">
-                <a href="{{ route('search_alpha_u') }}">Препарати</a>
-                @if(!empty($cats))
-                    @foreach($cats as $cat)
-                        @continue($loop->index > 3)
-                        @if('articles_cat' == Route::currentRouteName() && $cat->alias == Request::segment(2))
-                            <a>{{ $cat->utitle }}</a>
-                        @else
-                            <a href="{{ route('ua_articles_cat', ['cat'=>$cat->alias]) }}">{{ $cat->utitle }}</a>
-                        @endif
-                    @endforeach
+                <div>
+                    @if('search_alpha_u' == Route::currentRouteName())
+                        <div><a>Препарати</a></div>
+                    @else
+                        <div><a href="{{ route('search_alpha_u') }}">Препарати</a></div>
+                    @endif
+                </div>
+                <div>
+                    @if('ua_themes' == Route::currentRouteName())
+                        <div><a>Популярні теми</a></div>
+                    @else
+                        <div><a href="{{ route('ua_themes') }}">Популярні теми</a></div>
                 @endif
+                </div>
+                <div>
+                    @if('ua_top_articles' == Route::currentRouteName())
+                        <div><a>Топ статті</a></div>
+                    @else
+                        <div><a href="{{ route('ua_top_articles') }}">Топ статті</a></div>
+                    @endif
+                </div>
+                <div>
+                    @if('ua_articles' == Route::currentRouteName() && null == Request::segment(3))
+                        <div><a>Свіжі статті</a></div>
+                        <div>{!! Menu::get('menu')->asUl() !!}</div>
+                    @else
+                        <div><a href="{{ route('ua_articles') }}">Свіжі статті</a></div>
+                        <div>{!! Menu::get('menu')->asUl() !!}</div>
+                    @endif
+                </div>
+                <div>
+                    @if('ua_adv' == Route::currentRouteName())
+                        <div><a>Реклама</a></div>
+                    @else
+                        <div><a href="{{ route('ua_adv') }}">Реклама</a></div>
+                    @endif
+                </div>
             </nav>
             <a class="burgerBtn">
                 <span></span>

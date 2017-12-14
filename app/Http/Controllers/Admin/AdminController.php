@@ -51,11 +51,11 @@ class AdminController extends Controller
         return Menu::make('adminMenu', function ($menu) {
 
             if (Gate::allows('USERS_ADMIN')) {
-                $menu->add('Редактирование пользователей', array('route' => 'users_admin'));
+                $menu->add('Пользователи', array('route' => 'users_admin'));
             }
 
             if (Gate::allows('UPDATE_MEDICINE')) {
-                $menu->add('Редактирование препаратов', array('route' => 'medicine_admin'));
+                $menu->add('Препараты', array('route' => 'medicine_admin'));
             }
 
             if (Gate::allows('UPDATE_MEDICINE')) {

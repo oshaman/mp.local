@@ -28,11 +28,12 @@ class ThemesController extends AdminController
         }
         /*==========================================================================================*/
         $data = $request->except('_token');
-        $themes = null;
         if (!empty($data['value'])) {
             $data['value'] = $data['value'] ?? null;
             $themes = $this->repository->get(['title', 'id'], false, 25, ['title' => $data['value']]);
             if ($themes) $themes->appends(['param' => $data['value']])->links();
+        } else {
+            $themes = $this->repository->get(['title', 'id', 'loc'], false, 25);
         }
 
         $this->content = view('admin.themes.show')->with(['themes' => $themes])->render();
@@ -98,17 +99,17 @@ class ThemesController extends AdminController
 
     }
 
-    /*public function del($article)
+    public function del($theme)
     {
         if (Gate::denies('UPDATE_ARTICLES')) {
             abort(404);
         }
 
-        $result = $this->ru_rep->deleteArticle($article);
+        $result = $this->repository->deleteTheme($theme);
 
         if (is_array($result) && !empty($result['error'])) {
             return back()->with($result);
         }
-        return redirect()->route('articles_admin')->with($result);
-    }*/
+        return redirect()->route('themes_admin')->with($result);
+    }
 }

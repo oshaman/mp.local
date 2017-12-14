@@ -10,6 +10,7 @@ use Config;
 use Validator;
 use Cache;
 use DB;
+use Fresh\Medpravda\Category;
 
 class UarticlesRepository extends Repository
 {
@@ -262,6 +263,10 @@ class UarticlesRepository extends Repository
         return $prems;
     }
 
+    /**
+     * @param $res
+     * @return mixed
+     */
     public function clearContent($res)
     {
         $res = $res->transform(function ($item) {
@@ -273,4 +278,18 @@ class UarticlesRepository extends Repository
         return $res;
     }
 
+    /**
+     * @return array
+     */
+    public function getCats()
+    {
+        $cats = Category::where('id', '<>', 5)->get();
+
+        $articles = [];
+        foreach ($cats as $cat) {
+            $articles[$cat->alias]['articles'] = $this->getMain($cat->id, 4);
+            $articles[$cat->alias]['cat'] = $cat->utitle;
+        }
+        return $articles;
+    }
 }

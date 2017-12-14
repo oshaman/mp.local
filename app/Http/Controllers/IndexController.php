@@ -8,6 +8,7 @@ use Fresh\Medpravda\Repositories\MedicinesCatsRepository;
 use Fresh\Medpravda\Repositories\SeoRepository;
 use Fresh\Medpravda\Repositories\SlidersRepository;
 use Fresh\Medpravda\Repositories\TagsRepository;
+use Fresh\Medpravda\Repositories\ThemesRepository;
 use Fresh\Medpravda\Repositories\UarticlesRepository;
 use Illuminate\Http\Request;
 use Cache;
@@ -22,6 +23,7 @@ class IndexController extends MainController
     protected $ua_rep;
     protected $s_rep;
     protected $t_rep;
+    protected $themes_rep;
 
     public function __construct(
         MedicinesCatsRepository $medicinesCat,
@@ -30,7 +32,8 @@ class IndexController extends MainController
         ArticlesRepository $arep,
         SlidersRepository $srep,
         TagsRepository $trep,
-        UarticlesRepository $uarep
+        UarticlesRepository $uarep,
+        ThemesRepository $themesRepository
     )
     {
         $this->med_cat = $medicinesCat;
@@ -40,6 +43,7 @@ class IndexController extends MainController
         $this->s_rep = $srep;
         $this->t_rep = $trep;
         $this->ua_rep = $uarep;
+        $this->themes_rep = $themesRepository;
     }
 
     public function main(Request $request, $loc = null)
@@ -69,6 +73,8 @@ class IndexController extends MainController
                     'diets' => $this->ua_rep->getMain(3, 4),
                     'delusions' => $this->ua_rep->getMain(2, 5),
                     'intims' => $this->ua_rep->getMain(4, 8),
+                    'themes' => $this->themes_rep->get('*', 8, false,
+                        [['approved', 1], ['loc', 'ua']], ['priority', 'asc']),
                 ];
 
                 $sliders = $this->s_rep->get(
@@ -100,6 +106,8 @@ class IndexController extends MainController
                     'diets' => $this->a_rep->getMain(3, 4),
                     'delusions' => $this->a_rep->getMain(2, 5),
                     'intims' => $this->a_rep->getMain(4, 8),
+                    'themes' => $this->themes_rep->get('*', 8, false,
+                        [['approved', 1], ['loc', 'ru']], ['priority', 'asc']),
                 ];
 
                 $sliders = $this->s_rep->get(

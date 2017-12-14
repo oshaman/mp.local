@@ -4,6 +4,7 @@ namespace Fresh\Medpravda\Repositories;
 
 use Fresh\Medpravda\Article;
 use Fresh\Medpravda\UArticle;
+use Fresh\Medpravda\Category;
 use Gate;
 use File;
 use Image;
@@ -438,6 +439,10 @@ class ArticlesRepository extends Repository
         return $prems;
     }
 
+    /**
+     * @param $res
+     * @return mixed
+     */
     public function clearContent($res)
     {
         $res = $res->transform(function ($item) {
@@ -447,6 +452,21 @@ class ArticlesRepository extends Repository
             return $item;
         });
         return $res;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCats()
+    {
+        $cats = Category::where('id', '<>', 5)->get();
+
+        $articles = [];
+        foreach ($cats as $cat) {
+            $articles[$cat->alias]['articles'] = $this->getMain($cat->id, 4);
+            $articles[$cat->alias]['cat'] = $cat->title;
+        }
+        return $articles;
     }
 
 }

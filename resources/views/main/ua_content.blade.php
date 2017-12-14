@@ -15,10 +15,10 @@
             @if(!empty($sliders))
                 @foreach($sliders as $slider)
                     <div class="slide">
-                        <div class="slider-images">
+                        <a href="{{ $slider->link ?? route('sort') }}" class="slider-images">
                             <img src="{{ asset('asset') }}/images/slider/{{ $slider->path }}"
                                  alt="{{ $slider->alt }}" title="{{ $slider->title }}">
-                        </div>
+                        </a>
                         <div class="slider-info">
                             <div class="slider-info-text">
                                 <h2>{{ $slider->description }}</h2>
@@ -162,23 +162,22 @@
             </div>
         </div>
         <div class="section-interest-art wrap">
-            @if(!empty($articles['tops']) && $articles['tops']->isNotEmpty())
-                @foreach($articles['tops'] as $top)
+            @if(!empty($articles['themes']) && $articles['themes']->isNotEmpty())
+                @foreach($articles['themes'] as $theme)
                     <article class="article-articles">
-                        <a href="{{ route('ua_articles', ['ua_article_alias'=>$top->alias]) }}">
+                        <a href="{{ $theme->link }}">
                             <div class="article-img">
-                                <img src="{{ asset('asset/images/articles/ua/middle').'/'.$top->image->path }}"
-                                     alt="{{ $top->image->alt ?? '' }}"
-                                     title="{{ $top->image->title ?? ($top->image->alt ?? '') }}">
-                                <div class="views"><span>{{ $top->view }}</span></div>
+                                <img src="{{ asset('asset/images/theme').'/'.$theme->path }}"
+                                     alt="{{ $theme->alt ?? '' }}"
+                                     title="{{ $theme->imgtitle ?? ($theme->alt ?? '') }}">
                             </div>
                             <div class="article-info">
-                                <h4 class="article-title">{{ $top->title }}</h4>
+                                <h4 class="article-title">{{ $theme->title }}</h4>
                                 <div class="date-link">
                                     <div class="article-date">
-                                        {{ $top->created_at->format('d')
-                                            . ' '  . trans('ua.'.$top->created_at->format('m'))
-                                            . ' '  . $top->created_at->format('Y')
+                                        {{ $theme->created_at->format('d')
+                                            . ' '  . trans('ua.'.$theme->created_at->format('m'))
+                                            . ' '  . $theme->created_at->format('Y')
                                         }}
                                     </div>
                                     <span class="btn-link">Докладніше</span>
@@ -190,9 +189,8 @@
                 @endforeach
             @endif
         </div>
-
         <div>
-            <a href="{{ route('ua_articles_cat', ['cat_alias'=>'top-stati']) }}" class="button-white">
+            <a href="{{ route('ua_themes') }}" class="button-white">
                 Більше статей</a>
         </div>
     </section>
@@ -409,16 +407,16 @@
         <aside class="news-med">
             <div class="section-title-meta-icon">
                 <h3>{{ $blocks[6]->utitle ?? '' }}</h3>
-                @if(!empty($blocks[4]->fourth))
-                    {{ link_to_route('search', $blocks[4]->fourth, ['search' =>$blocks[4]->fourth]) }}
-                @endif
-                @if(!empty($blocks[4]->fifth))
-                    {{ link_to_route('search', $blocks[4]->fifth, ['search' =>$blocks[4]->fifth]) }}
-                @endif
-                @if(!empty($blocks[4]->sixth))
-                    {{ link_to_route('search', $blocks[4]->sixth, ['search' =>$blocks[4]->sixth]) }}
-                @endif
                 <div class="section-meta-icon">
+                    @if(!empty($blocks[6]->fourth))
+                        {{ link_to_route('search', $blocks[6]->fourth, ['search' =>$blocks[6]->fourth]) }}
+                    @endif
+                    @if(!empty($blocks[6]->fifth))
+                        {{ link_to_route('search', $blocks[6]->fifth, ['search' =>$blocks[6]->fifth]) }}
+                    @endif
+                    @if(!empty($blocks[6]->sixth))
+                        {{ link_to_route('search', $blocks[6]->sixth, ['search' =>$blocks[6]->sixth]) }}
+                    @endif
                     <div class="section-icon">
                         <img src="{{ asset('assets') }}/images/title-icons/main-icon-4.png"
                              alt="иконка Новости медицины">

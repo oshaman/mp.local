@@ -77,57 +77,85 @@ class ThemesRepository extends Repository
         }
     }
 
-    /*public function updateSlider($request, $mainslider = null)
+    public function updateTheme($request, $theme)
     {
-
-        if (null !== $mainslider) {
-            $this->model = $this->findById($mainslider);
-        }
 
         $data = $request->except('_token', 'img');
 
-        $this->model->description = $data['description'];
+        $theme['title'] = $data['title'];
 
-        $this->model->text = $data['text'];
-        $this->model->link = $data['link'];
+        $theme['description'] = $data['description'];
+        $theme['link'] = $data['link'];
+        if (2 == (int)$data['loc']) {
+            $theme['loc'] = 'ua';
+        } else {
+            $theme['loc'] = 'ru';
+        }
 
         if (!empty($data['priority'])) {
-            $article['priority'] = (int)$data['priority'];
+            $theme['priority'] = abs((int)$data['priority']);
         }
-
-        $this->model->alt = $data['alt'];
-
-        $this->model->title = $data['title'];
 
         if (!empty($data['approved'])) {
-            $this->model->approved = 1;
-        } else {
-            $this->model->approved = 0;
+            $theme['approved'] = 1;
         }
 
-        $old_img = $this->model->path ?? null;
+        if (!empty($data['alt'])) {
+            $theme['alt'] = $data['alt'];
+        } else {
+            $theme['alt'] = null;
+        }
 
+        if (!empty($data['imgtitle'])) {
+            $theme['imgtitle'] = $data['imgtitle'];
+        } else {
+            $theme['imgtitle'] = null;
+        }
+//dd($theme);
         if ($request->hasFile('img')) {
-            $path = $this->mainImg($request->file('img'), $this->transliterate($data['description']));
+            $path = $this->mainImg($request->file('img'), $this->transliterate($theme['title']));
 
             if (false === $path) {
                 $error[] = ['img' => 'Ошибка загрузки картинки'];
             } else {
-                $this->model->path = $path;
+                $this->deleteOldImage($theme->path);
+                $theme['path'] = $path;
             }
-            if (!empty($old_img)) {
-                $this->deleteOldImage($old_img);
-            }
-        }
 
-        $res = $this->model->save();
+        }
+//        ==================================
+
+        $res = $theme->save();
 //        dd($res);
         if ($res) {
             return ['status' => 'Тема обновлена'];
         }
         $error[] = ['img' => 'Ошибка записи данных'];
-    }*/
+    }
 
+    /**
+     * @param $theme
+     * @return array
+     */
+    public function deleteTheme($theme)
+    {
+        $old_img = $theme->path;
+        if ('ru' == $theme->loc) {
+            $loc = false;
+        } else {
+            $loc = true;
+        }
+
+        if ($theme->delete()) {
+
+            $this->deleteOldImage($old_img);
+
+            $this->clearThemesCache($loc);
+
+            return ['status' => 'Тема удалена'];
+        }
+
+    }
     /**
      * @param File $image
      * @param $alias
@@ -164,9 +192,15 @@ class ThemesRepository extends Repository
         return true;
     }
 
-    public function clearThemesCache()
+    public function clearThemesCache($loc = false)
     {
-        Cache::clear('main');
+        if (false == $loc) {
+            Cache::clear('main');
+            Cache::clear('themes');
+        } else {
+            Cache::clear('ua-main');
+            Cache::clear('ua-themes');
+        }
     }
 
 }

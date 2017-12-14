@@ -10,8 +10,13 @@
                     <meta itemprop="position" content="1"/>
                 </div>
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
-                    <a href="{{ route('ua_articles_cat', ['cat_alias'=>$article->category->alias]) }}"
-                       itemprop="item">{{ $article->category->utitle }}</a>
+                    @if(5 != $article->category->id)
+                        <a href="{{ route('ua_articles_cat', ['cat_alias'=>$article->category->alias]) }}"
+                           itemprop="item">{{ $article->category->utitle }}</a>
+                    @else
+                        <a href="{{ route('ua_top_articles') }}"
+                           itemprop="item">{{ $article->category->utitle }}</a>
+                    @endif
                     <meta itemprop="position" content="2"/>
                 </div>
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
@@ -132,8 +137,12 @@
                 </div>
             </div>
             <div>
-                <a href="{{ route('ua_articles_cat', ['cat_alias'=>$article->category->alias]) }}"
-                   class="button-white">Більше статей</a>
+                @if(5 != $article->category->id)
+                    <a href="{{ route('ua_articles_cat', ['cat_alias'=>$article->category->alias]) }}"
+                       class="button-white">Більше статей</a>
+                @else
+                    <a href="{{ route('ua_top_articles') }}" class="button-white">Більше статей</a>
+                @endif
             </div>
         </section>
         <div class="SEO-text">

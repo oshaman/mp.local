@@ -30,7 +30,7 @@
                         <div><a>Популярные темы</a></div>
                     @else
                         <div><a href="{{ route('themes') }}">Популярные темы</a></div>
-                @endif
+                    @endif
                 </div>
                 <div>
                     @if('top_articles' == Route::currentRouteName())
@@ -42,10 +42,10 @@
                 <div>
                     @if('articles' == Route::currentRouteName() && null == Request::segment(2))
                         <div><a>Свежие статьи</a></div>
-                        <div>{!! Menu::get('menu')->asUl() !!}</div>
+                        <div>{!! $menu->asUl() !!}</div>
                     @else
                         <div><a href="{{ route('articles') }}">Свежие статьи</a></div>
-                        <div>{!! Menu::get('menu')->asUl() !!}</div>
+                        <div>{!! $menu->asUl() !!}</div>
                     @endif
                 </div>
                 <div>

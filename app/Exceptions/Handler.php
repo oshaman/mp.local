@@ -4,6 +4,9 @@ namespace Fresh\Medpravda\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Menu;
+use Cache;
+use Fresh\Medpravda\Menu as Menus;
 
 class Handler extends ExceptionHandler
 {
@@ -55,12 +58,18 @@ class Handler extends ExceptionHandler
                 case '404' :
 
                     $block = \Fresh\Medpravda\Block::where('id', 1)->first();
-                    $cats = \Fresh\Medpravda\Category::get();
-                    $header = view('layouts.header.ru')->with(['block' => $block, 'cats' => $cats])->render();
+                    $cats = Cache::remember('ru_menu_404', 60, function () {
+                        return $this->getMenu();
+                    });
+//dd($cats);
+                    $header = view('layouts.header.404ru')->with(['block' => $block, 'menu' => $cats])->render();
 
                     $tags = \Fresh\Medpravda\Tag::select(['name', 'alias'])
                         ->where(['approved' => 1])->skip(15)->take(15)->get();
-                    $footer = view('layouts.footer.ru')->with(['cats' => $cats, 'tags' => $tags])->render();
+                    $all_cats = Cache::remember('main_cats', 24 * 60, function () {
+                        return \Fresh\Medpravda\Category::get();
+                    });
+                    $footer = view('layouts.footer.ru')->with(['cats' => $all_cats, 'tags' => $tags])->render();
 
                     return response()->view('errors.404',
                         ['header' => $header, 'footer' => $footer], 404);
@@ -68,5 +77,26 @@ class Handler extends ExceptionHandler
         }
 
         return parent::render($request, $exception);
+    }
+
+    /**
+     * @param $status
+     * @return mixed
+     */
+    public function getMenu($status = false)
+    {
+        if ($status) {
+            $cats = Menus::with('category')->where('own', 'ua')->get();
+        } else {
+            $cats = Menus::with('category')->where('own', 'ru')->get();
+        }
+
+        return Menu::make('menu', function ($menu) use ($cats, $status) {
+            foreach ($cats as $cat) {
+                $route = $status ? 'ua_' : '';
+                $title = $status ? 'u' : '';
+                $menu->add($cat->category->{$title . 'title'}, ['route' => [$route . 'articles_cat', $cat->category->alias]]);
+            }
+        });
     }
 }

@@ -5,10 +5,11 @@ namespace Fresh\Medpravda\Http\Controllers;
 use Fresh\Medpravda\About;
 use Fresh\Medpravda\Adv;
 use Fresh\Medpravda\Block;
-use Fresh\Medpravda\Category;
+use Fresh\Medpravda\Menu as Menus;
 use Fresh\Medpravda\Seo;
 use Fresh\Medpravda\Tag;
 use Cache;
+use Menu;
 
 class MainController extends Controller
 {
@@ -168,6 +169,7 @@ class MainController extends Controller
      */
     public function renderOutput()
     {
+        Cache::flush();
         $this->vars = array_add($this->vars, 'title', $this->title);
         $this->vars = array_add($this->vars, 'jss', $this->jss);
         $this->vars = array_add($this->vars, 'css', $this->jss);
@@ -176,37 +178,42 @@ class MainController extends Controller
             return Block::where('id', 1)->first();
         });
 
-
-        $cats = Cache::remember('main_cats', 60, function () {
-            return Category::get();
-        });
-
         if (empty($this->loc)) {
+            $cats = Cache::remember('ru_menu', 60, function () {
+                return $this->getMenu();
+            });
             $header = view('layouts.header.ru')
                 ->with(['block' => $this->block, 'cats' => $cats])->render();
         } else {
+            $cats = Cache::remember('ua_menu', 60, function () {
+                return $this->getMenu(true);
+            });
             $header = view('layouts.header.ua')->with(['block' => $this->block, 'cats' => $cats])->render();
         }
+
         $this->vars = array_add($this->vars, 'header', $header);
 
         $tags = Cache::remember('tags_main', 60, function () {
             return Tag::select(['name', 'uname', 'alias'])->where(['approved' => 1])->skip(15)->take(15)->get();
         });
 
+        $all_cats = Cache::remember('main_cats', 24 * 60, function () {
+            return \Fresh\Medpravda\Category::get();
+        });
         if (empty($this->loc)) {
             $med_tags = Cache::remember('med-tags', 24 * 60, function () {
                 $meds = \Fresh\Medpravda\Medtag::take(14)->get();
                 return \Fresh\Medpravda\Medicine::select('title', 'alias')->whereIn('alias', $meds->toArray())->get();
             });
             $footer = view('layouts.footer.ru')
-                ->with(['cats' => $cats, 'tags' => $tags, 'med_tags' => $med_tags])->render();
+                ->with(['cats' => $all_cats, 'tags' => $tags, 'med_tags' => $med_tags])->render();
         } else {
             $med_tags = Cache::remember('med-tags', 24 * 60, function () {
                 $meds = \Fresh\Medpravda\Medtag::take(14)->get();
                 return \Fresh\Medpravda\Umedicine::select('title', 'alias')->whereIn('alias', $meds->toArray())->get();
             });
             $footer = view('layouts.footer.ua')
-                ->with(['cats' => $cats, 'tags' => $tags, 'med_tags' => $med_tags])->render();
+                ->with(['cats' => $all_cats, 'tags' => $tags, 'med_tags' => $med_tags])->render();
         }
         $this->vars = array_add($this->vars, 'footer', $footer);
 
@@ -246,5 +253,26 @@ class MainController extends Controller
     {
         $rep = new \Fresh\Medpravda\Repositories\SeoRepository(new Seo());
         $this->seo = $rep->oneSeo($uri);
+    }
+
+    /**
+     * @param $status
+     * @return mixed
+     */
+    public function getMenu($status = false)
+    {
+        if ($status) {
+            $cats = Menus::with('category')->where('own', 'ua')->get();
+        } else {
+            $cats = Menus::with('category')->where('own', 'ru')->get();
+        }
+
+        return Menu::make('menu', function ($menu) use ($cats, $status) {
+            foreach ($cats as $cat) {
+                $route = $status ? 'ua_' : '';
+                $title = $status ? 'u' : '';
+                $menu->add($cat->category->{$title . 'title'}, ['route' => [$route . 'articles_cat', $cat->category->alias]]);
+            }
+        });
     }
 }
