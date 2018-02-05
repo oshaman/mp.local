@@ -34,7 +34,7 @@ class MedicineController extends AdminController
         $this->aua_rep = $aua_rep;
         $this->faq_rep = $questionsRepository;
         $this->jss = '
-                <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
                 <script src="' . asset('js/translate.js') . '"></script>
             ';
     }
@@ -50,10 +50,10 @@ class MedicineController extends AdminController
         if (!empty($data['param'])) {
             $data['value'] = $data['value'] ?? null;
             switch ($data['param']) {
-                case 1:
+                case 2:
                     $drugs[] = $this->ru_rep->one($data['value']);
                     break;
-                case 2:
+                case 1:
                     $drugs = $this->ru_rep->get(['title', 'id', 'alias'], false, 25, ['title' => $data['value']]);
                     if ($drugs) $drugs->appends(['param' => $data['param']])->links();
                     break;
@@ -91,7 +91,7 @@ class MedicineController extends AdminController
             if (is_array($result) && !empty($result['error'])) {
                 return back()->withErrors($result);
             }
-            return redirect()->route('edit', ['spec' => 'ru', 'medicine' => $result['alias']])->with($result);
+            return redirect()->route('medicine_edit', ['spec' => 'ru', 'medicine' => $result['alias']])->with($result);
 
         }
 
@@ -165,6 +165,7 @@ class MedicineController extends AdminController
             $drug->load('substance');
         }
 //dd($drug);
+        $this->mark = 'medicine_admin';
 
         $this->content = view('admin.medicine.edit')->with(['drug' => $drug, 'spec' => $spec])->render();
 
@@ -204,6 +205,7 @@ class MedicineController extends AdminController
         $this->title = 'Редактирование частых вопросов';
         $this->template = 'admin.admin';
         $this->tiny = true;
+        $this->mark = 'medicine_admin';
 
         $drug = $this->{$spec . '_rep'}->one($medicine);
         if (empty($drug)) {

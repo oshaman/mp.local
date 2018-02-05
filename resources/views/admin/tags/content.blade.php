@@ -1,24 +1,4 @@
-<nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-        <ul class="nav navbar-nav">
-            @if('cats' == Route::currentRouteName())
-                <li><a class="btn btn-default">Категории</a></li>
-            @else
-                <li><a href="{{ route('cats') }}">Категории</a></li>
-            @endif
-            @if('create_article' == Route::currentRouteName())
-                <li><a class="btn btn-default">Создать статью</a></li>
-            @else
-                <li><a href="{{ route('create_article') }}">Создать статью</a></li>
-            @endif
-            @if('tags_admin' == Route::currentRouteName())
-                <li><a class="btn btn-default">Тэги</a></li>
-            @else
-                <li><a href="{{ route('tags_admin') }}">Тэги</a></li>
-            @endif
-        </ul>
-    </div>
-</nav>
+@include('admin.articles.nav')
 <h1>Добавление \ Редактирование тегов</h1>
 
 {!! Form::open(['url' => route('tags_admin'), 'class'=>'form-horizontal','method'=>'POST' ]) !!}
@@ -48,7 +28,7 @@
             <th>На главной</th>
             <th>Тэг</th>
             <th>UA-тэг</th>
-            <th>ЧПУ</th>
+            <th>URL</th>
             <th>Редактировать</th>
         </tr>
         </thead>

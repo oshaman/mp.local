@@ -22,7 +22,7 @@
                 </div>
             </div>
             {{--BreadCrumbs--}}
-            <h1 class="head-title">{{ $medicine->title }} - инструкция</h1>
+            <h1 class="head-title">{{ $medicine->title }}</h1>
             <div class="clone-to" data-number="3"></div>
             <div class="product-nav">
                 <a href="{{ route('medicine_official', ['medicine'=>$medicine->alias]) }}"

@@ -17,10 +17,10 @@
 @if(!empty($class))
     <hr>
     <div class="alert alert-success row">
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             <h3>{{ $class->class }}</h3>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-4">
             {!! Form::open(['url' => route('atx_update',['atx'=> $class->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
             {!! Form::button('Редактировать', ['class' => 'btn btn-warning','type'=>'submit']) !!}
             {!! Form::close() !!}

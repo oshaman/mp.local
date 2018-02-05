@@ -35,5 +35,7 @@
                 @endforeach
             </div>
         @endforeach
+    @else
+        <h3>0</h3>
     @endif
 </div>

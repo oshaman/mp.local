@@ -20,10 +20,10 @@
                                  alt="{{ $slider->alt }}" title="{{ $slider->title }}">
                         </a>
                         <div class="slider-info">
-                            <div class="slider-info-text">
+                            <a href="{{ $slider->link ?? route('sort') }}" class="slider-info-text">
                                 <h2>{{ $slider->description }}</h2>
                                 <p>{{ $slider->text }}</p>
-                            </div>
+                            </a>
                             <a href="{{ $slider->link ?? route('sort') }}" class="button-blue">Детальніше</a>
                         </div>
                     </div>
@@ -95,7 +95,7 @@
                     <span class="button-blue">Всі фарм виробники</span>
                 </div>
             </a>
-            <a href="{{ route('adv', ['loc'=>'ua']) }}" class="box-number">
+            <a href="{{ route('ua_adv') }}" class="box-number">
                 <img src="{{ asset('assets') }}/images/index/main-3.jpg">
                 <div class="box-number-info">
                     <div class="box-number-num">
@@ -110,7 +110,6 @@
         </div>
     </section>
     <!-- end НА САЙТЕ -->
-
     <!-- Поиск препаратов -->
     <section class="section-product-search">
         <div class="section-title-meta-icon">
@@ -135,12 +134,11 @@
             @include('main.ua_medicines_cats', $med_cats)
             {{--Витрина--}}
             <div>
-                <a href="{{ route('sort') }}" class="button-white">Більше препаратів</a>
+                <a href="{{ route('search_alpha_u') }}" class="button-white">Більше препаратів</a>
             </div>
         </div>
     </section>
     <!-- end Поиск препаратов -->
-
     <!-- ТОП СТАТЬИ -->
     {{--<section class="mobile-display-none">--}}
     <section>
@@ -170,6 +168,7 @@
                                 <img src="{{ asset('asset/images/theme').'/'.$theme->path }}"
                                      alt="{{ $theme->alt ?? '' }}"
                                      title="{{ $theme->imgtitle ?? ($theme->alt ?? '') }}">
+                                <div class="views"></div>
                             </div>
                             <div class="article-info">
                                 <h4 class="article-title">{{ $theme->title }}</h4>
@@ -195,7 +194,6 @@
         </div>
     </section>
     <!-- end ТОП СТАТЬИ -->
-
     <!-- НОВОСТИ -->
     <div class="news-aside mobile-display-none">
         <div class="content last-commercial">
@@ -263,6 +261,9 @@
                                             </div>
                                             <div class="article-info">
                                                 <h4 class="article-title">{{ $article->title }}</h4>
+                                                <p class="article-category">
+                                                    {{ str_limit($article->description, 24) }}
+                                                </p>
                                                 <div class="date-link">
                                                     <div class="article-date">
                                                         {{ $article->created_at->format('d')
@@ -282,7 +283,7 @@
                     </div>
                 </div>
                 <div>
-                    <a href="{{ route('ua_articles_cat', ['cat_alias'=>'top-stati']) }}"
+                    <a href="{{ route('ua_top_articles') }}"
                        class="button-white">Більше статей</a>
                 </div>
             </section>

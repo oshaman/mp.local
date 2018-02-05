@@ -168,7 +168,7 @@ class ArticlesController extends MainController
                 ->render();
         });
 
-        $this->getAside('ru');
+        $this->getAside('ru', true);
 
         return $this->renderOutput();
     }

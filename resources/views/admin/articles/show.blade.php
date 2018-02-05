@@ -9,8 +9,8 @@
         {{ Form::label('param', 'Критерий поиска') }}
         {!! Form::select('param',
                     [
-                        1=>'ЧПУ статьи',
-                        2=>'Заголовок',
+                        1=>'Заголовок',
+                        2=>'URL статьи',
                         3 =>'На паузе',
                     ], old('val') ? : 1, ['class'=>'form-control'])
             !!}
@@ -21,24 +21,28 @@
     </div>
     {!! Form::close() !!}
 </div>
-<hr>
-
 <div class="">
     <table class="table">
         <thead>
         <tr>
-            <th>Ссылка</th>
-            <th>Заголовок</th>
+            <th>Приоритет</th>
             <th>Дата публикации</th>
+            <th>Заголовок</th>
+            <th>Категория</th>
+            <th>Ссылка</th>
+            <th>Статус</th>
         </tr>
         </thead>
         @if (!empty($articles[0]))
             <tbody>
             @foreach ($articles as $article)
                 <tr>
-                    <td>{{ $article->alias }}</td>
-                    <td>{{ $article->title }}</td>
+                    <td>{{ $article->priority }}</td>
                     <td>{{ $article->created_at }}</td>
+                    <td>{{ $article->title }}</td>
+                    <td>{{ $article->category->title }}</td>
+                    <td>{{ $article->alias }}</td>
+                    <td>{{ $article->approved ? '+' : ''}}</td>
                     <td>
                         {!! Form::open(['url' => route('edit_article',['spec' => 'ru','article'=> $article->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
                         {!! Form::button('Редактировать', ['class' => 'btn btn-warning','type'=>'submit']) !!}
@@ -49,11 +53,13 @@
                         {!! Form::button('Редактировать UA', ['class' => 'btn btn-warning','type'=>'submit']) !!}
                         {!! Form::close() !!}
                     </td>
-                    <td>
-                        {!! Form::open(['url' => route('delete_article',['article'=> $article->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
-                        {!! Form::button('Удалить', ['class' => 'btn btn-danger','type'=>'submit']) !!}
-                        {!! Form::close() !!}
-                    </td>
+                    @if(Auth::user()->hasRole('admin'))
+                        <td>
+                            {!! Form::open(['url' => route('delete_article',['article'=> $article->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
+                            {!! Form::button('Удалить', ['class' => 'btn btn-danger','type'=>'submit']) !!}
+                            {!! Form::close() !!}
+                        </td>
+                    @endif
                 </tr>
             @endforeach
             </tbody>
@@ -106,8 +112,6 @@
                         </ul>
                     @endif
                 @endif
-
-
             </div>
         @endif
     </table>

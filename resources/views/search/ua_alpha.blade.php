@@ -28,7 +28,7 @@
 
         @include('search.ua_nav')
     </div>
-    <div class="section-title-meta-icon">
+    <div class="section-title-meta-icon serch-height">
         <h3>
             Сортування за алфавітом:&nbsp;
             @if(!empty($letter))

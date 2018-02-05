@@ -96,9 +96,18 @@ class UmedicineRepository extends Repository
     {
         if ($image->isValid()) {
 
-            $path = substr($alias, 0, 64) . '-slider-' . str_random(2) . time() . '.jpeg';
-
             $img = Image::make($image);
+            $mime = $img->mime();
+
+            switch ($mime) {
+                case 'image/png':
+                    $extention = '.png';
+                    break;
+                default:
+                    $extention = '.jpeg';
+            }
+
+            $path = substr($alias, 0, 64) . '-slider-' . str_random(2) . time() . $extention;
 
             $width = $img->width();
             $height = $img->height();

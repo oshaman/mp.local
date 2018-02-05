@@ -48,7 +48,11 @@
                 @endif
             </div>
             <div>
-                <a href="#!" class="button-white">Все новости</a>
+                @if(!empty($articles[0]) && (5 != $articles[0]->category_id))
+                    <a href="{{ route('articles') }}" class="button-white">Все новости</a>
+                @else
+                    <a href="{{ route('top_articles') }}" class="button-white">Все новости</a>
+                @endif
             </div>
         </div>
     </div>
@@ -101,7 +105,11 @@
                 @endif
             </div>
             <div>
-                <a href="#!" class="button-white">Все новости</a>
+                @if(!empty($articles[0]) && (5 != $articles[0]->category_id))
+                    <a href="{{ route('articles') }}" class="button-white">Все новости</a>
+                @else
+                    <a href="{{ route('top_articles') }}" class="button-white">Все новости</a>
+                @endif
             </div>
         </div>
     </div>

@@ -33,7 +33,7 @@ class BlocksController extends AdminController
         $this->title = 'Редактирование блоков главной страницы';
 
         $this->template = 'admin.admin';
-
+        $this->mark = 'main_admin';
         $blocks = $this->rep->get();
         $this->content = view('admin.main.blocks')->with(['blocks' => $blocks])->render();
         return $this->renderOutput();

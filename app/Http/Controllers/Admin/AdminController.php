@@ -14,7 +14,9 @@ class AdminController extends Controller
     protected $content = FALSE;
     protected $title;
     protected $vars;
+    protected $mark = false;
     protected $jss = null;
+    protected $js = null;
     protected $css = null;
     protected $tiny = false;
     protected $areaH = false;
@@ -27,8 +29,10 @@ class AdminController extends Controller
     {
         $this->vars = array_add($this->vars, 'title', $this->title);
         $this->vars = array_add($this->vars, 'jss', $this->jss);
+        $this->vars = array_add($this->vars, 'js', $this->js);
         $this->vars = array_add($this->vars, 'tiny', $this->tiny);
         $this->vars = array_add($this->vars, 'css', $this->css);
+        $this->vars = array_add($this->vars, 'mark', $this->mark);
         if (!empty($this->areaH)) $this->vars = array_add($this->vars, 'areaH', $this->areaH);
         if (!empty($this->areaW)) $this->vars = array_add($this->vars, 'areaW', $this->areaW);
 
@@ -51,36 +55,45 @@ class AdminController extends Controller
         return Menu::make('adminMenu', function ($menu) {
 
             if (Gate::allows('USERS_ADMIN')) {
-                $menu->add('Пользователи', array('route' => 'users_admin'));
+                $menu->add('Пользователи', array('route' => 'users_admin', 'class' => 'users'));
             }
 
             if (Gate::allows('UPDATE_MEDICINE')) {
-                $menu->add('Препараты', array('route' => 'medicine_admin'));
+                $menu->add('Препараты', array('route' => 'medicine_admin', 'class' => 'medicine_admin'));
             }
 
             if (Gate::allows('UPDATE_MEDICINE')) {
-                $menu->add('ATX', array('route' => 'atx_admin'));
+                $menu->add('ATX', array('route' => 'atx_admin', 'class' => 'atx_admin'));
+            }
+
+            if (Gate::allows('UPDATE_MEDICINE')) {
+                $menu->add('Фармгруппа', array('route' => 'pharm_admin', 'class' => 'pharm_admin'));
+            }
+
+            if (Gate::allows('UPDATE_MEDICINE')) {
+                $menu->add('Производители', array('route' => 'fabricator_admin', 'class' => 'fabricator_admin'));
             }
 
             if (Gate::allows('UPDATE_ARTICLES')) {
-                $menu->add('Редактирование статей',array('route' => 'articles_admin'));
+                $menu->add('Редактирование статей', array('route' => 'articles_admin', 'class' => 'articles_admin'));
             }
 
             if (Gate::allows('UPDATE_ARTICLES')) {
-                $menu->add('Темы', array('route' => 'themes_admin'));
+                $menu->add('Темы', array('route' => 'themes_admin', 'class' => 'themes_admin'));
             }
 
             if (Gate::allows('MAIN_ADMIN')) {
-                $menu->add('Главная страница', array('route' => 'main_admin'));
+                $menu->add('Главная страница', array('route' => 'main_admin', 'class' => 'main_admin'));
             }
 
             if (Gate::allows('STATIC_ADMIN')) {
-                $menu->add('Статичные страницы', 'admin/static');
+                $menu->add('Статичные страницы', ['url' => 'admin/static', 'class' => 'static']);
             }
 
             if (Gate::allows('STATIC_ADMIN')) {
-                $menu->add('Статистика', route('stats_medicine'));
+                $menu->add('Статистика', array('route' => 'stats_medicine', 'class' => 'stats_medicine'));
             }
+
             /*if (Gate::allows('USERS_ADMIN')) {
                 $menu->add('test', array('route' => 'presearch'));
             }*/

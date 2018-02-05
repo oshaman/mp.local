@@ -21,6 +21,7 @@ class StaticsController extends AdminController
         $this->template = 'admin.admin';
         $this->adv_rep = $adv;
         $this->about_rep = $aboutRepository;
+        $this->mark = 'static';
     }
 
     /**
@@ -153,6 +154,10 @@ class StaticsController extends AdminController
         return \Response::json($result);
     }
 
+    /**
+     * @param Request $request
+     * @return $this|\Illuminate\Http\RedirectResponse|mixed
+     */
     public function updateConvention(Request $request)
     {
         if (Gate::denies('STATIC_ADMIN')) {
@@ -174,6 +179,35 @@ class StaticsController extends AdminController
 
         $this->tiny = true;
         $this->content = view('admin.static.about')->with(['abouts' => $abouts])->render();
+
+        return $this->renderOutput();
+    }
+
+    /**
+     * @param Request $request
+     * @return $this|\Illuminate\Http\RedirectResponse|mixed
+     */
+    public function updateCopyright(Request $request)
+    {
+        if (Gate::denies('STATIC_ADMIN')) {
+            abort(404);
+        }
+
+        if ($request->isMethod('post')) {
+            $result = $this->about_rep->updateCopyright($request);
+
+            if (is_array($result) && !empty($result['error'])) {
+                return redirect()->back()->withErrors($result['error']);
+            }
+            return back()->with(['status' => 'Данные обновлены.']);
+        }
+
+        $this->title = 'Футер копирайт';
+
+        $abouts = About::whereIn('id', [7, 8])->get();
+
+        $this->tiny = true;
+        $this->content = view('admin.static.copyright')->with(['abouts' => $abouts])->render();
 
         return $this->renderOutput();
     }

@@ -24,39 +24,41 @@
             <nav class="mobile-display-none">
                 <div>
                     @if('search_alpha_u' == Route::currentRouteName())
-                        <div><a>Препарати</a></div>
+                        <div class="primary-menu"><a>Препарати</a></div>
                     @else
-                        <div><a href="{{ route('search_alpha_u') }}">Препарати</a></div>
+                        <div class="primary-menu"><a href="{{ route('search_alpha_u') }}">Препарати</a></div>
                     @endif
                 </div>
                 <div>
                     @if('ua_themes' == Route::currentRouteName())
-                        <div><a>Популярні теми</a></div>
+                        <div class="primary-menu"><a>Популярні теми</a></div>
+                        <div class="sub-menu">{!! $themes->asUl() !!}</div>
                     @else
-                        <div><a href="{{ route('ua_themes') }}">Популярні теми</a></div>
-                @endif
+                        <div class="primary-menu"><a href="{{ route('ua_themes') }}">Популярні теми</a></div>
+                        <div class="sub-menu">{!! $themes->asUl() !!}</div>
+                    @endif
                 </div>
                 <div>
                     @if('ua_top_articles' == Route::currentRouteName())
-                        <div><a>Топ статті</a></div>
+                        <div class="primary-menu"><a>Топ статті</a></div>
                     @else
-                        <div><a href="{{ route('ua_top_articles') }}">Топ статті</a></div>
+                        <div class="primary-menu"><a href="{{ route('ua_top_articles') }}">Топ статті</a></div>
                     @endif
                 </div>
                 <div>
                     @if('ua_articles' == Route::currentRouteName() && null == Request::segment(3))
-                        <div><a>Свіжі статті</a></div>
-                        <div>{!! Menu::get('menu')->asUl() !!}</div>
+                        <div class="primary-menu"><a>Свіжі статті</a></div>
+                        <div class="sub-menu">{!! $cats->asUl() !!}</div>
                     @else
-                        <div><a href="{{ route('ua_articles') }}">Свіжі статті</a></div>
-                        <div>{!! Menu::get('menu')->asUl() !!}</div>
+                        <div class="primary-menu"><a href="{{ route('ua_articles') }}">Свіжі статті</a></div>
+                        <div class="sub-menu">{!! $cats->asUl() !!}</div>
                     @endif
                 </div>
                 <div>
                     @if('ua_adv' == Route::currentRouteName())
-                        <div><a>Реклама</a></div>
+                        <div class="primary-menu"><a>Реклама</a></div>
                     @else
-                        <div><a href="{{ route('ua_adv') }}">Реклама</a></div>
+                        <div class="primary-menu"><a href="{{ route('ua_adv') }}">Реклама</a></div>
                     @endif
                 </div>
             </nav>

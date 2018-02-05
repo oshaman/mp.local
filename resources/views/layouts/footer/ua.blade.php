@@ -35,7 +35,8 @@
                     <nav class="footer-menu">
                         @if(!empty($cats))
                             @foreach($cats as $cat)
-                                @if('ua_articles_cat' == Route::currentRouteName() && $cat->alias == Request::segment(2))
+                                @continue('top-stati' == $cat->alias)
+                                @if('ua_articles_cat' == Route::currentRouteName() && $cat->alias == Request::segment(4))
                                     <a>{{ $cat->title }}</a>
                                 @else
                                     <a href="{{ route('ua_articles_cat', ['cat'=>$cat->alias]) }}">{{ $cat->utitle }}</a>
@@ -93,11 +94,9 @@
             @endif
         </div>
         <div class="copy-block copyright">
-            <p>Mедправда это стандартизированным Интернет-изданием, предназначенным для врачей и других
-                профессиональных медицинских работников</p>
-            <p>Сайт является стандартизированным Интернет-изданием, предназначенным для врачей и других
-                профессиональных медицинских работников</p>
-            <p>Copyright @ 2010 - 2017 “Ассоциация независимых разработчиков”</p>
+            @if(!empty($copyright))
+                {!! $copyright->text !!}
+            @endif
         </div>
         <div class="copy-block fresh">
             <div class="created">САЙТ РАЗРАБОТАН</div>

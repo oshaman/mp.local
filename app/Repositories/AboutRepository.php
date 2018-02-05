@@ -238,6 +238,44 @@ class AboutRepository extends Repository
     }
 
     /**
+     * @param $request
+     * @return array
+     */
+    public function updateCopyright($request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'text' => 'nullable|string',
+        ]);
+
+        if ($validator->fails()) {
+            return ['error' => $validator];
+        }
+
+        $data = $request->except('_token');
+
+
+        if ('ru' == $data['loc']) {
+            $id = 7;
+        } else {
+            $id = 8;
+        }
+        $this->model = $this->model->find($id);
+
+        $this->model->text = $data['text'];
+
+        $res = $this->model->save();
+
+        Cache::forget('copyright');
+        Cache::forget('ua_copyright');
+
+        if ($res) {
+            return ['status' => 'Данные обновлены'];
+        }
+        $error[] = ['img' => 'Ошибка записи данных'];
+    }
+
+    /**
      * @param File $image
      * @param $alias
      * @param string $position

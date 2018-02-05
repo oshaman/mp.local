@@ -19,6 +19,7 @@ class UsersController extends AdminController
         $this->title = 'Редактирование пользователей';
         $this->template = 'admin.admin';
         $this->us_rep = $us_rep;
+        $this->mark = 'users';
     }
 
     /**

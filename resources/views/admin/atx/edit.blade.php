@@ -1,9 +1,26 @@
 <h1>Редактирование ATX</h1>
-
+<h2>ATX: {{ $class->class ?? '' }}</h2>
+<hr>
 {!! Form::open(['url' => route('atx_update',['atx'=> $class->id]), 'class'=>'form-horizontal','method'=>'POST' ]) !!}
-<div class="">
-    <h2>ATX: {{ $class->class ?? '' }}</h2>
-    <hr>
+
+<div class="row">
+    <div class="col-lg-6">
+        {{ Form::label('name', 'Название') }}
+        <div>
+            {!! Form::text('name', old('name') ? : ($class->name ?? ''),
+                            ['placeholder'=>'Средства, влияющие на...', 'id'=>'name', 'class'=>'form-control']) !!}
+        </div>
+    </div>
+    <div class="col-lg-6">
+        {{ Form::label('uname', 'UA-Название') }}
+        <div>
+            {!! Form::text('uname', old('uname') ? : ($class->uname ?? ''),
+                            ['placeholder'=>'uname', 'id'=>'uname', 'class'=>'form-control']) !!}
+        </div>
+    </div>
+</div>
+<hr>
+<div class="row">
     <!-- SEO -->
     <div class="panel-heading">
         <h2>

@@ -23,6 +23,8 @@ class MedicineRequest extends FormRequest
 
         $validator->sometimes('alias', ['required', 'max:255', 'regex:#^[\w-]#', 'unique:medicines,alias'], function ($input) {
 //  bind article in RouteServiceProvider
+
+            if ($this->route()->named('medicine_create') && $this->isMethod('post')) return true;
             if ($this->route()->hasParameter('medicine') && $this->isMethod('post')
                 && $this->route()->hasParameter('spec') && ('ru' == $this->route()->parameter('spec'))) {
                 $model = Medicine::where('alias', $this->route()->parameter('medicine'))->first();
@@ -55,7 +57,7 @@ class MedicineRequest extends FormRequest
                 'dose' => ['nullable', 'string', 'between:4,255'],
 
                 'slider' => 'array',
-                'slider.*' => 'mimes:jpg,bmp,png,jpeg|max:5120',
+                'slider.*' => 'mimes:jpg,png,jpeg|max:5120',
 
                 'imgalt' => 'array',
                 'imgalt.*' => 'string|nullable',
@@ -109,7 +111,7 @@ class MedicineRequest extends FormRequest
 
             if ($this->request->has('slider')) {
                 foreach ($this->request->get('slider') as $key => $val) {
-                    $rules['slider' . $key] = 'mimes:jpg,bmp,png,jpeg|max:5120';
+                    $rules['slider' . $key] = 'mimes:jpg,png,jpeg|max:5120';
                 }
             }
 
@@ -117,7 +119,7 @@ class MedicineRequest extends FormRequest
 
         } else {
             $rules = [
-                'value' => ['nullable', 'string', 'between:1,255', 'regex:#^[a-zA-zа-яА-ЯёЁ0-9\-\s\,\:\?\!\.]+$#u'],
+                'value' => ['nullable', 'string', 'between:1,255', 'regex:#^[a-zA-zа-яА-ЯёЁ0-9\(\)\-\s\,\:\?\!\.]+$#u'],
                 'param' => 'nullable|digits:1',
             ];
             return $rules;

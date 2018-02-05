@@ -17,6 +17,7 @@ class MenusController extends AdminController
     public function __construct(MenusRepository $rep)
     {
         $this->m_rep = $rep;
+        $this->mark = 'articles_admin';
     }
 
     public function index(MenusRequest $request)

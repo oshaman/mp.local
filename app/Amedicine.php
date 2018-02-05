@@ -44,6 +44,8 @@ class Amedicine extends Model
         'reg',
     ];
 
+    public $incrementing = false;
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */

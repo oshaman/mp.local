@@ -98,6 +98,10 @@ class ClassificationRepository extends Repository
             Cache::store('file')->forget('sort-atx-' . $atx->class);
             Cache::store('file')->forget('sort-ua-atx-' . $atx->class);
         }
+
+        $atx->name = $request->get('name');
+        $atx->uname = $request->get('uname');
+        $atx->save();
         return $res;
     }
 

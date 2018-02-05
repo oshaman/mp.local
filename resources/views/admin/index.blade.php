@@ -20,6 +20,7 @@
 <!-- TinyMCE -->
 @yield('tiny')
 <!-- TinyMCE -->
+    @yield('js')
 </head>
 <body>
 <div id="app">
@@ -91,6 +92,7 @@
 
 </div>
 
+@yield('mark')
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
 @yield('jss')

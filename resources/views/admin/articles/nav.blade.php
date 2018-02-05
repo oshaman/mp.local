@@ -1,6 +1,11 @@
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <ul class="nav navbar-nav">
+            @if('articles_admin' == Route::currentRouteName())
+                <li><a class="btn btn-default">Статьи</a></li>
+            @else
+                <li><a href="{{ route('articles_admin') }}">Статьи</a></li>
+            @endif
             @if('cats' == Route::currentRouteName())
                 <li><a class="btn btn-default">Категории</a></li>
             @else

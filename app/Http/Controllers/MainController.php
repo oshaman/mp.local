@@ -71,7 +71,7 @@ class MainController extends Controller
 
         $this->content = Cache::rememberForever('convention', function () {
             $about = About::find(3);
-            return view('main.about')->with(['about' => $about])->render();
+            return view('main.convention')->with(['about' => $about])->render();
         });
 
         return $this->renderOutput();
@@ -89,7 +89,7 @@ class MainController extends Controller
 
         $this->content = Cache::rememberForever('ua_convention', function () {
             $about = About::find(4);
-            return view('main.about')->with(['about' => $about])->render();
+            return view('main.convention')->with(['about' => $about, 'loc' => true])->render();
         });
 
         return $this->renderOutput();
@@ -106,7 +106,7 @@ class MainController extends Controller
 
         $this->content = Cache::rememberForever('conditions', function () {
             $about = About::find(5);
-            return view('main.about')->with(['about' => $about])->render();
+            return view('main.conditions')->with(['about' => $about])->render();
         });
 
         return $this->renderOutput();
@@ -124,7 +124,7 @@ class MainController extends Controller
 
         $this->content = Cache::rememberForever('ua_conditions', function () {
             $about = About::find(6);
-            return view('main.about')->with(['about' => $about])->render();
+            return view('main.conditions')->with(['about' => $about, 'loc' => true])->render();
         });
 
         return $this->renderOutput();
@@ -169,7 +169,6 @@ class MainController extends Controller
      */
     public function renderOutput()
     {
-        Cache::flush();
         $this->vars = array_add($this->vars, 'title', $this->title);
         $this->vars = array_add($this->vars, 'jss', $this->jss);
         $this->vars = array_add($this->vars, 'css', $this->jss);
@@ -177,21 +176,32 @@ class MainController extends Controller
         $this->block = Cache::remember('blocks', 60, function () {
             return Block::where('id', 1)->first();
         });
-
+//============================== Header =====================================
         if (empty($this->loc)) {
             $cats = Cache::remember('ru_menu', 60, function () {
                 return $this->getMenu();
             });
+            $themes = Cache::remember('header_themes', 24 * 60, function () {
+                return $this->getThemes();
+            });
+
             $header = view('layouts.header.ru')
-                ->with(['block' => $this->block, 'cats' => $cats])->render();
+                ->with(['block' => $this->block, 'cats' => $cats, 'themes' => $themes])->render();
         } else {
             $cats = Cache::remember('ua_menu', 60, function () {
                 return $this->getMenu(true);
             });
-            $header = view('layouts.header.ua')->with(['block' => $this->block, 'cats' => $cats])->render();
+            $themes = Cache::remember('header_themes_ua', 24 * 60, function () {
+                return $this->getThemes(true);
+            });
+
+            $header = view('layouts.header.ua')
+                ->with(['block' => $this->block, 'cats' => $cats, 'themes' => $themes])->render();
         }
 
         $this->vars = array_add($this->vars, 'header', $header);
+//============================== Header =====================================
+//============================== Footer =====================================
 
         $tags = Cache::remember('tags_main', 60, function () {
             return Tag::select(['name', 'uname', 'alias'])->where(['approved' => 1])->skip(15)->take(15)->get();
@@ -205,18 +215,27 @@ class MainController extends Controller
                 $meds = \Fresh\Medpravda\Medtag::take(14)->get();
                 return \Fresh\Medpravda\Medicine::select('title', 'alias')->whereIn('alias', $meds->toArray())->get();
             });
+
+            $copyright = Cache::remember('copyright', 24 * 60, function () {
+                return About::find(7);
+            });
             $footer = view('layouts.footer.ru')
-                ->with(['cats' => $all_cats, 'tags' => $tags, 'med_tags' => $med_tags])->render();
+                ->with(['cats' => $all_cats, 'tags' => $tags, 'med_tags' => $med_tags, 'copyright' => $copyright])
+                ->render();
         } else {
             $med_tags = Cache::remember('med-tags', 24 * 60, function () {
                 $meds = \Fresh\Medpravda\Medtag::take(14)->get();
                 return \Fresh\Medpravda\Umedicine::select('title', 'alias')->whereIn('alias', $meds->toArray())->get();
             });
+            $copyright = Cache::remember('ua_copyright', 24 * 60, function () {
+                return About::find(8);
+            });
             $footer = view('layouts.footer.ua')
-                ->with(['cats' => $all_cats, 'tags' => $tags, 'med_tags' => $med_tags])->render();
+                ->with(['cats' => $all_cats, 'tags' => $tags, 'med_tags' => $med_tags, 'copyright' => $copyright])
+                ->render();
         }
         $this->vars = array_add($this->vars, 'footer', $footer);
-
+//============================== Footer =====================================
         if ($this->content) {
             $this->vars = array_add($this->vars, 'content', $this->content);
         }
@@ -271,7 +290,28 @@ class MainController extends Controller
             foreach ($cats as $cat) {
                 $route = $status ? 'ua_' : '';
                 $title = $status ? 'u' : '';
-                $menu->add($cat->category->{$title . 'title'}, ['route' => [$route . 'articles_cat', $cat->category->alias]]);
+                $menu->add(str_limit($cat->category->{$title . 'title'}, 32), ['route' => [$route . 'articles_cat', $cat->category->alias]]);
+            }
+        });
+    }
+
+    /**
+     * @param bool $status
+     * @return mixed
+     */
+    public function getThemes($status = false)
+    {
+        if ($status) {
+            $themes = \Fresh\Medpravda\Toptheme::select('title', 'link')->where([['approved', 1], ['loc', 'ua']])
+                ->orderBy('priority', 'asc')->take(8)->get();
+        } else {
+            $themes = \Fresh\Medpravda\Toptheme::select('title', 'link')->where([['approved', 1], ['loc', 'ru']])
+                ->orderBy('priority', 'asc')->take(8)->get();
+        }
+
+        return Menu::make('themes', function ($menu) use ($themes) {
+            foreach ($themes as $cat) {
+                $menu->add(str_limit($cat->title, 32))->link->href($cat->link);;
             }
         });
     }

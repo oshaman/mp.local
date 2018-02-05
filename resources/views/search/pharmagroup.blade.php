@@ -22,7 +22,7 @@
             @else
                 <div itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem" class="button">
                     <span itemprop="name" class="label1">
-                        Сортировка по фармакологической группе @if(!empty($farm)) : <a>{{ $farm->title }}</a>@endif
+                        Сортировка по фармакотерапевтической группе @if(!empty($farm)) : <a>{{ $farm->title }}</a>@endif
                     </span>
                     <meta itemprop="position" content="2"/>
                 </div>
@@ -33,9 +33,9 @@
 
         @include('search.nav')
     </div>
-    <div class="section-title-meta-icon">
+    <div class="section-title-meta-icon serch-height">
         <h3>
-            Сортировка препаратов по фармакологической группе:&nbsp;
+            Сортировка препаратов по фармакотерапевтической группе:&nbsp;
             @if(!empty($farm->title))
                 <a>{{ str_limit($farm->title, 32) }}</a>
             @endif

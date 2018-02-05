@@ -8,7 +8,7 @@
     </div>
 </div>
 <div class="">
-    {{ Form::label('alias', 'ЧПУ страницы') }}
+    {{ Form::label('alias', 'URL страницы') }}
     <div>
         {!! Form::text('alias', old('alias') ? : '' , ['placeholder'=>'psevdonim-stranici', 'id'=>'alias', 'class'=>'form-control eng-alias']) !!}
     </div>

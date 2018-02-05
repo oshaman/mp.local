@@ -34,6 +34,8 @@ class ArticlesRepository extends Repository
     {
         $data = $request->except('_token');
 
+//        dd($data);
+
         $article['title'] = $data['title'];
 
         if (!empty($data['description'])) {
@@ -90,9 +92,10 @@ class ArticlesRepository extends Repository
         $uarticle['id'] = $new->id;
         $uarticle['category_id'] = $new->category_id;
         $uarticle['alias'] = $new->alias;
+        $uarticle['priority'] = $new->priority ?? null;
         $ua = $this->uarticle->updateOrCreate($uarticle);
         $ua->save();
-        $ua->image()->create(['path' => str_random(10) . 'mp.jpg', 'alt' => 'Med Pravda', 'title' => 'Med Pravda']);
+        $ua->image()->create(['path' => str_random(10) . 'mp.jpg', 'alt' => 'Med Pravda UA', 'title' => 'Med Pravda UA']);
 
         $error = [];
         if (!empty($new)) {
@@ -111,7 +114,7 @@ class ArticlesRepository extends Repository
                 }
             } else {
                 try {
-                    $new->image()->create(['path' => str_random(10) . 'mp.jpg', 'alt' => 'Med Pravda', 'title' => 'Med Pravda']);
+                    $new->image()->create(['path' => str_random(10) . 'mp.jpg', 'alt' => 'Med Pravda RU', 'title' => 'Med Pravda RU']);
                 } catch (Exception $e) {
                     \Log::info('Ошибка обновления главного изображения статьи: ', $e->getMessage());
                     $error[] = ['img' => 'Ошибка обновления главного изображения статьи'];
@@ -218,6 +221,7 @@ class ArticlesRepository extends Repository
         if ($updated) {
             $uarticle['id'] = $article->id;
             $uarticle['alias'] = $article->alias;
+            $cat['priority'] = $article->priority ?? null;
             $cat['category_id'] = $article->category_id;
             $this->uarticle->updateOrCreate($uarticle, $cat);
         }
@@ -342,13 +346,22 @@ class ArticlesRepository extends Repository
     {
         if ($image->isValid()) {
 
-            $path = substr($alias, 0, 64) . '-' . time() . '.jpeg';
-
             $img = Image::make($image);
+            $mime = $img->mime();
+
+            switch ($mime) {
+                case 'image/png':
+                    $extention = '.png';
+                    break;
+                default:
+                    $extention = '.jpeg';
+            }
+
+            $path = substr($alias, 0, 64) . '-' . time() . $extention;
 
             $img->resize(Config::get('settings.articles_img')['main']['width'], null, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save(public_path() . '/asset/images/articles/ru/main/' . $path, 100);
+            })->save(public_path() . '/asset/images/articles/ru/main/' . $path, 80);
             $img->fit(Config::get('settings.articles_img')['middle']['width'], Config::get('settings.articles_img')['middle']['height'])
                 ->save(public_path() . '/asset/images/articles/ru/middle/' . $path, 100);
             $img->fit(Config::get('settings.articles_img')['small']['width'], Config::get('settings.articles_img')['small']['height'])
@@ -432,10 +445,11 @@ class ArticlesRepository extends Repository
      * @param int $take
      * @return mixed
      */
-    public function getPrems($cat, $take = 8)
+    public function getPrems($cat, $take = 100)
     {
         $where = [['category_id', $cat], ['priority', '>', 0], ['approved', 1]];
-        $prems = $this->model->where($where)->take($take)->orderBy('priority', 'desc')->with(['image'])->get();
+        $prems = $this->model->where($where)->take($take)->orderBy('priority', 'asc')->with(['image'])->get();
+
         return $prems;
     }
 

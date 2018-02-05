@@ -10,18 +10,25 @@ class ClassificationsController extends AdminController
 {
     protected $repository;
 
+    /**
+     * ClassificationsController constructor.
+     * @param ClassificationRepository $rep
+     */
     public function __construct(ClassificationRepository $rep)
     {
         $this->repository = $rep;
+        $this->template = 'admin.admin';
     }
 
+    /**
+     * @param AtxRequest $request
+     * @return mixed
+     */
     public function index(AtxRequest $request)
     {
         if (Gate::denies('UPDATE_MEDICINE')) {
             abort(404);
         }
-
-        $this->template = 'admin.admin';
 
         $atx = null;
         if ($request->isMethod('post')) {
@@ -32,13 +39,16 @@ class ClassificationsController extends AdminController
         return $this->renderOutput();
     }
 
+    /**
+     * @param AtxRequest $request
+     * @param $atx
+     * @return $this|\Illuminate\Http\RedirectResponse|mixed
+     */
     public function updateAtx(AtxRequest $request, $atx)
     {
         if (Gate::denies('UPDATE_MEDICINE')) {
             abort(404);
         }
-        $this->template = 'admin.admin';
-
 
         if ($request->isMethod('post')) {
 
@@ -49,6 +59,7 @@ class ClassificationsController extends AdminController
                 return redirect()->back()->withErrors(['message' => 'Ошибка изменения ATX, повторите попытку позже.']);
             }
         }
+        $this->mark = 'atx_admin';
 
         $this->content = view('admin.atx.edit')->with('class', $atx);
         return $this->renderOutput();

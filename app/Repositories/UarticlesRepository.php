@@ -40,7 +40,6 @@ class UarticlesRepository extends Repository
         }
 
         $new['description'] = $data['description'] ?? null;
-        $new['priority'] = $data['priority'] ?? null;
 
         if (!empty($article->image->alt)) {
             if ($data['imgalt'] !== $article->image->alt) {
@@ -167,9 +166,18 @@ class UarticlesRepository extends Repository
     {
         if ($image->isValid()) {
 
-            $path = substr($alias, 0, 64) . '-' . time() . '.jpeg';
-
             $img = Image::make($image);
+            $mime = $img->mime();
+
+            switch ($mime) {
+                case 'image/png':
+                    $extention = '.png';
+                    break;
+                default:
+                    $extention = '.jpeg';
+            }
+
+            $path = substr($alias, 0, 64) . '-slider-' . str_random(2) . time() . $extention;
 
             $img->resize(Config::get('settings.articles_img')['main']['width'], null, function ($constraint) {
                 $constraint->aspectRatio();
@@ -256,10 +264,10 @@ class UarticlesRepository extends Repository
      * @param int $take
      * @return mixed
      */
-    public function getPrems($cat, $take = 8)
+    public function getPrems($cat, $take = 100)
     {
         $where = [['category_id', $cat], ['priority', '>', 0], ['approved', 1]];
-        $prems = $this->model->where($where)->take($take)->orderBy('priority', 'desc')->with(['image'])->get();
+        $prems = $this->model->where($where)->take($take)->orderBy('priority', 'ask')->with(['image'])->get();
         return $prems;
     }
 

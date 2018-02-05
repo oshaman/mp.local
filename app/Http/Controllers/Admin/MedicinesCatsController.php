@@ -52,7 +52,7 @@ class MedicinesCatsController extends AdminController
         }
 
         $this->title = 'Редактирование категорий препаратов';
-
+        $this->mark = 'main_admin';
         $this->template = 'admin.admin';
         $cats = $this->repo->get();
         $this->content = view('admin.main.med_cats')->with('cats', $cats)->render();

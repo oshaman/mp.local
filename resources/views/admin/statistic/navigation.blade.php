@@ -11,6 +11,11 @@
             @else
                 <li><a href="{{ route('stats_class') }}">Статистика ATX</a></li>
             @endif
+            {{--@if('download_atx' == Route::currentRouteName())
+                <li><a class="btn btn-default">TEST</a></li>
+            @else
+                <li><a href="{{ route('download_atx') }}">TEST</a></li>
+            @endif--}}
         </ul>
     </div>
 </nav>

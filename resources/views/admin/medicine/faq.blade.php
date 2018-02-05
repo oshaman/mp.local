@@ -1,4 +1,4 @@
-<h2>Частые вопросы</h2>
+<h2>Частые вопросы, препарат - {{ $drug->title }}</h2>
 {!! Form::open(['url' => route('faq', ['medicine'=>$drug->alias, 'spec'=>$spec]), 'method' => 'post', 'class' => 'form-horizontal']) !!}
 <div class="panel-group" id="accordion">
     @if($drug->questions->isNotEmpty())

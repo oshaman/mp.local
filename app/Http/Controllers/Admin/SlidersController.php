@@ -36,6 +36,7 @@ class SlidersController extends AdminController
         $this->content = view('admin.main.sliders')->with(['sliders' => $sliders])->render();
 
         $this->title = 'Редактирование главного слайдера';
+        $this->mark = 'main_admin';
 
         $this->template = 'admin.admin';
         return $this->renderOutput();

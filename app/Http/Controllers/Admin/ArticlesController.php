@@ -3,7 +3,7 @@
 namespace Fresh\Medpravda\Http\Controllers\Admin;
 
 use Fresh\Medpravda\Category;
-use Fresh\Medpravda\Http\Requests\Article;
+use Fresh\Medpravda\Http\Requests\Article as Request;
 use Fresh\Medpravda\Repositories\ArticlesRepository;
 use Fresh\Medpravda\Repositories\CategoriesRepository;
 use Fresh\Medpravda\Repositories\TagsRepository;
@@ -21,9 +21,10 @@ class ArticlesController extends AdminController
         $this->template = 'admin.admin';
         $this->ru_rep = $rep;
         $this->ua_rep = $uarticlesRepository;
+        $this->mark = 'articles_admin';
     }
 
-    public function index(Article $request)
+    public function index(Request $request)
     {
         $this->title = 'Редактирование статей';
         if (Gate::denies('UPDATE_ARTICLES')) {
@@ -34,22 +35,26 @@ class ArticlesController extends AdminController
         if (!empty($data['param'])) {
             $data['value'] = $data['value'] ?? null;
             switch ($data['param']) {
-                case 1:
+                case 2:
                     $articles[] = $this->ru_rep->one($data['value']);
                     break;
-                case 2:
-                    $articles = $this->ru_rep->get(['title', 'id', 'alias', 'created_at'], false, 25, ['title' => $data['value']]);
+                case 1:
+                    $articles = $this->ru_rep->get('*', false, 25,
+                        ['title' => $data['value']], false, ['category']);
                     break;
                 case 3:
-                    $articles = $this->ru_rep->get(['title', 'id', 'alias', 'created_at'], false, 25, ['approved' => 0], ['created_at', 'desc']);
+                    $articles = $this->ru_rep->get('*',
+                        false, 25, ['approved' => 0], ['created_at', 'desc'], ['category']);
                     if ($articles) $articles->appends(['param' => $data['param']])->links();
                     break;
                 default:
-                    $articles = $this->ru_rep->get(['alias', 'title', 'created_at', 'id'], false, 25, ['approved' => 0], ['created_at', 'desc']);
+                    $articles = $this->ru_rep->get('*',
+                        false, 25, ['approved' => 0], ['created_at', 'desc'], ['category']);
                     if ($articles) $articles->appends(['param' => $data['param']])->links();
             }
         } else {
-            $articles = $this->ru_rep->get(['alias', 'title', 'created_at', 'id'], false, 25, ['approved' => 1], ['created_at', 'desc']);
+            $articles = $this->ru_rep->get('*', false, 25, ['approved' => 1],
+                ['created_at', 'desc'], ['category']);
         }
 
         $this->content = view('admin.articles.show')->with(['articles' => $articles])->render();
@@ -60,7 +65,7 @@ class ArticlesController extends AdminController
 
     }
 
-    public function create(Article $request)
+    public function create(Request $request)
     {
         $this->title = 'Добавление статьи';
         if (Gate::denies('UPDATE_ARTICLES')) {
@@ -68,7 +73,7 @@ class ArticlesController extends AdminController
         }
 
         $this->jss = '
-                <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
                 <script src="' . asset('js/translate.js') . '"></script>
             ';
         $this->tiny = true;
@@ -101,7 +106,7 @@ class ArticlesController extends AdminController
 
     }
 
-    public function edit(Article $request, $spec, $article)
+    public function edit(Request $request, $spec, $article)
     {
         if (Gate::denies('UPDATE_ARTICLES')) {
             abort(404);

@@ -56,7 +56,7 @@
         <div class="panel panel-info alert alert-info">
             <div class="panel-heading">Общее</div>
             <div class="panel-body">
-                {{ Form::label('alias', 'ЧПУ страницы') }}
+                {{ Form::label('alias', 'URL страницы') }}
                 <div>
                     {!! Form::text('alias', old('alias') ? : ($drug->alias ?? '') ,
                      ['placeholder'=>'aspirin', 'id'=>'alias', 'class'=>'form-control eng-alias']) !!}
@@ -230,6 +230,7 @@
 <hr>
 <!-- SEO -->
 {!! Form::button('Сохранить', ['class' => 'btn btn-primary','type'=>'submit']) !!}
+<hr>
 {!! Form::close() !!}
 <div class="shablon" style="display:none">
     <div>

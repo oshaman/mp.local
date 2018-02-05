@@ -8,8 +8,8 @@
         {{ Form::label('param', 'Критерий поиска') }}
         {!! Form::select('param',
                     [
-                        1=>'ЧПУ',
-                        2=>'Название',
+                        1=>'Название',
+                        2=>'URL',
                         3 =>'На паузе',
                     ], old('val') ? : 1, ['class'=>'form-control'])
             !!}
@@ -21,16 +21,17 @@
     {!! Form::close() !!}
 </div>
 <hr>
-{{--<div class="">
+<div class="">
     {!! Html::link(route('medicine_create'),'Создать препарат',['class' => 'btn btn-success']) !!}
-</div>--}}
+</div>
+<hr>
 <div class="">
     <table class="table">
         <thead>
         <tr>
             <th>ID</th>
             <th>Название</th>
-            <th>ЧПУ</th>
+            <th>URL</th>
             <th></th>
             <th></th>
         </tr>
@@ -48,9 +49,11 @@
                         {!! Form::close() !!}
                     </td>
                     <td>
-                        {!! Form::open(['url' => route('medicine_delete',['drug'=> $drug->alias]),'class'=>'form-horizontal','method'=>'GET']) !!}
-                        {!! Form::button('Удалить', ['class' => 'btn btn-danger','type'=>'submit']) !!}
-                        {!! Form::close() !!}
+                        {{--@if(Auth::user()->hasRole('admin'))
+                            {!! Form::open(['url' => route('medicine_delete',['drug'=> $drug->alias]),'class'=>'form-horizontal','method'=>'GET']) !!}
+                            {!! Form::button('Удалить', ['class' => 'btn btn-danger','type'=>'submit']) !!}
+                            {!! Form::close() !!}
+                        @endif--}}
                     </td>
                 </tr>
             @endforeach

@@ -52,7 +52,95 @@ class MedicineRepository extends Repository
      */
     public function createMedicine($request)
     {
-        dd($request->all());
+        $input = $request->except('_token', 'slider');
+
+        // SEO handle
+        if (!empty($input['seo_title'] || !empty($input['seo_keywords']) || !empty($input['seo_description']) || !empty($input['seo_text'])
+            || !empty($input['og_image']) || !empty($input['og_title']) || !empty($input['og_description']))) {
+            $obj = new \stdClass;
+            $obj->seo_title = $input['seo_title'] ?? '';
+            $obj->seo_keywords = $input['seo_keywords'] ?? '';
+            $obj->seo_description = $input['seo_description'] ?? '';
+            $obj->seo_text = $input['seo_text'] ?? '';
+            $obj->og_image = $input['og_image'] ?? '';
+            $obj->og_title = $input['og_title'] ?? '';
+            $obj->og_description = $input['og_description'] ?? '';
+            $input['seo'] = json_encode($obj);
+        }
+        // SEO handle
+        //General=====================================>
+        $general['fabricator_id'] = $input['fabricator_name_id'] ?? 10000;
+        $general['innname_id'] = $input['innname_id'] ?? 10000;
+        $general['pharmagroup_id'] = $input['pharmagroup_name_id'] ?? 10000;
+        $general['classification_id'] = $input['classification_id'] ?? 10000;
+        $general['form_id'] = $input['form_id'] ?? 1;
+        $general['approved'] = $input['approved'] ?? 0;
+        $general['alias'] = $input['alias'];
+        $general['title'] = $input['title'];
+
+
+        DB::transaction(function () use ($general) {
+            DB::table('medicines')->insert($general);
+            $model = Medicine::where(['alias' => $general['alias']])->first();
+            $general['id'] = $model['id'];
+            DB::table('umedicines')->insert($general);
+            DB::table('amedicines')->insert($general);
+            DB::table('uamedicines')->insert($general);
+        });
+
+        $model = Medicine::where(['alias' => $input['alias']])->first();
+        $umodel = Umedicine::where(['alias' => $input['alias']])->first();
+
+        if (isset($model) && isset($umodel) && isset($input['substance_id']) && count(array_filter($input['substance_id'])) > 0) {
+            DB::transaction(function () use ($input, $model, $umodel) {
+                $model->substance()->attach($input['substance_id']);
+                $umodel->substance()->attach($input['substance_id']);
+            });
+        }
+        //General=====================================>
+
+        $input = array_map(function ($n) {
+            $re = '/&nbsp;/';
+            $n = preg_replace($re, ' ', $n);
+            return $n;
+        }, $input);
+
+        try {
+            $updated = $model->fill($input)->update();
+        } catch (Exception $e) {
+            \Log::info('Ошибка записи препарата: ', $e->getMessage());
+            return ['error' => 'Ошибка записи препарата'];
+        }
+
+        if (!empty($updated)) {
+            //Slider
+            $slider_path = [];
+            if ($request->hasFile('slider')) {
+                $i = 0;
+                foreach ($request->file('slider') as $slider) {
+                    $slider_path[$i]['alt'] = $input['imgalt'][$i];
+                    $slider_path[$i]['title'] = $input['imgtitle'][$i];
+                    $slider_path[$i]['path'] = $this->sliderImg($slider, $model->alias);
+                    $i++;
+                }
+
+            }
+
+            // slider imgs
+            if (!empty($slider_path)) {
+                try {
+
+                    $model->image()->createMany($slider_path);
+                } catch (Exception $e) {
+                    \Log::info('Ошибка записи фотографий слайдера: ', $e->getMessage());
+                    $error[] = ['slider' => 'Ошибка записи фотографий слайдера'];
+                }
+            }
+            //Slider
+        }
+
+//        dd($result);
+        return ['status' => 'Препарат добавлен', 'alias' => $model->alias];
     }
 
     /**
@@ -169,7 +257,7 @@ class MedicineRepository extends Repository
         }
         array_forget($input, 'approved');
 
-        if (count($input['substance_id']) > 0) {
+        if (isset($input['substance_id']) && count($input['substance_id']) > 0) {
             DB::transaction(function () use ($input, $model) {
                 $model->substance()->sync($input['substance_id']);
                 $umodel = Umedicine::firstOrCreate(['alias' => $model->alias]);
@@ -230,9 +318,18 @@ class MedicineRepository extends Repository
     {
         if ($image->isValid()) {
 
-            $path = substr($alias, 0, 64) . '-slider-' . str_random(2) . time() . '.jpeg';
-
             $img = Image::make($image);
+            $mime = $img->mime();
+
+            switch ($mime) {
+                case 'image/png':
+                    $extention = '.png';
+                    break;
+                default:
+                    $extention = '.jpeg';
+            }
+
+            $path = substr($alias, 0, 64) . '-slider-' . str_random(2) . time() . $extention;
 
             $img->resize(config('settings.medicine_img')['main']['width'],
                 config('settings.medicine_img')['main']['height'],

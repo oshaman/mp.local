@@ -20,39 +20,41 @@
             <nav class="mobile-display-none">
                 <div>
                     @if('search_alpha' == Route::currentRouteName())
-                        <div><a>Препараты</a></div>
+                        <div class="primary-menu"><a>Препараты</a></div>
                     @else
-                        <div><a href="{{ route('search_alpha') }}">Препараты</a></div>
+                        <div class="primary-menu"><a href="{{ route('search_alpha') }}">Препараты</a></div>
                     @endif
                 </div>
                 <div>
                     @if('themes' == Route::currentRouteName())
-                        <div><a>Популярные темы</a></div>
+                        <div class="primary-menu"><a>Популярные темы</a></div>
+                        <div class="sub-menu">{!! $themes->asUl() !!}</div>
                     @else
-                        <div><a href="{{ route('themes') }}">Популярные темы</a></div>
+                        <div class="primary-menu"><a href="{{ route('themes') }}">Популярные темы</a></div>
+                        <div class="sub-menu">{!! $themes->asUl() !!}</div>
                     @endif
                 </div>
                 <div>
                     @if('top_articles' == Route::currentRouteName())
-                        <div><a>Топ статьи</a></div>
+                        <div class="primary-menu"><a>Топ статьи</a></div>
                     @else
-                        <div><a href="{{ route('top_articles') }}">Топ статьи</a></div>
+                        <div class="primary-menu"><a href="{{ route('top_articles') }}">Топ статьи</a></div>
                     @endif
                 </div>
                 <div>
                     @if('articles' == Route::currentRouteName() && null == Request::segment(2))
-                        <div><a>Свежие статьи</a></div>
-                        <div>{!! $menu->asUl() !!}</div>
+                        <div class="primary-menu"><a>Свежие статьи</a></div>
+                        <div class="sub-menu">{!! $menu->asUl() !!}</div>
                     @else
-                        <div><a href="{{ route('articles') }}">Свежие статьи</a></div>
-                        <div>{!! $menu->asUl() !!}</div>
+                        <div class="primary-menu"><a href="{{ route('articles') }}">Свежие статьи</a></div>
+                        <div class="sub-menu">{!! $menu->asUl() !!}</div>
                     @endif
                 </div>
                 <div>
                     @if('adv' == Route::currentRouteName())
-                        <div><a>Реклама</a></div>
+                        <div class="primary-menu"><a>Реклама</a></div>
                     @else
-                        <div><a href="{{ route('adv') }}">Реклама</a></div>
+                        <div class="primary-menu"><a href="{{ route('adv') }}">Реклама</a></div>
                     @endif
                 </div>
             </nav>
@@ -62,7 +64,8 @@
         </div>
         <div class="lang-menu mobile-display-none">
             <span class="active">Рус</span>
-            <a href="{{ str_replace(env('APP_URL'), env('APP_URL').'/ua', Request::url()) }}">Укр</a>
+            <a>Укр</a>
+            {{--<a href="{{ str_replace(env('APP_URL'), env('APP_URL').'/ua', Request::url()) }}">Укр</a>--}}
         </div>
     </div>
 </header>

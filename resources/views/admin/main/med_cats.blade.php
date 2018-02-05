@@ -25,17 +25,17 @@
                                        value="{{ $cat->utitle or '' }}" class="form-control">
                             </div>
                             <div class="form-group col-lg-4">
-                                {!! Form::label('ЧПУ препарата №1') !!}
+                                {!! Form::label('URL препарата №1') !!}
                                 <input placeholder="meradazol" id="alias1" name="alias1" type="text"
                                        value="{{ $cat->alias1 or '' }}" class="form-control">
                             </div>
                             <div class="form-group col-lg-4">
-                                {!! Form::label('ЧПУ препарата №2') !!}
+                                {!! Form::label('URL препарата №2') !!}
                                 <input placeholder="meradazol" id="alias2" name="alias2" type="text"
                                        value="{{ $cat->alias2 or '' }}" class="form-control">
                             </div>
                             <div class="form-group col-lg-4">
-                                {!! Form::label('ЧПУ препарата №3') !!}
+                                {!! Form::label('URL препарата №3') !!}
                                 <input placeholder="meradazol" id="alias3" name="alias3" type="text"
                                        value="{{ $cat->alias3 or '' }}" class="form-control">
                             </div>

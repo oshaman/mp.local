@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Classification extends Model
 {
-    protected $fillable = ['name', 'class', 'parent'];
+    protected $fillable = ['name', 'uname', 'class', 'parent'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

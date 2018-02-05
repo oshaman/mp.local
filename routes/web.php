@@ -64,7 +64,7 @@ Route::group(['prefix' => 'ua'], function () {
     Route::group(['prefix' => 'fresh-articles'], function () {
         Route::get('/{ua_article_alias?}', 'ArticlesController@uaShow')->name('ua_articles')->where(['ua_article_alias' => '[\w-]+']);
         Route::get('cat/{cat_alias}', 'ArticlesController@uaCats')->name('ua_articles_cat')->where(['cat_alias' => '[\w-]+']);
-        Route::get('/tag/{tag_alias}', 'ArticlesController@uaTag')
+        Route::get('/teg/{tag_alias}', 'ArticlesController@uaTag')
             ->name('ua_articles_tag')->where(['tag_alias' => '[\w-]+']);
     });
 //        SEARCH ===============================>
@@ -123,7 +123,7 @@ Route::get('/top-articles', 'ArticlesController@topArticles')->name('top_article
 Route::group(['prefix' => 'fresh-articles'], function () {
     Route::get('/{article_alias?}', 'ArticlesController@show')->name('articles')->where(['article_alias' => '[\w-]+']);
     Route::get('/cat/{cat_alias}', 'ArticlesController@cats')->name('articles_cat')->where(['cat_alias' => '[\w-]+']);
-    Route::get('/tag/{tag_alias}', 'ArticlesController@tag')
+    Route::get('/teg/{tag_alias}', 'ArticlesController@tag')
         ->name('articles_tag')->where(['tag_alias' => '[\w-]+']);
 });
 
@@ -214,6 +214,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::match(['get', 'post'], 'convention', 'Admin\StaticsController@updateConvention')->name('convention_admin');
 //        conditions
         Route::match(['get', 'post'], 'conditions', 'Admin\StaticsController@updateConditions')->name('conditions_admin');
+//        footer copyright
+        Route::match(['get', 'post'], 'copyright', 'Admin\StaticsController@updateCopyright')->name('footer_copyright_admin');
+
     });
     /**
      * Main
@@ -225,6 +228,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
     Route::group(['prefix' => 'statistics'], function () {
         Route::match(['post', 'get'], 'medicine', 'Admin\StatisticController@medicine')->name('stats_medicine');
         Route::match(['post', 'get'], 'class', 'Admin\StatisticController@class')->name('stats_class');
+//        Route::match(['post', 'get'], 'get-atx', 'Admin\StatisticController@downloadClass')->name('download_atx');
+//        Route::match(['post', 'get'], 'atx-charts', 'Admin\StatisticController@showCharts')->name('charts_atx');
     });
     /**
      * Admin SEO
@@ -234,11 +239,27 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::match(['post', 'get'], 'edit/{seo}', 'Admin\SeoController@edit')->name('seo_update')->where('seo', '[0-9]+');
     });
     /**
-     * Admin ATX SEO
+     * Admin ATX
      */
     Route::group(['prefix' => 'atx'], function () {
         Route::match(['post', 'get'], '/', 'Admin\ClassificationsController@index')->name('atx_admin');
         Route::match(['post', 'get'], 'edit/{atx}', 'Admin\ClassificationsController@updateAtx')->name('atx_update')->where('atx', '[0-9]+');
+    });
+    /**
+     * Admin PHARMGROUP
+     */
+    Route::group(['prefix' => 'pharm'], function () {
+        Route::match(['post', 'get'], '/', 'Admin\PharmController@index')->name('pharm_admin');
+        Route::match(['post', 'get'], 'edit/{pharm}', 'Admin\PharmController@updatePharm')->name('pharm_update')->where('pharm', '[0-9]+');
+    });
+    /**
+     * Admin FABRICATORS
+     */
+    Route::group(['prefix' => 'fabricator'], function () {
+        Route::match(['post', 'get'], '/', 'Admin\FabricatorsController@index')->name('fabricator_admin');
+        Route::match(['get', 'post'], 'create', ['uses' => 'Admin\FabricatorsController@store', 'as' => 'fabricator_create']);
+        Route::match(['post', 'get'], 'edit/{fabricator_bind}', 'Admin\FabricatorsController@updateFabricator')
+            ->name('fabricator_update')->where('fabricator_bind', '[0-9]+');
     });
     /**
      * Med Tags

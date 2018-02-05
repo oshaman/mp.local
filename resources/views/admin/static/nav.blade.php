@@ -26,6 +26,11 @@
             @else
                 <li><a href="{{ route('conditions_admin') }}">Условия</a></li>
             @endif
+                @if('footer_copyright_admin' == Route::currentRouteName())
+                    <li><a class="btn btn-default">Сopyright</a></li>
+                @else
+                    <li><a href="{{ route('footer_copyright_admin') }}">Сopyright</a></li>
+                @endif
         </ul>
     </div>
 </nav>

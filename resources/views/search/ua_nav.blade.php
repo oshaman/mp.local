@@ -15,7 +15,7 @@
     </a>
     <a href="{{ route('search_farm_u') }}"
        class="nav-button-grey @if('search_farm_u' == Route::currentRouteName()) active @endif">
-        фармотерапевтичною групою
+        фармакотерапевтичною групою
     </a>
     <a href="{{ route('search_fabricator_u') }}"
        class="nav-button-grey @if('search_fabricator_u' == Route::currentRouteName()) active @endif">

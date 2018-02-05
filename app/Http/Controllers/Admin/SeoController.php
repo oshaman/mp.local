@@ -17,7 +17,7 @@ class SeoController extends AdminController
         $this->template = 'admin.admin';
         $this->title = 'SEO';
         $this->tiny = true;
-
+        $this->mark = 'static';
     }
 
     /**

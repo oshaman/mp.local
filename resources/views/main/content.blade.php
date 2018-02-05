@@ -20,10 +20,10 @@
                                  alt="{{ $slider->alt }}" title="{{ $slider->title }}">
                         </a>
                         <div class="slider-info">
-                            <div class="slider-info-text">
+                            <a href="{{ $slider->link ?? route('sort') }}" class="slider-info-text">
                                 <h2>{{ $slider->description }}</h2>
                                 <p>{{ $slider->text }}</p>
-                            </div>
+                            </a>
                             <a href="{{ $slider->link ?? route('sort') }}" class="button-blue">Подробнее</a>
                     </div>
                 </div>
@@ -169,6 +169,7 @@
                                 <img src="{{ asset('asset/images/theme').'/'.$theme->path }}"
                                      alt="{{ $theme->alt ?? '' }}"
                                      title="{{ $theme->imgtitle ?? ($theme->alt ?? '') }}">
+                                <div class="views"></div>
                             </div>
                             <div class="article-info">
                                 <h4 class="article-title">{{ $theme->title }}</h4>
@@ -264,6 +265,9 @@
                                             </div>
                                             <div class="article-info">
                                                 <h4 class="article-title">{{ $article->title }}</h4>
+                                                <p class="article-category">
+                                                    {{ str_limit($article->description, 24) }}
+                                                </p>
                                                 <div class="date-link">
                                                     <div class="article-date">
                                                         {{ $article->created_at->format('d')
@@ -283,7 +287,7 @@
                     </div>
                 </div>
                 <div>
-                    <a href="{{ route('articles_cat', ['cat_alias'=>'top-stati']) }}"
+                    <a href="{{ route('top_articles') }}"
                        class="button-white">Больше статей</a>
                 </div>
             </section>

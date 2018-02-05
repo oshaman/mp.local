@@ -16,6 +16,29 @@ class AtxRequest extends FormRequest
         return \Auth::user()->canDo('UPDATE_MEDICINE');
     }
 
+    public function getValidatorInstance()
+    {
+        $validator = parent::getValidatorInstance();
+
+        $validator->sometimes('name', ['required', 'max:255', 'string'], function ($input) {
+
+            if ($this->route()->named('atx_update') && $this->isMethod('post')) {
+                return true;
+            }
+
+            return false;
+        });
+        $validator->sometimes('uname', ['required', 'max:255', 'string'], function ($input) {
+
+            if ($this->route()->named('atx_update') && $this->isMethod('post')) {
+                return true;
+            }
+
+            return false;
+        });
+
+        return $validator;
+    }
     /**
      * Get the validation rules that apply to the request.
      *

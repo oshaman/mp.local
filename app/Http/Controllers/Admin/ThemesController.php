@@ -59,6 +59,7 @@ class ThemesController extends AdminController
             return redirect()->route('themes_update', ['theme' => $result['id']])->with($result);
         }
 
+        $this->mark = 'themes_admin';
 
         $this->content = view('admin.themes.add')->render();
 
@@ -90,6 +91,7 @@ class ThemesController extends AdminController
         } else {
             $theme->loc_id = 2;
         }
+        $this->mark = 'themes_admin';
 
         $this->content = view('admin.themes.edit')
             ->with(['theme' => $theme])

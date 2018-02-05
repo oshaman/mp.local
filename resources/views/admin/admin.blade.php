@@ -71,6 +71,12 @@
 @endsection
 @endif
 
+@if(!empty('js'))
+@section('js')
+    {!! $js !!}
+@endsection
+@endif
+
 @section('navbar')
     @isset($nav)
         <div class="navbar-header">
@@ -78,8 +84,15 @@
         </div>
     @endisset
 @endsection
+
 @section('content')
     {!! $content !!}
+@endsection
+
+@section('mark')
+    @if(!empty($mark))
+        <span class="mark-menu" data-class="{{ $mark }}"></span>
+    @endif
 @endsection
 
 @section('jss')

@@ -96,4 +96,58 @@ class StatisticsRepository
         }
         return $res;
     }
+
+    public function downloadAtx()
+    {
+        $classes = DB::table('download_classes')->get();
+        $tot_record_found = 0;
+        if (count($classes) > 0) {
+            $tot_record_found = 1;
+
+            $CsvData = array('ATX|Год|Полугодие|Квартал|Месяц|Неделя');
+            foreach ($classes as $value) {
+                $CsvData[] = $value->class_alias . '|' . $value->yearCount . '|' . $value->semesterCount
+                    . '|' . $value->quarterCount . '|' . $value->monthCount . '|' . $value->weekCount;
+            }
+
+            $filename = date('Y-m-d') . ".csv";
+            $file_path = base_path() . '/' . $filename;
+            $file = fopen($file_path, "w+");
+            foreach ($CsvData as $exp_data) {
+                fputcsv($file, explode('|', $exp_data));
+            }
+            fclose($file);
+
+            $headers = ['Content-Type' => 'application/csv'];
+            return ['filepath' => $file_path, 'filename' => $filename, 'headers' => $headers];
+        }
+        return ['error' => 'Записей не найдено.'];
+
+    }
+
+    public function getAtxChart()
+    {
+        $data = ['A', 'B', 'C', 'D', 'G', 'H', 'J', 'L', 'M', 'N', 'P', 'R', 'S', 'V'];
+
+        $quarter = [];
+        foreach ($data as $class) {
+            $classification = QuarterClass::select(DB::raw('(\'' . $class . '\') AS alias, count(class_alias) AS nums'))
+                ->where('class_alias', 'like', $class . '%')->first();
+
+            array_push($quarter, array("y" => $classification->nums, "label" => $classification->alias));
+
+        }
+        $month = [];
+        foreach ($data as $class) {
+            $classification = MonthClass::select(DB::raw('(\'' . $class . '\') AS alias, count(class_alias) AS nums'))
+                ->where('class_alias', 'like', $class . '%')->first();
+
+            array_push($month, array("y" => $classification->nums, "label" => $classification->alias));
+
+        }
+
+        $res['quarter'] = json_encode($quarter, JSON_NUMERIC_CHECK);
+        $res['month'] = json_encode($month, JSON_NUMERIC_CHECK);
+        return $res;
+    }
 }

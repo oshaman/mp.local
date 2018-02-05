@@ -28,7 +28,7 @@
         {!! Form::text('utitle', old('utitle') ? : ($category->utitle ?? ''),
            ['placeholder'=>'Психиатр...', 'id'=>'utitle', 'class'=>'form-control']) !!}
     </div>
-    {{ Form::label('title', 'ЧПУ категории') }}
+    {{ Form::label('title', 'URL категории') }}
     <div class="">
         {!! Form::text('alias', old('alias') ? : ($category->alias ?? ''),
             ['placeholder'=>'psihiatr...', 'id'=>'alias', 'class'=>'form-control eng-alias']) !!}

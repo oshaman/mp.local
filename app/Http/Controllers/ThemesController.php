@@ -8,6 +8,7 @@ use Fresh\Medpravda\Repositories\ThemesRepository;
 use Fresh\Medpravda\Repositories\UarticlesRepository;
 use Illuminate\Http\Request;
 use Cache;
+use DB;
 
 class ThemesController extends MainController
 {
@@ -32,7 +33,7 @@ class ThemesController extends MainController
     public function uaThemes(Request $request)
     {
 //       Last Modified
-        /*$lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `topthemes` WHERE `loc`=\'ua\'');
+        $lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `topthemes` WHERE `loc`=\'ua\'');
         $LastModified_unix = strtotime($lastM[0]->last); // время последнего изменения страницы
         $this->lastModified = gmdate("D, d M Y H:i:s \G\M\T", $LastModified_unix);
 
@@ -42,7 +43,7 @@ class ThemesController extends MainController
         }
         if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
             return response('304 Not Modified', 304);
-        }*/
+        }
 //      Last Modified
 
         $this->loc = 'ua';
@@ -64,7 +65,7 @@ class ThemesController extends MainController
     public function themes(Request $request)
     {
         //       Last Modified
-        /*$lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `topthemes` WHERE `loc`=\'ru\'');
+        $lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `topthemes` WHERE `loc`=\'ru\'');
         $LastModified_unix = strtotime($lastM[0]->last); // время последнего изменения страницы
         $this->lastModified = gmdate("D, d M Y H:i:s \G\M\T", $LastModified_unix);
 
@@ -74,10 +75,9 @@ class ThemesController extends MainController
         }
         if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
             return response('304 Not Modified', 304);
-        }*/
+        }
 //      Last Modified
         $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        Cache::flush();
         $this->content = Cache::remember('themes' . $currentPage, 60, function () {
             $themes = $this->repository->get('*', false, 8,
                 [['approved', 1], ['loc', 'ru']], ['priority', 'asc']);

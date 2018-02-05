@@ -43,6 +43,7 @@ class MedtagController extends AdminController
 
         $this->content = view('admin.main.tags.content')->with('tags', $tags)->render();
         $this->title = 'TAGS';
+        $this->mark = 'main_admin';
 
         return $this->renderOutput();
     }

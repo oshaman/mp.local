@@ -43,7 +43,7 @@
         @include('search.nav')
     </div>
 
-    <div class="section-title-meta-icon">
+    <div class="section-title-meta-icon serch-height">
         <h3>
             Сортировка препаратов по ATX:&nbsp;
             @if(!empty($letter))

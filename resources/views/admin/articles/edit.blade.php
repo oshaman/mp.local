@@ -1,5 +1,16 @@
 @include('admin.articles.nav')
 <h2>Редактирование статьи</h2>
+<hr>
+@if('ru' == $spec)
+    {!! Form::open(['url' => route('edit_article',['spec' => 'ua','article'=> $article->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
+    {!! Form::button('Редактировать UA', ['class' => 'btn btn-warning','type'=>'submit']) !!}
+    {!! Form::close() !!}
+@else
+    {!! Form::open(['url' => route('edit_article',['spec' => 'ru','article'=> $article->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
+    {!! Form::button('Редактировать RU', ['class' => 'btn btn-warning','type'=>'submit']) !!}
+    {!! Form::close() !!}
+@endif
+<hr>
 {!! Form::open(['url'=>route('edit_article', ['spec' => $spec , 'article' => $article->id]),
     'method'=>'POST', 'class'=>'form-horizontal', 'files'=>true]) !!}
 <div class="">
@@ -9,20 +20,20 @@
     </div>
 </div>
 @if('ru' == $spec)
-<div class="">
-    {{ Form::label('alias', 'ЧПУ страницы') }}
-    <div>
-        {!! Form::text('alias', old('alias') ? : ($article->alias ?? '') , ['placeholder'=>'psevdonim-stranici', 'id'=>'alias', 'class'=>'form-control eng-alias']) !!}
+    <div class="">
+        {{ Form::label('alias', 'URL страницы') }}
+        <div>
+            {!! Form::text('alias', old('alias') ? : ($article->alias ?? '') , ['placeholder'=>'psevdonim-stranici', 'id'=>'alias', 'class'=>'form-control eng-alias']) !!}
+        </div>
     </div>
-</div>
-<div class="">
-    {{ Form::label('category_id', 'Категория') }}
-    <div>
-        {!! Form::select('category_id', $cats ?? [],
-            old('category_id') ? : ($article->category_id ?? '') , [ 'class'=>'form-control', 'placeholder'=>'Категория'])
-        !!}
+    <div class="">
+        {{ Form::label('category_id', 'Категория') }}
+        <div>
+            {!! Form::select('category_id', $cats ?? [],
+                old('category_id') ? : ($article->category_id ?? '') , [ 'class'=>'form-control', 'placeholder'=>'Категория'])
+            !!}
+        </div>
     </div>
-</div>
 @endif
 <div class="">
     {{ Form::label('img', 'Основное изображение') }}
@@ -53,6 +64,7 @@
          ['placeholder'=>'description', 'id'=>'description', 'class'=>'form-control']) !!}
     </div>
 </div>
+@if('ru' == $spec)
 <div class="">
     {{ Form::label('priority', 'Приоритет(0-255)') }}
     <div>
@@ -60,7 +72,6 @@
          ['id'=>'priority', 'class'=>'form-control']) !!}
     </div>
 </div>
-@if('ru' == $spec)
 <div class="">
     {{ Form::label('tags', 'Тэги') }}
     @if(!empty($tags))

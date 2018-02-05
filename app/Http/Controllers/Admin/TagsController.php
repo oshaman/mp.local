@@ -20,6 +20,7 @@ class TagsController extends AdminController
                 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
                 <script src="' . asset('js/translate.js') . '"></script>
             ';
+        $this->mark = 'articles_admin';
     }
 
     /**

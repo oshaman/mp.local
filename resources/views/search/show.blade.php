@@ -23,7 +23,7 @@
         <h1 class="head-title">Результаты поиска по запросу:&nbsp;<a href="#!">{{ $search ?? '' }}</a></h1>
     </div>
 
-    <div class="section-title-meta-icon">
+    <div class="section-title-meta-icon serch-height">
         @if(!empty($search))
             <h3>Поиск препаратов:&nbsp;<a href="#!">{{ $search .' ('.count($titles['medicines'] ?? 0).')'}}</a></h3>
         @else
@@ -62,7 +62,7 @@
     </div>
     @if(!empty($titles['articles']))
         <section>
-            <div class="section-title-meta-icon">
+            <div class="section-title-meta-icon serch-height">
                 <h3>Поиск статей:&nbsp;<a href="#!">{{ $search }} </a></h3>
                 <div class="section-meta-icon">
                     <div class="section-icon">

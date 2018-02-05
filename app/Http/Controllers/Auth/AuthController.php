@@ -22,7 +22,7 @@ class AuthController extends Controller
     use AuthenticatesUsers;
 
     protected $loginView;
-    protected $decayMinutes = 10;
+    protected $decayMinutes = 1;
     /**
      * Where to redirect users after login.
      *
@@ -95,6 +95,6 @@ class AuthController extends Controller
             return redirect('/');
         }
 
-        return redirect()->intended('');
+        return redirect()->intended('--');
     }
 }

@@ -22,7 +22,7 @@
                 </div>
             </div>
             {{--BreadCrumbs--}}
-            <h1 class="head-title">{{ $medicine->title }} - Інструкція</h1>
+            <h1 class="head-title">{{ $medicine->title }}</h1>
             <div class="clone-to" data-number="3"></div>
             <div class="product-nav">
                 <a class="nav-button-grey active">Офіційна інструкція</a>

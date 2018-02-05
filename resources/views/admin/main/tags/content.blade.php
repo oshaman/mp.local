@@ -3,7 +3,7 @@
 
 {!! Form::open(['url' => route('med_tags_admin'), 'class'=>'form-horizontal','method'=>'POST' ]) !!}
 <div class="">
-    {{ Form::label('alias', 'ЧПУ препарата') }}
+    {{ Form::label('alias', 'URL препарата') }}
     <div class="">
         {!! Form::text('alias', old('alias') ? : '' ,
                 ['placeholder'=>'validol...', 'id'=>'alias', 'class'=>'form-control', 'required'=>'required']) !!}

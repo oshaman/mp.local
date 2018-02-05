@@ -67,7 +67,7 @@
 </noscript>
 <!-- End Google Tag Manager (noscript) -->
 <!-- REKLAMA BODY -->
-<div class="body-promotion desktop">
+{{--<div class="body-promotion desktop">
     <img src="{{ asset('assets') }}/images/promotion/body-rek.jpg" alt="">
 </div>
 <div class="body-promotion tablet">
@@ -75,7 +75,7 @@
 </div>
 <div class="body-promotion mobile clone-from" data-number="1">
     <img src="{{ asset('assets') }}/images/promotion/body-rek-mob.jpg" alt="">
-</div>
+</div>--}}
 <!-- end REKLAMA BODY -->
 <!-- WRAP -->
 <div class="main-wrapper

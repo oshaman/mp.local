@@ -90,17 +90,14 @@ class SearchController extends MainController
      */
     public function presearch(Request $request)
     {
-
         if ($request->isMethod('post')) {
             $result = $this->search_rep->getSearch($request);
 
 //            var_dump($result);die;
             return $this->content = view('search.result')->with(['result' => $result])->render();
         } else {
-            $this->content = view('search.result')->render();
+            return $this->content = view('search.result')->render();
         }
-
-        return $this->renderOutput();
     }
 
     /**
@@ -260,6 +257,12 @@ class SearchController extends MainController
             $count = $this->c_rep->atxIsset($val);
 
             if ($count > 0) {
+                if (!Crawler::isCrawler()) {
+                    $stats = new ClassificationStatistic();
+
+                    $stats->fill(['class_alias' => $val, 'created_at' => date('Y-m-d H:i:s')]);
+                    $stats->save();
+                }
 //          Last Modified
                 $lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `medicines` WHERE `approved`=1');
 
@@ -273,13 +276,6 @@ class SearchController extends MainController
                     return response('304 Not Modified', 304);
                 }
 //           Last Modified
-                if (true !== session('class-view-' . $val) && !Crawler::isCrawler()) {
-                    $stats = new ClassificationStatistic();
-
-                    $stats->fill(['class_alias' => $val, 'created_at' => date('Y-m-d H:i:s')]);
-                    $stats->save();
-                    session()->put('class-view-' . $val, true);
-                }
 
                 $this->seo = Cache::store('file')->remember('atx-seo-' . $val, 24 * 60, function () use ($val) {
                     return $this->c_rep->getSeo($val);
@@ -545,6 +541,12 @@ class SearchController extends MainController
         $this->loc = 'ua';
 
         if ($count > 0) {
+            if (!Crawler::isCrawler()) {
+                $stats = new ClassificationStatistic();
+
+                $stats->fill(['class_alias' => $val, 'created_at' => date('Y-m-d H:i:s')]);
+                $stats->save();
+            }
 //          Last Modified
             $lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `medicines` WHERE `approved`=1');
 
@@ -558,13 +560,6 @@ class SearchController extends MainController
                 return response('304 Not Modified', 304);
             }
 //           Last Modified
-            if (true !== session('class-view-' . $val) && !Crawler::isCrawler()) {
-                $stats = new ClassificationStatistic();
-
-                $stats->fill(['class_alias' => $val, 'created_at' => date('Y-m-d H:i:s')]);
-                $stats->save();
-                session()->put('class-view-' . $val, true);
-            }
 
             $this->seo = Cache::store('file')->remember('ua-atx-seo-' . $val, 24 * 60, function () use ($val) {
                 return $this->c_rep->getSeo($val, true);
@@ -684,6 +679,9 @@ class SearchController extends MainController
 
     }
 
+    /**
+     * @param $loc
+     */
     public function getAside($loc)
     {
         if ('ru' == $loc) {

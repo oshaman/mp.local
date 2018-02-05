@@ -31,7 +31,7 @@ return [
 
     'lifetime' => 120,
 
-    'expire_on_close' => false,
+    'expire_on_close' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -124,7 +124,7 @@ return [
 
     'cookie' => env(
         'SESSION_COOKIE',
-        str_slug(env('APP_NAME', 'laravel'), '_') . '_session'
+        str_slug(env('APP_NAME', 'medpravda'), '_') . '_session'
     ),
 
     /*
