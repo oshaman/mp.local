@@ -16,6 +16,11 @@ class Classification extends Model
         return $this->hasMany('Fresh\Medpravda\Medicine');
     }
 
+    public function meds()
+    {
+        return $this->hasMany('Fresh\Medpravda\Medicine', 'classification_id', 'id')->where('approved', 1);
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -29,7 +34,7 @@ class Classification extends Model
      */
     public function children()
     {
-        return $this->hasMany('Fresh\Medpravda\Classification', 'parent', 'id')->with(['children', 'medicines']);
+        return $this->hasMany('Fresh\Medpravda\Classification', 'parent', 'id')->with(['children', 'meds']);
     }
 
     /**

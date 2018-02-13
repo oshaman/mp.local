@@ -64,18 +64,24 @@
             </div>
             <hr>
             <div class="panel-body">
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     {{ Form::label('backcolor', 'Фон страницы') }}
                     <div>
                         #{!! Form::text('backcolor', old('backcolor') ? : ($drug->backcolor ?? '') ,
                          ['placeholder'=>'FFF000', 'id'=>'backcolor', 'class'=>'form-control']) !!}
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <label>
                         <input type="checkbox"
                                {{ (old('approved') || !empty($drug->approved)) ? 'checked' : '' }} value="1"
                                name="approved"> Опубликовать</label>
+                </div>
+                <div class="col-lg-4">
+                    <label>
+                        <input type="checkbox"
+                               {{ (old('certified') || !empty($drug->certified)) ? 'checked' : '' }} value="1"
+                               name="certified"> Сертифицирован</label>
                 </div>
             </div>
             <hr>
@@ -162,7 +168,11 @@
 
 
 {{--Content--}}
-@include('admin.medicine.sections', $drug)
+@if(('ru' == $spec) || ('aru' == $spec))
+    @include('admin.medicine.sections', ['drug'=>$drug, 'loc'=>true])
+@else
+    @include('admin.medicine.sections', $drug)
+@endif
 {{--Content--}}
 {{-- Слайдер --}}
 @include('admin.medicine.slider', [$drug, $spec])

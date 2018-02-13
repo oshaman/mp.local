@@ -410,6 +410,8 @@ class SearchController extends MainController
 
         if (!empty($list)) {
             $this->content = view('search.ua_alpha')->with('letters', $list)->render();
+            $this->getAside('ua');
+
             return $this->renderOutput();
         }
         $medicines = null;
@@ -436,6 +438,8 @@ class SearchController extends MainController
      */
     public function fabricatoru(Request $request, $val = null, $fabricator = null)
     {
+        Cache::store('file')->flush();
+
 //          Last Modified
         $lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `medicines` WHERE `approved`=1');
 
@@ -453,7 +457,7 @@ class SearchController extends MainController
         $this->loc = 'ua';
         if (!empty($fabricator)) {
             $this->content = Cache::store('file')->remember('ua-medicine-fabricator-' . $fabricator, 60, function () use ($fabricator, $val) {
-                $result = $this->search_rep->findByFabricator($fabricator);
+                $result = $this->search_rep->findByFabricator($fabricator, true);
                 $medicines = $result['medicines'] ?? null;
                 $fabricator_name = $result['fabricator'] ?? null;
 

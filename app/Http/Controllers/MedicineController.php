@@ -57,7 +57,7 @@ class MedicineController extends MainController
     {
         $res = Cache::store('file')->remember('medicine-' . $medicine, 24 * 60, function () use ($medicine) {
             $res = $this->amed_rep->one($medicine);
-            if (empty($res)) {
+            if (empty($res) || (1 != $res->approved)) {
                 return false;
             }
             $res->load('image');
@@ -132,7 +132,7 @@ class MedicineController extends MainController
     public function analog(Request $request, $medicine)
     {
         $res = $this->med_rep->one($medicine);
-        if (empty($res)) {
+        if (empty($res) || (1 != $res->approved)) {
             abort(404);
         }
 
@@ -175,7 +175,7 @@ class MedicineController extends MainController
     {
         $res = Cache::store('file')->remember('off-medicine-' . $medicine, 24 * 60, function () use ($medicine) {
             $res = $this->med_rep->one($medicine);
-            if (empty($res)) {
+            if (empty($res) || (1 != $res->approved)) {
                 return false;
             }
             $res->load('image');
@@ -249,7 +249,7 @@ class MedicineController extends MainController
         $this->title = 'Частые вопросы';
 
         $res = $this->med_rep->one($medicine);
-        if (empty($res)) {
+        if (empty($res) || (1 != $res->approved)) {
             abort(404);
         }
         if (!Crawler::isCrawler()) {
@@ -321,7 +321,7 @@ class MedicineController extends MainController
     {
         $res = Cache::store('file')->remember('medicine-ua-' . $medicine, 24 * 60, function () use ($medicine) {
             $res = $this->uamed_rep->one($medicine);
-            if (empty($res)) {
+            if (empty($res) || (1 != $res->approved)) {
                 return false;
             }
             $res->load('image');
@@ -393,7 +393,7 @@ class MedicineController extends MainController
     public function analogUa(Request $request, $medicine)
     {
         $res = $this->umed_rep->one($medicine);
-        if (empty($res)) {
+        if (empty($res) || (1 != $res->approved)) {
             abort(404);
         }
 
@@ -436,7 +436,7 @@ class MedicineController extends MainController
     {
         $res = Cache::store('file')->remember('off-medicine-ua-' . $medicine, 24 * 60, function () use ($medicine) {
             $res = $this->umed_rep->one($medicine);
-            if (empty($res)) {
+            if (empty($res) || (1 != $res->approved)) {
                 return false;
             }
             $res->load('image');
@@ -506,7 +506,7 @@ class MedicineController extends MainController
     public function faqUa(Request $request, $medicine)
     {
         $res = $this->umed_rep->one($medicine);
-        if (empty($res)) {
+        if (empty($res) || (1 != $res->approved)) {
             abort(404);
         }
         if (!Crawler::isCrawler()) {

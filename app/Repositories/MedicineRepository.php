@@ -138,7 +138,6 @@ class MedicineRepository extends Repository
             }
             //Slider
         }
-
 //        dd($result);
         return ['status' => 'Препарат добавлен', 'alias' => $model->alias];
     }
@@ -257,6 +256,19 @@ class MedicineRepository extends Repository
         }
         array_forget($input, 'approved');
 
+
+        $certified = !empty($input['certified']) ? 1 : 0;
+
+        if ($model->certified != $certified) {
+            DB::transaction(function () use ($certified, $model) {
+                DB::table('umedicines')->where('alias', $model->alias)->update(['certified' => $certified]);
+                DB::table('medicines')->where('alias', $model->alias)->update(['certified' => $certified]);
+                DB::table('amedicines')->where('alias', $model->alias)->update(['certified' => $certified]);
+                DB::table('uamedicines')->where('alias', $model->alias)->update(['certified' => $certified]);
+            });
+        }
+        array_forget($input, 'certified');
+
         if (isset($input['substance_id']) && count($input['substance_id']) > 0) {
             DB::transaction(function () use ($input, $model) {
                 $model->substance()->sync($input['substance_id']);
@@ -302,7 +314,7 @@ class MedicineRepository extends Repository
             }
             //Slider
         }
-
+        \Log::info('Препарат отредактирован - ' . $model->alias);
         $this->putTitles();
         Cache::store('file')->forget('off-medicine-' . $model->alias);
         $error = [];
@@ -391,7 +403,7 @@ class MedicineRepository extends Repository
         }
 
         $medicines = $this->model->whereHas('substance', function ($query) use ($ids) {
-            $query->whereIn('substance_id', $ids);
+            $query->whereIn('substance_id', $ids)->where([['approved', 1]]);
         })
             ->with(['substance', 'classification', 'form'])
 //            ->take(3)

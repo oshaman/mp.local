@@ -178,7 +178,7 @@ class UmedicineRepository extends Repository
         }
 
         $medicines = $this->model->whereHas('substance', function ($query) use ($ids) {
-            $query->whereIn('substance_id', $ids);
+            $query->whereIn('substance_id', $ids)->where([['approved', 1]]);
         })
             ->with(['substance', 'classification', 'form'])
 //            ->take(3)

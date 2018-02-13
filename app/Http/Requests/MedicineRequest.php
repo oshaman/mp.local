@@ -101,6 +101,7 @@ class MedicineRequest extends FormRequest
                 'og_description' => 'string|nullable',
 
                 'approved' => 'boolean|nullable',
+                'certified' => 'boolean|nullable',
                 'backcolor' => ['string', 'size:6', 'nullable'],
                 'form_id' => 'digits_between:1,10|max:4294967295',
                 'classification_id' => 'digits_between:1,10|max:4294967295',

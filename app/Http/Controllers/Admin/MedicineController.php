@@ -164,7 +164,7 @@ class MedicineController extends AdminController
         if ('ru' == $spec) {
             $drug->load('substance');
         }
-//dd($drug);
+//dd($spec);
         $this->mark = 'medicine_admin';
 
         $this->content = view('admin.medicine.edit')->with(['drug' => $drug, 'spec' => $spec])->render();

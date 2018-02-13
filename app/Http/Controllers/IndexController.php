@@ -61,8 +61,6 @@ class IndexController extends MainController
             return response('304 Not Modified', 304);
         }
 //  Last Modified
-
-        Cache::forget('main');
         if ($loc) {
             $this->loc = $loc;
             $this->seo = $this->seo_rep->oneSeo('/ua');

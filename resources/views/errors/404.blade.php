@@ -14,7 +14,6 @@
         <h2>Возможно Вы искали:</h2>
         <div class="admin-content">
             <ul>
-                <li><a href="{{ route('articles_cat', 'fitoterapiya') }}">Фитотерапия</a></li>
                 <li><a href="{{ route('articles_cat', 'zabluzhdeniya') }}">Заблуждения</a></li>
                 <li><a href="{{ route('articles_cat', 'pitanie-i-dieta') }}">Питание и диета</a></li>
                 <li><a href="{{ route('articles_cat', 'intimnye-temy') }}">Интимные темы</a></li>

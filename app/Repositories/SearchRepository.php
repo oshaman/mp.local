@@ -275,9 +275,9 @@ class SearchRepository
     public function findByLetter($val, $loc = null)
     {
         if (null == $loc) {
-            return $this->med->select(['alias', 'title'])->where('title', 'like', $val . '%')->get();
+            return $this->med->select(['alias', 'title'])->where([['title', 'like', $val . '%'], ['approved', 1]])->get();
         }
-        return $this->umed->select(['alias', 'title'])->where('title', 'like', $val . '%')->get();
+        return $this->umed->select(['alias', 'title'])->where([['title', 'like', $val . '%'], ['approved', 1]])->get();
     }
 
     /**
@@ -302,10 +302,10 @@ class SearchRepository
         if (!empty($fabricator)) {
             if (null == $loc) {
                 $result['medicines'] = $this->med->select(['alias', 'title'])
-                    ->where('fabricator_id', $fabricator->id)->get();
+                    ->where([['fabricator_id', $fabricator->id], ['approved', 1]])->get();
             } else {
-                $result['medicines'] = $this->umed->select(['alias', 'utitle'])
-                    ->where('fabricator_id', $fabricator->id)->get();
+                $result['medicines'] = $this->umed->select(['alias', 'title'])
+                    ->where([['fabricator_id', $fabricator->id], ['approved', 1]])->get();
             }
 
             $result['fabricator'] = $fabricator;
@@ -328,7 +328,8 @@ class SearchRepository
 
         $result = null;
         if (!empty($mnn)) {
-            $result['medicines'] = $this->med->select(['alias', 'title'])->where('innname_id', $mnn->id)->get();
+            $result['medicines'] = $this->med->select(['alias', 'title'])
+                ->where([['innname_id', $mnn->id], ['approved', 1]])->get();
             $result['mnn'] = $mnn;
         }
         return $result;
@@ -354,11 +355,12 @@ class SearchRepository
         if (!empty($atx)) {
 
             $atx->load('children');
-            $atx->load('medicines');
+            $atx->load('meds');
             $atx->load('parents');
 
-            if (!empty($atx->medicines)) {
-                foreach ($atx->medicines as $medicine) {
+            if (!empty($atx->meds)) {
+                foreach ($atx->meds as $medicine) {
+//                    if (1 != $medicine->approved) continue;
                     $this->medicines[$atx->class][] = $medicine;
                     $this->medicines[$atx->class]['name'] = $atx->name;
                 }
@@ -368,8 +370,8 @@ class SearchRepository
 
                 foreach ($atx->children as $child) {
                     $arr = [];
-                    if (empty($child->medicines)) continue;
-                    foreach ($child->medicines as $medicine) {
+                    if (empty($child->meds)) continue;
+                    foreach ($child->meds as $medicine) {
                         $arr[] = $medicine;
                     }
 
@@ -407,8 +409,9 @@ class SearchRepository
                 $arr = array_merge($arr, $carr);
             }
 
-            if (empty($child->medicines)) continue;
-            foreach ($child->medicines as $medicine) {
+            if (empty($child->meds)) continue;
+            foreach ($child->meds as $medicine) {
+//                if (1 != $medicine->approved) continue;
                 $arr[] = $medicine;
             }
         }
@@ -437,9 +440,9 @@ class SearchRepository
         $result = null;
         if (!empty($pharma)) {
             if (null == $loc) {
-                $result['medicines'] = $this->med->select(['alias', 'title'])->where('pharmagroup_id', $pharma->id)->get();
+                $result['medicines'] = $this->med->select(['alias', 'title'])->where([['pharmagroup_id', $pharma->id], ['approved', 1]])->get();
             } else {
-                $result['medicines'] = $this->umed->select(['alias', 'title'])->where('pharmagroup_id', $pharma->id)->get();
+                $result['medicines'] = $this->umed->select(['alias', 'title'])->where([['pharmagroup_id', $pharma->id], ['approved', 1]])->get();
             }
             $result['pharma'] = $pharma;
         }
@@ -472,11 +475,11 @@ class SearchRepository
 
             if (null == $loc) {
                 $result['medicines'] = $this->med->whereHas('substance', function ($q) use ($substance) {
-                    $q->where('substance_id', $substance->id)->select('title', 'alias');
+                    $q->where([['substance_id', $substance->id], ['approved', 1]])->select('title', 'alias');
                 })->get();
             } else {
                 $result['medicines'] = $this->umed->whereHas('substance', function ($q) use ($substance) {
-                    $q->where('substance_id', $substance->id)->select('title', 'alias');
+                    $q->where([['substance_id', $substance->id], ['approved', 1]])->select('title', 'alias');
                 })->get();
             }
 
