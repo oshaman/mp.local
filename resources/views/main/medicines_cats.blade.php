@@ -14,6 +14,8 @@
                                 <img src="{{ asset('asset/images/medicine/main/').'/'.$cat->alias_1[0]->image[0]->path }}"
                                      alt="{{ $cat->alias_1[0]->image[0]->alt or '' }}"
                                      title="{{ $cat->alias_1[0]->image[0]->title or '' }}">
+                            @else
+                                <img src="{{ asset('asset/images/showcase/mp-mini.jpg')}}">
                             @endif
                         </div>
                         <div class="article-info">
@@ -30,6 +32,8 @@
                                 <img src="{{ asset('asset/images/medicine/main/').'/'.$cat->alias_2[0]->image[0]->path }}"
                                      alt="{{ $cat->alias_2[0]->image[0]->alt or '' }}"
                                      title="{{ $cat->alias_2[0]->image[0]->title or '' }}">
+                            @else
+                                <img src="{{ asset('asset/images/showcase/mp-mini.jpg')}}">
                             @endif
                         </div>
                         <div class="article-info">
@@ -46,6 +50,8 @@
                                 <img src="{{ asset('asset/images/medicine/main/').'/'.$cat->alias_3[0]->image[0]->path }}"
                                      alt="{{ $cat->alias_3[0]->image[0]->alt or '' }}"
                                      title="{{ $cat->alias_3[0]->image[0]->title or '' }}">
+                            @else
+                                <img src="{{ asset('asset/images/showcase/mp-mini.jpg')}}">
                             @endif
                         </div>
                         <div class="article-info">

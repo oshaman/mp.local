@@ -48,6 +48,7 @@ class IndexController extends MainController
 
     public function main(Request $request, $loc = null)
     {
+        Cache::forget('main');
         //  Last Modified
         $lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `articles` WHERE `approved`=1');
         $LastModified_unix = strtotime($lastM[0]->last); // время последнего изменения страницы

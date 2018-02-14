@@ -14,6 +14,8 @@
                         {!! Form::open(['url' => route('about_admin'), 'method' => 'post', 'class' => 'form-horizontal', 'files' => true]) !!}
                     @elseif('convention_admin' == Route::CurrentRouteName())
                         {!! Form::open(['url' => route('convention_admin'), 'method' => 'post', 'class' => 'form-horizontal', 'files' => true]) !!}
+                    @else
+                        {!! Form::open(['url' => route('conditions_admin'), 'method' => 'post', 'class' => 'form-horizontal', 'files' => true]) !!}
                     @endif
                     <div>
                         {{ Form::label('title', 'Заголовок') }}

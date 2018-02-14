@@ -5,19 +5,21 @@
             @if('main' == Route::currentRouteName())
                 <img src="{{ asset('assets') }}/images/main/logo_ua.png" alt="Логотип МЕД правда">
             @else
-                @if ('ua' == Request::segment(1))
+                @if('ua' == Request::segment(1))
                     <a href="{{ route('main', ['loc'=>'ua']) }}">
                         @else
                             <a href="{{ route('main') }}">
                                 @endif
-                    <img src="{{ asset('assets') }}/images/main/logo_ua.png" alt="Логотип МЕД правда"></a>
+                                <img src="{{ asset('assets') }}/images/main/logo_ua.png" alt="Логотип МЕД правда"></a>
             @endif
         </div>
         <div class="search">
+            {!! Form::open(['url'=>route('search'), 'method'=>'post']) !!}
             <input autocomplete="off" type="search" name="search" class="search-placeholder"
                    placeholder="Поиск по сайту">
             <input type="hidden" name="stats">
             <div class="wrap-search"></div>
+            {{ Form::close() }}
             <span class="img-search"></span>
         </div>
         <div class="main-menu">
