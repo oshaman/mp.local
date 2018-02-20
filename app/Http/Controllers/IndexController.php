@@ -48,7 +48,6 @@ class IndexController extends MainController
 
     public function main(Request $request, $loc = null)
     {
-        Cache::forget('main');
         //  Last Modified
         $lastM = DB::select('SELECT MAX(`updated_at`) as last FROM `articles` WHERE `approved`=1');
         $LastModified_unix = strtotime($lastM[0]->last); // время последнего изменения страницы
@@ -58,7 +57,7 @@ class IndexController extends MainController
         if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
             $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
         }
-        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix && !$request->session()->has('new_csrf')) {
             return response('304 Not Modified', 304);
         }
 //  Last Modified

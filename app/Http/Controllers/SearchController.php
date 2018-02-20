@@ -161,7 +161,7 @@ class SearchController extends MainController
         if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
             $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
         }
-        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix && !$request->session()->has('new_csrf')) {
             return response('304 Not Modified', 304);
         }
 //           Last Modified
@@ -211,7 +211,7 @@ class SearchController extends MainController
         if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
             $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
         }
-        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix && !$request->session()->has('new_csrf')) {
             return response('304 Not Modified', 304);
         }
 //           Last Modified
@@ -272,7 +272,7 @@ class SearchController extends MainController
                 if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
                     $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
                 }
-                if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+                if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix && !$request->session()->has('new_csrf')) {
                     return response('304 Not Modified', 304);
                 }
 //           Last Modified
@@ -330,7 +330,7 @@ class SearchController extends MainController
         if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
             $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
         }
-        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix && !$request->session()->has('new_csrf')) {
             return response('304 Not Modified', 304);
         }
 //           Last Modified
@@ -449,7 +449,7 @@ class SearchController extends MainController
         if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
             $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
         }
-        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix && !$request->session()->has('new_csrf')) {
             return response('304 Not Modified', 304);
         }
 //           Last Modified
@@ -499,7 +499,7 @@ class SearchController extends MainController
         if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
             $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
         }
-        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix && !$request->session()->has('new_csrf')) {
             return response('304 Not Modified', 304);
         }
 //           Last Modified
@@ -560,7 +560,7 @@ class SearchController extends MainController
             if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
                 $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
             }
-            if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+            if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix && !$request->session()->has('new_csrf')) {
                 return response('304 Not Modified', 304);
             }
 //           Last Modified
@@ -616,7 +616,7 @@ class SearchController extends MainController
         if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
             $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
         }
-        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix && !$request->session()->has('new_csrf')) {
             return response('304 Not Modified', 304);
         }
 //           Last Modified

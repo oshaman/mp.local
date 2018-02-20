@@ -53,6 +53,18 @@ class AmedicineRepository extends Repository
 
         $updated = $model->fill($input)->save();
 
+        $input = array_map(function ($n) {
+            $re = '/&nbsp;/';
+            $n = preg_replace($re, ' ', $n);
+            return $n;
+        }, $input);
+
+        $input = array_map(function ($n) {
+            $re = '/ style="[^"]+"/';
+            $n = preg_replace($re, '', $n);
+            return $n;
+        }, $input);
+
         if (!empty($updated)) {
             //Slider
             $slider_path = [];

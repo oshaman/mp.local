@@ -53,6 +53,7 @@ class Handler extends ExceptionHandler
     {
         if ($exception instanceof \Illuminate\Session\TokenMismatchException) {
 
+            $request->session()->flash('new_csrf', 'new');
             return redirect()
                 ->back()
                 ->withInput($request->except('_token'))
@@ -65,13 +66,13 @@ class Handler extends ExceptionHandler
 
             switch ($statusCode) {
                 case '404' :
-                    $header = Cache::remember('ru_menu_404', 60, function () {
-                        $themes = $this->getThemes();
-                        $block = \Fresh\Medpravda\Block::where('id', 1)->first();
-                        $cats = $this->getMenu();
-                        return view('layouts.header.404ru')
-                            ->with(['block' => $block, 'menu' => $cats, 'themes' => $themes])->render();
-                    });
+
+
+                    $themes = $this->getThemes();
+                    $block = \Fresh\Medpravda\Block::where('id', 1)->first();
+                    $cats = $this->getMenu();
+                    $header = view('layouts.header.404ru')
+                        ->with(['block' => $block, 'menu' => $cats, 'themes' => $themes])->render();
 
                     $tags = \Fresh\Medpravda\Tag::select(['name', 'alias'])
                         ->where(['approved' => 1])->skip(15)->take(15)->get();

@@ -30,6 +30,7 @@
         <thead>
         <tr>
             <th>ID</th>
+            <th>Статус публикации</th>
             <th>Название</th>
             <th>URL</th>
             <th></th>
@@ -41,6 +42,7 @@
             @foreach ($drugs as $drug)
                 <tr>
                     <td>{{ $drug->id }}</td>
+                    <td>{!! $drug->approved ? '<a><span class="glyphicon glyphicon-plus"></span></a>' : '' !!}</td>
                     <td>{{ $drug->title }}</td>
                     <td>{{ $drug->alias }}</td>
                     <td>

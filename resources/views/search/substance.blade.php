@@ -25,7 +25,7 @@
             @endif
         </div>
         {{--BreadCrumbs--}}
-        <h1 class="product-title">Сортировка по:</h1>
+        <h1 class="product-title">Сортировка по: {{ $substance->title ?? '' }}</h1>
 
         @include('search.nav')
     </div>

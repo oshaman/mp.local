@@ -45,9 +45,11 @@
                     {!! Form::close() !!}
                 </td>
                 <td>
-                    {!! Form::open(['url' => route('delete_tag',['tag'=> $tag->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
-                    {!! Form::button('Удалить', ['class' => 'btn btn-danger','type'=>'submit']) !!}
-                    {!! Form::close() !!}
+                    @if(Auth::user()->hasRole('admin'))
+                        {!! Form::open(['url' => route('delete_tag',['tag'=> $tag->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
+                        {!! Form::button('Удалить', ['class' => 'btn btn-danger','type'=>'submit']) !!}
+                        {!! Form::close() !!}
+                    @endif
                 </td>
             </tr>
         @endforeach

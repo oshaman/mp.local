@@ -88,10 +88,10 @@
             <div class="block-to-add-substance">
                 {{ Form::label('substance', 'Действующее вещество') }}
                 <div>
-                    {!! Form::text('substance[]', old('substance') ? : '',
+                    {!! Form::text('substance[]', '',
                  ['placeholder'=>'...', 'id'=>'substance', 'class'=>'form-control autocomplete',
                    'autocomplete'=>'off', 'data-id'=>10000]) !!}
-                    {!! Form::hidden('substance_id[]', old('substance_id') ? :'', ['id'=>'substance_id']) !!}
+                    {!! Form::hidden('substance_id[]', '', ['id'=>'substance_id']) !!}
                     <span class="remove-this"><button type="button" class="btn btn-danger">-</button></span>
                 </div>
             </div>

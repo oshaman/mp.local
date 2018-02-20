@@ -24,6 +24,10 @@ class ArticlesController extends AdminController
         $this->mark = 'articles_admin';
     }
 
+    /**
+     * @param Request $request
+     * @return mixed
+     */
     public function index(Request $request)
     {
         $this->title = 'Редактирование статей';
@@ -65,9 +69,14 @@ class ArticlesController extends AdminController
 
     }
 
+    /**
+     * @param Request $request
+     * @return $this|\Illuminate\Http\RedirectResponse|mixed
+     */
     public function create(Request $request)
     {
         $this->title = 'Добавление статьи';
+
         if (Gate::denies('UPDATE_ARTICLES')) {
             abort(404);
         }
@@ -106,6 +115,12 @@ class ArticlesController extends AdminController
 
     }
 
+    /**
+     * @param Request $request
+     * @param $spec
+     * @param $article
+     * @return $this|\Illuminate\Http\RedirectResponse|mixed
+     */
     public function edit(Request $request, $spec, $article)
     {
         if (Gate::denies('UPDATE_ARTICLES')) {
@@ -152,6 +167,10 @@ class ArticlesController extends AdminController
 
     }
 
+    /**
+     * @param $article
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function del($article)
     {
         if (Gate::denies('UPDATE_ARTICLES')) {

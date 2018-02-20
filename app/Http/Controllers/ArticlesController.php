@@ -34,7 +34,7 @@ class ArticlesController extends MainController
             if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
                 $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
             }
-            if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+            if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix && !$request->session()->has('new_csrf')) {
                 return response('304 Not Modified', 304);
             }
 //            Last Modify
@@ -86,6 +86,8 @@ class ArticlesController extends MainController
             return view('articles.cats')->with(['cats' => $cats])
                 ->render();
         });
+        $this->getSeos('fresh-articles');
+
         return $this->renderOutput();
     }
 
@@ -109,7 +111,7 @@ class ArticlesController extends MainController
         if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
             $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
         }
-        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix && !$request->session()->has('new_csrf')) {
             return response('304 Not Modified', 304);
         }
 //  Last Modified
@@ -152,7 +154,7 @@ class ArticlesController extends MainController
         if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
             $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
         }
-        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix && !$request->session()->has('new_csrf')) {
             return response('304 Not Modified', 304);
         }
 //  Last Modified
@@ -169,6 +171,7 @@ class ArticlesController extends MainController
         });
 
         $this->getAside('ru', true);
+        $this->getSeos('top-articles');
 
         return $this->renderOutput();
     }
@@ -189,7 +192,7 @@ class ArticlesController extends MainController
         if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
             $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
         }
-        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix && !$request->session()->has('new_csrf')) {
             return response('304 Not Modified', 304);
         }
 //  Last Modified
@@ -228,7 +231,7 @@ class ArticlesController extends MainController
             if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
                 $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
             }
-            if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+            if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix && !$request->session()->has('new_csrf')) {
                 return response('304 Not Modified', 304);
             }
 //            Last Modify
@@ -286,6 +289,7 @@ class ArticlesController extends MainController
             return view('articles.ua_cats')->with(['cats' => $cats])
                 ->render();
         });
+        $this->getSeos('ua/fresh-articles');
         return $this->renderOutput();
     }
 
@@ -309,7 +313,7 @@ class ArticlesController extends MainController
         if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
             $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
         }
-        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix && !$request->session()->has('new_csrf')) {
             return response('304 Not Modified', 304);
         }
 //  Last Modified
@@ -355,7 +359,7 @@ class ArticlesController extends MainController
         if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
             $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
         }
-        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix && !$request->session()->has('new_csrf')) {
             return response('304 Not Modified', 304);
         }
 //  Last Modified
@@ -374,6 +378,7 @@ class ArticlesController extends MainController
         });
 
         $this->getAside('ua', true);
+        $this->getSeos('ua/top-articles');
 
         return $this->renderOutput();
     }
@@ -395,7 +400,7 @@ class ArticlesController extends MainController
         if ($request->server('HTTP_IF_MODIFIED_SINCE')) {
             $IfModifiedSince = strtotime(substr($request->server('HTTP_IF_MODIFIED_SINCE'), 5));
         }
-        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix) {
+        if ($IfModifiedSince && $IfModifiedSince >= $LastModified_unix && !$request->session()->has('new_csrf')) {
             return response('304 Not Modified', 304);
         }
 //  Last Modified

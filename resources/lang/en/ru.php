@@ -26,6 +26,12 @@ return [
     'usloviya' => 'Условия использования',
     'usloviya/ua' => 'UA - Условия использования',
     'poisk' => 'Поиск',
+    'top-themes' => 'Популярные темы',
+    'ua/top-themes' => 'UA - Популярные темы',
+    'top-articles' => 'Топ статьи',
+    'ua/top-articles' => 'UA - Топ статьи',
+    'fresh-articles' => 'Свежие статьи',
+    'ua/fresh-articles' => 'UA - Свежие статьи',
 
 //    search
     'def' => 'Возможно вы имели ввиду: ',

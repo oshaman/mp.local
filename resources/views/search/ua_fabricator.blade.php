@@ -30,7 +30,7 @@
     </div>
     <div class="section-title-meta-icon serch-height">
         <h3>
-            Сортування за виробником:&nbsp;
+            Сортування за виробником:<br/>
             @if(!empty($fabricator->utitle))
                 <a>{{ $fabricator->utitle }}</a>
             @endif

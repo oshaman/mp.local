@@ -54,7 +54,7 @@ class MedicineController extends AdminController
                     $drugs[] = $this->ru_rep->one($data['value']);
                     break;
                 case 1:
-                    $drugs = $this->ru_rep->get(['title', 'id', 'alias'], false, 25, ['title' => $data['value']]);
+                    $drugs = $this->ru_rep->get(['title', 'id', 'alias', 'approved'], false, 25, ['title' => $data['value']]);
                     if ($drugs) $drugs->appends(['param' => $data['param']])->links();
                     break;
                 default:
@@ -62,7 +62,7 @@ class MedicineController extends AdminController
                     if ($drugs) $drugs->appends(['param' => $data['param']])->links();
             }
         } else {
-            $drugs = $this->ru_rep->get(['alias', 'title', 'id'], false, 25, ['approved' => 1]);
+            $drugs = $this->ru_rep->get(['alias', 'title', 'id', 'approved'], false, 25, ['approved' => 1]);
         }
 
         $this->title = 'Преператы';

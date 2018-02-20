@@ -51,6 +51,18 @@ class UamedicineRepository extends Repository
         }
         // SEO handle
 
+        $input = array_map(function ($n) {
+            $re = '/&nbsp;/';
+            $n = preg_replace($re, ' ', $n);
+            return $n;
+        }, $input);
+
+        $input = array_map(function ($n) {
+            $re = '/ style="[^"]+"/';
+            $n = preg_replace($re, '', $n);
+            return $n;
+        }, $input);
+
         $updated = $model->fill($input)->save();
 
         if (!empty($updated)) {

@@ -105,6 +105,12 @@ class MedicineRepository extends Repository
             return $n;
         }, $input);
 
+        $input = array_map(function ($n) {
+            $re = '/ style="[^"]+"/';
+            $n = preg_replace($re, '', $n);
+            return $n;
+        }, $input);
+
         try {
             $updated = $model->fill($input)->update();
         } catch (Exception $e) {
@@ -282,6 +288,12 @@ class MedicineRepository extends Repository
         $input = array_map(function ($n) {
             $re = '/&nbsp;/';
             $n = preg_replace($re, ' ', $n);
+            return $n;
+        }, $input);
+
+        $input = array_map(function ($n) {
+            $re = '/ style="[^"]+"/';
+            $n = preg_replace($re, '', $n);
             return $n;
         }, $input);
 

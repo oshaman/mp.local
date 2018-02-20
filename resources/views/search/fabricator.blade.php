@@ -30,7 +30,7 @@
     </div>
     <div class="section-title-meta-icon serch-height">
         <h3>
-            Сортировка препаратов по производителю:&nbsp;
+            Сортировка препаратов по производителю:&nbsp;<br/>
             @if(!empty($fabricator->title))
                 <a>{{ $fabricator->title }}</a>
             @endif

@@ -1,5 +1,5 @@
 <!-- HEADER -->
-<header>
+<header id="myHeader">
     <div class="wrap">
         <div class="logo">
             @if('main' == Route::currentRouteName())

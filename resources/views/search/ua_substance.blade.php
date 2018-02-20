@@ -26,7 +26,7 @@
             @endif
         </div>
         {{--BreadCrumbs--}}
-        <h1 class="product-title">Сортування за:</h1>
+        <h1 class="product-title">Сортування за: {{ $substance->utitle ?? ''}}</h1>
 
         @include('search.ua_nav')
     </div>

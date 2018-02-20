@@ -65,19 +65,6 @@
     <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-5SZ98T6"
             height="0" width="0" style="display:none;visibility:hidden"></iframe>
 </noscript>
-<!-- End Google Tag Manager (noscript) -->
-<!-- REKLAMA BODY -->
-{{--<div class="body-promotion desktop">
-    <img src="{{ asset('assets') }}/images/promotion/body-rek.jpg" alt="">
-</div>
-<div class="body-promotion tablet">
-    <img src="{{ asset('assets') }}/images/promotion/body-rek-tablet.jpg" alt="">
-</div>
-<div class="body-promotion mobile clone-from" data-number="1">
-    <img src="{{ asset('assets') }}/images/promotion/body-rek-mob.jpg" alt="">
-</div>--}}
-<!-- end REKLAMA BODY -->
-<!-- WRAP -->
 <div class="main-wrapper
         @if('main' == Route::currentRouteName()) main-page @endif
 @if(('articles' == Route::currentRouteName()) || ('ua_articles' == Route::currentRouteName())) single-article @endif

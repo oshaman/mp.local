@@ -26,7 +26,6 @@ class StatisticController extends AdminController
         if (Gate::denies('STATIC_ADMIN')) {
             abort(404);
         }
-
         $this->title = 'Статистика препаратов';
 
         if ($request->isMethod('post')) {
