@@ -183,6 +183,11 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::post('save-custom', 'Admin\MedicineController@saveCustom')->name('get_custom');
 
     });
+//    SEO ANALOG
+    Route::match(['post', 'get'], 'seo-analog/{medicine}', 'Admin\AnalogController@updateSeo')
+        ->name('seo_analog')->where('medicine', '[0-9]+');
+
+
     Route::match(['post', 'get'], 'blocks/{block?}', 'Admin\BlocksController@updateBlocks')
         ->name('blocks')->where('block', '[0-9]+');
     /**

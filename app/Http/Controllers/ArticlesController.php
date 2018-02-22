@@ -4,6 +4,7 @@ namespace Fresh\Medpravda\Http\Controllers;
 
 use Fresh\Medpravda\Category;
 use Fresh\Medpravda\Repositories\ArticlesRepository;
+use Fresh\Medpravda\Repositories\CategoriesRepository;
 use Fresh\Medpravda\Repositories\TagsRepository;
 use Fresh\Medpravda\Repositories\UarticlesRepository;
 use Fresh\Medpravda\Tag;
@@ -16,14 +17,27 @@ class ArticlesController extends MainController
     protected $rua_rep;
     protected $uaa_rep;
     protected $t_rep;
+    protected $cat_rep;
 
-    public function __construct(ArticlesRepository $repository, UarticlesRepository $urepository, TagsRepository $trep)
+    public function __construct(
+        ArticlesRepository $repository,
+        UarticlesRepository $urepository,
+        TagsRepository $trep,
+        CategoriesRepository $cat_rep
+    )
     {
         $this->rua_rep = $repository;
         $this->uaa_rep = $urepository;
         $this->t_rep = $trep;
+        $this->cat_rep = $cat_rep;
     }
 
+    /**
+     * @param Request $request
+     * @param null $article
+     * @param null $loc
+     * @return $this
+     */
     public function show(Request $request, $article = null, $loc = null)
     {
         if ($article) {
@@ -136,6 +150,8 @@ class ArticlesController extends MainController
             $this->getAside('ru');
         }
 
+        $this->seo = $this->cat_rep->getSeo($cat);
+
         return $this->renderOutput();
     }
 
@@ -171,7 +187,7 @@ class ArticlesController extends MainController
         });
 
         $this->getAside('ru', true);
-        $this->getSeos('top-articles');
+        $this->seo = $this->cat_rep->getSeo($cat);
 
         return $this->renderOutput();
     }
@@ -341,6 +357,8 @@ class ArticlesController extends MainController
             $this->getAside('ua');
         }
 
+        $this->seo = $this->cat_rep->getSeo($cat, true);
+
         return $this->renderOutput();
     }
 
@@ -378,7 +396,8 @@ class ArticlesController extends MainController
         });
 
         $this->getAside('ua', true);
-        $this->getSeos('ua/top-articles');
+        $this->seo = $this->cat_rep->getSeo($cat, true);
+//        $this->getSeos('ua/top-articles');
 
         return $this->renderOutput();
     }

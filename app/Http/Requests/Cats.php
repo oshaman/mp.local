@@ -69,6 +69,22 @@ class Cats extends FormRequest
             $rules = [
                 'title' => ['required', 'between:5, 32', 'string'],
                 'utitle' => ['required', 'between:5, 32', 'string'],
+
+                'seo_title' => 'string|nullable',
+                'seo_keywords' => 'string|nullable',
+                'seo_description' => 'string|nullable',
+                'seo_text' => 'string|nullable',
+                'og_image' => 'string|nullable',
+                'og_title' => 'string|nullable',
+                'og_description' => 'string|nullable',
+
+                'useo_title' => 'string|nullable',
+                'useo_keywords' => 'string|nullable',
+                'useo_description' => 'string|nullable',
+                'useo_text' => 'string|nullable',
+                'uog_image' => 'string|nullable',
+                'uog_title' => 'string|nullable',
+                'uog_description' => 'string|nullable',
             ];
             return $rules;
         }

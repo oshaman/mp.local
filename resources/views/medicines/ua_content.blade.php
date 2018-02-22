@@ -173,8 +173,8 @@
     <div id="vzaimodeistvie" class="top-product-nav-info admin-content">
         <div class="title-product-info">
             <img src="{{ asset('assets') }}/images/product-icon/black/8_vzabmodeystvie.png"
-                 alt="Взаємодія з іншими лікарськими засобами">
-            <h4>Взаємодія з іншими лікарськими засобами</h4>
+                 alt="Лікарська взаємодія">
+            <h4>Лікарська взаємодія</h4>
         </div>
         {!! $medicine->interaction !!}
     </div>

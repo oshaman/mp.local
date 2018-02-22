@@ -51,12 +51,17 @@
                         {!! Form::close() !!}
                     </td>
                     <td>
-                        {{--@if(Auth::user()->hasRole('admin'))
+                        {!! Form::open(['url' => route('seo_analog',['medicine'=> $drug->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
+                        {!! Form::button('SEO-аналоги', ['class' => 'btn btn-warning','type'=>'submit']) !!}
+                        {!! Form::close() !!}
+                    </td>
+                    {{--<td>
+                        --}}{{--@if(Auth::user()->hasRole('admin'))
                             {!! Form::open(['url' => route('medicine_delete',['drug'=> $drug->alias]),'class'=>'form-horizontal','method'=>'GET']) !!}
                             {!! Form::button('Удалить', ['class' => 'btn btn-danger','type'=>'submit']) !!}
                             {!! Form::close() !!}
-                        @endif--}}
-                    </td>
+                        @endif--}}{{--
+                    </td>--}}
                 </tr>
             @endforeach
             </tbody>

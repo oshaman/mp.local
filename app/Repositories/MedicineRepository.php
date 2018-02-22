@@ -2,6 +2,7 @@
 
 namespace Fresh\Medpravda\Repositories;
 
+use Fresh\Medpravda\AnalogSeo;
 use Fresh\Medpravda\Classification;
 use Fresh\Medpravda\Fabricator;
 use Fresh\Medpravda\Form;
@@ -430,6 +431,10 @@ class MedicineRepository extends Repository
         return $result;
     }
 
+    /**
+     * @param $request
+     * @return null
+     */
     public function getCustom($request)
     {
         $result = null;
@@ -520,5 +525,35 @@ class MedicineRepository extends Repository
         }
 
         return true;
+    }
+
+    /**
+     * @param $id
+     * @param bool $loc
+     * @return \stdClass
+     */
+    public function getAnalogSeo($id, $loc = false)
+    {
+        $seo = AnalogSeo::where('medicine_id', $id)->first();
+        $obj = new \stdClass;
+
+        if (false == $loc) {
+            $obj->seo_title = $seo['seo_title'] ?? '';
+            $obj->seo_keywords = $seo['seo_keywords'] ?? '';
+            $obj->seo_description = $seo['seo_description'] ?? '';
+            $obj->seo_text = $seo['seo_text'] ?? '';
+            $obj->og_image = $seo['og_image'] ?? '';
+            $obj->og_title = $seo['og_title'] ?? '';
+            $obj->og_description = $seo['og_description'] ?? '';
+        } else {
+            $obj->seo_title = $seo['useo_title'] ?? '';
+            $obj->seo_keywords = $seo['useo_keywords'] ?? '';
+            $obj->seo_description = $seo['useo_description'] ?? '';
+            $obj->seo_text = $seo['useo_text'] ?? '';
+            $obj->og_image = $seo['uog_image'] ?? '';
+            $obj->og_title = $seo['uog_title'] ?? '';
+            $obj->og_description = $seo['uog_description'] ?? '';
+        }
+        return $obj;
     }
 }

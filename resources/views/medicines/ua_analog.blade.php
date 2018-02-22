@@ -78,7 +78,7 @@
             @endforeach
         </div>
         <div class="SEO-text">
-
+            {{--{!! $seo->seo_text ?? '' !!}--}}
         </div>
     </div>
 </section>

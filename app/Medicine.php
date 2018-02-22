@@ -120,4 +120,12 @@ class Medicine extends Model
     {
         return $this->belongsTo('Fresh\Medpravda\Form');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function analogSeo()
+    {
+        return $this->hasOne('Fresh\Medpravda\AnalogSeo');
+    }
 }

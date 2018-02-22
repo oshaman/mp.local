@@ -330,9 +330,9 @@ class SitemapRepository
         Tag::select('alias')->chunk(500, function ($medicines) use ($sitemap_tags, $sitemap_tags_ua) {
             foreach ($medicines as $medicine) {
 
-                $sitemap_tags->add(URL::to('/fresh-articles/tag/' . $medicine->alias),
+                $sitemap_tags->add(URL::to('/fresh-articles/teg/' . $medicine->alias),
                     $medicine->updated_at, '1.0', 'daily');
-                $sitemap_tags_ua->add(URL::to('/ua/fresh-articles/tag/' . $medicine->alias),
+                $sitemap_tags_ua->add(URL::to('/ua/fresh-articles/teg/' . $medicine->alias),
                     $medicine->updated_at, '1.0', 'daily');
             }
         });

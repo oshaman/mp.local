@@ -51,6 +51,11 @@ class ClassificationRepository extends Repository
         return $this->model->where('class', $request->atx)->first();
     }
 
+    /**
+     * @param $request
+     * @param $atx
+     * @return mixed
+     */
     public function updateAtx($request, $atx)
     {
         $atx->load('seo');
@@ -105,6 +110,11 @@ class ClassificationRepository extends Repository
         return $res;
     }
 
+    /**
+     * @param $class
+     * @param bool $loc
+     * @return \stdClass
+     */
     public function getSeo($class, $loc = false)
     {
         $atx = $this->model->with('seo')->where('class', $class)->first();

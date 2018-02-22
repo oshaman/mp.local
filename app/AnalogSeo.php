@@ -4,10 +4,10 @@ namespace Fresh\Medpravda;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Classseo extends Model
+class AnalogSeo extends Model
 {
     protected $fillable = [
-        'classification_id',
+        'medicine_id',
         'seo_title',
         'seo_keywords',
         'seo_description',

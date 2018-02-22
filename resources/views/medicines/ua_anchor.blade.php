@@ -120,8 +120,8 @@
     @if(!empty($medicine->interaction))
         <li>
             <img src="{{ asset('assets') }}/images/product-icon/8_vzabmodeystvie.png"
-                 alt="Взаємодія з іншими лікарськими засобами та інші види взаємодій">
-            <a href="#vzaimodeistvie">Взаємодія з іншими лікарськими засобами</a>
+                 alt="Лікарська взаємодія">
+            <a href="#vzaimodeistvie">Лікарська взаємодія</a>
         </li>
     @endif
     @if(!empty($medicine->shelf_life))

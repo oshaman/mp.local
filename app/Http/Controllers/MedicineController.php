@@ -163,6 +163,8 @@ class MedicineController extends MainController
         $medicines = $this->med_rep->get('*', 18, false, [['approved', 1], ['innname_id', $res->innname_id]]);
         $this->aside = view('medicines.aside')->with(['articles' => $articles, 'medicines' => $medicines])->render();
 
+        $this->seo = $this->med_rep->getAnalogSeo($res->id);
+
         return $this->renderOutput();
     }
 

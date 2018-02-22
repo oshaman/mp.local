@@ -32,6 +32,8 @@ return [
     'ua/top-articles' => 'UA - Топ статьи',
     'fresh-articles' => 'Свежие статьи',
     'ua/fresh-articles' => 'UA - Свежие статьи',
+    'sort/alfavit' => 'Сортировка по алфавиту',
+    'ua/sort/alfavit' => 'UA - Сортировка по алфавиту',
 
 //    search
     'def' => 'Возможно вы имели ввиду: ',

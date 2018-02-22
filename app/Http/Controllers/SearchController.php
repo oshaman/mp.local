@@ -141,6 +141,7 @@ class SearchController extends MainController
         });
 
         $this->getAside('ru');
+        $this->getSeos('sort/alfavit');
         return $this->renderOutput();
     }
 
@@ -426,6 +427,7 @@ class SearchController extends MainController
 
         $this->content = view('search.ua_alpha')->with(['medicines' => $medicines, 'letter' => $letter])->render();
         $this->getAside('ua');
+        $this->getSeos('ua/sort/alfavit');
 
         return $this->renderOutput();
     }
