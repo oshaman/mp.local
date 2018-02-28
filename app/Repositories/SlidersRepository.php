@@ -79,7 +79,7 @@ class SlidersRepository extends Repository
         $res = $this->model->save();
 //        dd($res);
         if ($res) {
-            return ['status' => 'Статья обновлена'];
+            return ['status' => 'Слайдер обновлен'];
         }
         $error[] = ['img' => 'Ошибка записи данных'];
     }

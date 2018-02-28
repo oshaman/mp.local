@@ -36,7 +36,8 @@ class RouteServiceProvider extends ServiceProvider
 //        Route::model('medicine', \Fresh\Medpravda\Medicine::class);
         Route::model('seo', \Fresh\Medpravda\Seo::class);
         Route::model('theme', \Fresh\Medpravda\Toptheme::class);
-
+        Route::model('substance', \Fresh\Medpravda\Substance::class);
+        Route::model('inn', \Fresh\Medpravda\Innname::class);
 
         Route::bind('article_alias', function ($value, \Illuminate\Routing\Route $route) {
             return \Fresh\Medpravda\Article::where('alias', $value)->first();

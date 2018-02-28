@@ -193,6 +193,37 @@ abstract class Repository
         }
         return $date;
     }
+
+    /**
+     * @param $model
+     * @param bool $loc
+     * @return \stdClass
+     */
+    public function obtainSeo($model, $loc = false)
+    {
+        $model->load('seo');
+
+        $obj = new \stdClass;
+
+        if (false == $loc) {
+            $obj->seo_title = $model->seo->seo_title ?? '';
+            $obj->seo_keywords = $model->seo->seo_keywords ?? '';
+            $obj->seo_description = $model->seo->seo_description ?? '';
+            $obj->seo_text = $model->seo->seo_text ?? '';
+            $obj->og_image = $model->seo->og_image ?? '';
+            $obj->og_title = $model->seo->og_title ?? '';
+            $obj->og_description = $model->seo->og_description ?? '';
+        } else {
+            $obj->seo_title = $model->seo->useo_title ?? '';
+            $obj->seo_keywords = $model->seo->useo_keywords ?? '';
+            $obj->seo_description = $model->useo->seo_description ?? '';
+            $obj->seo_text = $model->seo->useo_text ?? '';
+            $obj->og_image = $model->seo->uog_image ?? '';
+            $obj->og_title = $model->seo->uog_title ?? '';
+            $obj->og_description = $model->seo->uog_description ?? '';
+        }
+        return $obj;
+    }
 }
 
 ?>

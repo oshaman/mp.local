@@ -37,7 +37,7 @@
                             @foreach($cats as $cat)
                                 @continue('top-stati' == $cat->alias)
                                 @if('ua_articles_cat' == Route::currentRouteName() && $cat->alias == Request::segment(4))
-                                    <a>{{ $cat->title }}</a>
+                                    <a>{{ $cat->utitle }}</a>
                                 @else
                                     <a href="{{ route('ua_articles_cat', ['cat'=>$cat->alias]) }}">{{ $cat->utitle }}</a>
                                 @endif

@@ -8,10 +8,10 @@
 
 namespace Fresh\Medpravda\Repositories;
 
-use Fresh\Medpravda\AnalogSeo;
+use Fresh\Medpravda\FaqSeo;
 use Validator;
 
-class AnalogRepository
+class FaqRepository
 {
     public function updateSeo($medicine, $request)
     {
@@ -40,7 +40,7 @@ class AnalogRepository
         $data = $request->only('seo_title', 'seo_keywords', 'seo_description', 'og_image', 'og_title', 'og_description',
             'seo_text', 'useo_title', 'useo_text', 'useo_keywords', 'useo_description', 'uog_image', 'uog_title', 'uog_description');
 
-        $result = AnalogSeo::updateOrCreate(['medicine_id' => $medicine->id], $data)->save();
+        $result = FaqSeo::updateOrCreate(['medicine_id' => $medicine->id], $data)->save();
 
         if (false != $result) {
 //            Cache::forget('article_' . $medicine->alias);

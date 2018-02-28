@@ -76,7 +76,11 @@
 
     @yield('aside')
     @yield('slider')
-
+    @if(!empty($seo) && !empty($seo->seo_text))
+        <div class="SEO-text">
+            {!! $seo->seo_text !!}
+        </div>
+    @endif
     @yield('footer')
 
 </div><!-- end WRAP -->

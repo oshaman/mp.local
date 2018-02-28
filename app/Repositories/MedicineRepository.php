@@ -5,6 +5,7 @@ namespace Fresh\Medpravda\Repositories;
 use Fresh\Medpravda\AnalogSeo;
 use Fresh\Medpravda\Classification;
 use Fresh\Medpravda\Fabricator;
+use Fresh\Medpravda\FaqSeo;
 use Fresh\Medpravda\Form;
 use Fresh\Medpravda\Image as Slider;
 use Fresh\Medpravda\Innname;
@@ -330,6 +331,9 @@ class MedicineRepository extends Repository
         \Log::info('Препарат отредактирован - ' . $model->alias);
         $this->putTitles();
         Cache::store('file')->forget('off-medicine-' . $model->alias);
+        Cache::forget('alpha-' . substr($model->title, 0, 1));
+        Cache::forget('alphabet');
+        Cache::forget('second-alphabet-' . substr($model->title, 0, 2));
         $error = [];
         return ['status' => 'Препарат обновлен', $error];
     }
@@ -532,9 +536,14 @@ class MedicineRepository extends Repository
      * @param bool $loc
      * @return \stdClass
      */
-    public function getAnalogSeo($id, $loc = false)
+    public function getSecondarySeo($id, $source, $loc = false)
     {
-        $seo = AnalogSeo::where('medicine_id', $id)->first();
+        if ('analog' == $source) {
+            $seo = AnalogSeo::where('medicine_id', $id)->first();
+        } else {
+            $seo = FaqSeo::where('medicine_id', $id)->first();
+        }
+
         $obj = new \stdClass;
 
         if (false == $loc) {

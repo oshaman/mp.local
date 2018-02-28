@@ -26,13 +26,14 @@
 </div>
 <hr>
 <div class="">
-    <table class="table">
+    <table class="table status2">
         <thead>
         <tr>
             <th>ID</th>
             <th>Статус публикации</th>
             <th>Название</th>
             <th>URL</th>
+            <th></th>
             <th></th>
             <th></th>
         </tr>
@@ -53,6 +54,11 @@
                     <td>
                         {!! Form::open(['url' => route('seo_analog',['medicine'=> $drug->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
                         {!! Form::button('SEO-аналоги', ['class' => 'btn btn-warning','type'=>'submit']) !!}
+                        {!! Form::close() !!}
+                    </td>
+                    <td>
+                        {!! Form::open(['url' => route('seo_faq',['medicine'=> $drug->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
+                        {!! Form::button('SEO-вопросы', ['class' => 'btn btn-warning','type'=>'submit']) !!}
                         {!! Form::close() !!}
                     </td>
                     {{--<td>

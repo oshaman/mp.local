@@ -71,8 +71,4 @@
 
     </div>
 
-    <div class="SEO-text">
-
-    </div>
-
 </section>

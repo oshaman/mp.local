@@ -46,75 +46,22 @@
             <div class="search-alfavit">
                 <div class="search-alfavit-column">
                     <div class="search-left-content">
-                        <div class="first-alfavit">
-                            <a href="{{ route('search_fabricator', ['val'=>'E']) }}"
-                               class="nav-button-grey">E</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'L']) }}"
-                               class="nav-button-grey">L</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'S']) }}"
-                               class="nav-button-grey">S</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'Y']) }}"
-                               class="nav-button-grey">Y</a>
-                            <hr>
-                            <a href="{{ route('search_fabricator', ['val'=>'А']) }}"
-                               class="nav-button-grey">А</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'Б']) }}"
-                               class="nav-button-grey">Б</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'В']) }}"
-                               class="nav-button-grey">В</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'Г']) }}"
-                               class="nav-button-grey">Г</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'Д']) }}"
-                               class="nav-button-grey">Д</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'Е']) }}"
-                               class="nav-button-grey">Е</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'Ж']) }}"
-                               class="nav-button-grey">Ж</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'З']) }}"
-                               class="nav-button-grey">З</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'И']) }}"
-                               class="nav-button-grey">И</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'Й']) }}"
-                               class="nav-button-grey">Й</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'К']) }}"
-                               class="nav-button-grey">К</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'Л']) }}"
-                               class="nav-button-grey">Л</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'М']) }}"
-                               class="nav-button-grey">М</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'Н']) }}"
-                               class="nav-button-grey">Н</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'О']) }}"
-                               class="nav-button-grey">О</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'П']) }}"
-                               class="nav-button-grey">П</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'Р']) }}"
-                               class="nav-button-grey">Р</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'С']) }}"
-                               class="nav-button-grey">С</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'Т']) }}"
-                               class="nav-button-grey">Т</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'У']) }}"
-                               class="nav-button-grey">У</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'Ф']) }}"
-                               class="nav-button-grey">Ф</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'Х']) }}"
-                               class="nav-button-grey">Х</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'Ц']) }}"
-                               class="nav-button-grey">Ц</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'Ч']) }}"
-                               class="nav-button-grey">Ч</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'Ш']) }}"
-                               class="nav-button-grey">Ш</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'Щ']) }}"
-                               class="nav-button-grey">Щ</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'Э']) }}"
-                               class="nav-button-grey">Э</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'Ю']) }}"
-                               class="nav-button-grey">Ю</a>
-                            <a href="{{ route('search_fabricator', ['val'=>'Я']) }}"
-                               class="nav-button-grey">Я</a>
-                        </div>
+                        @if(!empty($alphabet['en']))
+                            <div class="first-alfavit">
+                                @foreach($alphabet['en'] as $a)
+                                    <a href="{{ route('search_fabricator', ['val'=>$a]) }}"
+                                       class="nav-button-grey">{{$a}}</a>
+                                @endforeach
+                            </div>
+                        @endif
+                        @if(!empty($alphabet['ru']))
+                            <div class="second-alfavit">
+                                @foreach($alphabet['ru'] as $a)
+                                    <a href="{{ route('search_fabricator', ['val'=>$a]) }}"
+                                       class="nav-button-grey">{{$a}}</a>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -134,9 +81,6 @@
                     </div>
                 @endforeach
             @endif
-        </div>
-        <div class="SEO-text">
-
         </div>
     </div>
 </section>

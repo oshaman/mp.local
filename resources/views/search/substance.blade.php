@@ -47,45 +47,20 @@
             <div class="search-alfavit">
                 <div class="search-alfavit-column">
                     <div class="search-left-content">
-                        <div class="first-alfavit">
-                            {{ link_to_route('search_substance', '5', [null, 'substance' =>'5'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'B', [null, 'substance' =>'B'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'C', [null, 'substance' =>'C'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'L', [null, 'substance' =>'L'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'P', [null, 'substance' =>'P'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'T', [null, 'substance' =>'T'], ['class'=>'nav-button-grey']) }}
-                        </div>
-                        <div class="first-alfavit">
-                            {{ link_to_route('search_substance', 'А', [null, 'substance' =>'А'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'Б', [null, 'substance' =>'Б'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'В', [null, 'substance' =>'В'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'Г', [null, 'substance' =>'Г'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'Д', [null, 'substance' =>'Д'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'Е', [null, 'substance' =>'Е'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'Ж', [null, 'substance' =>'Ж'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'З', [null, 'substance' =>'З'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'И', [null, 'substance' =>'И'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'Й', [null, 'substance' =>'Й'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'К', [null, 'substance' =>'К'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'Л', [null, 'substance' =>'Л'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'М', [null, 'substance' =>'М'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'Н', [null, 'substance' =>'Н'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'О', [null, 'substance' =>'О'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'П', [null, 'substance' =>'П'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'Р', [null, 'substance' =>'Р'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'С', [null, 'substance' =>'С'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'Т', [null, 'substance' =>'Т'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'У', [null, 'substance' =>'У'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'Ф', [null, 'substance' =>'Ф'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'Х', [null, 'substance' =>'Х'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'Ц', [null, 'substance' =>'Ц'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'Ч', [null, 'substance' =>'Ч'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'Ш', [null, 'substance' =>'Ш'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'Щ', [null, 'substance' =>'Щ'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'Э', [null, 'substance' =>'Э'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'Ю', [null, 'substance' =>'Ю'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_substance', 'Я', [null, 'substance' =>'Я'], ['class'=>'nav-button-grey']) }}
-                        </div>
+                        @if(!empty($alphabet['en']))
+                            <div class="first-alfavit">
+                                @foreach($alphabet['en'] as $a)
+                                    {{ link_to_route('search_substance', $a, [null, 'substance' =>$a], ['class'=>'nav-button-grey']) }}
+                                @endforeach
+                            </div>
+                        @endif
+                        @if(!empty($alphabet['ru']))
+                            <div class="second-alfavit">
+                                @foreach($alphabet['ru'] as $a)
+                                    {{ link_to_route('search_substance', $a, [null, 'substance' =>$a], ['class'=>'nav-button-grey']) }}
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -105,9 +80,6 @@
                     </div>
                 @endforeach
             @endif
-        </div>
-        <div class="SEO-text">
-
         </div>
     </div>
 </section>

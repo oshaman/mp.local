@@ -163,7 +163,7 @@ class MedicineController extends MainController
         $medicines = $this->med_rep->get('*', 18, false, [['approved', 1], ['innname_id', $res->innname_id]]);
         $this->aside = view('medicines.aside')->with(['articles' => $articles, 'medicines' => $medicines])->render();
 
-        $this->seo = $this->med_rep->getAnalogSeo($res->id);
+        $this->seo = $this->med_rep->getSecondarySeo($res->id, 'analog');
 
         return $this->renderOutput();
     }
@@ -278,6 +278,9 @@ class MedicineController extends MainController
             [['approved', 1]], ['priority', 'desc'], ['image']);
         $medicines = $this->med_rep->get('*', 18, false, [['approved', 1], ['innname_id', $res->innname_id]]);
         $this->aside = view('medicines.aside')->with(['articles' => $articles, 'medicines' => $medicines])->render();
+
+        $this->seo = $this->med_rep->getSecondarySeo($res->id, 'faq');
+
         return $this->renderOutput();
 
     }
@@ -426,6 +429,9 @@ class MedicineController extends MainController
         $medicines = $this->umed_rep->get('*', 18, false, [['approved', 1], ['innname_id', $res->innname_id]]);
 
         $this->aside = view('medicines.ua_aside')->with(['articles' => $articles, 'medicines' => $medicines])->render();
+
+        $this->seo = $this->med_rep->getSecondarySeo($res->id, 'analog', true);
+
         return $this->renderOutput();
 
     }
@@ -537,6 +543,8 @@ class MedicineController extends MainController
         $medicines = $this->umed_rep->get('*', 18, false, [['approved', 1], ['innname_id', $res->innname_id]]);
 
         $this->aside = view('medicines.ua_aside')->with(['articles' => $articles, 'medicines' => $medicines])->render();
+        $this->seo = $this->med_rep->getSecondarySeo($res->id, 'faq', true);
+
         return $this->renderOutput();
     }
 

@@ -36,9 +36,6 @@
 
         </div>
 
-        <div class="SEO-text">
-
-        </div>
     </div>
 
 </section>

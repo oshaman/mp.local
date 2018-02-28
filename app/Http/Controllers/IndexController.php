@@ -90,14 +90,13 @@ class IndexController extends MainController
 
                 return view('main.ua_content')
                     ->with([
-                        'med_cats' => $med_cats, 'blocks' => $blocks, 'seo' => $this->seo, 'loc' => $this->loc,
+                        'med_cats' => $med_cats, 'blocks' => $blocks, 'loc' => $this->loc,
                         'articles' => $articles, 'sliders' => $sliders, 'tags' => $tags,
                     ])
                     ->render();
             });
         } else {
             $this->seo = $this->seo_rep->oneSeo('/');
-
             $this->content = Cache::remember('main', 60, function () {
 
                 $articles = [
@@ -112,7 +111,7 @@ class IndexController extends MainController
                 $sliders = $this->s_rep->get(
                     ['description', 'text', 'path', 'alt', 'title', 'link'],
                     false, false,
-                    ['approved' => 1]
+                    ['approved' => 1, 'loc' => 'ru']
                 );
 
                 $tags = $this->t_rep->get(['name', 'alias'], 15, false, ['approved' => 1]);
@@ -123,7 +122,7 @@ class IndexController extends MainController
 
                 return view('main.content')
                     ->with([
-                        'med_cats' => $med_cats, 'blocks' => $blocks, 'seo' => $this->seo, 'loc' => null,
+                        'med_cats' => $med_cats, 'blocks' => $blocks, 'loc' => null,
                         'articles' => $articles, 'sliders' => $sliders, 'tags' => $tags,
                     ])
                     ->render();

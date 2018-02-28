@@ -2,6 +2,8 @@
 
 namespace Fresh\Medpravda\Repositories;
 
+use Fresh\Medpravda\AlphaUaView;
+use Fresh\Medpravda\AlphaView;
 use Fresh\Medpravda\Classification;
 use Fresh\Medpravda\Fabricator;
 use Fresh\Medpravda\Innname;
@@ -13,6 +15,7 @@ use Fresh\Medpravda\Article;
 use Fresh\Medpravda\UArticle;
 use Validator;
 use Fresh\Medpravda\MedicineTitle;
+use DB;
 
 class SearchRepository
 {
@@ -104,14 +107,14 @@ class SearchRepository
 
         $result['articles'] = $articles->isNotEmpty() ? $articles : null;
 
-        $medicies = $this->med->select('title', 'alias')->where('title', 'like', '%' . $query . '%')->get();
+        $medicies = $this->med->select('title', 'alias')->where([['title', 'like', '%' . $query . '%'], ['approved', 1]])->get();
 
         if ($medicies->isNotEmpty()) {
             $result['medicines'] = $medicies;
         } else {
             $query_f = '"' . $query . '"';
             $match = 'consist, physicochemical_char, pharm_group, additionally, indications, pharm_prop, contraindications, security, application_features, pregnancy, cars, children, app_mode, overdose, side_effects, interaction';
-            $medicies = $this->med->select('title', 'alias')->whereRaw(
+            $medicies = $this->med->select('title', 'alias', 'approved')->where('approved', 1)->whereRaw(
                 "MATCH($match) AGAINST(? IN BOOLEAN MODE) LIMIT 50",
                 array($query_f)
             )->get();
@@ -258,7 +261,8 @@ class SearchRepository
 
     public function getMedicine($val)
     {
-        $medicines = $this->med->select('title', 'id', 'alias')->where('title', 'like', '%' . $val . '%')->get();
+        $medicines = $this->med->select('title', 'id', 'alias')
+            ->where([['title', 'like', '%' . $val . '%'], ['approved', 1]])->get();
 //        dd($medicines);
 
         if (null == $medicines) {
@@ -295,24 +299,25 @@ class SearchRepository
      * @param $val
      * @return null
      */
-    public function findByFabricator($val, $loc = null)
+    public function findByFabricator($model, $loc = null)
     {
-        $fabricator = $this->fab->select('id', 'title', 'utitle')->where('alias', $val)->first();
-        $result = null;
-        if (!empty($fabricator)) {
-            if (null == $loc) {
-                $result['medicines'] = $this->med->select(['alias', 'title'])
-                    ->where([['fabricator_id', $fabricator->id], ['approved', 1]])->get();
-            } else {
-                $result['medicines'] = $this->umed->select(['alias', 'title'])
-                    ->where([['fabricator_id', $fabricator->id], ['approved', 1]])->get();
-            }
-
-            $result['fabricator'] = $fabricator;
+        if (null == $loc) {
+            $result['medicines'] = $this->med->select(['alias', 'title'])
+                ->where([['fabricator_id', $model->id], ['approved', 1]])->get();
+        } else {
+            $result['medicines'] = $this->umed->select(['alias', 'title'])
+                ->where([['fabricator_id', $model->id], ['approved', 1]])->get();
         }
+
+        $result['fabricator'] = $model;
+
         return $result;
     }
 
+    /**
+     * @param $val
+     * @return mixed
+     */
     public function findMnn($val)
     {
         return $this->mnn->select(['id', 'alias', 'title', 'name', 'uname'])->where('title', 'like', $val . '%')->get();
@@ -322,16 +327,11 @@ class SearchRepository
      * @param $val
      * @return null
      */
-    public function findByMnn($val)
+    public function findByMnn($mnn)
     {
-        $mnn = $this->mnn->select('id', 'title')->where('alias', $val)->first();
+        $result['medicines'] = $this->med->select(['alias', 'title'])
+            ->where([['innname_id', $mnn->id], ['approved', 1]])->get();
 
-        $result = null;
-        if (!empty($mnn)) {
-            $result['medicines'] = $this->med->select(['alias', 'title'])
-                ->where([['innname_id', $mnn->id], ['approved', 1]])->get();
-            $result['mnn'] = $mnn;
-        }
         return $result;
     }
 
@@ -433,10 +433,8 @@ class SearchRepository
      * @param $val
      * @return null
      */
-    public function findByPharma($val, $loc = null)
+    public function findByPharma($pharma, $loc = null)
     {
-        $pharma = $this->pharma->select('id', 'title', 'utitle')->where('alias', $val)->first();
-
         $result = null;
         if (!empty($pharma)) {
             if (null == $loc) {
@@ -466,25 +464,18 @@ class SearchRepository
      * @param $val
      * @return null
      */
-    public function findBySubstance($val, $loc = null)
+    public function findBySubstance($substance, $loc = null)
     {
-        $substance = $this->substance->select('id', 'title', 'utitle')->where('alias', $val)->first();
-
-        $result = null;
-        if (!empty($substance)) {
-
-            if (null == $loc) {
-                $result['medicines'] = $this->med->whereHas('substance', function ($q) use ($substance) {
-                    $q->where([['substance_id', $substance->id], ['approved', 1]])->select('title', 'alias');
-                })->get();
-            } else {
-                $result['medicines'] = $this->umed->whereHas('substance', function ($q) use ($substance) {
-                    $q->where([['substance_id', $substance->id], ['approved', 1]])->select('title', 'alias');
-                })->get();
-            }
-
-            $result['substance'] = $substance;
+        if (null == $loc) {
+            $result['medicines'] = $this->med->whereHas('substance', function ($q) use ($substance) {
+                $q->where([['substance_id', $substance->id], ['approved', 1]])->select('title', 'alias');
+            })->get();
+        } else {
+            $result['medicines'] = $this->umed->whereHas('substance', function ($q) use ($substance) {
+                $q->where([['substance_id', $substance->id], ['approved', 1]])->select('title', 'alias');
+            })->get();
         }
+
         return $result;
     }
 
@@ -533,5 +524,137 @@ class SearchRepository
         }
 
         return $result;
+    }
+
+    /**
+     * @return array
+     */
+    public function getFirstLetters($loc = false)
+    {
+        if (true === $loc) {
+            $letters = AlphaUaView::groupBy('firstletter')->get();
+        } else {
+            $letters = AlphaView::groupBy('firstletter')->get();
+        }
+
+        $alphabet = [];
+
+        foreach ($letters as $letter) {
+            if (preg_match('/[a-zA-Z0-9]/', $letter->firstletter, $x)) {
+                $alphabet['en'][] = $letter->firstletter;
+            } else {
+                $alphabet['ru'][] = $letter->firstletter;
+            }
+        }
+
+        return $alphabet;
+    }
+
+    /**
+     * @param $letter
+     * @param bool $loc
+     * @return mixed
+     */
+    public function getSecondLetters($letter, $loc = false)
+    {
+        if (true === $loc) {
+            $list = DB::table('umedicines')
+                ->select(DB::raw('DISTINCT SUBSTRING(`title`,1,2) AS FIRSTLETTER'))
+                ->where([['title', 'like', $letter . '%'], ['approved', true]])
+                ->get();
+        } else {
+            $list = DB::table('medicines')
+                ->select(DB::raw('DISTINCT SUBSTRING(`title`,1,2) AS FIRSTLETTER'))
+                ->where([['title', 'like', $letter . '%'], ['approved', true]])
+                ->get();
+        }
+
+        return $list;
+    }
+
+    /**
+     * @param bool $loc
+     * @return array
+     */
+    public function getSubstanceLetters($loc = false)
+    {
+        if (true === $loc) {
+            $letters = DB::table('substances')
+                ->select(DB::raw('DISTINCT SUBSTRING(`utitle`,1,1) AS first'))
+                ->groupBy('utitle')
+                ->get();
+        } else {
+            $letters = DB::table('substances')
+                ->select(DB::raw('DISTINCT SUBSTRING(`title`,1,1) AS first'))
+                ->get();
+        }
+
+        $alphabet = [];
+
+        foreach ($letters as $letter) {
+            if (preg_match('/[a-zA-Z0-9]/', $letter->first, $x)) {
+                $alphabet['en'][] = $letter->first;
+            } else {
+                $alphabet['ru'][] = $letter->first;
+            }
+        }
+
+        return $alphabet;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMnnLetters()
+    {
+        $letters = DB::table('innnames')
+            ->select(DB::raw('DISTINCT SUBSTRING(`title`,1,1) AS first'))
+            ->get();
+
+        return $letters;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPharmLetters($loc = true)
+    {
+        if (true === $loc) {
+            $letters = DB::table('pharmagroups')
+                ->select(DB::raw('DISTINCT SUBSTRING(`utitle`,1,1) AS first'))
+                ->get();
+        } else {
+            $letters = DB::table('pharmagroups')
+                ->select(DB::raw('DISTINCT SUBSTRING(`title`,1,1) AS first'))
+                ->get();
+        }
+
+        return $letters;
+    }
+
+    public function getFabricatorLetters($loc = false)
+    {
+        if (true === $loc) {
+            $letters = DB::table('fabricators')
+                ->select(DB::raw('DISTINCT SUBSTRING(`utitle`,1,1) AS first'))
+                ->groupBy('utitle')
+                ->get();
+        } else {
+            $letters = DB::table('fabricators')
+                ->select(DB::raw('DISTINCT SUBSTRING(`title`,1,1) AS first'))
+                ->get();
+        }
+
+        $alphabet = [];
+
+        foreach ($letters as $letter) {
+            if (preg_match('/[a-zA-Z0-9]/', $letter->first, $x)) {
+                $alphabet['en'][] = $letter->first;
+            } else {
+                $alphabet['ru'][] = $letter->first;
+            }
+        }
+
+        return $alphabet;
     }
 }

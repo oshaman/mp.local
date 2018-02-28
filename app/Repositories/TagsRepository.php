@@ -126,6 +126,7 @@ class TagsRepository extends Repository
     {
         if ($tag->delete()) {
             Cache::forget('tags_main');
+            \Log::info('Тег удален');
             return ['status' => 'Тег удален'];
         }
 

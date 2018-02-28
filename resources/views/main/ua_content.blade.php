@@ -56,6 +56,22 @@
                          title="">
                 </div>
             </div>
+            <div class="slide">
+                <div class="inner">
+                    <img class="pagination-active" src="{{ asset('assets') }}/images/index/pagination-blue-1.png"
+                         alt="" title="">
+                    <img class="pagination-hover" src="{{ asset('assets') }}/images/index/pagination-white-1.png" alt=""
+                         title="">
+                </div>
+            </div>
+            <div class="slide">
+                <div class="inner">
+                    <img class="pagination-active" src="{{ asset('assets') }}/images/index/pagination-blue-2.png" alt=""
+                         title="">
+                    <img class="pagination-hover" src="{{ asset('assets') }}/images/index/pagination-white-2.png" alt=""
+                         title="">
+                </div>
+            </div>
         </div>
     </section>
     <!-- end SLIDER -->
@@ -588,9 +604,4 @@
         </div>
     </section>
     <!-- end Интересные СТАТЬИ -->
-</div>
-<div class="SEO-text">
-    @if(!empty($seo))
-        {!! $seo->seo_text !!}
-    @endif
 </div>

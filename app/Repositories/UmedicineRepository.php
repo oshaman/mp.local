@@ -95,6 +95,9 @@ class UmedicineRepository extends Repository
 
         $this->putTitles();
         Cache::store('file')->forget('off-medicine-ua-' . $model->alias);
+        Cache::forget('alpha-ua-' . substr($model->title, 0, 1));
+        Cache::forget('alphabet-ua');
+        Cache::forget('second-alphabet-ua-' . substr($model->title, 0, 1));
         $error = [];
         return ['status' => 'Препарат обновлен', $error];
     }

@@ -37,7 +37,7 @@
         <h3>
             Сортировка препаратов по фармакотерапевтической группе:&nbsp;
             @if(!empty($farm->title))
-                <a>{{ str_limit($farm->title, 32) }}</a>
+                <a>{{ str_limit($farm->title, 128) }}</a>
             @endif
         </h3>
         <div class="section-meta-icon">
@@ -49,37 +49,16 @@
     <div class="wrap">
         <div class="product-analog">
             <div class="search-alfavit">
-
                 <div class="search-alfavit-column">
                     <div class="search-left-content">
-                        <div class="first-alfavit">
-                            {{ link_to_route('search_farm', 'А', [null, 'farmgroup' =>'А'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Б', [null, 'farmgroup' =>'Б'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'В', [null, 'farmgroup' =>'В'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Г', [null, 'farmgroup' =>'Г'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Д', [null, 'farmgroup' =>'Д'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Е', [null, 'farmgroup' =>'Е'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Ж', [null, 'farmgroup' =>'Ж'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'З', [null, 'farmgroup' =>'З'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'И', [null, 'farmgroup' =>'И'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'К', [null, 'farmgroup' =>'К'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Л', [null, 'farmgroup' =>'Л'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'М', [null, 'farmgroup' =>'М'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Н', [null, 'farmgroup' =>'Н'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'О', [null, 'farmgroup' =>'О'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'П', [null, 'farmgroup' =>'П'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Р', [null, 'farmgroup' =>'Р'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'С', [null, 'farmgroup' =>'С'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Т', [null, 'farmgroup' =>'Т'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'У', [null, 'farmgroup' =>'У'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Ф', [null, 'farmgroup' =>'Ф'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Х', [null, 'farmgroup' =>'Х'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Ц', [null, 'farmgroup' =>'Ц'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Ш', [null, 'farmgroup' =>'Ш'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Щ', [null, 'farmgroup' =>'Щ'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Э', [null, 'farmgroup' =>'Э'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm', 'Я', [null, 'farmgroup' =>'Я'], ['class'=>'nav-button-grey']) }}
-                        </div>
+                        @if(!empty($alphabet) && count($alphabet)>0)
+                            <div class="first-alfavit">
+                                @foreach($alphabet as $a)
+                                    @if('n' == $a->first) @continue @endif
+                                    {{ link_to_route('search_farm', $a->first, [null, 'farmgroup' =>$a->first], ['class'=>'nav-button-grey']) }}
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -99,9 +78,6 @@
                     </div>
                 @endforeach
             @endif
-        </div>
-        <div class="SEO-text">
-
         </div>
     </div>
 </section>

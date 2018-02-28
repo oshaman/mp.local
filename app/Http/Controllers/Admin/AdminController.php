@@ -71,6 +71,14 @@ class AdminController extends Controller
             }
 
             if (Gate::allows('UPDATE_MEDICINE')) {
+                $menu->add('Вещества', array('route' => 'substance_admin', 'class' => 'substance_admin'));
+            }
+
+            if (Gate::allows('UPDATE_MEDICINE')) {
+                $menu->add('МНН', array('route' => 'inn_admin', 'class' => 'inn_admin'));
+            }
+
+            if (Gate::allows('UPDATE_MEDICINE')) {
                 $menu->add('Производители', array('route' => 'fabricator_admin', 'class' => 'fabricator_admin'));
             }
 

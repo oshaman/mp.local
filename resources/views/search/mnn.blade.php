@@ -46,35 +46,13 @@
             <div class="search-alfavit">
                 <div class="search-alfavit-column">
                     <div class="search-left-content">
-                        <div class="first-alfavit">
-                            {{ link_to_route('search_mnn', '4', [null, 'mnn' =>'4'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'A', [null, 'mnn' =>'A'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'B', [null, 'mnn' =>'B'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'C', [null, 'mnn' =>'C'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'D', [null, 'mnn' =>'D'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'E', [null, 'mnn' =>'E'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'F', [null, 'mnn' =>'F'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'G', [null, 'mnn' =>'G'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'H', [null, 'mnn' =>'H'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'I', [null, 'mnn' =>'I'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'J', [null, 'mnn' =>'J'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'K', [null, 'mnn' =>'K'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'L', [null, 'mnn' =>'L'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'M', [null, 'mnn' =>'M'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'N', [null, 'mnn' =>'N'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'O', [null, 'mnn' =>'O'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'P', [null, 'mnn' =>'P'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'Q', [null, 'mnn' =>'Q'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'R', [null, 'mnn' =>'R'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'S', [null, 'mnn' =>'S'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'T', [null, 'mnn' =>'T'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'U', [null, 'mnn' =>'U'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'V', [null, 'mnn' =>'V'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'W', [null, 'mnn' =>'W'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'X', [null, 'mnn' =>'X'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'Y', [null, 'mnn' =>'Y'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_mnn', 'Z', [null, 'mnn' =>'Z'], ['class'=>'nav-button-grey']) }}
-                        </div>
+                        @if(!empty($alphabet) && count($alphabet)>0)
+                            <div class="first-alfavit">
+                                @foreach($alphabet as $a)
+                                    {{ link_to_route('search_mnn', $a->first, [null, 'mnn' =>$a->first], ['class'=>'nav-button-grey']) }}
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -97,9 +75,6 @@
                     </div>
                 @endforeach
             @endif
-        </div>
-        <div class="SEO-text">
-
         </div>
     </div>
 </section>

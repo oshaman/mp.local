@@ -52,6 +52,15 @@ class ClassificationRepository extends Repository
     }
 
     /**
+     * @param $val
+     * @return mixed
+     */
+    public function getClass($val)
+    {
+        return $this->model->where('class', $val)->first();
+    }
+
+    /**
      * @param $request
      * @param $atx
      * @return mixed
@@ -108,36 +117,5 @@ class ClassificationRepository extends Repository
         $atx->uname = $request->get('uname');
         $atx->save();
         return $res;
-    }
-
-    /**
-     * @param $class
-     * @param bool $loc
-     * @return \stdClass
-     */
-    public function getSeo($class, $loc = false)
-    {
-        $atx = $this->model->with('seo')->where('class', $class)->first();
-
-        $obj = new \stdClass;
-
-        if (false == $loc) {
-            $obj->seo_title = $atx->seo->seo_title ?? '';
-            $obj->seo_keywords = $atx->seo->seo_keywords ?? '';
-            $obj->seo_description = $atx->seo->seo_description ?? '';
-            $obj->seo_text = $atx->seo->seo_text ?? '';
-            $obj->og_image = $atx->seo->og_image ?? '';
-            $obj->og_title = $atx->seo->og_title ?? '';
-            $obj->og_description = $atx->seo->og_description ?? '';
-        } else {
-            $obj->seo_title = $atx->seo->useo_title ?? '';
-            $obj->seo_keywords = $atx->seo->useo_keywords ?? '';
-            $obj->seo_description = $atx->useo->seo_description ?? '';
-            $obj->seo_text = $atx->seo->useo_text ?? '';
-            $obj->og_image = $atx->seo->uog_image ?? '';
-            $obj->og_title = $atx->seo->uog_title ?? '';
-            $obj->og_description = $atx->seo->uog_description ?? '';
-        }
-        return $obj;
     }
 }

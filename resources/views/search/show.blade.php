@@ -55,10 +55,6 @@
                 аналоги.
             </div>
         @endif
-
-        <div class="SEO-text">
-
-        </div>
     </div>
     @if(!empty($titles['articles']))
         <section>

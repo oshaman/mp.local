@@ -38,10 +38,6 @@ class CategoriesRepository extends Repository
 
         $seo = $this->updateSeo($request, $cat);
 
-        /*if (!empty($seo)) {
-//            Cache::store('file')->forget('atx-seo-' . $atx->class);
-        }*/
-
         if ($cat->title != $request->title) {
             $cat->title = $request->title;
         }

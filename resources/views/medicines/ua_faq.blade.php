@@ -55,9 +55,6 @@
                     </ul>
                 </div>
             @endif
-            <div class="SEO-text">
-
-            </div>
         </div>
     </section>
 @endif

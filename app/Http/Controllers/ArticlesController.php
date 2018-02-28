@@ -63,8 +63,10 @@ class ArticlesController extends MainController
                 $article->load('category');
                 $article->load('tags');
                 $article->load('image');
+                $article->load('image');
                 return $article;
             });
+
             if (!empty($article->seo)) {
                 $article->seo = $this->rua_rep->convertSeo($article->seo);
             } else {
@@ -397,7 +399,6 @@ class ArticlesController extends MainController
 
         $this->getAside('ua', true);
         $this->seo = $this->cat_rep->getSeo($cat, true);
-//        $this->getSeos('ua/top-articles');
 
         return $this->renderOutput();
     }

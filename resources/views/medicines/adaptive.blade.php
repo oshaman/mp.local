@@ -213,6 +213,9 @@
                                 </div>
                             @endforeach
                         </div>
+                        <div class="no-regist">
+                            <a href="{{ route('medicine_analog', ['medicine'=>$medicine->alias]) }}">нет регистрации</a>
+                        </div>
                     </div>
                 @else
                     <div class="product-slider clone-from" data-number="3">
@@ -221,6 +224,9 @@
                                 <img src="{{ asset('asset/images/mp.png') }}"
                                      alt="Med Pravda" title="Med Pravda">
                             </div>
+                        </div>
+                        <div class="no-regist">
+                            <a href="{{ route('medicine_analog', ['medicine'=>$medicine->alias]) }}">нет регистрации</a>
                         </div>
                     </div>
                 @endif
@@ -283,9 +289,6 @@
                         @endforeach
                     </div>
                 @endif
-            </div>
-            <div class="SEO-text">
-
             </div>
         </div>
     </section>

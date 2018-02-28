@@ -128,4 +128,12 @@ class Medicine extends Model
     {
         return $this->hasOne('Fresh\Medpravda\AnalogSeo');
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function faqSeo()
+    {
+        return $this->hasOne('Fresh\Medpravda\FaqSeo');
+    }
 }

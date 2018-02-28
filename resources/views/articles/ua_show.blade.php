@@ -127,8 +127,4 @@
             @endif
         </div>
     @endif
-
-    <div class="SEO-text">
-
-    </div>
 </section>

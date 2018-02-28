@@ -22,7 +22,7 @@
     {!! Form::close() !!}
 </div>
 <div class="">
-    <table class="table">
+    <table class="table status">
         <thead>
         <tr>
             <th>Приоритет</th>

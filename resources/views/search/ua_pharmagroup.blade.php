@@ -53,34 +53,14 @@
 
                 <div class="search-alfavit-column">
                     <div class="search-left-content">
-                        <div class="first-alfavit">
-                            {{ link_to_route('search_farm_u', 'А', [null, 'farmgroup' =>'А'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm_u', 'Б', [null, 'farmgroup' =>'Б'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm_u', 'В', [null, 'farmgroup' =>'В'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm_u', 'Г', [null, 'farmgroup' =>'Г'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm_u', 'Д', [null, 'farmgroup' =>'Д'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm_u', 'Е', [null, 'farmgroup' =>'Е'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm_u', 'Ж', [null, 'farmgroup' =>'Ж'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm_u', 'З', [null, 'farmgroup' =>'З'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm_u', 'И', [null, 'farmgroup' =>'И'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm_u', 'К', [null, 'farmgroup' =>'К'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm_u', 'Л', [null, 'farmgroup' =>'Л'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm_u', 'М', [null, 'farmgroup' =>'М'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm_u', 'Н', [null, 'farmgroup' =>'Н'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm_u', 'О', [null, 'farmgroup' =>'О'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm_u', 'П', [null, 'farmgroup' =>'П'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm_u', 'Р', [null, 'farmgroup' =>'Р'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm_u', 'С', [null, 'farmgroup' =>'С'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm_u', 'Т', [null, 'farmgroup' =>'Т'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm_u', 'У', [null, 'farmgroup' =>'У'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm_u', 'Ф', [null, 'farmgroup' =>'Ф'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm_u', 'Х', [null, 'farmgroup' =>'Х'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm_u', 'Ц', [null, 'farmgroup' =>'Ц'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm_u', 'Ш', [null, 'farmgroup' =>'Ш'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm_u', 'Щ', [null, 'farmgroup' =>'Щ'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm_u', 'Є', [null, 'farmgroup' =>'Є'], ['class'=>'nav-button-grey']) }}
-                            {{ link_to_route('search_farm_u', 'Я', [null, 'farmgroup' =>'Я'], ['class'=>'nav-button-grey']) }}
-                        </div>
+                        @if(!empty($alphabet) && count($alphabet)>0)
+                            <div class="first-alfavit">
+                                @foreach($alphabet as $a)
+                                    @if('n' == $a->first) @continue @endif
+                                    {{ link_to_route('search_farm_u', $a->first, [null, 'farmgroup' =>$a->first], ['class'=>'nav-button-grey']) }}
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -100,9 +80,6 @@
                     </div>
                 @endforeach
             @endif
-        </div>
-        <div class="SEO-text">
-
         </div>
     </div>
 </section>

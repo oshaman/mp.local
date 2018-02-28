@@ -87,9 +87,6 @@
             </div>
         </div>
     @endif
-
-
-
     @if(is_object($articles) && !empty($articles->lastPage()) && $articles->lastPage() > 1)
         <div class="articles-pagination">
             @if($articles->lastPage() > 1)
@@ -127,8 +124,4 @@
             @endif
         </div>
     @endif
-
-    <div class="SEO-text">
-
-    </div>
 </section>

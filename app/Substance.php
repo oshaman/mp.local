@@ -15,4 +15,9 @@ class Substance extends Model
     {
         return $this->belongsToMany('Fresh\Medpravda\Medicine', 'medicine_substance');
     }
+
+    public function seo()
+    {
+        return $this->hasOne('Fresh\Medpravda\SubstanceSeo');
+    }
 }

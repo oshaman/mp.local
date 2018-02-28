@@ -145,9 +145,6 @@
                 @endif
             </div>
         </section>
-        <div class="SEO-text">
-
-        </div>
 
     </section>
 @endif

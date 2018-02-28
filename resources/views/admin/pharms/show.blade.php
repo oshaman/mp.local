@@ -1,4 +1,4 @@
-<h1>Добавление \ Редактирование Фармгрупп</h1>
+<h1>Редактирование Фармгрупп</h1>
 
 <div class="">
     {!! Form::open(['url' => route('pharm_admin'), 'class'=>'form-horizontal','method'=>'get' ]) !!}
@@ -28,6 +28,7 @@
         <tr>
             <th>Заголовок</th>
             <th></th>
+            <th></th>
         </tr>
         </thead>
         @if (!empty($pharms[0]))
@@ -35,6 +36,11 @@
             @foreach ($pharms as $pharm)
                 <tr>
                     <td>{{ $pharm->title }}</td>
+                    <td>
+                        {!! Form::open(['url' => route('pharm_seo_update', ['pharm'=> $pharm->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
+                        {!! Form::button('SEO', ['class' => 'btn btn-warning','type'=>'submit']) !!}
+                        {!! Form::close() !!}
+                    </td>
                     <td>
                         {!! Form::open(['url' => route('pharm_update', ['pharm'=> $pharm->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
                         {!! Form::button('Редактировать', ['class' => 'btn btn-warning','type'=>'submit']) !!}

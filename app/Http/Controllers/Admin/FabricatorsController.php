@@ -5,6 +5,8 @@ namespace Fresh\Medpravda\Http\Controllers\Admin;
 use Fresh\Medpravda\Http\Requests\FabricatorRequest;
 use Fresh\Medpravda\Repositories\FabricatorsRepository;
 use Gate;
+use Illuminate\Http\Request;
+use Fresh\Medpravda\FabricatorSeo;
 
 class FabricatorsController extends AdminController
 {
@@ -111,6 +113,39 @@ class FabricatorsController extends AdminController
         $this->mark = 'fabricator_admin';
 
         $this->content = view('admin.fabricators.edit')->with('fabricator', $fabricator);
+        return $this->renderOutput();
+    }
+
+    /**
+     * @param Request $request
+     * @param $fabricator
+     * @return $this|\Illuminate\Http\RedirectResponse|mixed
+     */
+    public function updateSeo(Request $request, $fabricator)
+    {
+        if (Gate::denies('UPDATE_ARTICLES')) {
+            abort(404);
+        }
+
+        if ($request->isMethod('post')) {
+            $result = $this->repository->updateSeo($request, $fabricator);
+
+            if (is_array($result) && !empty($result['error'])) {
+                return back()->withErrors($result);
+            }
+
+            return redirect()->back()->with($result);
+        }
+
+        $this->title = 'Редактирование SEO-блоков для производителя.';
+        $this->mark = 'fabricator_admin';
+
+        $seo = FabricatorSeo::where('fabricator_id', $fabricator->id)->first();
+
+        $this->content = view('admin.fabricators.seo')->with(compact(['seo', 'fabricator']))->render();
+
+        $this->template = 'admin.admin';
+
         return $this->renderOutput();
     }
 }

@@ -70,6 +70,8 @@
                     </div>
                 </div>
             </div>
+            @if(0 == $loop->iteration%2)
+                <hr> @endif
         @endforeach
     </div>
 @endif

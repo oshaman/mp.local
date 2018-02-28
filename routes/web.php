@@ -186,6 +186,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
 //    SEO ANALOG
     Route::match(['post', 'get'], 'seo-analog/{medicine}', 'Admin\AnalogController@updateSeo')
         ->name('seo_analog')->where('medicine', '[0-9]+');
+    Route::match(['post', 'get'], 'seo-faq/{medicine}', 'Admin\FaqController@updateSeo')
+        ->name('seo_faq')->where('medicine', '[0-9]+');
 
 
     Route::match(['post', 'get'], 'blocks/{block?}', 'Admin\BlocksController@updateBlocks')
@@ -255,7 +257,31 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
      */
     Route::group(['prefix' => 'pharm'], function () {
         Route::match(['post', 'get'], '/', 'Admin\PharmController@index')->name('pharm_admin');
-        Route::match(['post', 'get'], 'edit/{pharm}', 'Admin\PharmController@updatePharm')->name('pharm_update')->where('pharm', '[0-9]+');
+        Route::match(['post', 'get'], 'edit/{pharm}', 'Admin\PharmController@updatePharm')
+            ->name('pharm_update')->where('pharm', '[0-9]+');
+        Route::match(['post', 'get'], 'seo/{pharm}', 'Admin\PharmController@updateSeo')
+            ->name('pharm_seo_update')->where('pharm', '[0-9]+');
+    });
+
+    /**
+     * Admin SUBSTANCE
+     */
+    Route::group(['prefix' => 'substance'], function () {
+        Route::match(['post', 'get'], '/', 'Admin\SubstanceController@show')->name('substance_admin');
+        Route::match(['post', 'get'], 'edit/{substance}', 'Admin\SubstanceController@update')
+            ->name('substance_update')->where('substance', '[0-9]+');
+        Route::match(['post', 'get'], 'seo/{substance}', 'Admin\SubstanceController@updateSeo')
+            ->name('substance_seo_update')->where('substance', '[0-9]+');
+    });
+    /**
+     * Admin INN
+     */
+    Route::group(['prefix' => 'inn'], function () {
+        Route::match(['post', 'get'], '/', 'Admin\InnController@show')->name('inn_admin');
+        Route::match(['post', 'get'], 'edit/{inn}', 'Admin\InnController@update')
+            ->name('inn_update')->where('inn', '[0-9]+');
+        Route::match(['post', 'get'], 'seo/{inn}', 'Admin\InnController@updateSeo')
+            ->name('inn_seo_update')->where('inn', '[0-9]+');
     });
     /**
      * Admin FABRICATORS
@@ -265,6 +291,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
         Route::match(['get', 'post'], 'create', ['uses' => 'Admin\FabricatorsController@store', 'as' => 'fabricator_create']);
         Route::match(['post', 'get'], 'edit/{fabricator_bind}', 'Admin\FabricatorsController@updateFabricator')
             ->name('fabricator_update')->where('fabricator_bind', '[0-9]+');
+        Route::match(['post', 'get'], 'seo/{fabricator_bind}', 'Admin\FabricatorsController@updateSeo')
+            ->name('fabricator_seo_update')->where('fabricator_bind', '[0-9]+');
     });
     /**
      * Med Tags

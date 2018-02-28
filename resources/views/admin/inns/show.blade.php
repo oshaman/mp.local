@@ -1,8 +1,8 @@
-<h1>Добавление \ Редактирование производителей</h1>
+<h1>Редактирование международных названий</h1>
 
 <div class="">
-    {!! Form::open(['url' => route('fabricator_admin'), 'class'=>'form-horizontal','method'=>'get' ]) !!}
-    <h3>Поиск производителей:</h3>
+    {!! Form::open(['route' => 'inn_admin', 'class'=>'form-horizontal','method'=>'get' ]) !!}
+    <h3>Поиск международных названий:</h3>
     <div class="">
         {{ Form::label('value', 'Параметр поиска') }}
         {!! Form::text('value', old('value') ? : '' , ['placeholder'=>'id, link...', 'id'=>'value', 'class'=>'form-control']) !!}
@@ -20,11 +20,8 @@
     </div>
     {!! Form::close() !!}
 </div>
-<hr>
-<div class="">
-    {!! Html::link(route('fabricator_create'),'Добавить производителя.',['class' => 'btn btn-success']) !!}
-</div>
-<hr>
+
+
 <div class="">
     <table class="table">
         <thead>
@@ -32,21 +29,22 @@
             <th>Заголовок</th>
             <th></th>
             <th></th>
+            <th></th>
         </tr>
         </thead>
-        @if (!empty($fabricators[0]))
+        @if (!empty($inns[0]))
             <tbody>
-            @foreach ($fabricators as $fabricator)
+            @foreach ($inns as $inn)
                 <tr>
-                    <td>{{ $fabricator->title }}</td>
+                    <td>{{ $inn->title }}</td>
+                    <td>{{ $inn->name }}</td>
                     <td>
-                        {!! Form::open(['url' => route('fabricator_seo_update', ['fabricator'=> $fabricator->id]),
-                                                                    'class'=>'form-horizontal','method'=>'GET']) !!}
+                        {!! Form::open(['url' => route('inn_seo_update', ['inn'=> $inn->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
                         {!! Form::button('SEO', ['class' => 'btn btn-warning','type'=>'submit']) !!}
                         {!! Form::close() !!}
                     </td>
                     <td>
-                        {!! Form::open(['url' => route('fabricator_update', ['fabricator'=> $fabricator->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
+                        {!! Form::open(['url' => route('inn_update', ['inn'=> $inn->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
                         {!! Form::button('Редактировать', ['class' => 'btn btn-warning','type'=>'submit']) !!}
                         {!! Form::close() !!}
                     </td>
@@ -55,45 +53,45 @@
             </tbody>
             <!--PAGINATION-->
             <div class="general-pagination group">
-                @if(is_object($fabricators) && !empty($fabricators->lastPage()) && $fabricators->lastPage() > 1)
-                    @if($fabricators->lastPage() > 1)
+                @if(is_object($inns) && !empty($inns->lastPage()) && $inns->lastPage() > 1)
+                    @if($inns->lastPage() > 1)
                         <ul class="pagination">
-                            @if($fabricators->currentPage() !== 1)
+                            @if($inns->currentPage() !== 1)
                                 <li>
-                                    <a rel="prev" href="{{ $fabricators->url(($fabricators->currentPage() - 1)) }}"
+                                    <a rel="prev" href="{{ $inns->url(($inns->currentPage() - 1)) }}"
                                        class="prev">
                                         <
                                     </a>
                                 </li>
                             @endif
-                            @if($fabricators->currentPage() >= 3)
-                                <li><a href="{{ $fabricators->url($fabricators->url(1)) }}">1</a></li>
+                            @if($inns->currentPage() >= 3)
+                                <li><a href="{{ $inns->url($inns->url(1)) }}">1</a></li>
                             @endif
-                            @if($fabricators->currentPage() >= 4)
+                            @if($inns->currentPage() >= 4)
                                 <li><a href="#">...</a></li>
                             @endif
-                            @if($fabricators->currentPage() !== 1)
+                            @if($inns->currentPage() !== 1)
                                 <li>
-                                    <a href="{{ $fabricators->url($fabricators->currentPage()-1) }}">{{ $fabricators->currentPage()-1 }}</a>
+                                    <a href="{{ $inns->url($inns->currentPage()-1) }}">{{ $inns->currentPage()-1 }}</a>
                                 </li>
                             @endif
-                            <li><a class="active disabled">{{ $fabricators->currentPage() }}</a></li>
-                            @if($fabricators->currentPage() !== $fabricators->lastPage())
+                            <li><a class="active disabled">{{ $inns->currentPage() }}</a></li>
+                            @if($inns->currentPage() !== $inns->lastPage())
                                 <li>
-                                    <a href="{{ $fabricators->url($fabricators->currentPage()+1) }}">{{ $fabricators->currentPage()+1 }}</a>
+                                    <a href="{{ $inns->url($inns->currentPage()+1) }}">{{ $inns->currentPage()+1 }}</a>
                                 </li>
                             @endif
-                            @if($fabricators->currentPage() <= ($fabricators->lastPage()-3))
+                            @if($inns->currentPage() <= ($inns->lastPage()-3))
                                 <li><a href="#">...</a></li>
                             @endif
-                            @if($fabricators->currentPage() <= ($fabricators->lastPage()-2))
+                            @if($inns->currentPage() <= ($inns->lastPage()-2))
                                 <li>
-                                    <a href="{{ $fabricators->url($fabricators->lastPage()) }}">{{ $fabricators->lastPage() }}</a>
+                                    <a href="{{ $inns->url($inns->lastPage()) }}">{{ $inns->lastPage() }}</a>
                                 </li>
                             @endif
-                            @if($fabricators->currentPage() !== $fabricators->lastPage())
+                            @if($inns->currentPage() !== $inns->lastPage())
                                 <li>
-                                    <a rel="next" href="{{ $fabricators->url(($fabricators->currentPage() + 1)) }}"
+                                    <a rel="next" href="{{ $inns->url(($inns->currentPage() + 1)) }}"
                                        class="next">
                                         >
                                     </a>
