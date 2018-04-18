@@ -52,9 +52,11 @@ class ArticlesController extends AdminController
                     if ($articles) $articles->appends(['param' => $data['param']])->links();
                     break;
                 default:
-                    $articles = $this->ru_rep->get('*',
+                    /*$articles = $this->ru_rep->get('*',
                         false, 25, ['approved' => 0], ['created_at', 'desc'], ['category']);
-                    if ($articles) $articles->appends(['param' => $data['param']])->links();
+                    if ($articles) $articles->appends(['param' => $data['param']])->links();*/
+                    $articles = $this->ru_rep->get('*', false, 25, ['approved' => 1],
+                        ['created_at', 'desc'], ['category']);
             }
         } else {
             $articles = $this->ru_rep->get('*', false, 25, ['approved' => 1],

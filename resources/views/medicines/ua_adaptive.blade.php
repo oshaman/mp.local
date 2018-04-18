@@ -52,6 +52,15 @@
                                 </div>
                             @endforeach
                         </div>
+                        @if(empty($medicine->certified))
+                            <div class="no-regist">
+                                <div>
+                                    Відсутня Реєстрація
+                                </div>
+                                <a href="{{ route('medicine_analog_ua', ['medicine'=>$medicine->alias]) }}">Перейти до
+                                    аналогів</a>
+                            </div>
+                        @endif
                     </div>
                 @else
                     <div class="product-slider clone-from" data-number="3">
@@ -61,6 +70,15 @@
                                      alt="Med Pravda" title="Med Pravda">
                             </div>
                         </div>
+                        @if(empty($medicine->certified))
+                            <div class="no-regist">
+                                <div>
+                                    Відсутня Реєстрація
+                                </div>
+                                <a href="{{ route('medicine_analog_ua', ['medicine'=>$medicine->alias]) }}">Перейти до
+                                    аналогів</a>
+                            </div>
+                        @endif
                     </div>
                 @endif
             </div>

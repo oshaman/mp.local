@@ -239,7 +239,7 @@
 </div>
 <hr>
 <!-- SEO -->
-{!! Form::button('Сохранить', ['class' => 'btn btn-primary','type'=>'submit']) !!}
+{!! Form::button('Сохранить', ['class' => 'btn btn-primary buttn-save','type'=>'submit']) !!}
 <hr>
 {!! Form::close() !!}
 <div class="shablon" style="display:none">

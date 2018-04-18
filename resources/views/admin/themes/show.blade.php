@@ -1,7 +1,7 @@
 <!-- START CONTENT -->
 <div class="">
     {!! Form::open(['url' => route('themes_admin'), 'class'=>'form-horizontal','method'=>'GET' ]) !!}
-    <h3>Поиск темы:</h3>
+    <h3>Поиск популярные темы:</h3>
     <div class="">
         {{ Form::label('value', 'Заголовок') }}
         {!! Form::text('value', old('value') ? : '' , ['placeholder'=>'id, link...', 'id'=>'value', 'class'=>'form-control']) !!}
@@ -70,7 +70,7 @@
                                     <a href="{{ $themes->url($themes->currentPage()-1) }}">{{ $themes->currentPage()-1 }}</a>
                                 </li>
                             @endif
-                            <li><a class="active disabled">{{ $themes->currentPage() }}</a></li>
+                                <li class="active"><a class="active disabled">{{ $themes->currentPage() }}</a></li>
                             @if($themes->currentPage() !== $themes->lastPage())
                                 <li>
                                     <a href="{{ $themes->url($themes->currentPage()+1) }}">{{ $themes->currentPage()+1 }}</a>

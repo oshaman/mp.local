@@ -87,7 +87,7 @@ class AdminController extends Controller
             }
 
             if (Gate::allows('UPDATE_ARTICLES')) {
-                $menu->add('Темы', array('route' => 'themes_admin', 'class' => 'themes_admin'));
+                $menu->add('Популярные Темы', array('route' => 'themes_admin', 'class' => 'themes_admin'));
             }
 
             if (Gate::allows('MAIN_ADMIN')) {

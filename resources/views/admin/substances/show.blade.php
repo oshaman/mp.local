@@ -36,12 +36,12 @@
             @foreach ($substances as $substance)
                 <tr>
                     <td>{{ $substance->title }}</td>
-                    <td>
+                    <td align="right" class="buttons">
                         {!! Form::open(['url' => route('substance_seo_update', ['substance'=> $substance->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
                         {!! Form::button('SEO', ['class' => 'btn btn-warning','type'=>'submit']) !!}
                         {!! Form::close() !!}
                     </td>
-                    <td>
+                    <td align="right" class="buttons">
                         {!! Form::open(['url' => route('substance_update', ['substance'=> $substance->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
                         {!! Form::button('Редактировать', ['class' => 'btn btn-warning','type'=>'submit']) !!}
                         {!! Form::close() !!}
@@ -73,16 +73,31 @@
                                     <a href="{{ $substances->url($substances->currentPage()-1) }}">{{ $substances->currentPage()-1 }}</a>
                                 </li>
                             @endif
-                            <li><a class="active disabled">{{ $substances->currentPage() }}</a></li>
+                                <li class="active"><a class="active disabled">{{ $substances->currentPage() }}</a></li>
                             @if($substances->currentPage() !== $substances->lastPage())
                                 <li>
                                     <a href="{{ $substances->url($substances->currentPage()+1) }}">{{ $substances->currentPage()+1 }}</a>
                                 </li>
                             @endif
-                            @if($substances->currentPage() <= ($substances->lastPage()-3))
+                                @if($substances->currentPage()+1 < $substances->lastPage())
+                                    <li>
+                                        <a href="{{ $substances->url($substances->currentPage()+2) }}">{{ $substances->currentPage()+2 }}</a>
+                                    </li>
+                                @endif
+                                @if($substances->currentPage()+2 < $substances->lastPage())
+                                    <li>
+                                        <a href="{{ $substances->url($substances->currentPage()+3) }}">{{ $substances->currentPage()+3 }}</a>
+                                    </li>
+                                @endif
+                                @if($substances->currentPage()+3 < $substances->lastPage())
+                                    <li>
+                                        <a href="{{ $substances->url($substances->currentPage()+4) }}">{{ $substances->currentPage()+4 }}</a>
+                                    </li>
+                                @endif
+                                @if($substances->currentPage() < ($substances->lastPage()-5))
                                 <li><a href="#">...</a></li>
                             @endif
-                            @if($substances->currentPage() <= ($substances->lastPage()-2))
+                                @if($substances->currentPage() < ($substances->lastPage()-4))
                                 <li>
                                     <a href="{{ $substances->url($substances->lastPage()) }}">{{ $substances->lastPage() }}</a>
                                 </li>
@@ -98,8 +113,6 @@
                         </ul>
                     @endif
                 @endif
-
-
             </div>
         @endif
     </table>

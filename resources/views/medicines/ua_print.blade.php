@@ -8,20 +8,20 @@
 </head>
 <body>
 <div class="for-print">
-    <a href="javascript:window.print();" class="btn-print">Распечатать</a>
-    <div class="from">ИНФОРМАЦИЯ С САЙТА MEDPRAVDA.COM.UA - ВСЯ ПРАВДА О ПРЕПАРАТАХ</div>
-    <h1 class="head-title">{{ $medicine->title }} инструкция и цена в аптеках</h1>
+    <a href="javascript:window.print();" class="btn-print">Друкувати</a>
+    <div class="from">ІНФОРМАЦІЯ З САЙТУ MEDPRAVDA.COM.UA - ВСЯ ПРАВДА ПРО ПРЕПАРАТИ</div>
+    <h1 class="head-title">{{ $medicine->title }} инструкція та ціна в аптеках</h1>
     <div class="product-info-down">
         @if(!empty($medicine->dose))
             <div id="dozirovka">
-                <h5>Дозировка:</h5>
+                <h5>Дозування:</h5>
                 <p>{{ $medicine->dose }}</p>
             </div>
         @endif
-        @if(!empty($medicine->fabricator_name->title))
+        @if(!empty($medicine->fabricator_name->utitle))
             <div id="proizvoditel">
-                <h5>Производитель:</h5>
-                <a href="#"><p>{{ $medicine->fabricator_name->title }}</p></a>
+                <h5>Виробник:</h5>
+                <a href="#"><p>{{ $medicine->fabricator_name->utitle }}</p></a>
             </div>
         @endif
         @if(!empty($medicine->innname->title))
@@ -30,15 +30,15 @@
                 <a href="#"><p>{{ $medicine->innname->title }}</p></a>
             </div>
         @endif
-        @if(!empty($medicine->pharmagroup->title))
+        @if(!empty($medicine->pharmagroup->utitle))
             <div id="farm-group">
-                <h5>Фарм. группа:</h5>
-                <a href="#"><p>{{ $medicine->pharmagroup->title }}</p></a>
+                <h5>Фарм. група:</h5>
+                <a href="#"><p>{{ $medicine->pharmagroup->utitle }}</p></a>
             </div>
         @endif
         @if(!empty($medicine->reg))
             <div id="reg">
-                <h5>Регистрация:</h5>
+                <h5>Реєстрація:</h5>
                 <p>{{ $medicine->reg }}</p>
             </div>
         @endif
@@ -47,7 +47,7 @@
                 <h5>Код АТХ:</h5>
                 @foreach($classes as $class=>$name)
                     <a href="#">
-                        <p>{{ $class .' - '. $name['name'] }}</p>
+                        <p>{{ $class .' - '. $name['uname'] }}</p>
                     </a>
                 @endforeach
             </div>
@@ -58,7 +58,7 @@
     @if(!empty($medicine->consist))
         <div id="sostav" class="top-product-nav-info">
             <div class="title-product-info">
-                <h5>Состав</h5>
+                <h5>Склад</h5>
             </div>
             {!! $medicine->consist !!}
         </div>
@@ -66,7 +66,7 @@
     @if(!empty($medicine->docs_form))
         <div id="lekforma" class="top-product-nav-info">
             <div class="title-product-info">
-                <h5>Лекарственная форма</h5>
+                <h5>Лікарська форма</h5>
             </div>
             {!! $medicine->docs_form !!}
         </div>
@@ -74,7 +74,7 @@
     @if(!empty($medicine->physicochemical_char))
         <div id="fizhimsvoistva" class="top-product-nav-info">
             <div class="title-product-info">
-                <h5>Основные физико-химические свойства</h5>
+                <h5>Основні фізико-хімічні властивості</h5>
             </div>
             {!! $medicine->physicochemical_char !!}
         </div>
@@ -82,7 +82,7 @@
     @if(!empty($medicine->fabricator))
         <div id="proizvoditel" class="top-product-nav-info">
             <div class="title-product-info">
-                <h5>Производитель</h5>
+                <h5>Виробник</h5>
             </div>
             {!! $medicine->fabricator !!}
         </div>
@@ -90,7 +90,7 @@
     @if(!empty($medicine->addr_fabricator))
         <div id="adresproizvoditelya" class="top-product-nav-info">
             <div class="title-product-info">
-                <h5>Местонахождение производителя</h5>
+                <h5>Місцезнаходження виробника</h5>
             </div>
             {!! $medicine->addr_fabricator !!}
         </div>
@@ -98,7 +98,7 @@
     @if(!empty($medicine->pharm_group))
         <div id="farmgruppa" class="top-product-nav-info">
             <div class="title-product-info">
-                <h5>Фармакотерапевтическая группа</h5>
+                <h5>Фармакотерапевтична група</h5>
             </div>
             {!! $medicine->pharm_group !!}
         </div>
@@ -106,7 +106,7 @@
     @if(!empty($medicine->pharm_prop))
         <div id="farmsvoistva" class="top-product-nav-info">
             <div class="title-product-info">
-                <h5>Фармакологические свойства</h5>
+                <h5>Фармакологічні властивості</h5>
             </div>
             {!! $medicine->pharm_prop !!}
         </div>
@@ -114,7 +114,7 @@
     @if(!empty($medicine->indications))
         <div id="pokazanij" class="top-product-nav-info">
             <div class="title-product-info">
-                <h5>Показания к применению</h5>
+                <h5>Показання</h5>
             </div>
             {!! $medicine->indications !!}
         </div>
@@ -122,7 +122,7 @@
     @if(!empty($medicine->contraindications))
         <div id="protivipokazaniya" class="top-product-nav-info">
             <div class="title-product-info">
-                <h5>Противопоказания</h5>
+                <h5>Протипоказання</h5>
             </div>
             {!! $medicine->contraindications !!}
         </div>
@@ -134,7 +134,7 @@
     @if(!empty($medicine->security))
         <div id="bezopastnost" class="top-product-nav-info">
             <div class="title-product-info">
-                <h5>Надлежащие меры безопасности при применении</h5>
+                <h5>Міри безпеки</h5>
             </div>
             {!! $medicine->security !!}
         </div>
@@ -142,7 +142,7 @@
     @if(!empty($medicine->application_features))
         <div id="osobennostprimeneniya" class="top-product-nav-info">
             <div class="title-product-info">
-                <h5>Особенности применения</h5>
+                <h5>Особливості застосування</h5>
             </div>
             {!! $medicine->application_features !!}
         </div>
@@ -150,7 +150,7 @@
     @if(!empty($medicine->pregnancy))
         <div id="beremennost" class="top-product-nav-info">
             <div class="title-product-info">
-                <h5>Применение в период беременности или кормления грудью</h5>
+                <h5>Застосування у період вагітності або годування груддю</h5>
             </div>
             {!! $medicine->pregnancy !!}
         </div>
@@ -158,7 +158,7 @@
     @if(!empty($medicine->cars))
         <div id="avto" class="top-product-nav-info">
             <div class="title-product-info">
-                <h5>Способность влиять на скорость реакции при управлении автотранспортом</h5>
+                <h5>Вплив на здатність керувати транспортними засобами і механізмами</h5>
             </div>
             {!! $medicine->cars !!}
         </div>
@@ -166,7 +166,7 @@
     @if(!empty($medicine->children))
         <div id="deti" class="top-product-nav-info">
             <div class="title-product-info">
-                <h5>Дети</h5>
+                <h5>Діти</h5>
             </div>
             {!! $medicine->children !!}
         </div>
@@ -174,7 +174,7 @@
     @if(!empty($medicine->app_mode))
         <div id="premenenieidosa" class="top-product-nav-info">
             <div class="title-product-info">
-                <h5>Способ применения и дозы</h5>
+                <h5>Спосіб застосування та дози</h5>
             </div>
             {!! $medicine->app_mode !!}
         </div>
@@ -182,7 +182,7 @@
     @if(!empty($medicine->overdose))
         <div id="peredoz" class="top-product-nav-info">
             <div class="title-product-info">
-                <h5>Передозировка</h5>
+                <h5>Передозування</h5>
             </div>
             {!! $medicine->overdose !!}
         </div>
@@ -190,7 +190,7 @@
     @if(!empty($medicine->side_effects))
         <div id="pobochnie" class="top-product-nav-info">
             <div class="title-product-info">
-                <h5>Побочные действия</h5>
+                <h5>Побічні ефекти</h5>
             </div>
             {!! $medicine->side_effects !!}
         </div>
@@ -198,7 +198,7 @@
     @if(!empty($medicine->interaction))
         <div id="vzaimodeistvie" class="top-product-nav-info">
             <div class="title-product-info">
-                <h5>Лекарственное взаимодействие</h5>
+                <h5>Лікарська взаємодія</h5>
             </div>
             {!! $medicine->interaction !!}
         </div>
@@ -206,7 +206,7 @@
     @if(!empty($medicine->shelf_life))
         <div id="srokgodnosti" class="top-product-nav-info">
             <div class="title-product-info">
-                <h5>Срок годности</h5>
+                <h5>Термін придатності</h5>
             </div>
             {!! $medicine->shelf_life !!}
         </div>
@@ -214,7 +214,7 @@
     @if(!empty($medicine->saving))
         <div id="usloviyahraneniya" class="top-product-nav-info">
             <div class="title-product-info">
-                <h5>Условия хранения</h5>
+                <h5>Умови зберігання</h5>
             </div>
             {!! $medicine->saving !!}
         </div>
@@ -230,7 +230,7 @@
     @if(!empty($medicine->leave_cat))
         <div id="kategoriyaotpuska" class="top-product-nav-info">
             <div class="title-product-info">
-                <h5>Категория отпуска</h5>
+                <h5>Категорія відпуску</h5>
             </div>
             {!! $medicine->leave_cat !!}
         </div>
@@ -238,13 +238,13 @@
     @if(!empty($medicine->additionally))
         <div id="dopolnitelno" class="top-product-nav-info">
             <div class="title-product-info">
-                <h5>Дополнительно</h5>
+                <h5>Додатково</h5>
             </div>
             {!! $medicine->additionally !!}
         </div>
     @endif
 
-    <a href="javascript:window.print();" class="btn-print">Распечатать</a>
+    <a href="javascript:window.print();" class="btn-print">Роздрукувати</a>
 </div>
 
 </body>

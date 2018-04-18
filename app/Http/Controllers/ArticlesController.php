@@ -181,10 +181,16 @@ class ArticlesController extends MainController
 
         $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 
-        $this->content = Cache::remember('article-top-' . $cat->id . $currentPage, 60, function () use ($cat) {
-            $articles = $this->rua_rep->get('*', false, 9,
-                ['category_id' => $cat->id, 'approved' => 1], ['created_at', 'desc'], ['image', 'tags']);
-            return view('articles.show')->with(['articles' => $articles, 'cat' => $cat])
+        $this->content = Cache::remember('article-top-' . $cat->id . $currentPage, 60, function () use ($cat, $currentPage) {
+
+            $res = $this->rua_rep->getTopCat();
+
+            if (1 !== $currentPage) {
+                $res['prems'] = null;
+            }
+
+            return view('articles.top')
+                ->with(['articles' => $res['articles'], 'prems' => $res['prems'], 'cat' => $cat])
                 ->render();
         });
 
@@ -390,10 +396,15 @@ class ArticlesController extends MainController
 
         $currentPage = isset($_GET['page']) ? (int)$_GET['page'] : 1;
 
-        $this->content = Cache::remember('ua-article-top-' . $cat->id . $currentPage, 60, function () use ($cat) {
-            $articles = $this->uaa_rep->get('*', false, 9,
-                ['category_id' => $cat->id, 'approved' => 1], ['created_at', 'desc'], ['image', 'tags']);
-            return view('articles.ua_show')->with(['articles' => $articles, 'cat' => $cat])
+        $this->content = Cache::remember('ua-article-top-' . $cat->id . $currentPage, 60, function () use ($cat, $currentPage) {
+            $res = $this->uaa_rep->getTopCat();
+
+            if (1 !== $currentPage) {
+                $res['prems'] = null;
+            }
+
+            return view('articles.uatop')
+                ->with(['articles' => $res['articles'], 'prems' => $res['prems'], 'cat' => $cat])
                 ->render();
         });
 

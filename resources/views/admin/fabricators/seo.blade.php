@@ -1,4 +1,5 @@
-<h1>Редактирование SEO-блоков для производетеля - {{ $fabricator->title }}</h1>
+<h1>Редактирование SEO-блоков для производетеля:</h1>
+<h2>{{ $fabricator->title }}</h2>
 {!! Form::open(['url'=>route('fabricator_seo_update', $fabricator->id), 'method'=>'post', 'class'=>'form-horizontal']) !!}<!-- SEO -->
 <div class="panel-heading">
     <h2>

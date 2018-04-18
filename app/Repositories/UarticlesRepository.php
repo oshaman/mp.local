@@ -215,7 +215,8 @@ class UarticlesRepository extends Repository
     protected function clearArticlesCache($id = false, $cat = false)
     {
         Cache::forget('ua-main');
-        !empty($cat) ? Cache::forget('ua-article-cat-' . $cat) : null;
+        Cache::forget('ua-article-top-51');
+        !empty($cat) ? Cache::forget('ua-article-cat-' . $cat . '1') : null;
         !empty($id) ? Cache::store('file')->forget('ua_article-' . $id) : null;
 
 //
@@ -267,7 +268,7 @@ class UarticlesRepository extends Repository
     public function getPrems($cat, $take = 100)
     {
         $where = [['category_id', $cat], ['priority', '>', 0], ['approved', 1]];
-        $prems = $this->model->where($where)->take($take)->orderBy('priority', 'ask')->with(['image'])->get();
+        $prems = $this->model->where($where)->take($take)->orderBy('priority', 'as')->with(['image'])->get();
         return $prems;
     }
 
@@ -300,4 +301,40 @@ class UarticlesRepository extends Repository
         }
         return $articles;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getTopCat()
+    {
+        $prems = $this->getPrems(5, 5);
+
+        if ($prems->isNotEmpty()) {
+            $ids = [];
+            foreach ($prems as $prem) {
+                $ids[] = $prem->id;
+            }
+        } else {
+            $prems = null;
+        }
+
+        $builder = $this->model->with(['image', 'tags']);
+
+        $where = [['category_id', 5], ['approved', 1]];
+        $builder->where($where);
+
+
+        if (!empty($ids)) {
+            $builder->whereNotIn('id', $ids);
+        }
+
+        $articles = $builder->orderBy('created_at', 'desc')->paginate(9);
+
+        $res['articles'] = $articles;
+        $res['prems'] = $prems;
+
+        return $res;
+
+    }
+
 }

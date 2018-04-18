@@ -1,5 +1,5 @@
-<h1>Редактирование фармгруппы</h1>
-<h2>фармгруппа: {{ $pharm->title ?? '' }}</h2>
+<h1>Редактирование фармгруппы:</h1>
+<h2>{{ $pharm->title ?? '' }}</h2>
 <hr>
 {!! Form::open(['url' => route('pharm_update',['pharm'=> $pharm->id]), 'class'=>'form-horizontal','method'=>'POST' ]) !!}
 

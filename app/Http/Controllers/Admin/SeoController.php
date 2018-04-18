@@ -29,7 +29,7 @@ class SeoController extends AdminController
         if (Gate::denies('SEO_ADMIN')) {
             abort(404);
         }
-        $seos = $repository->get(['id', 'uri']);
+        $seos = $repository->get(['id', 'uri'], false, false, false, ['id', 'asc']);
         $this->content = view('admin.seo.show')->with(['seos' => $seos])->render();
         return $this->renderOutput();
     }

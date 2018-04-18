@@ -1,5 +1,5 @@
 @include('admin.static.nav')
-<div class="panel-group" id="accordion">
+<div class="panel-group accordion2" id="accordion">
     @if(is_object($advs) && $advs->isNotEmpty())
         @foreach($advs as $adv)
             <div class="panel panel-default">

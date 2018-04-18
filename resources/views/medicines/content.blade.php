@@ -73,8 +73,8 @@
 @if(!empty($medicine->indications))
     <div id="pokazanij" class="top-product-nav-info admin-content">
         <div class="title-product-info">
-            <img src="{{ asset('assets') }}/images/product-icon/black/3_pokazaniya.png" alt="Показания к прменению">
-            <h4>Показания к прменению</h4>
+            <img src="{{ asset('assets') }}/images/product-icon/black/3_pokazaniya.png" alt="Показания к применению">
+            <h4>Показания к применению</h4>
         </div>
         {!! $medicine->indications !!}
     </div>

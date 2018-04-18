@@ -51,6 +51,15 @@
                                 </div>
                             @endforeach
                         </div>
+                        @if(empty($medicine->certified))
+                            <div class="no-regist">
+                                <div>
+                                    Відсутня Реєстрація
+                                </div>
+                                <a href="{{ route('medicine_analog_ua', ['medicine'=>$medicine->alias]) }}">Перейти до
+                                    аналогів</a>
+                            </div>
+                        @endif
                     </div>
                 @else
                     <div class="product-slider clone-from" data-number="3">
@@ -60,6 +69,15 @@
                                      alt="Med Pravda" title="Med Pravda">
                             </div>
                         </div>
+                        @if(empty($medicine->certified))
+                            <div class="no-regist">
+                                <div>
+                                    Відсутня Реєстрація
+                                </div>
+                                <a href="{{ route('medicine_analog_ua', ['medicine'=>$medicine->alias]) }}">Перейти до
+                                    аналогів</a>
+                            </div>
+                        @endif
                     </div>
                 @endif
             </div>
@@ -68,7 +86,7 @@
 
 
             <div class="print">
-                <a href="{{ route('toprint', ['medicine'=>$medicine->alias, 'vr'=>'adaptive']) }}">
+                <a href="{{ route('toprint_ua', ['medicine'=>$medicine->alias, 'vr'=>'main']) }}">
                     <img src="{{ asset('assets') }}/images/main/icons.png" alt="Версія для друку">
                     Версія для друку
                 </a>

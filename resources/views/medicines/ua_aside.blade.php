@@ -54,16 +54,16 @@
             @foreach($articles as $article)
                 @continue($loop->index>3)
                 <article class="news">
-                    <a href="{{ route('ua_articles', ['ua_article_alias'=>$article->alias]) }}">
+                    <a href="{{ $article->link }}">
                         <div class="article-img">
-                            <img src="{{ asset('asset').'/images/articles/ua/middle/'.$article->image->path }}"
-                                 alt="{{ $article->image->alt }}" title="{{ $article->image->title }}">
-                            <div class="views"><span>{{ $article->view }}</span></div>
+                            <img src="{{ asset('asset/images/theme').'/'.$article->path }}"
+                                 alt="{{ $article->alt ?? '' }}"
+                                 title="{{ $article->imgtitle ?? ($article->alt ?? '') }}">
                         </div>
                         <div class="article-info">
                             <h4 class="article-title">{{ $article->title }}</h4>
                             <p class="article-category">{{ str_limit($article->description, 24) }}</p>
-                            <div class="article-text">{!! str_limit($article->content, 312) !!}</div>
+                            <div class="article-text">{{ $article->description }}</div>
                             <div class="date-link">
                                 <div class="article-date">
                                     {{ $article->created_at->format('d')
@@ -92,16 +92,16 @@
             @foreach($articles as $article)
                 @continue($loop->index<4)
                 <article class="news">
-                    <a href="{{ route('ua_articles', ['ua_article_alias'=>$article->alias]) }}">
+                    <a href="{{ $article->link }}">
                         <div class="article-img">
-                            <img src="{{ asset('asset').'/images/articles/ua/middle/'.$article->image->path }}"
-                                 alt="{{ $article->image->alt }}" title="{{ $article->image->title }}">
-                            <div class="views"><span>{{ $article->view }}</span></div>
+                            <img src="{{ asset('asset/images/theme').'/'.$article->path }}"
+                                 alt="{{ $article->alt ?? '' }}"
+                                 title="{{ $article->imgtitle ?? ($article->alt ?? '') }}">
                         </div>
                         <div class="article-info">
                             <h4 class="article-title">{{ $article->title }}</h4>
                             <p class="article-category">{{ str_limit($article->description, 24) }}</p>
-                            <div class="article-text">{!! str_limit($article->content, 312) !!}</div>
+                            <div class="article-text">{{ $article->description }}</div>
                             <div class="date-link">
                                 <div class="article-date">
                                     {{ $article->created_at->format('d')

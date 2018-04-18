@@ -1,3 +1,4 @@
+@include('admin.static.nav')
 <h2>Редактирование SEO</h2>
 <h3>URI: "{{ $seo->uri }}"</h3>
 <hr>
@@ -53,6 +54,6 @@
     </div>
 </div>
 <hr>
-{!! Form::button('Сохранить', ['class' => 'btn btn-large btn-primary','type'=>'submit']) !!}
+{!! Form::button('Сохранить', ['class' => 'btn btn-large btn-primary buttn-save','type'=>'submit']) !!}
 {!! Form::close() !!}
 <!-- SEO -->

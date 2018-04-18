@@ -15,14 +15,11 @@
             !!}
     </div>
     <hr>
-    <div class="">
+    <div class="bth-min-width">
         {!! Form::button('Поиск', ['class' => 'btn btn-primary','type'=>'submit']) !!}
+        {!! Html::link(route('fabricator_create'),'Добавить производителя',['class' => 'btn btn-success']) !!}
     </div>
     {!! Form::close() !!}
-</div>
-<hr>
-<div class="">
-    {!! Html::link(route('fabricator_create'),'Добавить производителя.',['class' => 'btn btn-success']) !!}
 </div>
 <hr>
 <div class="">
@@ -39,13 +36,13 @@
             @foreach ($fabricators as $fabricator)
                 <tr>
                     <td>{{ $fabricator->title }}</td>
-                    <td>
+                    <td align="right" class="buttons">
                         {!! Form::open(['url' => route('fabricator_seo_update', ['fabricator'=> $fabricator->id]),
                                                                     'class'=>'form-horizontal','method'=>'GET']) !!}
                         {!! Form::button('SEO', ['class' => 'btn btn-warning','type'=>'submit']) !!}
                         {!! Form::close() !!}
                     </td>
-                    <td>
+                    <td align="right" class="buttons">
                         {!! Form::open(['url' => route('fabricator_update', ['fabricator'=> $fabricator->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
                         {!! Form::button('Редактировать', ['class' => 'btn btn-warning','type'=>'submit']) !!}
                         {!! Form::close() !!}
@@ -77,16 +74,31 @@
                                     <a href="{{ $fabricators->url($fabricators->currentPage()-1) }}">{{ $fabricators->currentPage()-1 }}</a>
                                 </li>
                             @endif
-                            <li><a class="active disabled">{{ $fabricators->currentPage() }}</a></li>
+                                <li class="active"><a class="active disabled">{{ $fabricators->currentPage() }}</a></li>
                             @if($fabricators->currentPage() !== $fabricators->lastPage())
                                 <li>
                                     <a href="{{ $fabricators->url($fabricators->currentPage()+1) }}">{{ $fabricators->currentPage()+1 }}</a>
                                 </li>
                             @endif
-                            @if($fabricators->currentPage() <= ($fabricators->lastPage()-3))
+                                @if($fabricators->currentPage()+1 < $fabricators->lastPage())
+                                    <li>
+                                        <a href="{{ $fabricators->url($fabricators->currentPage()+2) }}">{{ $fabricators->currentPage()+2 }}</a>
+                                    </li>
+                                @endif
+                                @if($fabricators->currentPage()+2 < $fabricators->lastPage())
+                                    <li>
+                                        <a href="{{ $fabricators->url($fabricators->currentPage()+3) }}">{{ $fabricators->currentPage()+3 }}</a>
+                                    </li>
+                                @endif
+                                @if($fabricators->currentPage()+3 < $fabricators->lastPage())
+                                    <li>
+                                        <a href="{{ $fabricators->url($fabricators->currentPage()+4) }}">{{ $fabricators->currentPage()+4 }}</a>
+                                    </li>
+                                @endif
+                                @if($fabricators->currentPage() < ($fabricators->lastPage()-5))
                                 <li><a href="#">...</a></li>
                             @endif
-                            @if($fabricators->currentPage() <= ($fabricators->lastPage()-2))
+                                @if($fabricators->currentPage() < ($fabricators->lastPage()-4))
                                 <li>
                                     <a href="{{ $fabricators->url($fabricators->lastPage()) }}">{{ $fabricators->lastPage() }}</a>
                                 </li>
@@ -102,8 +114,6 @@
                         </ul>
                     @endif
                 @endif
-
-
             </div>
         @endif
     </table>

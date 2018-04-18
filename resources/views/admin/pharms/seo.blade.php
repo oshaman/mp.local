@@ -1,4 +1,5 @@
-<h1>Редактирование SEO-блоков для фармгруппы - {{ $pharm->title }}</h1>
+<h1>Редактирование SEO-блоков для фармгруппы:</h1>
+<h2>{{ $pharm->title }}</h2>
 {!! Form::open(['url'=>route('pharm_seo_update', $pharm->id), 'method'=>'post', 'class'=>'form-horizontal']) !!}<!-- SEO -->
 <div class="panel-heading">
     <h2>

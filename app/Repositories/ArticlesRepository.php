@@ -396,11 +396,10 @@ class ArticlesRepository extends Repository
         Cache::forget('main');
         Cache::forget('sort-aside-ru');
         Cache::forget('sort-aside-ua');
-        Cache::forget('sort-aside-ua');
-        !empty($cat) ? Cache::forget('article-cat-' . $cat) : null;
+        Cache::forget('article-top-51');
+        !empty($cat) ? Cache::forget('article-cat-' . $cat . '1') : null;
         !empty($id) ? Cache::store('file')->forget('ru_article-' . $id) : null;
 
-//        !empty($cat) ? Cache::forget('articles_cats' . $cat) : null;
     }
 
     /**
@@ -483,4 +482,35 @@ class ArticlesRepository extends Repository
         return $articles;
     }
 
+    public function getTopCat()
+    {
+        $prems = $this->getPrems(5, 5);
+
+        if ($prems->isNotEmpty()) {
+            $ids = [];
+            foreach ($prems as $prem) {
+                $ids[] = $prem->id;
+            }
+        } else {
+            $prems = null;
+        }
+
+        $builder = $this->model->with(['image', 'tags']);
+
+        $where = [['category_id', 5], ['approved', 1]];
+        $builder->where($where);
+
+
+        if (!empty($ids)) {
+            $builder->whereNotIn('id', $ids);
+        }
+
+        $articles = $builder->orderBy('created_at', 'desc')->paginate(9);
+
+        $res['articles'] = $articles;
+        $res['prems'] = $prems;
+
+        return $res;
+
+    }
 }

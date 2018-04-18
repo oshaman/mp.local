@@ -1,5 +1,5 @@
-<h1>Редактирование действующего вещества</h1>
-<h2>фармгруппа: {{ $substance->title ?? '' }}</h2>
+<h1>Редактирование действующего вещества:</h1>
+<h2>{{ $substance->title ?? '' }}</h2>
 <hr>
 {!! Form::open(['url' => route('substance_update',['substance'=> $substance->id]), 'class'=>'form-horizontal','method'=>'POST' ]) !!}
 

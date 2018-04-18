@@ -12,6 +12,7 @@
                         1=>'Заголовок',
                         2=>'URL статьи',
                         3 =>'На паузе',
+                        4 =>'Все',
                     ], old('val') ? : 1, ['class'=>'form-control'])
             !!}
     </div>
@@ -87,16 +88,31 @@
                                     <a href="{{ $articles->url($articles->currentPage()-1) }}">{{ $articles->currentPage()-1 }}</a>
                                 </li>
                             @endif
-                            <li><a class="active disabled">{{ $articles->currentPage() }}</a></li>
+                                <li class="active"><a class="active disabled">{{ $articles->currentPage() }}</a></li>
                             @if($articles->currentPage() !== $articles->lastPage())
                                 <li>
                                     <a href="{{ $articles->url($articles->currentPage()+1) }}">{{ $articles->currentPage()+1 }}</a>
                                 </li>
                             @endif
-                            @if($articles->currentPage() <= ($articles->lastPage()-3))
+                                @if($articles->currentPage()+1 < $articles->lastPage())
+                                    <li>
+                                        <a href="{{ $articles->url($articles->currentPage()+2) }}">{{ $articles->currentPage()+2 }}</a>
+                                    </li>
+                                @endif
+                                @if($articles->currentPage()+2 < $articles->lastPage())
+                                    <li>
+                                        <a href="{{ $articles->url($articles->currentPage()+3) }}">{{ $articles->currentPage()+3 }}</a>
+                                    </li>
+                                @endif
+                                @if($articles->currentPage()+3 < $articles->lastPage())
+                                    <li>
+                                        <a href="{{ $articles->url($articles->currentPage()+4) }}">{{ $articles->currentPage()+4 }}</a>
+                                    </li>
+                                @endif
+                                @if($articles->currentPage() < ($articles->lastPage()-5))
                                 <li><a href="#">...</a></li>
                             @endif
-                            @if($articles->currentPage() <= ($articles->lastPage()-2))
+                                @if($articles->currentPage() < ($articles->lastPage()-4))
                                 <li>
                                     <a href="{{ $articles->url($articles->lastPage()) }}">{{ $articles->lastPage() }}</a>
                                 </li>

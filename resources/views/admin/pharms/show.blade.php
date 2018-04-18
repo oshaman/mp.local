@@ -36,12 +36,12 @@
             @foreach ($pharms as $pharm)
                 <tr>
                     <td>{{ $pharm->title }}</td>
-                    <td>
+                    <td align="right" class="buttons">
                         {!! Form::open(['url' => route('pharm_seo_update', ['pharm'=> $pharm->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
                         {!! Form::button('SEO', ['class' => 'btn btn-warning','type'=>'submit']) !!}
                         {!! Form::close() !!}
                     </td>
-                    <td>
+                    <td align="right" class="buttons">
                         {!! Form::open(['url' => route('pharm_update', ['pharm'=> $pharm->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
                         {!! Form::button('Редактировать', ['class' => 'btn btn-warning','type'=>'submit']) !!}
                         {!! Form::close() !!}
@@ -73,16 +73,31 @@
                                     <a href="{{ $pharms->url($pharms->currentPage()-1) }}">{{ $pharms->currentPage()-1 }}</a>
                                 </li>
                             @endif
-                            <li><a class="active disabled">{{ $pharms->currentPage() }}</a></li>
+                                <li class="active"><a class="active disabled">{{ $pharms->currentPage() }}</a></li>
                             @if($pharms->currentPage() !== $pharms->lastPage())
                                 <li>
                                     <a href="{{ $pharms->url($pharms->currentPage()+1) }}">{{ $pharms->currentPage()+1 }}</a>
                                 </li>
                             @endif
-                            @if($pharms->currentPage() <= ($pharms->lastPage()-3))
+                                @if($pharms->currentPage()+1 < $pharms->lastPage())
+                                    <li>
+                                        <a href="{{ $pharms->url($pharms->currentPage()+2) }}">{{ $pharms->currentPage()+2 }}</a>
+                                    </li>
+                                @endif
+                                @if($pharms->currentPage()+2 < $pharms->lastPage())
+                                    <li>
+                                        <a href="{{ $pharms->url($pharms->currentPage()+3) }}">{{ $pharms->currentPage()+3 }}</a>
+                                    </li>
+                                @endif
+                                @if($pharms->currentPage()+3 < $pharms->lastPage())
+                                    <li>
+                                        <a href="{{ $pharms->url($pharms->currentPage()+4) }}">{{ $pharms->currentPage()+4 }}</a>
+                                    </li>
+                                @endif
+                                @if($pharms->currentPage() < ($pharms->lastPage()-5))
                                 <li><a href="#">...</a></li>
                             @endif
-                            @if($pharms->currentPage() <= ($pharms->lastPage()-2))
+                                @if($pharms->currentPage() < ($pharms->lastPage()-4))
                                 <li>
                                     <a href="{{ $pharms->url($pharms->lastPage()) }}">{{ $pharms->lastPage() }}</a>
                                 </li>
@@ -98,8 +113,6 @@
                         </ul>
                     @endif
                 @endif
-
-
             </div>
         @endif
     </table>

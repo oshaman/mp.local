@@ -91,7 +91,7 @@
                         @if(!empty($medicine->indications))
                             <li>
                                 <img src="{{ asset('assets') }}/images/product-icon/3_pokazaniya.png"
-                                     alt="Показания к прменению">
+                                     alt="Показания к применению">
                                 <a href="#pokazanij">Показания к применению</a>
                             </li>
                         @endif
@@ -213,9 +213,15 @@
                                 </div>
                             @endforeach
                         </div>
-                        <div class="no-regist">
-                            <a href="{{ route('medicine_analog', ['medicine'=>$medicine->alias]) }}">нет регистрации</a>
-                        </div>
+                        @if(empty($medicine->certified))
+                            <div class="no-regist">
+                                <div>
+                                    нет регистрации
+                                </div>
+                                <a href="{{ route('medicine_analog', ['medicine'=>$medicine->alias]) }}">Перейти к
+                                    аналогам</a>
+                            </div>
+                        @endif
                     </div>
                 @else
                     <div class="product-slider clone-from" data-number="3">
@@ -225,9 +231,15 @@
                                      alt="Med Pravda" title="Med Pravda">
                             </div>
                         </div>
-                        <div class="no-regist">
-                            <a href="{{ route('medicine_analog', ['medicine'=>$medicine->alias]) }}">нет регистрации</a>
-                        </div>
+                        @if(empty($medicine->certified))
+                            <div class="no-regist">
+                                <div>
+                                    нет регистрации
+                                </div>
+                                <a href="{{ route('medicine_analog', ['medicine'=>$medicine->alias]) }}">Перейти к
+                                    аналогам</a>
+                            </div>
+                        @endif
                     </div>
                 @endif
             </div>

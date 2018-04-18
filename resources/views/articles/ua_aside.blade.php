@@ -30,7 +30,7 @@
                                 <div class="article-info">
                                     <h4 class="article-title">{{ $article->title }}</h4>
                                     <p class="article-category">{{ str_limit($article->description, 24) }}</p>
-                                    <div class="article-text">{!! str_limit($article->content, 128) !!}</div>
+                                    <div class="article-text">{{ $article->description }}</div>
                                     <div class="date-link">
                                         <div class="article-date">
                                             {{ $article->created_at->format('d')
@@ -87,7 +87,7 @@
                                 <div class="article-info">
                                     <h4 class="article-title">{{ $article->title }}</h4>
                                     <p class="article-category">{{ str_limit($article->description, 24) }}</p>
-                                    <div class="article-text">{!! str_limit($article->content, 128) !!}</div>
+                                    <div class="article-text">{{ $article->description }}</div>
                                     <div class="date-link">
                                         <div class="article-date">
                                             {{ $article->created_at->format('d')

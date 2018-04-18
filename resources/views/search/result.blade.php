@@ -10,7 +10,7 @@
                         @break
 
                         @case('fabricators')
-                        <a href="{{ route('search_fabricator', $item->alias) }}">{{ $item->title }}</a>
+                        <a href="{{ route('search_fabricator', ['val'=>mb_substr($item->title, 0, 1), 'fabricator'=>$item->alias]) }}">{{ $item->title }}</a>
                         @break
 
                         @case('innnames')

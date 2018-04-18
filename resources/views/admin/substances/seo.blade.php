@@ -1,4 +1,5 @@
-<h1>Редактирование SEO-блоков для вещества - {{ $substance->title }}</h1>
+<h1>Редактирование SEO-блоков для вещества:</h1>
+<h2>{{ $substance->title }}</h2>
 {!! Form::open(['url'=>route('substance_seo_update', $substance->id), 'method'=>'post', 'class'=>'form-horizontal']) !!}<!-- SEO -->
 <div class="panel-heading">
     <h2>

@@ -1,4 +1,5 @@
-<h1>Редактирование SEO-блоков для международного названия - {{ $inn->title }}</h1>
+<h1>Редактирование SEO-блоков для международного названия:</h1>
+<h2>{{ $inn->title }}</h2>
 {!! Form::open(['url'=>route('inn_seo_update', $inn->id), 'method'=>'post', 'class'=>'form-horizontal']) !!}<!-- SEO -->
 <div class="panel-heading">
     <h2>

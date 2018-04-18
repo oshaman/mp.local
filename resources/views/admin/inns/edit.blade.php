@@ -1,5 +1,5 @@
-<h1>Редактирование международного названия</h1>
-<h2>фармгруппа: {{ $inn->title ?? '' }}</h2>
+<h1>Редактирование международного названия:</h1>
+<h2>{{ $inn->title ?? '' }}</h2>
 <hr>
 {!! Form::open(['url' => route('inn_update',['inn'=> $inn->id]), 'class'=>'form-horizontal','method'=>'POST' ]) !!}
 

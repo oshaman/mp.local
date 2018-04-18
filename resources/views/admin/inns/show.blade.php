@@ -38,12 +38,12 @@
                 <tr>
                     <td>{{ $inn->title }}</td>
                     <td>{{ $inn->name }}</td>
-                    <td>
+                    <td align="right" class="buttons">
                         {!! Form::open(['url' => route('inn_seo_update', ['inn'=> $inn->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
                         {!! Form::button('SEO', ['class' => 'btn btn-warning','type'=>'submit']) !!}
                         {!! Form::close() !!}
                     </td>
-                    <td>
+                    <td align="right" class="buttons">
                         {!! Form::open(['url' => route('inn_update', ['inn'=> $inn->id]),'class'=>'form-horizontal','method'=>'GET']) !!}
                         {!! Form::button('Редактировать', ['class' => 'btn btn-warning','type'=>'submit']) !!}
                         {!! Form::close() !!}
@@ -75,16 +75,31 @@
                                     <a href="{{ $inns->url($inns->currentPage()-1) }}">{{ $inns->currentPage()-1 }}</a>
                                 </li>
                             @endif
-                            <li><a class="active disabled">{{ $inns->currentPage() }}</a></li>
+                                <li class="active"><a class="active disabled">{{ $inns->currentPage() }}</a></li>
                             @if($inns->currentPage() !== $inns->lastPage())
                                 <li>
                                     <a href="{{ $inns->url($inns->currentPage()+1) }}">{{ $inns->currentPage()+1 }}</a>
                                 </li>
                             @endif
-                            @if($inns->currentPage() <= ($inns->lastPage()-3))
+                                @if($inns->currentPage()+1 < $inns->lastPage())
+                                    <li>
+                                        <a href="{{ $inns->url($inns->currentPage()+2) }}">{{ $inns->currentPage()+2 }}</a>
+                                    </li>
+                                @endif
+                                @if($inns->currentPage()+2 < $inns->lastPage())
+                                    <li>
+                                        <a href="{{ $inns->url($inns->currentPage()+3) }}">{{ $inns->currentPage()+3 }}</a>
+                                    </li>
+                                @endif
+                                @if($inns->currentPage()+3 < $inns->lastPage())
+                                    <li>
+                                        <a href="{{ $inns->url($inns->currentPage()+4) }}">{{ $inns->currentPage()+4 }}</a>
+                                    </li>
+                                @endif
+                                @if($inns->currentPage() < ($inns->lastPage()-5))
                                 <li><a href="#">...</a></li>
                             @endif
-                            @if($inns->currentPage() <= ($inns->lastPage()-2))
+                                @if($inns->currentPage() < ($inns->lastPage()-4))
                                 <li>
                                     <a href="{{ $inns->url($inns->lastPage()) }}">{{ $inns->lastPage() }}</a>
                                 </li>
@@ -100,8 +115,6 @@
                         </ul>
                     @endif
                 @endif
-
-
             </div>
         @endif
     </table>

@@ -1,6 +1,6 @@
 @include('admin.main.nav')
 @if(!empty($cats))
-    <div class="panel-group" id="accordion">
+    <div class="panel-group vitrina" id="accordion">
         @foreach($cats as $cat)
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -51,7 +51,7 @@
                                 @endif
                             </div>
                             {{ Form::label('img', 'Параметры картинки') }}
-                            <div class="">
+                            <div class="form-group">
                                 <div class="col-lg-6">
                                     {!! Form::text('alt', $cat->alt ?? '',
                                         ['placeholder'=>'Alt', 'id'=>'alt', 'class'=>'form-control']) !!}

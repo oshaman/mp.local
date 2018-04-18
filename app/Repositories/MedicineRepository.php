@@ -331,6 +331,9 @@ class MedicineRepository extends Repository
         \Log::info('Препарат отредактирован - ' . $model->alias);
         $this->putTitles();
         Cache::store('file')->forget('off-medicine-' . $model->alias);
+        Cache::store('file')->forget('medicine-' . $model->alias);
+        Cache::store('file')->forget('medicine-ua-' . $model->alias);
+        Cache::store('file')->forget('off-medicine-ua-' . $model->alias);
         Cache::forget('alpha-' . substr($model->title, 0, 1));
         Cache::forget('alphabet');
         Cache::forget('second-alphabet-' . substr($model->title, 0, 2));

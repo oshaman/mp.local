@@ -2,7 +2,9 @@
 
 namespace Fresh\Medpravda\Http\Controllers\Admin;
 
+use Fresh\Medpravda\Repositories\SearchRepository;
 use Fresh\Medpravda\Repositories\StatisticsRepository;
+use Fresh\Medpravda\Repositories\UarticlesRepository;
 use Illuminate\Http\Request;
 use Gate;
 use DB;
@@ -10,11 +12,15 @@ use DB;
 class StatisticController extends AdminController
 {
     protected $repository;
+    protected $search;
+    protected $ua_rep;
 
-    public function __construct(StatisticsRepository $repository)
+    public function __construct(StatisticsRepository $repository, SearchRepository $searchRepository, UarticlesRepository $articlesRepository)
     {
         $this->template = 'admin.admin';
         $this->repository = $repository;
+        $this->search = $searchRepository;
+        $this->ua_rep = $articlesRepository;
     }
 
     /**
@@ -109,5 +115,25 @@ class StatisticController extends AdminController
         $this->content = view('admin.statistic.chart')->render();
 
         return $this->renderOutput();
+    }
+
+    public function test(Request $request)
+    {
+        $res = $this->ua_rep->getTopCat();
+
+        $this->content = view('admin.statistic.test')
+            ->with(['articles' => $res['articles'], 'prems' => $res['prems']])->render();
+        return $this->renderOutput();
+        dd($articles);
+
+        $str = 'LABORATOIRE YALACTA, ФРАНЦ';
+
+        $re = '#[^,\w\'\sа-яА-ЯёЁіІїЇЄє\-]+#u';
+
+        $query = preg_replace($re, '', $str);
+        $query = preg_replace('#\s{2,}#', ' ', $query);
+        dd($query);
+        $res = $this->search->getSearchFabricators($str);
+        dd($res);
     }
 }

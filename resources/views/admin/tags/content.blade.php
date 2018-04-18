@@ -11,6 +11,7 @@
     <div class="">
         {!! Form::text('utag', old('utag') ? : '' , ['placeholder'=>'Валiдол...', 'id'=>'utag', 'class'=>'form-control', 'required'=>'required']) !!}
     </div>
+    {{ Form::label('alias', 'URL') }}
     <div class="">
         {!! Form::text('alias', old('alias') ? : '' , ['placeholder'=>'validol...', 'id'=>'alias', 'class'=>'form-control eng-alias', 'required'=>'required']) !!}
     </div>

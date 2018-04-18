@@ -15,17 +15,14 @@
             !!}
     </div>
     <hr>
-    <div class="">
-        {!! Form::button('Найти', ['class' => 'btn btn-primary','type'=>'submit']) !!}
+    <div class="bth-min-width">
+        {!! Form::button('Поиск', ['class' => 'btn btn-primary','type'=>'submit']) !!}
+        {!! Html::link(route('medicine_create'),'Добавить препарат',['class' => 'btn btn-success']) !!}
     </div>
     {!! Form::close() !!}
 </div>
 <hr>
-<div class="">
-    {!! Html::link(route('medicine_create'),'Создать препарат',['class' => 'btn btn-success']) !!}
-</div>
-<hr>
-<div class="">
+<div class="table-pagination">
     <table class="table status2">
         <thead>
         <tr>
@@ -74,14 +71,14 @@
         @endif
     </table>
     <!--PAGINATION-->
-
     <div class="general-pagination group">
         @if(is_object($drugs) && !empty($drugs->lastPage()) && $drugs->lastPage() > 1)
             @if($drugs->lastPage() > 1)
                 <ul class="pagination">
                     @if($drugs->currentPage() !== 1)
                         <li>
-                            <a rel="prev" href="{{ $drugs->url(($drugs->currentPage() - 1)) }}" class="prev">
+                            <a rel="prev" href="{{ $drugs->url(($drugs->currentPage() - 1)) }}"
+                               class="prev">
                                 <
                             </a>
                         </li>
@@ -97,22 +94,39 @@
                             <a href="{{ $drugs->url($drugs->currentPage()-1) }}">{{ $drugs->currentPage()-1 }}</a>
                         </li>
                     @endif
-                    <li><a class="active disabled">{{ $drugs->currentPage() }}</a></li>
+                    <li class="active"><a class="active disabled">{{ $drugs->currentPage() }}</a></li>
                     @if($drugs->currentPage() !== $drugs->lastPage())
                         <li>
                             <a href="{{ $drugs->url($drugs->currentPage()+1) }}">{{ $drugs->currentPage()+1 }}</a>
                         </li>
                     @endif
-                    @if($drugs->currentPage() <= ($drugs->lastPage()-3))
+                    @if($drugs->currentPage()+1 < $drugs->lastPage())
+                        <li>
+                            <a href="{{ $drugs->url($drugs->currentPage()+2) }}">{{ $drugs->currentPage()+2 }}</a>
+                        </li>
+                    @endif
+                    @if($drugs->currentPage()+2 < $drugs->lastPage())
+                        <li>
+                            <a href="{{ $drugs->url($drugs->currentPage()+3) }}">{{ $drugs->currentPage()+3 }}</a>
+                        </li>
+                    @endif
+                    @if($drugs->currentPage()+3 < $drugs->lastPage())
+                        <li>
+                            <a href="{{ $drugs->url($drugs->currentPage()+4) }}">{{ $drugs->currentPage()+4 }}</a>
+                        </li>
+                    @endif
+                    @if($drugs->currentPage() < ($drugs->lastPage()-5))
                         <li><a href="#">...</a></li>
                     @endif
-                    @if($drugs->currentPage() <= ($drugs->lastPage()-2))
-                        <li><a href="{{ $drugs->url($drugs->lastPage()) }}">{{ $drugs->lastPage() }}</a>
+                    @if($drugs->currentPage() < ($drugs->lastPage()-4))
+                        <li>
+                            <a href="{{ $drugs->url($drugs->lastPage()) }}">{{ $drugs->lastPage() }}</a>
                         </li>
                     @endif
                     @if($drugs->currentPage() !== $drugs->lastPage())
                         <li>
-                            <a rel="next" href="{{ $drugs->url(($drugs->currentPage() + 1)) }}" class="next">
+                            <a rel="next" href="{{ $drugs->url(($drugs->currentPage() + 1)) }}"
+                               class="next">
                                 >
                             </a>
                         </li>
@@ -120,8 +134,6 @@
                 </ul>
             @endif
         @endif
-
-
     </div>
 </div>
 <!-- END CONTENT -->

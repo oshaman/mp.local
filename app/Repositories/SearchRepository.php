@@ -59,10 +59,10 @@ class SearchRepository
      */
     public function getSearch($request)
     {
-        $re = '#[^\w\'\sа-яА-ЯёЁіІїЇЄє\-]+#u';
+        $re = '#[^\w\'\sа-яА-ЯёЁіІїЇЄє\-,]+#u';
 
         $query = preg_replace($re, '', $request->get('search'));
-        $query = substr(preg_replace('#[\s{2,}]#', ' ', $query), 0, 96);
+        $query = substr(preg_replace('#\s{2,}#', ' ', $query), 0, 96);
 
         $result['medicines'] = $this->getSearchMedicines($query);
         $result['fabricators'] = $this->getSearchFabricators($query);

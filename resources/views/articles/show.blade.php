@@ -32,7 +32,7 @@
                     <div class="article-info">
                         <h4 class="article-title">{{ $articles[0]->title }}</h4>
                         <p class="article-category">Статистика минздрава</p>
-                        <div class="article-text">{!! str_limit($articles[0]->content, 312) !!}</div>
+                        <div class="article-text">{!! str_limit(strip_tags($articles[0]->content), 312) !!}</div>
                         <div class="date-link">
                             <div class="article-date">
                                 {{ $articles[0]->created_at->format('d')

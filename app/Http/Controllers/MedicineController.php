@@ -8,6 +8,7 @@ use Fresh\Medpravda\Repositories\AmedicineRepository;
 use Fresh\Medpravda\Repositories\ArticlesRepository;
 use Fresh\Medpravda\Repositories\ClassificationRepository;
 use Fresh\Medpravda\Repositories\MedicineRepository;
+use Fresh\Medpravda\Repositories\ThemesRepository;
 use Fresh\Medpravda\Repositories\UamedicineRepository;
 use Fresh\Medpravda\Repositories\UarticlesRepository;
 use Fresh\Medpravda\Repositories\UmedicineRepository;
@@ -25,6 +26,7 @@ class MedicineController extends MainController
     protected $c_rep;
     protected $a_rep;
     protected $ua_rep;
+    protected $theme_rep;
 
     public function __construct(
         MedicineRepository $mrep,
@@ -34,7 +36,8 @@ class MedicineController extends MainController
         UmedicineRepository $umed,
         MedicineStatistic $med_stat,
         ArticlesRepository $arep,
-        UarticlesRepository $uarep
+        UarticlesRepository $uarep,
+        ThemesRepository $themesRepository
     )
     {
         $this->med_rep = $mrep;
@@ -45,6 +48,7 @@ class MedicineController extends MainController
         $this->uamed_rep = $uamrep;
         $this->amed_rep = $amedicineRepository;
         $this->c_rep = $classificationRepository;
+        $this->theme_rep = $themesRepository;
     }
 
     /**
@@ -112,10 +116,12 @@ class MedicineController extends MainController
             }
         }
 
-        $articles = $this->a_rep->get(['title', 'alias', 'description'], 8, false,
-            [['approved', 1]], ['priority', 'desc'], ['image']);
-
         $medicines = $this->med_rep->get('*', 18, false, [['approved', 1], ['innname_id', $res->innname_id]]);
+
+        $articles = $this->theme_rep->get('*', 8, false,
+            [['approved', 1], ['loc', 'ru']], ['priority', 'asc']);
+
+
         $this->aside = view('medicines.aside')
             ->with(['articles' => $articles, 'medicines' => $medicines, 'banner_content' => true])->render();
         $this->slider = view('medicines.slider')->with(['medicines' => $medicines])->render();
@@ -158,8 +164,9 @@ class MedicineController extends MainController
 
         $this->title = 'Аналог';
 
-        $articles = $this->a_rep->get(['title', 'alias', 'description'], 8, false,
-            [['approved', 1]], ['priority', 'desc'], ['image']);
+        $articles = $this->theme_rep->get('*', 8, false,
+            [['approved', 1], ['loc', 'ru']], ['priority', 'asc']);
+
         $medicines = $this->med_rep->get('*', 18, false, [['approved', 1], ['innname_id', $res->innname_id]]);
         $this->aside = view('medicines.aside')->with(['articles' => $articles, 'medicines' => $medicines])->render();
 
@@ -230,8 +237,8 @@ class MedicineController extends MainController
 
         $this->content = view('medicines.medicine')->with(['medicine' => $res, 'classes' => $class])->render();
 
-        $articles = $this->a_rep->get(['title', 'alias', 'description'], 8, false,
-            [['approved', 1]], ['priority', 'desc'], ['image']);
+        $articles = $this->theme_rep->get('*', 8, false,
+            [['approved', 1], ['loc', 'ru']], ['priority', 'asc']);
 
         $medicines = $this->med_rep->get('*', 18, false, [['approved', 1], ['innname_id', $res->innname_id]]);
         $this->aside = view('medicines.aside')
@@ -274,8 +281,9 @@ class MedicineController extends MainController
 
         $this->content = view('medicines.faq')->with(['medicine' => $res])->render();
 
-        $articles = $this->a_rep->get(['title', 'alias', 'description'], 8, false,
-            [['approved', 1]], ['priority', 'desc'], ['image']);
+        $articles = $this->theme_rep->get('*', 8, false,
+            [['approved', 1], ['loc', 'ru']], ['priority', 'asc']);
+
         $medicines = $this->med_rep->get('*', 18, false, [['approved', 1], ['innname_id', $res->innname_id]]);
         $this->aside = view('medicines.aside')->with(['articles' => $articles, 'medicines' => $medicines])->render();
 
@@ -380,8 +388,8 @@ class MedicineController extends MainController
             }
         }
 
-        $articles = $this->ua_rep->get(['title', 'alias', 'description'], 8, false,
-            [['approved', 1]], ['priority', 'desc'], ['image']);
+        $articles = $this->theme_rep->get('*', 8, false,
+            [['approved', 1], ['loc', 'ua']], ['priority', 'asc']);
 
         $medicines = $this->umed_rep->get('*', 18, false, [['approved', 1], ['innname_id', $res->innname_id]]);
 
@@ -424,8 +432,10 @@ class MedicineController extends MainController
         $this->jss = '<script type="text/javascript" src="' . asset('js') . '/analog.js"></script>';
 
         $this->title = 'Аналог';
-        $articles = $this->ua_rep->get(['title', 'alias', 'description'], 8, false,
-            [['approved', 1]], ['priority', 'desc'], ['image']);
+
+        $articles = $this->theme_rep->get('*', 8, false,
+            [['approved', 1], ['loc', 'ua']], ['priority', 'asc']);
+
         $medicines = $this->umed_rep->get('*', 18, false, [['approved', 1], ['innname_id', $res->innname_id]]);
 
         $this->aside = view('medicines.ua_aside')->with(['articles' => $articles, 'medicines' => $medicines])->render();
@@ -497,8 +507,9 @@ class MedicineController extends MainController
 
         $this->content = view('medicines.ua_medicine')->with(['medicine' => $res, 'classes' => $class])->render();
 
-        $articles = $this->ua_rep->get(['title', 'alias', 'description'], 8, false,
-            [['approved', 1]], ['priority', 'desc'], ['image']);
+        $articles = $this->theme_rep->get('*', 8, false,
+            [['approved', 1], ['loc', 'ua']], ['priority', 'asc']);
+
         $medicines = $this->umed_rep->get('*', 18, false, [['approved', 1], ['innname_id', $res->innname_id]]);
 
         $this->aside = view('medicines.ua_aside')
@@ -538,8 +549,9 @@ class MedicineController extends MainController
 
         $this->content = view('medicines.ua_faq')->with(['medicine' => $res])->render();
 
-        $articles = $this->ua_rep->get(['title', 'alias', 'description'], 8, false,
-            [['approved', 1]], ['priority', 'desc'], ['image']);
+        $articles = $this->theme_rep->get('*', 8, false,
+            [['approved', 1], ['loc', 'ua']], ['priority', 'asc']);
+
         $medicines = $this->umed_rep->get('*', 18, false, [['approved', 1], ['innname_id', $res->innname_id]]);
 
         $this->aside = view('medicines.ua_aside')->with(['articles' => $articles, 'medicines' => $medicines])->render();
@@ -567,10 +579,9 @@ class MedicineController extends MainController
 
         $class = $this->c_rep->getParents($res->classification_id);
 
-        $this->content = view('medicines.print')
+        $this->content = view('medicines.ua_print')
             ->with(['medicine' => $res, 'classes' => $class])->render();
 
-        $this->title = 'Частые вопросы';
         return $this->content;
 
     }

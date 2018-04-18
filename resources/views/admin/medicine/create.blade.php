@@ -190,7 +190,7 @@
 </div>
 <hr>
 <!-- SEO -->
-{!! Form::button('Создать', ['class' => 'btn btn-primary','type'=>'submit']) !!}
+{!! Form::button('Добавить', ['class' => 'btn btn-primary','type'=>'submit']) !!}
 {!! Form::close() !!}
 <div class="shablon" style="display:none">
     <div>

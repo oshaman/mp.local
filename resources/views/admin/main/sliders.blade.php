@@ -5,7 +5,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-question">
-                        <a @if('ua' == $slider->loc) class="bg-primary text-white" @endif data-toggle="collapse"
+                        <a data-toggle="collapse"
                            data-parent="#accordion" href="#collapse{{ $loop->iteration }}">
                             # @if('ua' == $slider->loc) UA-вариант - @endif {{ $slider->description }}:</a>
                     </h4>
@@ -21,7 +21,7 @@
                             </div>
                         </div>
                         <div class="">
-                            {{ Form::label('text', 'Текст(160 символов)') }}
+                            {{ Form::label('text', 'Текст (160 символов)') }}
                             <div>
                                 {!! Form::text('text', $slider->text ?? '',
                                  ['placeholder'=>'Текст', 'class'=>'form-control']) !!}

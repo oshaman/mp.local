@@ -317,6 +317,8 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function () {
      * Admin Menus
      */
     Route::match(['post', 'get'], 'menus', 'Admin\MenusController@index')->name('menus');
+
+    Route::get('test', 'Admin\StatisticController@test');
 });
 //Auth
 Route::get('login', 'Auth\AuthController@showLoginForm')->name('login');

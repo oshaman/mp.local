@@ -10,8 +10,9 @@
     <div class="">
         {!! Form::text('utag', old('utag') ? : ($tag->uname ?? '') , ['placeholder'=>'Психиатрiя...', 'id'=>'utag', 'class'=>'form-control']) !!}
     </div>
+    {{ Form::label('alias', 'URL') }}
     <div class="">
-        {!! Form::text('alias', old('alias') ? : ($tag->alias ?? '') , ['placeholder'=>'psihiatr...', 'id'=>'cat', 'class'=>'form-control eng-alias']) !!}
+        {!! Form::text('alias', old('alias') ? : ($tag->alias ?? '') , ['placeholder'=>'psihiatr...', 'id'=>'alias', 'class'=>'form-control eng-alias']) !!}
     </div>
     <div class="col-lg-6">
         <label>

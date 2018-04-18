@@ -1,5 +1,5 @@
-<h1>Редактирование производителей</h1>
-<h2>производитель: {{ $fabricator->title ?? '' }}</h2>
+<h1>Редактирование производителей:</h1>
+<h2>{{ $fabricator->title ?? '' }}</h2>
 <hr>
 {!! Form::open(['url' => route('fabricator_update',['fabricator'=> $fabricator->id]), 'class'=>'form-horizontal','method'=>'POST' ]) !!}
 
